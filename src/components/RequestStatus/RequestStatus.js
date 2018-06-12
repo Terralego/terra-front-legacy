@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Card, Alert, Button } from 'antd';
 import { updateRequestProperties } from 'modules/userrequest';
-import FormConfig from '../Form/Form.config';
+import FormConfig from 'components/Form/Form.config';
 
 const Status = ({ state, userGroup }) => <Alert message={state[userGroup]} type={state.type || 'info'} />;
 
@@ -51,7 +51,7 @@ const DispatchToProps = dispatch =>
 
 RequestStatus.propTypes = {
   userGroup: PropTypes.string.isRequired,
-  status: PropTypes.string.isRequired,
+  status: PropTypes.number.isRequired,
 };
 
 export default connect(StateToProps, DispatchToProps)(RequestStatus);
