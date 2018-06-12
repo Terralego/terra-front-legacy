@@ -10,6 +10,8 @@ import { getUserrequest, clear } from 'modules/userrequest';
 import HeaderForm from 'components/Form/HeaderForm';
 import FormConfig from 'components/Form/Form.config';
 
+import styles from './Form.module.scss';
+
 class FormApp extends React.Component {
   componentDidMount () {
     if (this.props.match.params.id) {
@@ -29,19 +31,22 @@ class FormApp extends React.Component {
     return (
       <div>
         <HeaderForm />
-        {this.props.updated_at ?
-          <React.Fragment>
-            <h1>Demande d'autorisation n°{this.props.match.params.id}</h1>
-            <p style={{ fontStyle: 'italic' }}>
-              Dernière sauvegarde le {moment(this.props.updated_at).format('DD/MM/YYYY à HH:mm', 'fr')}
-            </p>
-          </React.Fragment>
-        :
-          <h1>Nouvelle demande d'autorisation</h1>
-        }
+        <div className={styles.header}>
+          {this.props.updated_at ?
+            <React.Fragment>
+              <h1>Demande d'autorisation n°{this.props.match.params.id}</h1>
+              <p style={{ fontStyle: 'italic' }}>
+                Dernière sauvegarde le {moment(this.props.updated_at).format('DD/MM/YYYY à HH:mm', 'fr')}
+              </p>
+            </React.Fragment>
+          :
+            <h1>Nouvelle demande d'autorisation</h1>
+          }
+        </div>
         <Form
           model="userrequest"
           onSubmit={userrequest => this.handleSubmit(userrequest)}
+          className={styles.content}
         >
           {FormConfig.steps.map(step => (
             <div key={`step_${step.title}`}>

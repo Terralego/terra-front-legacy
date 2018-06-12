@@ -25,12 +25,16 @@ export const routes = [{
   component: Form,
   icon: 'form',
   protected: false,
+  hideBG: true,
+  hideHeader: true,
 }, {
   path: '/request/:id',
   name: 'Edit existing request',
   component: Form,
   icon: 'form',
   protected: false,
+  hideBG: true,
+  hideHeader: true,
 }, {
   path: '/request-preview',
   name: 'Request Preview',
