@@ -9,7 +9,7 @@ import { getUserrequest } from 'modules/userrequestList';
 import RequestStatus from 'components/RequestStatus/RequestStatus';
 import Comments from 'components/Comments/Comments';
 
-class ManageRequestDetail extends React.Component {
+class Userrequest extends React.Component {
   componentDidMount () {
     if (!this.props.data && !this.props.loading) {
       this.props.getUserrequest(this.props.match.params.id);
@@ -52,4 +52,4 @@ const StateToProps = (state, ownProps) => ({
 const DispatchToProps = dispatch =>
   bindActionCreators({ getUserrequest }, dispatch);
 
-export default withRouter(connect(StateToProps, DispatchToProps)(ManageRequestDetail));
+export default withRouter(connect(StateToProps, DispatchToProps)(Userrequest));

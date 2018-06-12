@@ -1,8 +1,8 @@
 import Home from 'components/Home/Home';
 import About from 'components/About/About';
 import Form from 'components/Form/Form';
-import ManageRequests from 'components/ManageRequests/ManageRequests';
-import ManageRequestDetail from 'components/ManageRequests/ManageRequestDetail';
+import UserrequestList from 'components/Userrequest/UserrequestList';
+import Userrequest from 'components/Userrequest/Userrequest';
 import Login from 'components/Login/Login';
 import FormSummary from 'components/Form/FormSummary';
 
@@ -34,7 +34,7 @@ export const routes = [{
 }, {
   path: '/manage-request',
   name: 'Manage requests',
-  component: ManageRequests,
+  component: UserrequestList,
   icon: 'form',
   exact: true,
   protected: true,
@@ -42,7 +42,7 @@ export const routes = [{
     {
       path: '/manage-request/detail/:id',
       name: 'Manage request detail',
-      component: ManageRequestDetail,
+      component: Userrequest,
       protected: true,
     },
   ],

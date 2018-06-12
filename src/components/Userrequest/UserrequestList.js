@@ -7,7 +7,7 @@ import moment from 'moment';
 
 import { getUserrequestList } from 'modules/userrequestList';
 
-class ManageRequests extends React.Component {
+class UserrequestList extends React.Component {
   componentDidMount () {
     this.props.getUserrequestList();
   }
@@ -65,4 +65,4 @@ const DispatchToProps = dispatch =>
     dispatch,
   );
 
-export default withRouter(connect(StateToProps, DispatchToProps)(ManageRequests));
+export default withRouter(connect(StateToProps, DispatchToProps)(UserrequestList));
