@@ -7,6 +7,7 @@ const FormConfig = {
     { title: 'Where', component: FormWhere },
   ],
   confirmation: {
+    dratButton: 'Save as draft',
     previewButton: 'Preview your request',
     editButton: 'Edit my request',
     submitButton: 'Send my request',

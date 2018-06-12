@@ -1,7 +1,7 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { Redirect, withRouter } from 'react-router-dom';
 import { Spin, Row, Col, Card } from 'antd';
 
 import Summary from 'components/Summary/Summary';
@@ -24,6 +24,15 @@ class Userrequest extends React.Component {
   }
 
   render () {
+    // If userrequest is in draft status, redirect to form route
+    if (this.props.data && this.props.data.state === 0) {
+      return (
+        <Redirect
+          to={{ pathname: `/request/${this.props.data.id}`, state: { from: this.props.location.pathname } }}
+          from={this.props.location.pathname}
+        />
+      );
+    }
     return (
       <Row gutter={24} style={{ paddingBottom: 24 }}>
         <Col span={24} lg={14}>

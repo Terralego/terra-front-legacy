@@ -20,8 +20,14 @@ export const routes = [{
   icon: 'paper-clip',
   protected: false,
 }, {
-  path: '/request',
-  name: 'Request',
+  path: '/new-request',
+  name: 'New request',
+  component: Form,
+  icon: 'form',
+  protected: false,
+}, {
+  path: '/request/:id',
+  name: 'Edit existing request',
   component: Form,
   icon: 'form',
   protected: false,
