@@ -19,6 +19,7 @@ const CustomRadio = props => {
   delete propsField.withFieldValue;
   delete propsField.errorMessages;
   delete propsField.options;
+  delete propsField.required;
 
   return (
     <FormItem

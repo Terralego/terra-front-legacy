@@ -17,6 +17,7 @@ const CustomCheckbox = props => {
   const propsField = { ...props };
   delete propsField.withFieldValue;
   delete propsField.errorMessages;
+  delete propsField.required;
 
   return (
     <FormItem

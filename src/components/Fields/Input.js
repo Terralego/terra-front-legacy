@@ -17,6 +17,7 @@ const CustomInput = props => {
   delete propsField.withFieldValue;
   delete propsField.errorMessages;
   delete propsField.fieldValue;
+  delete propsField.required;
 
   return (
     <FormItem

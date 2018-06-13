@@ -20,6 +20,7 @@ const CustomSelect = props => {
   delete propsField.withFieldValue;
   delete propsField.errorMessages;
   delete propsField.value;
+  delete propsField.required;
 
   return (
     <FormItem
