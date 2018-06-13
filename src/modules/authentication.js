@@ -80,13 +80,14 @@ export default authentication;
  */
 
 /**
- * getCommentsByUserrequest selector
+ * getUserGroup selector
  * @param {object} state
- * @param {string} userrequestId : id of userrequest
- * @returns {array} array of comments
+ * @returns {string} current user group
  */
 export const getUserGroup = createSelector(
   state => state.authentication.payload && state.authentication.payload.user,
+  // Temporary we get first item
+  // TODO: find a way to implemant authorization with multiple groups
   user => user.groups[0],
 );
 
