@@ -10,11 +10,42 @@ function validateStatus (fieldValue) {
   if (!fieldValue.valid && fieldValue.touched && !fieldValue.focus) {
     return 'error';
   }
-
   return '';
 }
 
-function CustomDatePicker (props) {
+const CustomDatePicker = props => {
+  const propsField = { ...props };
+  if (props.value !== '') {
+    propsField.value = moment(props.value);
+  }
+  delete propsField.withFieldValue;
+  delete propsField.errorMessages;
+  delete propsField.fieldValue;
+
+  return (
+    <FormItem
+      style={{ display: 'inline-block' }}
+      label={props.label}
+      validateStatus={validateStatus(props.fieldValue)}
+      required={props.required}
+      help={
+        props.required && (
+          <Errors
+            model={props.name}
+            show={field => field.touched && !field.focus}
+            messages={props.errorMessages}
+          />
+        )
+      }
+    >
+      <DatePicker
+        {...propsField}
+      />
+    </FormItem>
+  );
+};
+
+function DatePickerField (props) {
   return (
     <Control
       model={props.model}
@@ -23,40 +54,16 @@ function CustomDatePicker (props) {
         required: val => val && val.length,
       }}
       withFieldValue
-      component={innerProps => (
-        <FormItem
-          style={{ display: 'inline-block' }}
-          label={props.label && props.label}
-          validateStatus={validateStatus(innerProps.fieldValue)}
-          required={props.required}
-          help={
-            <Errors
-              model={props.model}
-              show={field => field.touched && !field.focus}
-              messages={props.errorMessages}
-            />}
-        >
-          <DatePicker
-            style={props.style}
-            defaultValue={moment()}
-            placeholder={props.placeholder}
-            onChange={innerProps.onChange}
-            onFocus={innerProps.onFocus}
-            onBlur={innerProps.onBlur}
-            onKeyPress={innerProps.onKeyPress}
-            autoFocus={props.autoFocus}
-            // open={props.open}
-            showTime
-            format={props.format}
-            disabledDate={props.disabledDate}
-            onOpenChange={props.onOpenChange}
-          />
-        </FormItem>)}
+      mapProps={{
+        errorMessages: () => props.errorMessages,
+      }}
+      component={CustomDatePicker}
+      {...props}
     />
   );
 }
 
-CustomDatePicker.propTypes = {
+DatePickerField.propTypes = {
   model: Proptypes.string.isRequired,
   label: Proptypes.string,
   placeholder: Proptypes.string,
@@ -80,7 +87,7 @@ CustomDatePicker.propTypes = {
   onOpenChange: Proptypes.func,
 };
 
-CustomDatePicker.defaultProps = {
+DatePickerField.defaultProps = {
   label: null,
   placeholder: '',
   format: 'DD-MM-YYYY HH:mm',
@@ -92,4 +99,4 @@ CustomDatePicker.defaultProps = {
   onOpenChange: () => {},
 };
 
-export default CustomDatePicker;
+export default DatePickerField;

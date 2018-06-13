@@ -9,9 +9,34 @@ function validateStatus (fieldValue) {
   if (!fieldValue.valid && fieldValue.touched && !fieldValue.focus) {
     return 'error';
   }
-
   return '';
 }
+
+const CustomInput = props => {
+  const propsField = { ...props };
+  delete propsField.withFieldValue;
+  delete propsField.errorMessages;
+  delete propsField.fieldValue;
+
+  return (
+    <FormItem
+      label={props.label}
+      validateStatus={validateStatus(props.fieldValue)}
+      required={props.required}
+      help={
+        props.required && (
+          <Errors
+            model={props.name}
+            show={field => field.touched && !field.focus}
+            messages={props.errorMessages}
+          />
+        )
+      }
+    >
+      <Input {...propsField} />
+    </FormItem>
+  );
+};
 
 function InputField (props) {
   return (
@@ -22,28 +47,11 @@ function InputField (props) {
         required: val => val && val.length,
       }}
       withFieldValue
-      component={innerProps => (
-        <FormItem
-          label={props.label}
-          validateStatus={validateStatus(innerProps.fieldValue)}
-          required={props.required}
-          help={
-            <Errors
-              model={props.model}
-              show={field => field.touched && !field.focus}
-              messages={props.errorMessages}
-            />}
-        >
-          <Input
-            defaultValue={innerProps.value}
-            placeholder={props.placeholder}
-            onChange={innerProps.onChange}
-            onFocus={innerProps.onFocus}
-            onBlur={innerProps.onBlur}
-            onKeyPress={innerProps.onKeyPress}
-            autoFocus={props.autoFocus}
-          />
-        </FormItem>)}
+      mapProps={{
+        errorMessages: () => props.errorMessages,
+      }}
+      component={CustomInput}
+      {...props}
     />
   );
 }

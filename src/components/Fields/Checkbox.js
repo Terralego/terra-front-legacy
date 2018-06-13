@@ -10,11 +10,37 @@ function validateStatus (fieldValue) {
   if (!fieldValue.valid && fieldValue.touched && !fieldValue.focus) {
     return 'error';
   }
-
   return '';
 }
 
-function CustomCheckbox (props) {
+const CustomCheckbox = props => {
+  const propsField = { ...props };
+  delete propsField.withFieldValue;
+  delete propsField.errorMessages;
+
+  return (
+    <FormItem
+      label={props.label}
+      validateStatus={validateStatus(props.fieldValue)}
+      required={props.required}
+      help={
+        props.required && (
+          <Errors
+            model={props.name}
+            show={field => field.touched && !field.focus}
+            messages={props.errorMessages}
+          />
+        )
+      }
+    >
+      <CheckboxGroup
+        {...propsField}
+      />
+    </FormItem>
+  );
+};
+
+function CheckboxField (props) {
   return (
     <Control
       model={props.model}
@@ -23,31 +49,16 @@ function CustomCheckbox (props) {
         required: val => val && val.length,
       }}
       withFieldValue
-      component={innerProps => (
-        <FormItem
-          label={props.label}
-          validateStatus={validateStatus(innerProps.fieldValue)}
-          help={
-            <Errors
-              model={props.model}
-              show={field => field.touched && !field.focus}
-              messages={props.errorMessages}
-            />}
-        >
-          <CheckboxGroup
-            options={props.options}
-            placeholder={props.placeholder}
-            onChange={innerProps.onChange}
-            onFocus={innerProps.onFocus}
-            onBlur={innerProps.onBlur}
-            onKeyPress={innerProps.onKeyPress}
-          />
-        </FormItem>)}
+      mapProps={{
+        errorMessages: () => props.errorMessages,
+      }}
+      component={CustomCheckbox}
+      {...props}
     />
   );
 }
 
-CustomCheckbox.propTypes = {
+CheckboxField.propTypes = {
   model: Proptypes.string.isRequired,
   label: Proptypes.string.isRequired,
   placeholder: Proptypes.string,
@@ -56,9 +67,9 @@ CustomCheckbox.propTypes = {
   }),
 };
 
-CustomCheckbox.defaultProps = {
+CheckboxField.defaultProps = {
   placeholder: '',
   errorMessages: { required: 'Please fill this field' },
 };
 
-export default CustomCheckbox;
+export default CheckboxField;

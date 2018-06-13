@@ -11,11 +11,49 @@ function validateStatus (fieldValue) {
   if (!fieldValue.valid && fieldValue.touched && !fieldValue.focus) {
     return 'error';
   }
-
   return '';
 }
 
-function CustomRadio (props) {
+const CustomRadio = props => {
+  const propsField = { ...props };
+  delete propsField.withFieldValue;
+  delete propsField.errorMessages;
+  delete propsField.options;
+
+  return (
+    <FormItem
+      label={props.label}
+      validateStatus={validateStatus(props.fieldValue)}
+      required={props.required}
+      help={
+        props.required && (
+          <Errors
+            model={props.name}
+            show={field => field.touched && !field.focus}
+            messages={props.errorMessages}
+          />
+        )
+      }
+    >
+      <RadioGroup
+        defaultValue={props.defaultValue}
+        onChange={props.onChange}
+        onFocus={props.onFocus}
+        onBlur={props.onBlur}
+        onKeyPress={props.onKeyPress}
+        {...propsField}
+      >
+        {props.options.map(option => (
+          <RadioButton value={option.value} key={`radio_${props.name}_${option.value}`}>
+            {option.label}
+          </RadioButton>
+        ))}
+      </RadioGroup>
+    </FormItem>
+  );
+};
+
+function RadioField (props) {
   return (
     <Control
       model={props.model}
@@ -23,39 +61,18 @@ function CustomRadio (props) {
       validators={{
         required: val => val && val.length,
       }}
+      mapProps={{
+        errorMessages: () => props.errorMessages,
+        options: () => props.options,
+      }}
       withFieldValue
-      component={innerProps => (
-        <FormItem
-          label={props.label}
-          validateStatus={validateStatus(innerProps.fieldValue)}
-          required={props.required}
-          help={
-            <Errors
-              model={props.model}
-              show={field => field.touched && !field.focus}
-              messages={props.errorMessages}
-            />}
-        >
-          <RadioGroup
-            // defaultValue={props.defaultValue}
-            value={innerProps.value}
-            onChange={innerProps.onChange}
-            onFocus={innerProps.onFocus}
-            onBlur={innerProps.onBlur}
-            onKeyPress={innerProps.onKeyPress}
-          >
-            {props.options.map(option => (
-              <RadioButton value={option.value} key={`radio_${props.model}_${option.value}`}>
-                {option.label}
-              </RadioButton>
-            ))}
-          </RadioGroup>
-        </FormItem>)}
+      component={CustomRadio}
+      {...props}
     />
   );
 }
 
-CustomRadio.propTypes = {
+RadioField.propTypes = {
   model: Proptypes.string.isRequired,
   label: Proptypes.string.isRequired,
   errorMessages: Proptypes.shape({
@@ -69,9 +86,9 @@ CustomRadio.propTypes = {
   required: Proptypes.bool,
 };
 
-CustomRadio.defaultProps = {
+RadioField.defaultProps = {
   required: false,
   errorMessages: { required: 'Please fill this field' },
 };
 
-export default CustomRadio;
+export default RadioField;
