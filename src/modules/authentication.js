@@ -1,3 +1,4 @@
+import { createSelector } from 'reselect';
 import { disableTimerRefreshToken, enableTimerRefreshToken } from 'modules/authenticationTimer';
 import apiService from 'services/apiService';
 import tokenService from 'services/tokenService';
@@ -26,15 +27,7 @@ const initialState = {
   isAuthenticated: !!localStorage.getItem('token'),
   receivedAt: null,
   errorMessage: null,
-  // Temporary set user permission (will be sent with API)
-  user: {
-    group: 'niv1',
-    permissions: [
-      'can_create_requests',
-      'can_read_self_requests',
-      'can_comment_requests',
-    ],
-  },
+  payload: {},
 };
 
 /**
@@ -64,9 +57,9 @@ const authentication = (state = initialState, action) => {
       return {
         ...state,
         isAuthenticated: action.isAuthenticated,
-        user: {
-          ...state.user,
-          ...action.user,
+        payload: {
+          ...state.payload,
+          ...action.payload,
         },
       };
     case SET_ERROR_MESSAGE:
@@ -80,6 +73,23 @@ const authentication = (state = initialState, action) => {
 };
 
 export default authentication;
+
+/**
+ * SELECTORS
+ * --------------------------------------------------------- *
+ */
+
+/**
+ * getCommentsByUserrequest selector
+ * @param {object} state
+ * @param {string} userrequestId : id of userrequest
+ * @returns {array} array of comments
+ */
+export const getUserGroup = createSelector(
+  state => state.authentication.payload && state.authentication.payload.user,
+  user => user.groups[0],
+);
+
 
 /**
  * ACTIONS
@@ -116,7 +126,7 @@ export function setAuthentication () {
   return {
     type: SET_AUTHENTICATION,
     isAuthenticated: tokenService.isAuthenticated(),
-    user: tokenService.isAuthenticated() && parseJwt(tokenService.getToken()),
+    payload: tokenService.isAuthenticated() && parseJwt(tokenService.getToken()),
   };
 }
 
@@ -130,11 +140,11 @@ export function resetToken () {
 
 /**
  * Recieve token
- * @param {object} user
+ * @param {object} payload
  */
-export const receiveToken = user => ({
+export const receiveToken = payload => ({
   type: RECEIVE_TOKEN,
-  user,
+  payload,
   isAuthenticated: true,
   receivedAt: Date.now(),
 });

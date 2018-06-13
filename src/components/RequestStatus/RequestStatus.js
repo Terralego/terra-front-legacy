@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Card, Alert, Button } from 'antd';
+
+import { getUserGroup } from 'modules/authentication';
 import { updateRequestProperties } from 'modules/userrequest';
 import FormConfig from 'components/Form/Form.config';
 
@@ -16,7 +18,7 @@ const RequestStatus = props => {
     return null;
   }
 
-  if (userGroup === 'niv1') {
+  if (userGroup === 'N1') {
     return (
       <Card title="Évaluation de niv 1">
         <Status state={state} {...props} />
@@ -29,7 +31,7 @@ const RequestStatus = props => {
     );
   }
 
-  if (userGroup === 'niv2') {
+  if (userGroup === 'N2') {
     return (
       <Card title="Évaluation de niv 2">
         <Status state={state} {...props} />
@@ -43,7 +45,7 @@ const RequestStatus = props => {
 };
 
 const StateToProps = state => ({
-  userGroup: state.authentication.user.group,
+  userGroup: getUserGroup(state),
 });
 
 const DispatchToProps = dispatch =>

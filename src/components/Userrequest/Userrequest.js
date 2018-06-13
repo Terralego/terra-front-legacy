@@ -4,10 +4,13 @@ import { connect } from 'react-redux';
 import { Redirect, withRouter } from 'react-router-dom';
 import { Spin, Row, Col, Card } from 'antd';
 
-import Summary from 'components/Summary/Summary';
 import { getUserrequest } from 'modules/userrequestList';
+import { getUserGroup } from 'modules/authentication';
+import Summary from 'components/Summary/Summary';
 import RequestStatus from 'components/RequestStatus/RequestStatus';
 import Comments from 'components/Comments/Comments';
+
+const DRAFT_STATUS = 0;
 
 class Userrequest extends React.Component {
   componentDidMount () {
@@ -24,8 +27,11 @@ class Userrequest extends React.Component {
   }
 
   render () {
-    // If userrequest is in draft status, redirect to form route
-    if (this.props.data && this.props.data.state === 0) {
+    // If userrequest is in draft status
+    // and user group is user, redirect to editabled request
+    if (this.props.data
+      && this.props.data.state === DRAFT_STATUS
+      && this.props.userGroup === 'user') {
       return (
         <Redirect
           to={{ pathname: `/request/${this.props.data.id}`, state: { from: this.props.location.pathname } }}
@@ -56,6 +62,7 @@ const StateToProps = (state, ownProps) => ({
   // TODO: use Reselect for increase performances
   data: state.userrequestList.items[ownProps.match.params.id],
   loading: state.userrequestList.loading,
+  userGroup: getUserGroup(state),
 });
 
 const DispatchToProps = dispatch =>
