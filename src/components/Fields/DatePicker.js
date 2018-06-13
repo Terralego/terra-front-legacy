@@ -15,9 +15,7 @@ function validateStatus (fieldValue) {
 
 const CustomDatePicker = props => {
   const propsField = { ...props };
-  if (props.value !== '') {
-    propsField.value = moment(props.value);
-  }
+  propsField.value = moment.isMoment(props.value) ? moment(props.value) : null;
   delete propsField.withFieldValue;
   delete propsField.errorMessages;
   delete propsField.fieldValue;
