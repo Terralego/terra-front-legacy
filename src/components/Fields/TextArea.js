@@ -45,7 +45,7 @@ function TextAreaField (props) {
       model={props.model}
       id={props.model}
       validators={{
-        required: val => val && val.length,
+        required: !props.required || (val => val && val.length),
       }}
       withFieldValue
       mapProps={{

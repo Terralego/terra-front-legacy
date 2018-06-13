@@ -47,7 +47,7 @@ function CheckboxField (props) {
       model={props.model}
       id={props.model}
       validators={{
-        required: val => !props.required || (val && val.length),
+        required: val => ((val && val.length) || !props.required),
       }}
       withFieldValue
       mapProps={{

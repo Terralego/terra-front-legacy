@@ -21,6 +21,7 @@ const CustomRadio = props => {
   delete propsField.options;
   delete propsField.required;
 
+  console.log(props);
   return (
     <FormItem
       label={props.label}
@@ -36,14 +37,7 @@ const CustomRadio = props => {
         )
       }
     >
-      <RadioGroup
-        defaultValue={props.defaultValue}
-        onChange={props.onChange}
-        onFocus={props.onFocus}
-        onBlur={props.onBlur}
-        onKeyPress={props.onKeyPress}
-        {...propsField}
-      >
+      <RadioGroup {...propsField}>
         {props.options.map(option => (
           <RadioButton value={option.value} key={`radio_${props.name}_${option.value}`}>
             {option.label}
@@ -60,7 +54,7 @@ function RadioField (props) {
       model={props.model}
       id={props.model}
       validators={{
-        required: !props.required || (val => val && val.length),
+        required: val => ((val && val.length) || !props.required),
       }}
       mapProps={{
         errorMessages: () => props.errorMessages,
