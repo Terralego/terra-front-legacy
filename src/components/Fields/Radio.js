@@ -59,7 +59,7 @@ function RadioField (props) {
     <Control
       model={props.model}
       id={props.model}
-      validators={{
+      validators={props.required && {
         required: val => val && val.length,
       }}
       mapProps={{
