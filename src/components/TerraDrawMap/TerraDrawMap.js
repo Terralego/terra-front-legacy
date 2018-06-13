@@ -59,7 +59,7 @@ class TerraDrawMap extends Component {
     const vectorLayers = [];
     const vectorSourceLayer = new ol.source.VectorTile({
       format: new ol.format.MVT(),
-      url: this.props.config.SOURCE_VECTOR_URL,
+      url: this.props.config.sourceVectorUrl,
       renderMode: 'hybrid',
     });
     this.props.config.vectorLayers.forEach(layer => {
