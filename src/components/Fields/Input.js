@@ -44,8 +44,8 @@ function InputField (props) {
     <Control
       model={props.model}
       id={props.model}
-      validators={props.required && {
-        required: val => val && val.length,
+      validators={{
+        required: !props.required || (val => val && val.length),
       }}
       withFieldValue
       mapProps={{

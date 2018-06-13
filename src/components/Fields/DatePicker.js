@@ -49,8 +49,8 @@ function DatePickerField (props) {
     <Control
       model={props.model}
       id={props.model}
-      validators={props.required && {
-        required: val => val && moment.isMoment(val),
+      validators={{
+        required: !props.required || (val => val && moment.isMoment(val)),
       }}
       withFieldValue
       mapProps={{

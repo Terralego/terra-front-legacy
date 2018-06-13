@@ -59,8 +59,8 @@ function RadioField (props) {
     <Control
       model={props.model}
       id={props.model}
-      validators={props.required && {
-        required: val => val && val.length,
+      validators={{
+        required: !props.required || (val => val && val.length),
       }}
       mapProps={{
         errorMessages: () => props.errorMessages,
