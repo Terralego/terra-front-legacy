@@ -21,7 +21,6 @@ const CustomRadio = props => {
   delete propsField.options;
   delete propsField.required;
 
-  console.log(props);
   return (
     <FormItem
       label={props.label}
