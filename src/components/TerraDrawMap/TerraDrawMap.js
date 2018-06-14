@@ -25,6 +25,8 @@ class TerraDrawMap extends Component {
         .addFeatures((new ol.format.GeoJSON()).readFeatures({
           type: 'FeatureCollection',
           features: this.props.features,
+          dataProjection: 'EPSG:4326',
+          featureProjection: 'EPSG:3857',
         }));
     }
     this.vectorDraw = new ol.layer.Vector({
@@ -136,13 +138,14 @@ class TerraDrawMap extends Component {
           type: 'Feature',
           geometry: {
             type: event.feature.getGeometry().getType(),
-            coordinates: event.feature.getGeometry().getCoordinates(),
+            coordinates: event.feature.getGeometry().transform('EPSG:3857', 'EPSG:4326').getCoordinates(),
           },
           properties: {
             id,
             name: event.feature.getGeometry().getType(),
           },
         });
+        event.feature.getGeometry().transform('EPSG:4326', 'EPSG:3857');
         event.feature.setId(id);
       }
     });
