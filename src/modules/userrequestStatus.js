@@ -13,19 +13,18 @@ const statusLabels = {
   WAITING: { text: 'En cours de traitement par l\'ONF', type: 'warning' },
   TO_COMPLETE: { text: 'En attente d\'éléments supplémentaires de votre part', type: 'warning' },
 };
+
 /**
  * getUserrequestStatus
  *
  * @param {number} state - state of the userrequest
  * @param {object} approbations - approbations of the userrequest
- * @param {group} userGroup - user's group
- * @param {group} userUuid - user's uuid
+ * @param {string} userGroup - user's group
+ * @param {string} userUuid - user's uuid
  */
 const getUserrequestStatus = (userrequestState, approbations, userGroup, userUuid) => {
   const { states, approbation_statuses } = store.getState().appConfig;
-  // console.log(approbations, approbation_statuses);
 
-  // console.log(states[userrequestState], statusLabels[states[userrequestState]]);
   // Same label for all groups
   if (states[userrequestState] === 'DRAFT'
   || states[userrequestState] === 'REFUSED') {

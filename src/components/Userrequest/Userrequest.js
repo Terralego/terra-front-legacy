@@ -20,14 +20,15 @@ class Userrequest extends React.Component {
   }
 
   render () {
+    const { data } = this.props;
     // If userrequest is in draft status
     // and user group is user, redirect to editabled request
-    if (this.props.data
-      && this.props.data.state === DRAFT_STATUS
+    if (data
+      && data.state === DRAFT_STATUS
       && this.props.userGroup === 'user') {
       return (
         <Redirect
-          to={{ pathname: `/request/${this.props.data.id}`, state: { from: this.props.location.pathname } }}
+          to={{ pathname: `/request/${data.id}`, state: { from: this.props.location.pathname } }}
           from={this.props.location.pathname}
         />
       );
@@ -35,13 +36,13 @@ class Userrequest extends React.Component {
     return (
       <Row gutter={24} style={{ paddingBottom: 24 }}>
         <Col span={24} lg={14}>
-          {this.props.data ?
-            <Summary data={this.props.data} />
+          {data ?
+            <Summary data={data} />
           : <Spin style={{ margin: '30px auto', width: '100%' }} />}
         </Col>
 
         <Col span={24} lg={10}>
-          {this.props.data && <RequestStatus {...this.props.data} />}
+          {data && <RequestStatus userrequest={data} />}
           <Card title="Échanges" style={{ marginTop: 24 }}>
             <Comments userrequestId={this.props.match.params.id} />
           </Card>

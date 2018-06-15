@@ -21,6 +21,11 @@ export const REQUEST_EXISTING = 'userrequestList/REQUEST_EXISTING';
 export const SUCCESS_EXISTING = 'userrequestList/SUCCESS_EXISTING';
 export const FAILURE_EXISTING = 'userrequestList/FAILURE_EXISTING';
 
+// Change userrequest status
+export const REQUEST_STATE_CHANGE = 'userrequestList/REQUEST_STATE_CHANGE';
+export const SUCCESS_STATE_CHANGE = 'userrequestList/SUCCESS_STATE_CHANGE';
+export const FAILURE_STATE_CHANGE = 'userrequestList/FAILURE_STATE_CHANGE';
+
 // New userrequest
 export const CLEAR = 'userrequestList/CLEAR';
 
@@ -161,5 +166,25 @@ export const saveDraft = data => ({
       body: JSON.stringify(data),
     },
     form: 'userrequest',
+  },
+});
+
+/**
+ * userrequest action : save userrequest as draft
+ * @param {string} data
+ */
+export const updateState = (id, state) => ({
+  [CALL_API]: {
+    endpoint: `/userrequest/${id}/status/`,
+    types: [REQUEST_STATE_CHANGE, SUCCESS_STATE_CHANGE, FAILURE_STATE_CHANGE],
+    config: {
+      method: 'POST',
+      body: JSON.stringify({
+        geojson: 'string',
+        state,
+        properties: 'string',
+        organization: [0],
+      }),
+    },
   },
 });
