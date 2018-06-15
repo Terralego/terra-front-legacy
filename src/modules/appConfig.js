@@ -1,4 +1,11 @@
-export const UPDATE_VALUE = 'userrequest/UPDATE_VALUE';
+import { CALL_API } from 'middlewares/api';
+
+export const UPDATE_VALUE = 'config/UPDATE_VALUE';
+
+// Get app config
+export const REQUEST_CONFIG = 'config/CONFIG';
+export const SUCCESS_CONFIG = 'config/SUCCESS_CONFIG';
+export const FAILURE_CONFIG = 'config/FAILURE_CONFIG';
 
 const initialState = {};
 
@@ -12,6 +19,11 @@ const userrequest = (state = initialState, action) => {
       return {
         ...state,
         [action.key]: action.value,
+      };
+    case SUCCESS_CONFIG:
+      return {
+        ...state,
+        ...action.data,
       };
     default:
       return state;
@@ -27,8 +39,8 @@ export default userrequest;
  */
 
 /**
- * userrequest action
- * updateRequestValue create or update a value of userrequest key
+ * config action
+ * updateConfigValue create or update a value of config key
  * @param  {string} key : the key of the new userrequest value
  * @param  {any} value : the new value
  */
@@ -36,4 +48,16 @@ export const updateConfigValue = (key, value) => ({
   type: UPDATE_VALUE,
   key,
   value,
+});
+
+/**
+ * config action
+ * getSettings fetch api settings
+ */
+export const getSettings = () => ({
+  [CALL_API]: {
+    endpoint: '/settings/',
+    types: [REQUEST_CONFIG, SUCCESS_CONFIG, FAILURE_CONFIG],
+    config: { method: 'GET' },
+  },
 });

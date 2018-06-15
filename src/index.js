@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import { setAuthentication, refreshToken } from 'modules/authentication';
+import { getSettings } from 'modules/appConfig';
 
 import './index.css';
 import store from './store';
@@ -20,6 +21,9 @@ const render = Component => {
 if (module.hot) {
   module.hot.accept('./App', () => render(App));
 }
+
+// Fetch app config
+store.dispatch(getSettings());
 
 // init the store with the localStorage / sessionStorage data
 store.dispatch(setAuthentication());
