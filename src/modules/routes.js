@@ -32,7 +32,7 @@ export const routes = [{
   name: 'Edit existing request',
   component: Form,
   icon: 'form',
-  protected: false,
+  protected: true,
   hideBG: true,
   hideHeader: true,
 }, {
@@ -40,7 +40,9 @@ export const routes = [{
   name: 'Request Preview',
   component: FormSummary,
   icon: 'form',
-  protected: false,
+  protected: true,
+  hideBG: true,
+  hideHeader: true,
 }, {
   path: '/manage-request',
   name: 'Manage requests',
