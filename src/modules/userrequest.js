@@ -141,8 +141,8 @@ export const getUserrequest = id => ({
 });
 
 /**
- * userrequest action : fetch userrequest
- * @param {string} id
+ * userrequest action : save userrequest as draft
+ * @param {string} data
  */
 export const saveDraft = data => ({
   [CALL_API]: {
