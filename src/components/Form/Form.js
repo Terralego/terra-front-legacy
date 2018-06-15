@@ -1,5 +1,5 @@
 import React from 'react';
-import { Divider, Button, message } from 'antd';
+import { Card, Button, message } from 'antd';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Form } from 'react-redux-form';
@@ -52,14 +52,11 @@ class FormApp extends React.Component {
         <Form
           model="userrequest"
           onSubmit={userrequest => this.handleSubmit(userrequest)}
-          className={styles.content}
         >
           {FormConfig.steps.map(step => (
-            <div key={`step_${step.title}`}>
-              <h2>{step.title}</h2>
-              <Divider />
+            <Card title={step.title} key={`step_${step.title}`} style={{ marginTop: 16 }}>
               <step.component />
-            </div>
+            </Card>
           ))}
 
           <Button type="primary" htmlType="submit">{FormConfig.confirmation.previewButton}</Button>
