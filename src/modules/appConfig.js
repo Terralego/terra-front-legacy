@@ -7,7 +7,14 @@ export const REQUEST_CONFIG = 'config/CONFIG';
 export const SUCCESS_CONFIG = 'config/SUCCESS_CONFIG';
 export const FAILURE_CONFIG = 'config/FAILURE_CONFIG';
 
-const initialState = {};
+const initialState = {
+  statuses: {
+    100: 'DRAFT',
+    200: 'SUBMITTED',
+    300: 'ACCEPTED',
+    '-1': 'REFUSED',
+  },
+};
 
 /**
  * REDUCER
