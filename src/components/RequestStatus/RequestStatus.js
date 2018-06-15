@@ -48,6 +48,7 @@ const RequestStatus = ({ userrequest, userGroup, onApproved, onChangeStatus }) =
         <div style={{ display: 'flex', justifyContent: 'center', marginTop: 12 }}>
           {actionsN1.map(action => (
             <Button
+              key={action.label}
               style={{ margin: 6 }}
               // TODO: change 'uuid3' by real N1 uuid when API ready
               onClick={() => onApproved(userrequest, 'uuid3', action.value)}
@@ -73,6 +74,7 @@ const RequestStatus = ({ userrequest, userGroup, onApproved, onChangeStatus }) =
         <div style={{ display: 'flex', justifyContent: 'center', marginTop: 12 }}>
           {actionsN2.map(action => (
             <Button
+              key={action.label}
               style={{ margin: 6 }}
               // TODO: change 'uuid3' by real N2 uuid when API ready
               onClick={onChangeStatus(userrequest, 'uuid3', action.value)}
