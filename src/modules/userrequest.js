@@ -4,9 +4,16 @@ import initialState from 'modules/userrequest-initial';
 export const UPDATE_DATA_PROPERTIES = 'userrequest/UPDATE_DATA_PROPERTIES';
 export const ADD_GEOSJON_FEATURE = 'userrequest/ADD_GEOSJON_FEATURE';
 export const REMOVE_GEOSJON_FEATURE = 'userrequest/REMOVE_GEOSJON_FEATURE';
-export const POST_DATA = 'userrequest/POST_DATA';
-export const SUBMIT_DATA_SUCCESS = 'userrequest/SUBMIT_DATA_SUCCESS';
-export const SUBMIT_DATA_FAILED = 'userrequest/SUBMIT_DATA_FAILED';
+
+// Save draft userrequest actions
+export const SAVE_DRAFT = 'userrequest/SAVE_DRAFT';
+export const SUCCESS_SAVE_DRAFT = 'userrequest/SUBMIT_DRAFT_SUCCESS';
+export const FAILURE_SAVE_DRAFT = 'userrequest/SUBMIT_DRAFT_FAILED';
+
+// Submit userrequest actions
+export const SUBMIT_DATA = 'userrequest/SUBMIT_DATA';
+export const SUCCESS_SUBMIT_DATA = 'userrequest/SUCCESS_SUBMIT_DATA';
+export const FAILURE_SUBMIT_DATA = 'userrequest/FAILURE_SUBMIT_DATA';
 
 // Get draft request actions
 export const REQUEST_EXISTING = 'userrequestList/REQUEST_EXISTING';
@@ -54,22 +61,6 @@ const userrequest = (state = initialState, action) => {
       return action.data;
     case CLEAR:
       return initialState;
-    // case POST_DATA:
-    //   return {
-    //     ...state,
-    //     submitted: true,
-    //   };
-    // case SUBMIT_DATA_SUCCESS:
-    //   return {
-    //     ...state,
-    //     sent: true,
-    //     apiError: null,
-    //   };
-    // case SUBMIT_DATA_FAILED:
-    //   return {
-    //     ...state,
-    //     apiError: action.error,
-    //   };
     default:
       return state;
   }
@@ -128,7 +119,7 @@ export const clear = () => ({
 export const submitData = data => ({
   [CALL_API]: {
     endpoint: '/userrequest/',
-    types: [POST_DATA, SUBMIT_DATA_SUCCESS, SUBMIT_DATA_FAILED],
+    types: [SUBMIT_DATA, SUCCESS_SUBMIT_DATA, FAILURE_SUBMIT_DATA],
     config: {
       method: 'POST',
       body: JSON.stringify(data),
