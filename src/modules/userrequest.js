@@ -139,3 +139,19 @@ export const getUserrequest = id => ({
     config: { method: 'GET' },
   },
 });
+
+/**
+ * userrequest action : fetch userrequest
+ * @param {string} id
+ */
+export const saveDraft = data => ({
+  [CALL_API]: {
+    endpoint: `/userrequest/${data.id ? `${data.id}/` : ''}`,
+    types: [SAVE_DRAFT, SUCCESS_SAVE_DRAFT, FAILURE_SAVE_DRAFT],
+    config: {
+      method: data.id ? 'PUT' : 'POST',
+      body: JSON.stringify(data),
+    },
+    form: 'userrequest',
+  },
+});
