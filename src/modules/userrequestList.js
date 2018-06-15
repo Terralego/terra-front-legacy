@@ -13,6 +13,9 @@ const initialState = {
 };
 
 const getItemsFromResponse = response => {
+  if (!response.results || response.results.length < 1) {
+    return null;
+  }
   const items = {};
   response.results.forEach(userrequest => {
     items[userrequest.id] = userrequest;

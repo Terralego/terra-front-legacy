@@ -19,10 +19,10 @@ const initialState = {
 };
 
 const parseCommentsByUserrequest = response => {
-  const comments = {};
-  if (response.results.length < 1) {
+  if (!response.results || response.results.length < 1) {
     return null;
   }
+  const comments = {};
   const userrequestId = response.results[0].userrequest;
   response.results.forEach(userrequest => {
     comments[userrequest.id] = {
