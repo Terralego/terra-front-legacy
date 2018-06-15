@@ -26,6 +26,11 @@ export const REQUEST_STATE_CHANGE = 'userrequestList/REQUEST_STATE_CHANGE';
 export const SUCCESS_STATE_CHANGE = 'userrequestList/SUCCESS_STATE_CHANGE';
 export const FAILURE_STATE_CHANGE = 'userrequestList/FAILURE_STATE_CHANGE';
 
+// Change userrequest status
+export const REQUEST_APPROBATIONS_CHANGE = 'userrequestList/REQUEST_APPROBATIONS_CHANGE';
+export const SUCCESS_APPROBATIONS_CHANGE = 'userrequestList/SUCCESS_APPROBATIONS_CHANGE';
+export const FAILURE_APPROBATIONS_CHANGE = 'userrequestList/FAILURE_APPROBATIONS_CHANGE';
+
 // New userrequest
 export const CLEAR = 'userrequestList/CLEAR';
 
@@ -184,6 +189,32 @@ export const updateState = (id, state) => ({
         state,
         properties: 'string',
         organization: [0],
+      }),
+    },
+  },
+});
+
+/**
+ * userrequest action : update approbation status of given N1 user
+ * @param {object} userrequest - data that we wan't change approbations
+ * @param {string} uuidN1 - uuid of N1 that request approbation
+ * @param {number} approvedStatus - N1 approbation status
+ */
+export const updateApproved = (data, uuidN1, approvedStatus) => ({
+  [CALL_API]: {
+    endpoint: `/userrequest/${data.id}/`,
+    types: [REQUEST_APPROBATIONS_CHANGE, SUCCESS_APPROBATIONS_CHANGE, FAILURE_APPROBATIONS_CHANGE],
+    config: {
+      method: 'PATCH',
+      body: JSON.stringify({
+        ...data,
+        properties: {
+          ...data.properties,
+          approbations: {
+            ...data.properties.approbations,
+            [uuidN1]: approvedStatus,
+          },
+        },
       }),
     },
   },

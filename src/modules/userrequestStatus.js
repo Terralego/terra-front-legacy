@@ -6,8 +6,8 @@ const statusLabels = {
   ACCEPTED: { text: 'Demande acceptée', type: 'success' },
   // Specific for N1 and N2
   TO_EVALUATE: { text: 'A évaluer', type: 'warning' },
-  WAIT_NIV2: { text: 'En cours d’évaluation par l’instructeur de Niv 2', type: 'warning' },
   WAIT_NIV1: { text: 'En cours d’évaluation par l’instructeur de Niv 1', type: 'warning' },
+  WAIT_NIV2: { text: 'En cours d’évaluation par l’instructeur de Niv 2', type: 'warning' },
   WAIT_USER: { text: 'En attente d\'éléments de la part du demandeur', type: 'warning' },
   // Specific for user
   WAITING: { text: 'En cours de traitement par l\'ONF', type: 'warning' },
@@ -39,7 +39,7 @@ const getUserrequestStatus = (userrequestState, approbations, userGroup, userUui
         const N1status = approbation_statuses[N1approved];
         // Current N1 already approved, need N2
         if (N1status) {
-          return statusLabels.WAIT_NIV1;
+          return statusLabels.WAIT_NIV2;
         }
       }
       return statusLabels.TO_EVALUATE;
