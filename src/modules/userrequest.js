@@ -57,6 +57,11 @@ const userrequest = (state = initialState, action) => {
             .filter(feature => feature.properties.id !== action.featureId),
         },
       };
+    case SUCCESS_SAVE_DRAFT:
+      return {
+        ...state,
+        ...action.data,
+      };
     case SUCCESS_EXISTING:
       return action.data;
     case CLEAR:

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Divider, Button } from 'antd';
+import { Divider, Button, message } from 'antd';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Form } from 'react-redux-form';
@@ -20,6 +20,12 @@ class FormApp extends React.Component {
     } else {
       // Else, clear fields to get a blank form
       this.props.clear();
+    }
+  }
+
+  componentDidUpdate (nextProps) {
+    if (nextProps.updated_at !== this.props.updated_at) {
+      message.success('Votre demande a bien été sauvegardée !');
     }
   }
 

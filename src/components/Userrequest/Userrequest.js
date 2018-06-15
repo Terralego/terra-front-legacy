@@ -19,13 +19,6 @@ class Userrequest extends React.Component {
     }
   }
 
-  shouldComponentUpdate (nextProps) {
-    if (nextProps.data !== this.props.data) {
-      return true;
-    }
-    return false;
-  }
-
   render () {
     // If userrequest is in draft status
     // and user group is user, redirect to editabled request
