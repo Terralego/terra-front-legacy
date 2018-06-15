@@ -12,9 +12,9 @@ const initialState = {
   loading: false,
 };
 
-const getItemsFromResponse = data => {
+const getItemsFromResponse = response => {
   const items = {};
-  data.forEach(userrequest => {
+  response.results.forEach(userrequest => {
     items[userrequest.id] = userrequest;
   });
   return items;

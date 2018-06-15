@@ -18,13 +18,13 @@ const initialState = {
   fetched: false,
 };
 
-const parseCommentsByUserrequest = items => {
+const parseCommentsByUserrequest = response => {
   const comments = {};
-  if (items.length < 1) {
+  if (response.results.length < 1) {
     return null;
   }
-  const userrequestId = items[0].userrequest;
-  items.forEach(userrequest => {
+  const userrequestId = response.results[0].userrequest;
+  response.results.forEach(userrequest => {
     comments[userrequest.id] = {
       content: userrequest.properties.comment,
       date: userrequest.created_at,
