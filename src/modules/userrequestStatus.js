@@ -22,7 +22,8 @@ const statusLabels = {
  * @param {group} userUuid - user's uuid
  */
 const getUserrequestStatus = (userrequestState, approbations, userGroup, userUuid) => {
-  const { states, approbations_status } = store.getState().appConfig;
+  const { states, approbation_statuses } = store.getState().appConfig;
+  // console.log(approbations, approbation_statuses);
 
   // console.log(states[userrequestState], statusLabels[states[userrequestState]]);
   // Same label for all groups
@@ -34,6 +35,14 @@ const getUserrequestStatus = (userrequestState, approbations, userGroup, userUui
   // Specific labels for N1
   if (userGroup === 'N1') {
     if (states[userrequestState] === 'SUBMITTED') {
+      const N1approved = approbations && approbations[userUuid];
+      if (N1approved) {
+        const N1status = approbation_statuses[N1approved];
+        // Current N1 already approved, need N2
+        if (N1status) {
+          return statusLabels.WAIT_NIV1;
+        }
+      }
       return statusLabels.TO_EVALUATE;
     }
   }
@@ -49,6 +58,8 @@ const getUserrequestStatus = (userrequestState, approbations, userGroup, userUui
   if (states[userrequestState] === 'SUBMITTED') {
     return statusLabels.WAITING;
   }
+
+  return null;
 };
 
 export default getUserrequestStatus;

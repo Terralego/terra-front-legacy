@@ -8,9 +8,13 @@ import getUserrequestStatus from 'modules/userrequestStatus';
 import { getUserGroup } from 'modules/authentication';
 import { updateRequestProperties } from 'modules/userrequest';
 
-export const Status = ({ state, approbations, userGroup }) => {
+export const Status = ({ state, userGroup, ...props }) => {
+  const { approbations } = props.properties;
+
   if (state) {
-    const status = getUserrequestStatus(state, approbations, userGroup);
+    // TODO: connect userId with API when ready
+    // Temporary userId parameter 'uuid2'
+    const status = getUserrequestStatus(state, approbations, userGroup, 'uuid2');
     return <Alert message={status.text} type={status.type || 'info'} />;
   }
   return null;
