@@ -10,23 +10,17 @@ import { submitData } from 'modules/userrequest';
 
 
 class FormProperties extends React.Component {
-  constructor (props) {
-    super(props);
-    this.submitForm = this.submitForm.bind(this);
-    this.handleAction = this.handleAction.bind(this);
-    this.editForm = this.editForm.bind(this);
-  }
-
-  handleAction () {
+  handleAction = () => {
     this.props.history.push('/manage-request');
   }
 
-  submitForm () {
+  submitForm = () => {
     this.props.submitData(this.props.userrequest);
   }
 
-  editForm () {
-    this.props.history.push('/request');
+  editForm = () => {
+    // TODO: save as draft before
+    this.props.history.push(`/request/${this.props.userrequest.id}/`);
   }
 
   render () {
