@@ -10,7 +10,7 @@ import Summary from 'components/Summary/Summary';
 import RequestStatus from 'components/RequestStatus/RequestStatus';
 import Comments from 'components/Comments/Comments';
 
-const DRAFT_STATUS = 0;
+const DRAFT_STATUS = 100;
 
 class Userrequest extends React.Component {
   componentDidMount () {
