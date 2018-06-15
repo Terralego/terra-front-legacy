@@ -11,7 +11,7 @@ import FormConfig from 'components/Form/Form.config';
 import styles from './HeaderForm.module.scss';
 
 class HeaderForm extends React.Component {
-  saveDraft = e => {
+  saveDraft (e) {
     this.props.saveDraft(this.props.userrequest);
     e.preventDefault();
   }
@@ -25,7 +25,7 @@ class HeaderForm extends React.Component {
           </Col>
           <Col>
             <Link to="">
-              <Button type="secondary" htmlType="button" onClick={this.saveDraft}>
+              <Button type="secondary" htmlType="button" onClick={e => this.saveDraft(e)}>
                 <Icon type="save" />{FormConfig.confirmation.dratButton}
               </Button>
             </Link>

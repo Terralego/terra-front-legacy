@@ -1,4 +1,5 @@
 import { CALL_API } from 'middlewares/api';
+
 import initialState from 'modules/userrequest-initial';
 
 export const UPDATE_DATA_PROPERTIES = 'userrequest/UPDATE_DATA_PROPERTIES';
@@ -59,7 +60,6 @@ const userrequest = (state = initialState, action) => {
       };
     case SUCCESS_SAVE_DRAFT:
       return {
-        ...state,
         ...action.data,
       };
     case SUCCESS_EXISTING:
@@ -123,11 +123,14 @@ export const clear = () => ({
  */
 export const submitData = data => ({
   [CALL_API]: {
-    endpoint: '/userrequest/',
+    endpoint: `/userrequest/${data.id ? `${data.id}/` : ''}`,
     types: [SUBMIT_DATA, SUCCESS_SUBMIT_DATA, FAILURE_SUBMIT_DATA],
     config: {
-      method: 'POST',
-      body: JSON.stringify(data),
+      method: data.id ? 'PUT' : 'POST',
+      body: JSON.stringify({
+        ...data,
+        state: 200, // SUBMITTED
+      }),
     },
     form: 'userrequest',
   },

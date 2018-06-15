@@ -41,7 +41,7 @@ class Userrequest extends React.Component {
         </Col>
 
         <Col span={24} lg={10}>
-          {this.props.data && <RequestStatus status={this.props.data.state} />}
+          {this.props.data && <RequestStatus {...this.props.data} />}
           <Card title="Échanges" style={{ marginTop: 24 }}>
             <Comments userrequestId={this.props.match.params.id} />
           </Card>

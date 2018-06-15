@@ -8,10 +8,17 @@ export const SUCCESS_CONFIG = 'config/SUCCESS_CONFIG';
 export const FAILURE_CONFIG = 'config/FAILURE_CONFIG';
 
 const initialState = {
-  statuses: {
+  states: {
     100: 'DRAFT',
     200: 'SUBMITTED',
     300: 'ACCEPTED',
+    '-1': 'REFUSED',
+  },
+
+  approbation_statuses: {
+    0: 'PENDING',
+    1: 'WAITING_FOR_INFORMATION',
+    2: 'ACCEPTED',
     '-1': 'REFUSED',
   },
 };
@@ -27,11 +34,12 @@ const userrequest = (state = initialState, action) => {
         ...state,
         [action.key]: action.value,
       };
-    case SUCCESS_CONFIG:
-      return {
-        ...state,
-        ...action.data,
-      };
+    // TODO: uncomment when API is ready
+    // case SUCCESS_CONFIG:
+    //   return {
+    //     ...state,
+    //     ...action.data,
+    //   };
     default:
       return state;
   }

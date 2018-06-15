@@ -4,24 +4,25 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Card, Alert, Button } from 'antd';
 
+import getUserrequestStatus from 'modules/userrequestStatus';
 import { getUserGroup } from 'modules/authentication';
 import { updateRequestProperties } from 'modules/userrequest';
-import FormConfig from 'components/Form/Form.config';
 
-const Status = ({ state, userGroup }) => <Alert message={state[userGroup]} type={state.type || 'info'} />;
+export const Status = ({ state, approbations, userGroup }) => {
+  if (state) {
+    const status = getUserrequestStatus(state, approbations, userGroup);
+    return <Alert message={status.text} type={status.type || 'info'} />;
+  }
+  return null;
+};
 
 const RequestStatus = props => {
-  const { userGroup, status } = props;
-  const state = FormConfig.status[status];
-
-  if (!state) {
-    return null;
-  }
+  const { userGroup } = props;
 
   if (userGroup === 'N1') {
     return (
       <Card title="Évaluation de niv 1">
-        <Status state={state} {...props} />
+        <Status {...props} />
         <div style={{ display: 'flex', justifyContent: 'center', marginTop: 12 }}>
           <Button style={{ margin: 6 }}>Approuver</Button>
           <Button style={{ margin: 6 }}>Refuser</Button>
@@ -34,13 +35,13 @@ const RequestStatus = props => {
   if (userGroup === 'N2') {
     return (
       <Card title="Évaluation de niv 2">
-        <Status state={state} {...props} />
+        <Status {...props} />
       </Card>
     );
   }
 
   return (
-    <Status state={state} {...props} />
+    <Status {...props} />
   );
 };
 
@@ -53,7 +54,7 @@ const DispatchToProps = dispatch =>
 
 RequestStatus.propTypes = {
   userGroup: PropTypes.string.isRequired,
-  status: PropTypes.number.isRequired,
+  state: PropTypes.number.isRequired,
 };
 
 export default connect(StateToProps, DispatchToProps)(RequestStatus);
