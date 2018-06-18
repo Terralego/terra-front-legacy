@@ -1,7 +1,7 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Icon, Card, Alert, Dropdown, Button, Menu } from 'antd';
+import { Icon, Card, Alert, Dropdown, Button, Menu, List } from 'antd';
 import classnames from 'classnames';
 
 import getUserrequestStatus from 'modules/userrequestStatus';
@@ -115,6 +115,12 @@ const RequestStatus = ({ userrequest, userGroup, onApproved, onChangeStatus }) =
               </span> <Icon type="down" />
             </Button>
           </Dropdown>
+
+          <List
+            size="small"
+            dataSource={approbations}
+            renderItem={n1 => <List.Item>{console.log(n1)}{approbations[n1]}</List.Item>}
+          />
         </div>
       </Card>
     );
