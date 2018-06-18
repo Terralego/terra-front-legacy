@@ -1,7 +1,7 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Card, Alert, Button } from 'antd';
+import { Icon, Card, Alert, Button } from 'antd';
 
 import getUserrequestStatus from 'modules/userrequestStatus';
 import { getUserGroup } from 'modules/authentication';
@@ -42,23 +42,24 @@ const RequestStatus = ({ userrequest, userGroup, onApproved, onChangeStatus }) =
 
   if (userGroup === 'N1') {
     const actionsN1 = [
-      { label: 'Approuver', value: 2 },
-      { label: 'Refuser', value: -1 },
-      { label: 'En attente', value: 1 },
+      { type: 'default', label: 'En attente d\'information du demandeur', value: 1, icon: 'pause' },
+      { type: 'primary', label: 'Approuver', value: 2, icon: 'check' },
+      { type: 'danger', label: 'Refuser', value: -1, icon: 'close' },
     ];
     return (
       <Card title="Évaluation de niv 1">
         <Status state={state} approbations={approbations} userGroup={userGroup} />
-        <div style={{ display: 'flex', justifyContent: 'center', marginTop: 12 }}>
+        <div style={{ display: 'flex', justifyContent: 'center', marginTop: 12, flexWrap: 'wrap' }}>
           {actionsN1.map(action => (
             <Button
               key={action.label}
+              type={action.type}
               style={{ margin: 6 }}
               // TODO: change 'uuid3' by real N1 uuid when API ready
               onClick={() => onApproved(userrequest, 'uuid3', action.value)}
               disabled={selfApprobation === action.value}
             >
-              {action.label}
+              <Icon type={action.icon} /> {action.label}
             </Button>
           ))}
         </div>
@@ -68,9 +69,9 @@ const RequestStatus = ({ userrequest, userGroup, onApproved, onChangeStatus }) =
 
   if (userGroup === 'N2') {
     const actionsN2 = [
-      { label: 'Approuver', value: 300 },
-      { label: 'Refuser', value: -1 },
-      { label: 'En attente', value: 200 },
+      { type: 'default', label: 'En attente d\'information du demandeur', value: 200, icon: 'pause' },
+      { type: 'primary', label: 'Approuver', value: 300, icon: 'check' },
+      { type: 'danger', label: 'Refuser', value: -1, icon: 'close' },
     ];
 
     return (
@@ -80,11 +81,12 @@ const RequestStatus = ({ userrequest, userGroup, onApproved, onChangeStatus }) =
           {actionsN2.map(action => (
             <Button
               key={action.label}
+              type={action.type}
               style={{ margin: 6 }}
               // TODO: change 'uuid3' by real N2 uuid when API ready
               onClick={() => onChangeStatus(userrequest, 'uuid3', action.value)}
             >
-              {action.label}
+              <Icon type={action.icon} /> {action.label}
             </Button>
           ))}
         </div>
