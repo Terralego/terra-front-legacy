@@ -15,7 +15,9 @@ function validateStatus (fieldValue) {
 
 const CustomDatePicker = props => {
   const propsField = { ...props };
-  propsField.value = moment.isMoment(props.value) ? moment(props.value) : null;
+  // props.value is a "moment" object
+  // but it becomes a string when we register it to the store
+  propsField.value = (moment.isMoment(props.value) || props.value !== '') ? moment(props.value) : null;
   delete propsField.withFieldValue;
   delete propsField.errorMessages;
   delete propsField.fieldValue;
@@ -50,7 +52,7 @@ function DatePickerField (props) {
       model={props.model}
       id={props.model}
       validators={{
-        required: val => ((val && moment.isMoment(val)) || !props.required),
+        required: val => ((val && (moment.isMoment(val) || val.length)) || !props.required),
       }}
       withFieldValue
       mapProps={{
