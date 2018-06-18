@@ -77,7 +77,7 @@ const RequestStatus = ({ userrequest, userGroup, onApproved, onChangeStatus }) =
               key={action.label}
               style={{ margin: 6 }}
               // TODO: change 'uuid3' by real N2 uuid when API ready
-              onClick={onChangeStatus(userrequest, 'uuid3', action.value)}
+              onClick={() => onChangeStatus(userrequest, 'uuid3', action.value)}
             >
               {action.label}
             </Button>

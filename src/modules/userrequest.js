@@ -175,8 +175,9 @@ export const saveDraft = data => ({
 });
 
 /**
- * userrequest action : save userrequest as draft
- * @param {string} data
+ * userrequest action : update state of a userrequest
+ * @param {number} id - id of the userrequest
+ * @param {number} state - state of the uerrequest (request by a N2)
  */
 export const updateState = (id, state) => ({
   [CALL_API]: {
@@ -195,7 +196,7 @@ export const updateState = (id, state) => ({
 });
 
 /**
- * userrequest action : update approbation status of given N1 user
+ * userrequest action : update approbation status from N1 user
  * @param {object} userrequest - data that we wan't change approbations
  * @param {string} uuidN1 - uuid of N1 that request approbation
  * @param {number} approvedStatus - N1 approbation status
