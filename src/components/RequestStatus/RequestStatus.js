@@ -5,7 +5,7 @@ import { Card, Alert, Button } from 'antd';
 
 import getUserrequestStatus from 'modules/userrequestStatus';
 import { getUserGroup } from 'modules/authentication';
-import { updateRequestProperties, updateState, updateApproved } from 'modules/userrequest';
+import { updateState, updateApproved } from 'modules/userrequestList';
 
 /**
  * Status
@@ -35,6 +35,10 @@ export const Status = ({ state, userGroup, approbations }) => {
 const RequestStatus = ({ userrequest, userGroup, onApproved, onChangeStatus }) => {
   const { state } = userrequest;
   const { approbations } = userrequest.properties;
+  // TODO: set real user uuid when API ready
+  const userUuid = 'uuid3';
+  const selfApprobation = approbations[userUuid];
+  console.log(selfApprobation);
 
   if (userGroup === 'N1') {
     const actionsN1 = [
@@ -52,6 +56,7 @@ const RequestStatus = ({ userrequest, userGroup, onApproved, onChangeStatus }) =
               style={{ margin: 6 }}
               // TODO: change 'uuid3' by real N1 uuid when API ready
               onClick={() => onApproved(userrequest, 'uuid3', action.value)}
+              disabled={selfApprobation === action.value}
             >
               {action.label}
             </Button>
@@ -98,7 +103,6 @@ const StateToProps = state => ({
 
 const DispatchToProps = dispatch =>
   bindActionCreators({
-    updateRequestProperties,
     onChangeStatus: updateState,
     onApproved: updateApproved,
   }, dispatch);
