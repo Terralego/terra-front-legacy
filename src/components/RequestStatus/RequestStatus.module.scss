@@ -1,0 +1,32 @@
+.actions {
+  margin-top: 12px;
+  text-align: center;
+}
+
+.actionsButton {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+}
+
+.actionsButtonLabel {
+  flex: 1;
+}
+
+.dropdownMenu {
+  font-weight: bold;
+}
+
+.check {
+  color: green;
+}
+
+.pause {
+  color: orange;
+}
+
+.close {
+  color: red;
+}

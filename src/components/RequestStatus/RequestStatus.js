@@ -1,12 +1,13 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Icon, Card, Alert, Button } from 'antd';
+import { Icon, Card, Alert, Dropdown, Button, Menu } from 'antd';
 
 import getUserrequestStatus from 'modules/userrequestStatus';
 import { getUserGroup } from 'modules/authentication';
 import { updateState, updateApproved } from 'modules/userrequestList';
 
+import styles from './RequestStatus.module.scss';
 /**
  * Status
  *
@@ -24,6 +25,20 @@ export const Status = ({ state, userGroup, approbations }) => {
   return null;
 };
 
+const getEvaluationFromOptions = (options, value) => (
+  options.find(option => option.value === value)
+);
+
+const EvaluationMenu = ({ actions, handleClick }) => (
+  <Menu className={styles.dropdownMenu}>
+    {actions.map(action => (
+      <Menu.Item key={`status_${action.value}`} onClick={() => handleClick(action.value)} style={{ width: '100%' }}>
+        <Icon type={action.icon} className={styles[action.icon]} />{action.label}
+      </Menu.Item>
+    ))}
+  </Menu>
+);
+
 /**
  * RequestStatus
  *
@@ -35,10 +50,6 @@ export const Status = ({ state, userGroup, approbations }) => {
 const RequestStatus = ({ userrequest, userGroup, onApproved, onChangeStatus }) => {
   const { state } = userrequest;
   const { approbations } = userrequest.properties;
-  // TODO: set real user uuid when API ready
-  const userUuid = 'uuid3';
-  const selfApprobation = approbations[userUuid];
-  console.log(selfApprobation);
 
   if (userGroup === 'N1') {
     const actionsN1 = [
@@ -46,22 +57,30 @@ const RequestStatus = ({ userrequest, userGroup, onApproved, onChangeStatus }) =
       { type: 'primary', label: 'Approuver', value: 2, icon: 'check' },
       { type: 'danger', label: 'Refuser', value: -1, icon: 'close' },
     ];
+    // TODO: set real user uuid when API ready
+    const userUuid = 'uuid3';
+    const selfApprobation = getEvaluationFromOptions(actionsN1, approbations[userUuid]);
     return (
       <Card title="Évaluation de niv 1">
         <Status state={state} approbations={approbations} userGroup={userGroup} />
-        <div style={{ display: 'flex', justifyContent: 'center', marginTop: 12, flexWrap: 'wrap' }}>
-          {actionsN1.map(action => (
-            <Button
-              key={action.label}
-              type={action.type}
-              style={{ margin: 6 }}
-              // TODO: change 'uuid3' by real N1 uuid when API ready
-              onClick={() => onApproved(userrequest, 'uuid3', action.value)}
-              disabled={selfApprobation === action.value}
-            >
-              <Icon type={action.icon} /> {action.label}
+        <div className={styles.actions}>
+          <p>Votre approbation :</p>
+          <Dropdown
+            overlay={(
+              <EvaluationMenu
+                actions={actionsN1}
+                handleClick={val => onApproved(userrequest, 'uuid3', val)}
+              />
+            )}
+            trigger={['click']}
+          >
+            <Button className={styles.actionsButton}>
+              <span className={styles.actionsButtonLabel}>
+                <Icon className={styles[selfApprobation.icon]} type={selfApprobation.icon} />
+                &nbsp;{selfApprobation.label}
+              </span> <Icon type="down" />
             </Button>
-          ))}
+          </Dropdown>
         </div>
       </Card>
     );
