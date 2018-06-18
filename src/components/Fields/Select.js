@@ -41,7 +41,7 @@ const CustomSelect = props => {
         showSearch
         optionFilterProp="children"
         filterOption={handleFilter}
-        defaultValue={props.value}
+        value={props.value}
         {...propsField}
       >{props.options.map(option => (
         props.categories ?
