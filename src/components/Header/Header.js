@@ -19,19 +19,19 @@ const HeaderBrand = () => (
   </div>
 );
 
-const Header = props => (
+const Header = ({ isAuthenticated, logout, user }) => (
   <Layout.Header className={styles.header}>
 
     <HeaderBrand />
 
-    {props.isAuthenticated ?
+    {isAuthenticated ?
       <Menu
         theme="dark"
         className={styles.menu}
         mode="horizontal"
         style={{ lineHeight: '64px' }}
       >
-        <Menu.SubMenu title={<span><Icon type="user" />Mon compte</span>}>
+        <Menu.SubMenu title={<span><Icon type="user" />{user.email || 'Mon compte'}</span>}>
           <Menu.ItemGroup title="Prénom Nom">
             <Menu.Item key="account"><Icon type="setting" /> Profil</Menu.Item>
             <Menu.Item key="manage-request"><Link to="/manage-request"><Icon type="file-text" />Mes demandes</Link></Menu.Item>
@@ -43,7 +43,7 @@ const Header = props => (
             title="Êtes-vous sûr ?"
             okText="Oui"
             cancelText="Non"
-            onConfirm={props.logout}
+            onConfirm={logout}
           >
             <Icon type="logout" />Se déconnecter
           </Popconfirm>

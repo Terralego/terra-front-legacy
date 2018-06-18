@@ -36,6 +36,7 @@ const Main = props => (
 
 const StateToProps = state => ({
   isAuthenticated: state.authentication.isAuthenticated,
+  user: state.authentication.payload && state.authentication.payload.user,
 });
 
 const DispatchToProps = dispatch =>
