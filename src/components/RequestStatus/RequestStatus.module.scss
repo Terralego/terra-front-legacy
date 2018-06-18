@@ -9,6 +9,22 @@
   justify-content: center;
   align-items: center;
   font-weight: bold;
+  &:hover, &.ant-btn:hover, &:focus {
+    color: rgba(0, 0, 0, 0.85);
+    border-color: #d9d9d9;
+  }
+
+  &.check, &.check.ant-btn {
+    background-color: #b7eb8f;
+  }
+
+  &.pause, &.pause.ant-btn {
+    background-color: #ffe58f;
+  }
+
+  &.close, &.close.ant-btn {
+    background-color: #ffa39e;
+  }
 }
 
 .actionsButtonLabel {
@@ -19,14 +35,35 @@
   font-weight: bold;
 }
 
-.check {
-  color: green;
-}
+.dropdownItem, {
+  margin: 0 !important;
+  border: none !important;
+  color: rgba(0, 0, 0, 0.65) !important;
+  &:hover, &:focus {
+    color: rgba(0, 0, 0, 0.85) !important;
+  }
 
-.pause {
-  color: orange;
-}
+  &.check, &.check.ant-btn {
+    background-color: #f6ffed;
+    &:hover, &:focus, &.ant-menu-item-selected {
+      background-color: #b7eb8f;
+      color: rgba(0, 0, 0, 0.85);
+    }
+  }
 
-.close {
-  color: red;
+  &.pause, &.pause.ant-btn {
+    background-color: #fffbe6;
+    &:hover, &:focus, &.ant-menu-item-selected {
+      background-color: #ffe58f;
+      color: rgba(0, 0, 0, 0.85);
+    }
+  }
+
+  &.close, &.close.ant-btn {
+    background-color: #fff1f0;
+    &:hover, &:focus, &.ant-menu-item-selected {
+      background-color: #ffa39e;
+      color: rgba(0, 0, 0, 0.85);
+    }
+  }
 }

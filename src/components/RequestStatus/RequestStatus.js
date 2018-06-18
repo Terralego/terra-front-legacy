@@ -2,6 +2,7 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Icon, Card, Alert, Dropdown, Button, Menu } from 'antd';
+import classnames from 'classnames';
 
 import getUserrequestStatus from 'modules/userrequestStatus';
 import { getUserGroup } from 'modules/authentication';
@@ -32,8 +33,8 @@ const getEvaluationFromOptions = (options, value) => (
 const EvaluationMenu = ({ actions, handleClick }) => (
   <Menu className={styles.dropdownMenu}>
     {actions.map(action => (
-      <Menu.Item key={`status_${action.value}`} onClick={() => handleClick(action.value)} style={{ width: '100%' }}>
-        <Icon type={action.icon} className={styles[action.icon]} />{action.label}
+      <Menu.Item className={classnames(styles.dropdownItem, styles[action.icon])} key={`status_${action.value}`} onClick={() => handleClick(action.value)} style={{ width: '100%' }}>
+        <Icon type={action.icon} />{action.label}
       </Menu.Item>
     ))}
   </Menu>
@@ -53,9 +54,9 @@ const RequestStatus = ({ userrequest, userGroup, onApproved, onChangeStatus }) =
 
   if (userGroup === 'N1') {
     const actionsN1 = [
-      { type: 'default', label: 'En attente d\'information du demandeur', value: 1, icon: 'pause' },
-      { type: 'primary', label: 'Approuver', value: 2, icon: 'check' },
-      { type: 'danger', label: 'Refuser', value: -1, icon: 'close' },
+      { label: 'En attente d\'information du demandeur', value: 1, icon: 'pause' },
+      { label: 'Approuver', selectedLabel: 'Approuvée', value: 2, icon: 'check' },
+      { label: 'Refuser', selectedLabel: 'Refusée', value: -1, icon: 'close' },
     ];
     // TODO: set real user uuid when API ready
     const userUuid = 'uuid3';
@@ -74,10 +75,10 @@ const RequestStatus = ({ userrequest, userGroup, onApproved, onChangeStatus }) =
             )}
             trigger={['click']}
           >
-            <Button className={styles.actionsButton}>
+            <Button className={classnames(styles.actionsButton, styles[selfApprobation.icon])}>
               <span className={styles.actionsButtonLabel}>
-                <Icon className={styles[selfApprobation.icon]} type={selfApprobation.icon} />
-                &nbsp;{selfApprobation.label}
+                <Icon type={selfApprobation.icon} />
+                &nbsp;{selfApprobation.selectedLabel || selfApprobation.label}
               </span> <Icon type="down" />
             </Button>
           </Dropdown>
@@ -88,26 +89,31 @@ const RequestStatus = ({ userrequest, userGroup, onApproved, onChangeStatus }) =
 
   if (userGroup === 'N2') {
     const actionsN2 = [
-      { type: 'default', label: 'En attente d\'information du demandeur', value: 200, icon: 'pause' },
-      { type: 'primary', label: 'Approuver', value: 300, icon: 'check' },
-      { type: 'danger', label: 'Refuser', value: -1, icon: 'close' },
+      { label: 'En attente', value: 200, icon: 'pause' },
+      { label: 'Approuver', value: 300, icon: 'check' },
+      { label: 'Refuser', value: -1, icon: 'close' },
     ];
-
+    const selfEvaluation = getEvaluationFromOptions(actionsN2, state);
     return (
       <Card title="Évaluation de niv 2">
-        <Status state={state} approbations={approbations} userGroup={userGroup} />
-        <div style={{ display: 'flex', justifyContent: 'center', marginTop: 12 }}>
-          {actionsN2.map(action => (
-            <Button
-              key={action.label}
-              type={action.type}
-              style={{ margin: 6 }}
-              // TODO: change 'uuid3' by real N2 uuid when API ready
-              onClick={() => onChangeStatus(userrequest, 'uuid3', action.value)}
-            >
-              <Icon type={action.icon} /> {action.label}
+        <div styles={{ textAlign: 'center' }}>
+          <p>Status de la demande :</p>
+          <Dropdown
+            overlay={(
+              <EvaluationMenu
+                actions={actionsN2}
+                handleClick={val => onChangeStatus(userrequest.id, val)}
+              />
+            )}
+            trigger={['click']}
+          >
+            <Button className={classnames(styles.actionsButton, styles[selfEvaluation.icon])}>
+              <span className={styles.actionsButtonLabel}>
+                <Icon type={selfEvaluation.icon} />
+                &nbsp;{selfEvaluation.selectedLabel || selfEvaluation.label}
+              </span> <Icon type="down" />
             </Button>
-          ))}
+          </Dropdown>
         </div>
       </Card>
     );
