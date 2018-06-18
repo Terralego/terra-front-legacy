@@ -9,6 +9,19 @@ import { getUserGroup } from 'modules/authentication';
 import { updateState, updateApproved } from 'modules/userrequestList';
 
 import styles from './RequestStatus.module.scss';
+
+const actionsN1 = [
+  { label: 'En attente d\'information du demandeur', value: 1, icon: 'pause' },
+  { label: 'Approuver', selectedLabel: 'Approuvée', value: 2, icon: 'check' },
+  { label: 'Refuser', selectedLabel: 'Refusée', value: -1, icon: 'close' },
+];
+
+const actionsN2 = [
+  { label: 'En attente', value: 200, icon: 'pause' },
+  { label: 'Approuver', value: 300, icon: 'check' },
+  { label: 'Refuser', value: -1, icon: 'close' },
+];
+
 /**
  * Status
  *
@@ -27,8 +40,25 @@ export const Status = ({ state, userGroup, approbations }) => {
   return <Alert message={text} type={type || 'info'} />;
 };
 
-const getEvaluationFromOptions = (options, value) => (
+/**
+ * getEvaluationFromValue
+ *
+ * @param {array} options - array of evaluations options
+ * @param {number} value - selected option
+ * @return {object} object of current selected option
+ */
+const getEvaluationFromValue = (options, value) => (
   options.find(option => option.value === value)
+);
+
+/**
+ * getUsersApprobationList
+ *
+ * @param {object} approbations - array of approbations
+ * @return {array} array of approbations by N1 identifier
+ */
+const getUsersApprobationList = approbations => (
+  Object.keys(approbations).map(uuid => ({ n1: uuid, value: approbations[uuid] }))
 );
 
 const EvaluationMenu = ({ actions, handleClick }) => (
@@ -54,14 +84,9 @@ const RequestStatus = ({ userrequest, userGroup, onApproved, onChangeStatus }) =
   const { approbations } = userrequest.properties;
 
   if (userGroup === 'N1') {
-    const actionsN1 = [
-      { label: 'En attente d\'information du demandeur', value: 1, icon: 'pause' },
-      { label: 'Approuver', selectedLabel: 'Approuvée', value: 2, icon: 'check' },
-      { label: 'Refuser', selectedLabel: 'Refusée', value: -1, icon: 'close' },
-    ];
     // TODO: set real user uuid when API ready
     const userUuid = 'uuid3';
-    const selfApprobation = getEvaluationFromOptions(actionsN1, approbations[userUuid]);
+    const selfApprobation = getEvaluationFromValue(actionsN1, approbations[userUuid]);
     return (
       <Card title="Évaluation de niv 1">
         <Status state={state} approbations={approbations} userGroup={userGroup} />
@@ -89,12 +114,8 @@ const RequestStatus = ({ userrequest, userGroup, onApproved, onChangeStatus }) =
   }
 
   if (userGroup === 'N2') {
-    const actionsN2 = [
-      { label: 'En attente', value: 200, icon: 'pause' },
-      { label: 'Approuver', value: 300, icon: 'check' },
-      { label: 'Refuser', value: -1, icon: 'close' },
-    ];
-    const selfEvaluation = getEvaluationFromOptions(actionsN2, state);
+    const selfEvaluation = getEvaluationFromValue(actionsN2, state);
+
     return (
       <Card title="Évaluation de niv 2">
         <div styles={{ textAlign: 'center' }}>
@@ -118,8 +139,17 @@ const RequestStatus = ({ userrequest, userGroup, onApproved, onChangeStatus }) =
 
           <List
             size="small"
-            dataSource={approbations}
-            renderItem={n1 => <List.Item>{console.log(n1)}{approbations[n1]}</List.Item>}
+            dataSource={getUsersApprobationList(approbations)}
+            renderItem={approbation => {
+              const N1approbation = getEvaluationFromValue(actionsN1, approbation.value);
+              return (
+                <List.Item key={approbation.n1}>
+                  {approbation.n1} : {N1approbation
+                    ? (N1approbation.selectedLabel || N1approbation.label)
+                    : 'En attente d\'évaluation'}
+                </List.Item>
+              );
+            }}
           />
         </div>
       </Card>
