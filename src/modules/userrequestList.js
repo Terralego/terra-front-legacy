@@ -110,15 +110,12 @@ export const getUserrequest = id => ({
  */
 export const updateState = (id, state) => ({
   [CALL_API]: {
-    endpoint: `/userrequest/${id}/status/`,
+    endpoint: `/userrequest/${id}/`,
     types: [REQUEST_STATE_CHANGE, SUCCESS_STATE_CHANGE, FAILURE_STATE_CHANGE],
     config: {
-      method: 'POST',
+      method: 'PATCH',
       body: JSON.stringify({
-        geojson: 'string',
         state,
-        properties: 'string',
-        organization: [0],
       }),
     },
   },
@@ -137,7 +134,6 @@ export const updateApproved = (data, uuidN1, approvedStatus) => ({
     config: {
       method: 'PATCH',
       body: JSON.stringify({
-        ...data,
         properties: {
           ...data.properties,
           approbations: {
