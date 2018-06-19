@@ -41,9 +41,12 @@ const getEvaluationFromValue = (options, value) => (
  * @param {object} approbations - array of approbations
  * @return {array} array of approbations by N1 identifier
  */
-const getUsersApprobationList = approbations => (
-  Object.keys(approbations).map(uuid => ({ n1: uuid, value: approbations[uuid] }))
-);
+const getUsersApprobationList = approbations => {
+  if (!approbations) {
+    return [];
+  }
+  return Object.keys(approbations).map(uuid => ({ n1: uuid, value: approbations[uuid] }));
+};
 
 const EvaluationMenu = ({ actions, handleClick }) => (
   <Menu className={styles.dropdownMenu}>
@@ -59,33 +62,37 @@ const EvaluationMenu = ({ actions, handleClick }) => (
  * RequestStatus
  *
  * @param {object} userrequest - userrequest object
- * @param {string} userGroup - user's group
+ * @param {object} user - user's group
+ * @param {string} user.group - user's group
+ * @param {string} user.uuid - user's uuid
  * @param {void} onApproved - change userrequest state (only for N1)
  * @param {void} updateState - change userrequest state (only for N2)
  */
-const RequestStatus = ({ userrequest, userGroup, onApproved, onChangeStatus }) => {
+const RequestStatus = ({ userrequest, user, onApproved, onChangeStatus }) => {
+  if (!user) {
+    return null;
+  }
+
   const { state } = userrequest;
   const { approbations } = userrequest.properties;
 
   const onN1ChangeStatus = val => {
-    onApproved(userrequest, 'uuid2', val);
+    onApproved(userrequest, user.uuid, val);
     return onChangeStatus(userrequest.id, val);
   };
 
-  if (userGroup === 'N1') {
-    // TODO: set real user uuid when API ready
-    const userUuid = 'uuid3';
-    const selfApprobation = getEvaluationFromValue(actionsN1, approbations[userUuid]);
+  if (user.group === 'N1') {
+    const selfApprobation = getEvaluationFromValue(actionsN1, approbations[user.uuid]);
     return (
       <Card title="Évaluation de niv 1">
-        <Status state={state} approbations={approbations} userGroup={userGroup} />
+        <Status state={state} approbations={approbations} userGroup={user.group} />
         <div className={styles.actions}>
           <p>Votre approbation :</p>
           <Dropdown
             overlay={(
               <EvaluationMenu
                 actions={actionsN1}
-                handleClick={val => onApproved(userrequest, 'uuid3', val)}
+                handleClick={val => onApproved(userrequest, user.uuid, val)}
               />
             )}
             trigger={['click']}
@@ -102,7 +109,7 @@ const RequestStatus = ({ userrequest, userGroup, onApproved, onChangeStatus }) =
     );
   }
 
-  if (userGroup === 'N2') {
+  if (user.group === 'N2') {
     const selfEvaluation = getEvaluationFromValue(actionsN2, state);
 
     return (
@@ -146,13 +153,15 @@ const RequestStatus = ({ userrequest, userGroup, onApproved, onChangeStatus }) =
   }
 
   return (
-    <Status state={state} approbations={approbations} userGroup={userGroup} />
+    <Status state={state} approbations={approbations} userGroup={user.group} />
   );
 };
 
 const StateToProps = state => ({
-  userGroup: getUserGroup(state),
-  uuid: state.authentication.payload && state.authentication.payload.user.uuid,
+  user: {
+    group: getUserGroup(state),
+    uuid: state.authentication.payload && state.authentication.payload.user.uuid,
+  },
 });
 
 const DispatchToProps = dispatch =>
