@@ -11,6 +11,7 @@ import { updateState, updateApproved } from 'modules/userrequestList';
 import styles from './RequestStatus.module.scss';
 
 const actionsN1 = [
+  { label: 'En cours de traitement', value: 0, icon: 'pause' },
   { label: 'En attente d\'information du demandeur', value: 1, icon: 'pause' },
   { label: 'Approuver', selectedLabel: 'Approuvée', value: 2, icon: 'check' },
   { label: 'Refuser', selectedLabel: 'Refusée', value: -1, icon: 'close' },
@@ -18,6 +19,7 @@ const actionsN1 = [
 
 const actionsN2 = [
   { label: 'En attente', value: 200, icon: 'pause' },
+  { label: 'En attente d\'information du demandeur', value: 1, icon: 'pause' },
   { label: 'Approuver', value: 300, icon: 'check' },
   { label: 'Refuser', value: -1, icon: 'close' },
 ];
@@ -83,6 +85,11 @@ const RequestStatus = ({ userrequest, userGroup, onApproved, onChangeStatus }) =
   const { state } = userrequest;
   const { approbations } = userrequest.properties;
 
+  const onN1ChangeStatus = val => {
+    onApproved(userrequest, 'uuid2', val);
+    return onChangeStatus(userrequest.id, val);
+  };
+
   if (userGroup === 'N1') {
     // TODO: set real user uuid when API ready
     const userUuid = 'uuid3';
@@ -124,7 +131,7 @@ const RequestStatus = ({ userrequest, userGroup, onApproved, onChangeStatus }) =
             overlay={(
               <EvaluationMenu
                 actions={actionsN2}
-                handleClick={val => onChangeStatus(userrequest.id, val)}
+                handleClick={onN1ChangeStatus}
               />
             )}
             trigger={['click']}
@@ -163,6 +170,7 @@ const RequestStatus = ({ userrequest, userGroup, onApproved, onChangeStatus }) =
 
 const StateToProps = state => ({
   userGroup: getUserGroup(state),
+  uuid: state.authentication.payload && state.authentication.payload.user.uuid,
 });
 
 const DispatchToProps = dispatch =>

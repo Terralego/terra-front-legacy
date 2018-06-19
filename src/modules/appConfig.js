@@ -9,17 +9,18 @@ export const FAILURE_CONFIG = 'config/FAILURE_CONFIG';
 
 const initialState = {
   states: {
-    100: 'DRAFT',
-    200: 'SUBMITTED',
-    300: 'ACCEPTED',
-    '-1': 'REFUSED',
+    DRAFT: 100,
+    SUBMITTED: 200,
+    ACCEPTED: 300,
+    REFUSED: -1,
+    CANCELED: -2,
   },
 
   approbation_statuses: {
-    0: 'PENDING',
-    1: 'WAITING_FOR_INFORMATION',
-    2: 'ACCEPTED',
-    '-1': 'REFUSED',
+    PENDING: 0,
+    WAITING_FOR_INFORMATION: 1,
+    ACCEPTED: 2,
+    REFUSED: -1,
   },
 };
 

@@ -24,25 +24,28 @@ const statusLabels = {
  * @param {string} userUuid - user's uuid
  */
 const getUserrequestStatus = (userrequestState, approbations, userGroup, userUuid) => {
-  const { states, approbation_statuses } = store.getState().appConfig;
+  const { states } = store.getState().appConfig;
 
   // Same label for all groups
-  if (states[userrequestState] === 'DRAFT'
-  || states[userrequestState] === 'REFUSED'
-  || states[userrequestState] === 'ACCEPTED') {
-    return statusLabels[states[userrequestState]];
+  if (userrequestState === states.DRAFT) {
+    return statusLabels.DRAFT;
+  }
+
+  if (userrequestState === states.REFUSED) {
+    return statusLabels.REFUSED;
+  }
+
+  if (userrequestState === states.ACCEPTED) {
+    return statusLabels.ACCEPTED;
   }
 
   // Specific labels for N1
   if (userGroup === 'N1') {
-    if (states[userrequestState] === 'SUBMITTED') {
+    if (userrequestState === states.SUBMITTED) {
       const N1approved = approbations && approbations[userUuid];
       if (N1approved) {
-        const N1status = approbation_statuses[N1approved];
         // Current N1 already approved, need N2
-        if (N1status) {
-          return statusLabels.WAIT_NIV2;
-        }
+        return statusLabels.WAIT_NIV2;
       }
       return statusLabels.TO_EVALUATE;
     }
@@ -50,13 +53,13 @@ const getUserrequestStatus = (userrequestState, approbations, userGroup, userUui
 
   // Specific labels for N2
   if (userGroup === 'N2') {
-    if (states[userrequestState] === 'SUBMITTED') {
+    if (userrequestState === states.SUBMITTED) {
       return statusLabels.TO_EVALUATE;
     }
   }
 
   // Specific labels for users
-  if (states[userrequestState] === 'SUBMITTED') {
+  if (userrequestState === states.SUBMITTED) {
     return statusLabels.WAITING;
   }
 
