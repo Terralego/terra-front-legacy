@@ -59,7 +59,9 @@ class FormApp extends React.Component {
             </Card>
           ))}
 
-          <Button type="primary" htmlType="submit">{FormConfig.confirmation.previewButton}</Button>
+          <div style={{ margin: '24px 0', textAlign: 'right' }}>
+            <Button size="large" type="primary" htmlType="submit">{FormConfig.confirmation.previewButton}</Button>
+          </div>
         </Form>
       </div>
     );
