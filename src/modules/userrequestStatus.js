@@ -12,6 +12,7 @@ const statusLabels = {
   // Specific for user
   WAITING: { text: 'En cours de traitement par l\'ONF', type: 'warning' },
   TO_COMPLETE: { text: 'En attente d\'éléments supplémentaires de votre part', type: 'warning' },
+  NO_STATUS: { text: 'Pas de status connu', type: 'warning' },
 };
 
 /**
@@ -27,7 +28,8 @@ const getUserrequestStatus = (userrequestState, approbations, userGroup, userUui
 
   // Same label for all groups
   if (states[userrequestState] === 'DRAFT'
-  || states[userrequestState] === 'REFUSED') {
+  || states[userrequestState] === 'REFUSED'
+  || states[userrequestState] === 'ACCEPTED') {
     return statusLabels[states[userrequestState]];
   }
 
@@ -58,7 +60,7 @@ const getUserrequestStatus = (userrequestState, approbations, userGroup, userUui
     return statusLabels.WAITING;
   }
 
-  return null;
+  return statusLabels.NO_STATUS;
 };
 
 export default getUserrequestStatus;
