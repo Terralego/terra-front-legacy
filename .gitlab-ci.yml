@@ -12,6 +12,7 @@ npm_install:
   stage: install
   script:
     - npm --version
+    - npm set registry=http://10.1.0.5:4873/
     - npm ci
   artifacts:
     expire_in: 1 day
