@@ -17,13 +17,14 @@ import styles from './RequestStatus.module.scss';
  * @param {object} approbations - userrequest approbations
  */
 export const Status = ({ state, userGroup, approbations }) => {
-  if (state) {
-    // TODO: connect userId with API when ready
-    // Temporary userId parameter 'uuid2'
-    const status = getUserrequestStatus(state, approbations, userGroup, 'uuid2');
-    return <Alert message={status.text} type={status.type || 'info'} />;
+  if (!state) {
+    return null;
   }
-  return null;
+
+  // TODO: connect userId with API when ready
+  // Temporary userId parameter 'uuid2'
+  const { text, type } = getUserrequestStatus(state, approbations, userGroup, 'uuid2');
+  return <Alert message={text} type={type || 'info'} />;
 };
 
 const getEvaluationFromOptions = (options, value) => (
