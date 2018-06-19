@@ -1,10 +1,10 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Icon, Card, Alert, Dropdown, Button, Menu, List } from 'antd';
+import { Icon, Card, Dropdown, Button, Menu, List } from 'antd';
 import classnames from 'classnames';
 
-import getUserrequestStatus from 'modules/userrequestStatus';
+import Status from 'components/RequestStatus/Status';
 import { getUserGroup } from 'modules/authentication';
 import { updateState, updateApproved } from 'modules/userrequestList';
 
@@ -23,24 +23,6 @@ const actionsN2 = [
   { label: 'Approuver', value: 300, icon: 'check' },
   { label: 'Refuser', value: -1, icon: 'close' },
 ];
-
-/**
- * Status
- *
- * @param {number} state - status of the userrequest
- * @param {string} userGroup - current user's group
- * @param {object} approbations - userrequest approbations
- */
-export const Status = ({ state, userGroup, approbations }) => {
-  if (!state) {
-    return null;
-  }
-
-  // TODO: connect userId with API when ready
-  // Temporary userId parameter 'uuid2'
-  const { text, type } = getUserrequestStatus(state, approbations, userGroup, 'uuid2');
-  return <Alert message={text} type={type || 'info'} />;
-};
 
 /**
  * getEvaluationFromValue
