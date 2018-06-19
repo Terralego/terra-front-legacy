@@ -23,9 +23,10 @@ class FormApp extends React.Component {
     }
   }
 
-  componentDidUpdate (nextProps) {
-    if (nextProps.updated_at !== this.props.updated_at) {
+  componentDidUpdate (prevProps) {
+    if (prevProps.updated_at !== this.props.updated_at && this.props.id) {
       message.success('Votre demande a bien été sauvegardée !');
+      this.props.history.push(`/request/${this.props.id}`);
     }
   }
 
