@@ -40,7 +40,6 @@ npm_run_lint:
 
 npm_run_build:
   stage: build
-  when: always
   script:
     - npm run build
   artifacts:
