@@ -80,8 +80,11 @@ const RequestStatus = ({ userrequest, user, updateApprobationOrState }) => {
   const { state } = userrequest;
   const { approbations } = userrequest.properties;
 
+  // If user already give evaluation, get the id, either set 0 (= PENDING)
+  const selfEvaluationId = approbations[user.uuid] || 0;
+  const selfEvaluation = getEvaluationFromValue([...actionsN1, ...actionsN2], selfEvaluationId);
+
   if (user.group === 'N1') {
-    const selfApprobation = getEvaluationFromValue(actionsN1, approbations[user.uuid]);
     return (
       <Card title="Évaluation de niv 1">
         <Status userrequestState={state} approbations={approbations} user={user} />
@@ -96,10 +99,10 @@ const RequestStatus = ({ userrequest, user, updateApprobationOrState }) => {
             )}
             trigger={['click']}
           >
-            <Button className={classnames(styles.actionsButton, styles[selfApprobation.icon])}>
+            <Button className={classnames(styles.actionsButton, styles[selfEvaluation.icon])}>
               <span className={styles.actionsButtonLabel}>
-                <Icon type={selfApprobation.icon} />
-                &nbsp;{selfApprobation.selectedLabel || selfApprobation.label}
+                <Icon type={selfEvaluation.icon} />
+                &nbsp;{selfEvaluation.selectedLabel || selfEvaluation.label}
               </span> <Icon type="down" />
             </Button>
           </Dropdown>
@@ -109,8 +112,6 @@ const RequestStatus = ({ userrequest, user, updateApprobationOrState }) => {
   }
 
   if (user.group === 'N2') {
-    const selfEvaluation = getEvaluationFromValue(actionsN2, approbations[user.uuid]);
-
     return (
       <Card title="Évaluation de niv 2">
         <div styles={{ textAlign: 'center' }}>
@@ -136,11 +137,14 @@ const RequestStatus = ({ userrequest, user, updateApprobationOrState }) => {
             size="small"
             dataSource={getUsersApprobationList(approbations)}
             renderItem={approbation => {
-              const onfApprobations = getEvaluationFromValue([...actionsN1, ...actionsN2], approbation.value);
+              const onfEvaluation = getEvaluationFromValue(
+                [...actionsN1, ...actionsN2],
+                approbation.value,
+              );
               return (
                 <List.Item key={approbation.n1}>
-                  {approbation.n1} : {onfApprobations
-                    ? (onfApprobations.selectedLabel || onfApprobations.label)
+                  {approbation.n1} : {onfEvaluation
+                    ? (onfEvaluation.selectedLabel || onfEvaluation.label)
                     : 'En attente d\'évaluation'}
                 </List.Item>
               );
