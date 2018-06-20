@@ -5,7 +5,7 @@ import classnames from 'classnames';
 
 import Status from 'components/RequestStatus/Status';
 import { getUserGroup } from 'modules/authentication';
-import { updateStateAndApprobation, updateApproved } from 'modules/userrequestList';
+import { updateStateAndApprobation, updateApprobation } from 'modules/userrequestList';
 
 import styles from './RequestStatus.module.scss';
 
@@ -172,7 +172,7 @@ const DispatchToProps = dispatch => ({
     if (e.type === 'state') {
       return dispatch(updateStateAndApprobation(userrequest, e.value, user.uuid));
     }
-    return dispatch(updateApproved(userrequest, e.value, user.uuid));
+    return dispatch(updateApprobation(userrequest, e.value, user.uuid));
   },
 });
 

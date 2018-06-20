@@ -157,7 +157,7 @@ export const updateStateAndApprobation = (data, status, userUuid) => ({
  * @param {number} status - N1 approbation status
  * @param {string} userUuid - uuid of N1 that request approbation
  */
-export const updateApproved = (data, status, userUuid) => ({
+export const updateApprobation = (data, status, userUuid) => ({
   [CALL_API]: {
     endpoint: `/userrequest/${data.id}/`,
     types: [REQUEST_APPROBATIONS_CHANGE, SUCCESS_APPROBATIONS_CHANGE, FAILURE_APPROBATIONS_CHANGE],
