@@ -88,7 +88,7 @@ export const getUserGroup = createSelector(
   state => state.authentication.payload && state.authentication.payload.user,
   // Temporary we get first item
   // TODO: find a way to implemant authorization with multiple groups
-  user => user.groups[0],
+  user => user && user.groups[0],
 );
 
 
