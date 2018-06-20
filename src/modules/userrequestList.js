@@ -17,6 +17,9 @@ export const REQUEST_APPROBATIONS_CHANGE = 'userrequestList/REQUEST_APPROBATIONS
 export const SUCCESS_APPROBATIONS_CHANGE = 'userrequestList/SUCCESS_APPROBATIONS_CHANGE';
 export const FAILURE_APPROBATIONS_CHANGE = 'userrequestList/FAILURE_APPROBATIONS_CHANGE';
 
+// Submit userrequest actions
+export const SUCCESS_SUBMIT_DATA = 'userrequest/SUCCESS_SUBMIT_DATA';
+
 const initialState = {
   items: {},
   loading: false,
@@ -55,6 +58,7 @@ const userrequestList = (state = initialState, action) => {
         loading: true,
       };
     case SUCCESS_DETAIL:
+    case SUCCESS_SUBMIT_DATA:
       return {
         ...state,
         loading: false,
