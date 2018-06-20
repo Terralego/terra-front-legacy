@@ -1,5 +1,4 @@
 import React from 'react';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Icon, Card, Dropdown, Button, Menu, List } from 'antd';
 import classnames from 'classnames';
@@ -11,17 +10,17 @@ import { updateState, updateApproved } from 'modules/userrequestList';
 import styles from './RequestStatus.module.scss';
 
 const actionsN1 = [
-  { label: 'En cours de traitement', value: 0, icon: 'pause' },
-  { label: 'En attente d\'information du demandeur', value: 1, icon: 'pause' },
-  { label: 'Approuver', selectedLabel: 'Approuvée', value: 2, icon: 'check' },
-  { label: 'Refuser', selectedLabel: 'Refusée', value: -1, icon: 'close' },
+  { label: 'En cours de traitement', value: 0, icon: 'pause', type: 'approbation' },
+  { label: 'En attente d\'information du demandeur', value: 1, icon: 'pause', type: 'approbation' },
+  { label: 'Approuver', selectedLabel: 'Approuvée', value: 2, icon: 'check', type: 'approbation' },
+  { label: 'Refuser', selectedLabel: 'Refusée', value: -1, icon: 'close', type: 'approbation' },
 ];
 
 const actionsN2 = [
-  { label: 'En attente', value: 200, icon: 'pause' },
-  { label: 'En attente d\'information du demandeur', value: 1, icon: 'pause' },
-  { label: 'Approuver', value: 300, icon: 'check' },
-  { label: 'Refuser', value: -1, icon: 'close' },
+  { label: 'En attente', value: 200, icon: 'pause', type: 'state' },
+  { label: 'En attente d\'information du demandeur', value: 1, icon: 'pause', type: 'approbation' },
+  { label: 'Approuver', value: 300, icon: 'check', type: 'state' },
+  { label: 'Refuser', value: -1, icon: 'close', type: 'state' },
 ];
 
 /**
@@ -51,7 +50,12 @@ const getUsersApprobationList = approbations => {
 const EvaluationMenu = ({ actions, handleClick }) => (
   <Menu className={styles.dropdownMenu}>
     {actions.map(action => (
-      <Menu.Item className={classnames(styles.dropdownItem, styles[action.icon])} key={`status_${action.value}`} onClick={() => handleClick(action.value)} style={{ width: '100%' }}>
+      <Menu.Item
+        className={classnames(styles.dropdownItem, styles[action.icon])}
+        key={`status_${action.value}`}
+        onClick={() => handleClick(action)}
+        style={{ width: '100%' }}
+      >
         <Icon type={action.icon} />{action.label}
       </Menu.Item>
     ))}
@@ -68,19 +72,13 @@ const EvaluationMenu = ({ actions, handleClick }) => (
  * @param {void} onApproved - change userrequest state (only for N1)
  * @param {void} updateState - change userrequest state (only for N2)
  */
-const RequestStatus = ({ userrequest, user, onApproved, onChangeStatus }) => {
+const RequestStatus = ({ userrequest, user, updateApprobationOrState }) => {
   if (!user) {
     return null;
   }
-  console.log(userrequest);
 
   const { state } = userrequest;
   const { approbations } = userrequest.properties;
-
-  const onN1ChangeStatus = val => {
-    onApproved(userrequest, user.uuid, val);
-    return onChangeStatus(userrequest.id, val);
-  };
 
   if (user.group === 'N1') {
     const selfApprobation = getEvaluationFromValue(actionsN1, approbations[user.uuid]);
@@ -93,7 +91,7 @@ const RequestStatus = ({ userrequest, user, onApproved, onChangeStatus }) => {
             overlay={(
               <EvaluationMenu
                 actions={actionsN1}
-                handleClick={val => onApproved(userrequest, user.uuid, val)}
+                handleClick={e => updateApprobationOrState(e, userrequest, user)}
               />
             )}
             trigger={['click']}
@@ -111,7 +109,7 @@ const RequestStatus = ({ userrequest, user, onApproved, onChangeStatus }) => {
   }
 
   if (user.group === 'N2') {
-    const selfEvaluation = getEvaluationFromValue(actionsN2, state);
+    const selfEvaluation = getEvaluationFromValue(actionsN2, approbations[user.uuid]);
 
     return (
       <Card title="Évaluation de niv 2">
@@ -121,7 +119,7 @@ const RequestStatus = ({ userrequest, user, onApproved, onChangeStatus }) => {
             overlay={(
               <EvaluationMenu
                 actions={actionsN2}
-                handleClick={onN1ChangeStatus}
+                handleClick={e => updateApprobationOrState(e, userrequest, user)}
               />
             )}
             trigger={['click']}
@@ -138,11 +136,11 @@ const RequestStatus = ({ userrequest, user, onApproved, onChangeStatus }) => {
             size="small"
             dataSource={getUsersApprobationList(approbations)}
             renderItem={approbation => {
-              const N1approbation = getEvaluationFromValue(actionsN1, approbation.value);
+              const onfApprobations = getEvaluationFromValue([...actionsN1, ...actionsN2], approbation.value);
               return (
                 <List.Item key={approbation.n1}>
-                  {approbation.n1} : {N1approbation
-                    ? (N1approbation.selectedLabel || N1approbation.label)
+                  {approbation.n1} : {onfApprobations
+                    ? (onfApprobations.selectedLabel || onfApprobations.label)
                     : 'En attente d\'évaluation'}
                 </List.Item>
               );
@@ -165,11 +163,14 @@ const StateToProps = state => ({
   },
 });
 
-const DispatchToProps = dispatch =>
-  bindActionCreators({
-    onChangeStatus: updateState,
-    onApproved: updateApproved,
-  }, dispatch);
+const DispatchToProps = dispatch => ({
+  updateApprobationOrState: (e, userrequest, user) => {
+    if (e.type === 'state') {
+      return dispatch(updateState(userrequest, e.value, user.uuid));
+    }
+    return dispatch(updateApproved(userrequest, e.value, user.uuid));
+  },
+});
 
 export default connect(StateToProps, DispatchToProps)(RequestStatus);
 

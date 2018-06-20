@@ -105,17 +105,25 @@ export const getUserrequest = id => ({
 
 /**
  * userrequest action : update state of a userrequest
- * @param {number} id - id of the userrequest
- * @param {number} state - state of the uerrequest (request by a N2)
+ * @param {object} userrequest - data that we wan't change approbations
+ * @param {number} status - N2 approbation status
+ * @param {string} userUuid - uuid of N1 that request approbation
  */
-export const updateState = (id, state) => ({
+export const updateState = (data, status, userUuid) => ({
   [CALL_API]: {
-    endpoint: `/userrequest/${id}/`,
+    endpoint: `/userrequest/${data.id}/`,
     types: [REQUEST_STATE_CHANGE, SUCCESS_STATE_CHANGE, FAILURE_STATE_CHANGE],
     config: {
       method: 'PATCH',
       body: JSON.stringify({
-        state,
+        state: status,
+        properties: {
+          ...data.properties,
+          approbations: {
+            ...data.properties.approbations,
+            [userUuid]: status,
+          },
+        },
       }),
     },
   },
@@ -124,10 +132,10 @@ export const updateState = (id, state) => ({
 /**
  * userrequest action : update approbation status from N1 user
  * @param {object} userrequest - data that we wan't change approbations
- * @param {string} uuidN1 - uuid of N1 that request approbation
- * @param {number} approvedStatus - N1 approbation status
+ * @param {number} status - N1 approbation status
+ * @param {string} userUuid - uuid of N1 that request approbation
  */
-export const updateApproved = (data, uuidN1, approvedStatus) => ({
+export const updateApproved = (data, status, userUuid) => ({
   [CALL_API]: {
     endpoint: `/userrequest/${data.id}/`,
     types: [REQUEST_APPROBATIONS_CHANGE, SUCCESS_APPROBATIONS_CHANGE, FAILURE_APPROBATIONS_CHANGE],
@@ -138,7 +146,7 @@ export const updateApproved = (data, uuidN1, approvedStatus) => ({
           ...data.properties,
           approbations: {
             ...data.properties.approbations,
-            [uuidN1]: approvedStatus,
+            [userUuid]: status,
           },
         },
       }),
