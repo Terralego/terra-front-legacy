@@ -3,6 +3,7 @@ import store from 'store';
 const statusLabels = {
   DRAFT: { text: 'Demande sauvegardée non envoyée', type: 'info' },
   REFUSED: { text: 'Demande refusée', type: 'error' },
+  CANCELED: { text: 'Demande annulée ', type: 'error' },
   ACCEPTED: { text: 'Demande acceptée', type: 'success' },
   // Specific for N1 and N2
   TO_EVALUATE: { text: 'A évaluer', type: 'warning' },
@@ -38,6 +39,10 @@ const getUserrequestStatus = (userrequestState, approbations, user) => {
 
   if (userrequestState === states.ACCEPTED) {
     return statusLabels.ACCEPTED;
+  }
+
+  if (userrequestState === states.CANCELED) {
+    return statusLabels.CANCELED;
   }
 
   // Specific labels for N1
