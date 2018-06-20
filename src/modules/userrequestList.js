@@ -105,11 +105,29 @@ export const getUserrequest = id => ({
 
 /**
  * userrequest action : update state of a userrequest
+ * @param {number} id - id of the userrequest
+ * @param {number} state - state of the userrequest
+ */
+export const updateState = (id, state) => ({
+  [CALL_API]: {
+    endpoint: `/userrequest/${id}/`,
+    types: [REQUEST_STATE_CHANGE, SUCCESS_STATE_CHANGE, FAILURE_STATE_CHANGE],
+    config: {
+      method: 'PATCH',
+      body: JSON.stringify({
+        state,
+      }),
+    },
+  },
+});
+
+/**
+ * updateStateAndApprobations action : update state of a userrequest
  * @param {object} userrequest - data that we wan't change approbations
  * @param {number} status - N2 approbation status
  * @param {string} userUuid - uuid of N1 that request approbation
  */
-export const updateState = (data, status, userUuid) => ({
+export const updateStateAndApprobation = (data, status, userUuid) => ({
   [CALL_API]: {
     endpoint: `/userrequest/${data.id}/`,
     types: [REQUEST_STATE_CHANGE, SUCCESS_STATE_CHANGE, FAILURE_STATE_CHANGE],
