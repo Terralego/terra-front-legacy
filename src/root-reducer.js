@@ -8,10 +8,12 @@ import authenticationTimer from 'modules/authenticationTimer';
 import { createForms } from 'react-redux-form';
 
 export default combineReducers({
-  ...createForms({ userrequest }),
+  ...createForms({
+    userrequest,
+    userrequestComments,
+  }),
   appConfig,
   userrequestList,
-  userrequestComments,
   authentication,
   authenticationTimer,
 });

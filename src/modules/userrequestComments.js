@@ -11,11 +11,8 @@ export const SUBMIT_FAILED = 'userrequestComments/SUBMIT_FAILED';
 
 const initialState = {
   comments: {}, // comments by userrequestId
-  submitted: false,
-  sent: false,
-  error: null,
   loading: false, // loading comments list
-  fetched: false,
+  text: '',
 };
 
 const parseCommentsByUserrequest = response => {
@@ -70,8 +67,7 @@ const userrequestComments = (state = initialState, action) => {
     case SUBMIT_SUCCESS:
       return {
         ...state,
-        sent: true,
-        error: null,
+        text: '',
         comments: {
           ...state.comments,
           [action.data.userrequest]: {
@@ -160,5 +156,6 @@ export const submitComment = (userrequestId, comment) => ({
         properties: { comment },
       }),
     },
+    form: 'userrequestComments',
   },
 });

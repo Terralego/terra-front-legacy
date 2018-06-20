@@ -59,7 +59,7 @@ function TextAreaField (props) {
 
 TextAreaField.propTypes = {
   model: Proptypes.string.isRequired,
-  label: Proptypes.string.isRequired,
+  label: Proptypes.string,
   placeholder: Proptypes.string,
   errorMessages: Proptypes.shape({
     x: Proptypes.string,
@@ -71,6 +71,7 @@ TextAreaField.propTypes = {
 };
 
 TextAreaField.defaultProps = {
+  label: '',
   placeholder: '',
   errorMessages: {},
   required: false,

@@ -2,66 +2,48 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Spin, Input, Form, List, Button } from 'antd';
+import { Form } from 'react-redux-form';
+import { Spin, List, Button } from 'antd';
 import moment from 'moment';
+
 import {
   fetchUserrequestComments,
   getCommentsByUserrequest,
   submitComment,
 } from 'modules/userrequestComments';
-
-const { TextArea } = Input;
-const FormItem = Form.Item;
+import TextArea from 'components/Fields/TextArea';
 
 class Comments extends React.Component {
-  constructor (props) {
-    super(props);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
   componentDidMount () {
     if (!this.props.loading && !this.props.fetched) {
       this.props.fetchUserrequestComments(this.props.userrequestId);
     }
   }
 
-  componentWillReceiveProps (nextProps) {
-    // Clear field when comment sent
-    if (nextProps.sent && this.props.form.getFieldValue('comment') !== '') {
-      this.props.form.setFieldsValue({ comment: '' });
-    }
-  }
-
-  handleSubmit (e) {
-    e.preventDefault();
-    this.props.form.validateFields((err, values) => {
-      if (!err) {
-        this.props.submitComment(this.props.userrequestId, values.comment);
-      }
-    });
+  handleSubmit = () => {
+    this.props.submitComment(this.props.userrequestId, this.props.comment);
   }
 
   render () {
-    const { comments, loading, submitted, sent, error } = this.props;
-    const { getFieldDecorator, getFieldError, isFieldTouched } = this.props.form;
+    const { comments, loading, form } = this.props;
 
     return (
-      <Form onSubmit={this.handleSubmit}>
-        <FormItem
+      <Form model="userrequestComments">
+        <TextArea
           style={{ marginBottom: 12 }}
-          validateStatus=""
-        >
-          {getFieldDecorator('comment', {
-            rules: [{ required: true, message: 'Veuillez écrire un message' }],
-          })(<TextArea rows={4} placeholder="Entrez votre message..." />)}
-        </FormItem>
+          model=".text"
+          placeholder="Entrez votre message..."
+          errorMessages={{ required: 'Veuillez écrire un message' }}
+          required
+        />
         <div style={{ textAlign: 'right' }}>
           <Button
             type="primary"
             htmlType="submit"
-            disabled={getFieldError('comment') || !isFieldTouched('comment')}
             icon="arrow-right"
-            loading={submitted && !sent && !error}
+            loading={form.pending}
+            disabled={!form.valid}
+            onClick={this.handleSubmit}
           >
             Envoyer
           </Button>
@@ -99,18 +81,14 @@ Comments.propTypes = {
   userrequestId: PropTypes.string.isRequired,
 };
 
-const FormComments = Form.create()(Comments);
-
 const StateToProps = (state, props) => ({
   comments: getCommentsByUserrequest(state, props.userrequestId),
   loading: state.userrequestComments.loading,
-  submitted: state.userrequestComments.submitted,
-  sent: state.userrequestComments.sent,
-  error: state.userrequestComments.error,
-  fetched: state.userrequestComments.fetched,
+  form: state.forms.userrequestComments.$form,
+  comment: state.userrequestComments.text,
 });
 
 const DispatchToProps = dispatch =>
   bindActionCreators({ fetchUserrequestComments, submitComment }, dispatch);
 
-export default connect(StateToProps, DispatchToProps)(FormComments);
+export default connect(StateToProps, DispatchToProps)(Comments);
