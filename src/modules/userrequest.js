@@ -29,6 +29,38 @@ export const FAILURE_POST_FEATURE = 'userrequest/FAILURE_POST_FEATURE';
 // New userrequest
 export const CLEAR = 'userrequestList/CLEAR';
 
+
+const getFeaturesWithIncidence = () => {
+  const incidenceList = [];
+  // const featureIncidence = featuresIncidences[Math.floor(Math.random() * ((4 - 0) + 1)) + 0];
+  featureIncidence.forEach(feature => {
+    const infos = {
+      gridcode: feature.properties[0].GRIDCODE,
+      from: feature.properties[0].date_from,
+      to: feature.properties[0].date_to,
+    };
+    incidenceList.push(infos);
+  });
+  //   let maxLevel = 0;
+  //   const featureIncidence = incidenceList
+  //     .map(item => {
+  //       if (item.gridcode > maxLevel) {
+  //         maxLevel = item.gridcode;
+  //       }
+  //       return item;
+  //     })
+  //     .find(item => item.gridcode === maxLevel);
+  // return incidenceList;
+};
+
+// const getInfosIncidence = incidenceList => {
+//   if (incidenceList.length < 1) {
+//     return null;
+//   }
+
+//   return { ...warning[featureIncidence.gridcode], ...featureIncidence };
+// };
+
 /**
  * REDUCER
  * --------------------------------------------------------- *
@@ -71,6 +103,13 @@ const userrequest = (state = initialState, action) => {
       return action.data;
     case CLEAR:
       return initialState;
+    case SUCCESS_POST_FEATURE:
+      return {
+        ...state,
+        // geometry: {
+
+        // }
+      };
     default:
       return state;
   }
@@ -175,27 +214,229 @@ export const saveDraft = data => ({
  * @param  {date} eventDateStart : Event start date
  * @param  {date} eventDateEnd : Event end date
  */
-export const getIntersections = (feature, eventDateStart, eventDateEnd) =>
-  // const params = [
-  //   `callbackid=${feature.properties.id}`,
-  //   `from=${eventDateStart || moment()}`,
-  //   `to=${eventDateEnd || moment()}`,
-  //   `geom=${JSON.stringify(feature.geometry)}`,
-  // ];
-  // const getQueryParams = params.join('&');
-  ({
-    [CALL_API]: {
-      endpoint: '/layer/reference/intersects/',
-      types: [POST_FEATURE, SUCCESS_POST_FEATURE, FAILURE_POST_FEATURE],
-      config: {
-        method: 'POST',
-        body: JSON.stringify({
-          callbackid: feature.properties.id,
-          from: eventDateStart,
-          to: eventDateEnd,
-          geom: feature.geometry,
-        }),
-      },
+// export const getIntersections = (feature, eventDateStart, eventDateEnd) =>
+//   // const params = [
+//   //   `callbackid=${feature.properties.id}`,
+//   //   `from=${eventDateStart || moment()}`,
+//   //   `to=${eventDateEnd || moment()}`,
+//   //   `geom=${JSON.stringify(feature.geometry)}`,
+//   // ];
+//   // const getQueryParams = params.join('&');
+
+//   ({
+//     [CALL_API]: {
+//       endpoint: '/layer/reference/intersects/',
+//       types: [POST_FEATURE, SUCCESS_POST_FEATURE, FAILURE_POST_FEATURE],
+//       config: {
+//         method: 'POST',
+//         body: JSON.stringify({
+//           callbackid: feature.properties.id,
+//           from: eventDateStart,
+//           to: eventDateEnd,
+//           geom: feature.geometry,
+//         }),
+//       },
+//     },
+//   });
+
+export const getIntersections = (feature, eventDateStart, eventDateEnd) => ({
+  type: SUCCESS_POST_FEATURE,
+  data: {
+    request: {
+      callbackid: feature.properties.id,
+      geom: '{ "type": "LineString", "coordinates": [ [ 2.693259716033935, 48.391540991563879 ], [ 2.692251205444336, 48.387080959335698 ], [ 2.693002223968506, 48.386924209878941 ] ] }',
     },
-  });
+    results: {
+      type: 'FeatureCollection',
+      crs: {
+        type: 'name',
+        properties: {
+          name: 'EPSG:4326',
+        },
+      },
+      features: [
+        {
+          type: 'Feature',
+          properties: [
+            {
+              ID: 1065,
+              RBI: 0,
+              AUT_CYC: 0,
+              AUT_EQU: 0,
+              BAL_CYC: 0,
+              BAL_EQU: 0,
+              BAL_PED: 0,
+              CCOD_FRT: 'FONT',
+              CCOD_TRC: 856,
+              DESSERTE: 'Sentier',
+              GRIDCODE: 0,
+              IIDT_TRC: 'FONT_00856',
+              LLIB_VCI: 'Route de la Pompadour',
+              CCOD_REVN: 'TN',
+              LARGE_TRC: null,
+              Shape_Leng: 260.500781,
+              date_from: '04-01',
+              date_to: '07-31',
+            },
+          ],
+          geometry: {
+            type: 'LineString',
+            coordinates: [
+              [
+                2.6897315,
+                48.3898563,
+              ],
+              [
+                2.6897626,
+                48.3898505,
+              ],
+              [
+                2.693121,
+                48.3892267,
+              ],
+            ],
+          },
+        },
+        {
+          type: 'Feature',
+          properties: [
+            {
+              ID: 1065,
+              RBI: 0,
+              AUT_CYC: 1,
+              AUT_EQU: 1,
+              BAL_CYC: 0,
+              BAL_EQU: 0,
+              BAL_PED: 0,
+              CCOD_FRT: 'FONT',
+              CCOD_TRC: 4992,
+              DESSERTE: 'Desserte',
+              GRIDCODE: 0,
+              IIDT_TRC: 'FONT_04992',
+              LLIB_VCI: null,
+              CCOD_REVN: 'TN',
+              LARGE_TRC: '> 3,5 m',
+              Shape_Leng: 264.66228,
+              date_from: '04-01',
+              date_to: '07-31',
+            },
+          ],
+          geometry: {
+            type: 'LineString',
+            coordinates: [
+              [
+                2.6897315,
+                48.3898563,
+              ],
+              [
+                2.693303,
+                48.3897508,
+              ],
+            ],
+          },
+        },
+        {
+          type: 'Feature',
+          properties: [
+            {
+              ID: 1162,
+              RBI: 0,
+              AUT_CYC: 1,
+              AUT_EQU: 1,
+              BAL_CYC: 0,
+              BAL_EQU: 0,
+              BAL_PED: 0,
+              CCOD_FRT: 'FONT',
+              CCOD_TRC: 4994,
+              DESSERTE: 'Desserte',
+              GRIDCODE: 0,
+              IIDT_TRC: 'FONT_04994',
+              LLIB_VCI: 'Route de la Pompadour',
+              CCOD_REVN: 'TN',
+              LARGE_TRC: '> 3,5 m',
+              Shape_Leng: 300.640251,
+              date_from: '04-01',
+              date_to: '07-31',
+            },
+          ],
+          geometry: {
+            type: 'LineString',
+            coordinates: [
+              [
+                2.691791,
+                48.3866854,
+              ],
+              [
+                2.6919655,
+                48.387037,
+              ],
+              [
+                2.692124,
+                48.3872551,
+              ],
+              [
+                2.6922965,
+                48.3874542,
+              ],
+              [
+                2.6923976,
+                48.3876344,
+              ],
+              [
+                2.6924991,
+                48.3878622,
+              ],
+              [
+                2.6925862,
+                48.38809,
+              ],
+              [
+                2.6926741,
+                48.3884224,
+              ],
+              [
+                2.6927749,
+                48.3885551,
+              ],
+              [
+                2.6928758,
+                48.3887164,
+              ],
+              [
+                2.6930059,
+                48.3889536,
+              ],
+              [
+                2.693121,
+                48.3892267,
+              ],
+            ],
+          },
+        },
+        {
+          type: 'Feature',
+          properties: [
+            {
+              ID: 1162,
+              GRIDCODE: 1,
+              date_from: '04-01',
+              date_to: '07-31',
+            },
+          ],
+        },
+        {
+          type: 'Feature',
+          properties: [
+            {
+              ID: 1166,
+              GRIDCODE: 0,
+              date_from: '04-01',
+              date_to: '07-31',
+            },
+          ],
+        },
+      ],
+    },
+  },
+});
 
