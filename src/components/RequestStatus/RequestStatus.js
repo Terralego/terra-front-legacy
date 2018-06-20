@@ -72,6 +72,7 @@ const RequestStatus = ({ userrequest, user, onApproved, onChangeStatus }) => {
   if (!user) {
     return null;
   }
+  console.log(userrequest);
 
   const { state } = userrequest;
   const { approbations } = userrequest.properties;
@@ -85,7 +86,7 @@ const RequestStatus = ({ userrequest, user, onApproved, onChangeStatus }) => {
     const selfApprobation = getEvaluationFromValue(actionsN1, approbations[user.uuid]);
     return (
       <Card title="Évaluation de niv 1">
-        <Status state={state} approbations={approbations} userGroup={user.group} />
+        <Status userrequestState={state} approbations={approbations} user={user} />
         <div className={styles.actions}>
           <p>Votre approbation :</p>
           <Dropdown
@@ -153,7 +154,7 @@ const RequestStatus = ({ userrequest, user, onApproved, onChangeStatus }) => {
   }
 
   return (
-    <Status state={state} approbations={approbations} userGroup={user.group} />
+    <Status userrequestState={state} approbations={approbations} user={user} />
   );
 };
 
