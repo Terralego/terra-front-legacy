@@ -1,4 +1,5 @@
 import { CALL_API } from 'middlewares/api';
+import moment from 'moment';
 
 import initialState from 'modules/userrequest-initial';
 
@@ -20,6 +21,10 @@ export const FAILURE_SUBMIT_DATA = 'userrequest/FAILURE_SUBMIT_DATA';
 export const REQUEST_EXISTING = 'userrequestList/REQUEST_EXISTING';
 export const SUCCESS_EXISTING = 'userrequestList/SUCCESS_EXISTING';
 export const FAILURE_EXISTING = 'userrequestList/FAILURE_EXISTING';
+
+export const POST_FEATURE = 'userrequest/POST_FEATURE';
+export const SUCCESS_POST_FEATURE = 'userrequest/SUCCESS_POST_FEATURE';
+export const FAILURE_POST_FEATURE = 'userrequest/FAILURE_POST_FEATURE';
 
 // New userrequest
 export const CLEAR = 'userrequestList/CLEAR';
@@ -163,3 +168,34 @@ export const saveDraft = data => ({
     form: 'userrequest',
   },
 });
+
+/**
+ * Post feature object
+ * @param  {object} feature : feature sent to the server
+ * @param  {date} eventDateStart : Event start date
+ * @param  {date} eventDateEnd : Event end date
+ */
+export const getIntersections = (feature, eventDateStart, eventDateEnd) =>
+  // const params = [
+  //   `callbackid=${feature.properties.id}`,
+  //   `from=${eventDateStart || moment()}`,
+  //   `to=${eventDateEnd || moment()}`,
+  //   `geom=${JSON.stringify(feature.geometry)}`,
+  // ];
+  // const getQueryParams = params.join('&');
+  ({
+    [CALL_API]: {
+      endpoint: '/layer/reference/intersects/',
+      types: [POST_FEATURE, SUCCESS_POST_FEATURE, FAILURE_POST_FEATURE],
+      config: {
+        method: 'POST',
+        body: JSON.stringify({
+          callbackid: feature.properties.id,
+          from: eventDateStart,
+          to: eventDateEnd,
+          geom: feature.geometry,
+        }),
+      },
+    },
+  });
+
