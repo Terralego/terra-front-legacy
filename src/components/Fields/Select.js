@@ -41,7 +41,7 @@ const CustomSelect = props => {
         showSearch
         optionFilterProp="children"
         filterOption={handleFilter}
-        value={props.value}
+        value={props.value ? props.value : undefined}
         {...propsField}
       >{props.options.map(option => (
         props.categories ?
@@ -52,7 +52,10 @@ const CustomSelect = props => {
               </Select.Option>
               ))}
           </Select.OptGroup>
-        : <Select.Option key={option.value} value={option.value}>{option.label}</Select.Option>
+        :
+          <Select.Option key={option.value.toString()} value={option.value.toString()}>
+            {option.label}
+          </Select.Option>
       ))}
       </Select>
     </FormItem>
@@ -81,13 +84,17 @@ function SelectField (props) {
 
 SelectField.propTypes = {
   model: Proptypes.string.isRequired,
-  label: Proptypes.string.isRequired,
+  label: Proptypes.string,
   placeholder: Proptypes.string,
   errorMessages: Proptypes.shape({
     x: Proptypes.string,
   }),
   options: Proptypes.arrayOf(Proptypes.shape({
-    value: Proptypes.string,
+    value: Proptypes.oneOfType([
+      Proptypes.string,
+      Proptypes.number,
+      Proptypes.bool,
+    ]),
     label: Proptypes.string,
   })).isRequired,
   required: Proptypes.bool,
@@ -95,6 +102,7 @@ SelectField.propTypes = {
 
 SelectField.defaultProps = {
   placeholder: '',
+  label: '',
   errorMessages: {},
   required: false,
 };

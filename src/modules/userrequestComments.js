@@ -13,7 +13,26 @@ const initialState = {
   comments: {}, // comments by userrequestId
   loading: false, // loading comments list
   text: '',
+  is_internal: false,
 };
+
+const getCommentAuthor = ({ groups, properties: { firstname, lastname } }) => {
+  if (groups[0] === 'N1') {
+    return 'Agent de terrain';
+  }
+
+  if (groups[0] === 'N2') {
+    return 'Agent ONF';
+  }
+
+  return `${firstname} ${lastname}`;
+};
+
+const getCommentData = data => ({
+  content: data.properties.comment,
+  date: data.created_at,
+  author: getCommentAuthor(data.owner),
+});
 
 const parseCommentsByUserrequest = response => {
   if (!response.results || response.results.length < 1) {
@@ -22,10 +41,7 @@ const parseCommentsByUserrequest = response => {
   const comments = {};
   const userrequestId = response.results[0].userrequest;
   response.results.forEach(userrequest => {
-    comments[userrequest.id] = {
-      content: userrequest.properties.comment,
-      date: userrequest.created_at,
-    };
+    comments[userrequest.id] = getCommentData(userrequest);
   });
 
   return { [userrequestId]: comments };
@@ -72,10 +88,7 @@ const userrequestComments = (state = initialState, action) => {
           ...state.comments,
           [action.data.userrequest]: {
             ...state.comments[action.data.userrequest],
-            [action.data.id]: {
-              content: action.data.properties.comment,
-              date: action.data.created_at,
-            },
+            [action.data.id]: getCommentData(action.data),
           },
         },
       };
@@ -146,7 +159,7 @@ export const fetchUserrequestComments = userrequestId => ({
  * @param {number} userrequestId
  * @param {string} new comment text
  */
-export const submitComment = (userrequestId, comment) => ({
+export const submitComment = (userrequestId, comment, isInternal) => ({
   [CALL_API]: {
     endpoint: `/userrequest/${userrequestId}/comment/`,
     types: [SUBMIT, SUBMIT_SUCCESS, SUBMIT_FAILED],
@@ -154,6 +167,7 @@ export const submitComment = (userrequestId, comment) => ({
       method: 'POST',
       body: JSON.stringify({
         properties: { comment },
+        is_internal: isInternal,
       }),
     },
     form: 'userrequestComments',
