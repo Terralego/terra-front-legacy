@@ -1,11 +1,4 @@
-const initialState = {
-  email: '',
-  paddword: '',
-  properties: {
-    firstname: '',
-    lastname: '',
-  },
-};
+import initialState from 'modules/profile-initial';
 
 /**
  * REDUCER
