@@ -1,5 +1,6 @@
 import Home from 'components/Home/Home';
 import About from 'components/About/About';
+import Profile from 'components/Profile/Profile';
 import Form from 'components/Form/Form';
 import UserrequestList from 'components/Userrequest/UserrequestList';
 import Userrequest from 'components/Userrequest/Userrequest';
@@ -17,6 +18,12 @@ export const routes = [{
   path: '/about',
   name: 'About',
   component: About,
+  icon: 'paper-clip',
+  protected: false,
+}, {
+  path: '/profile',
+  name: 'Profile',
+  component: Profile,
   icon: 'paper-clip',
   protected: false,
 }, {
