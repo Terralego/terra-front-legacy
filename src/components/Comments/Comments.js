@@ -6,12 +6,16 @@ import { Form } from 'react-redux-form';
 import { Spin, List, Button } from 'antd';
 import moment from 'moment';
 
+import { getUserGroup } from 'modules/authentication';
 import {
   fetchUserrequestComments,
   getCommentsByUserrequest,
   submitComment,
 } from 'modules/userrequestComments';
 import TextArea from 'components/Fields/TextArea';
+import Select from 'components/Fields/Select';
+
+import config from 'components/Comments/Comments.config';
 
 class Comments extends React.Component {
   componentDidMount () {
@@ -21,14 +25,22 @@ class Comments extends React.Component {
   }
 
   handleSubmit = () => {
-    this.props.submitComment(this.props.userrequestId, this.props.comment);
+    const { userrequestId, comment } = this.props;
+    this.props.submitComment(userrequestId, comment.text, comment.is_internal);
   }
 
   render () {
-    const { comments, loading, form } = this.props;
+    const { comments, loading, form, userGroup } = this.props;
 
     return (
       <Form model="userrequestComments">
+        {userGroup !== 'user' && <Select
+          placeholder="Choisir un destinataire"
+          model=".is_internal"
+          options={config.recipientsOptions}
+          errorMessages={{ required: 'Veuillez choisir un destinataire' }}
+          required
+        />}
         <TextArea
           style={{ marginBottom: 12 }}
           model=".text"
@@ -57,7 +69,7 @@ class Comments extends React.Component {
           renderItem={comment => (
             <List.Item key={`comment_${comment.content}`}>
               <List.Item.Meta
-                title="Administrateur"
+                title={comment.author}
                 description={comment.content}
                 style={{ marginBottom: 16 }}
               />
@@ -82,10 +94,11 @@ Comments.propTypes = {
 };
 
 const StateToProps = (state, props) => ({
+  userGroup: getUserGroup(state),
   comments: getCommentsByUserrequest(state, props.userrequestId),
   loading: state.userrequestComments.loading,
   form: state.forms.userrequestComments.$form,
-  comment: state.userrequestComments.text,
+  comment: state.userrequestComments,
 });
 
 const DispatchToProps = dispatch =>
