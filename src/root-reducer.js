@@ -5,12 +5,14 @@ import userrequestList from 'modules/userrequestList';
 import userrequestComments from 'modules/userrequestComments';
 import authentication from 'modules/authentication';
 import authenticationTimer from 'modules/authenticationTimer';
+import profile from 'modules/profile';
 import { createForms } from 'react-redux-form';
 
 export default combineReducers({
   ...createForms({
     userrequest,
     userrequestComments,
+    profile,
   }),
   appConfig,
   userrequestList,
