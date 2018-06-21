@@ -26,6 +26,7 @@ export const routes = [{
   component: Profile,
   icon: 'paper-clip',
   protected: false,
+  hideBG: true,
 }, {
   path: '/new-request',
   name: 'New request',
