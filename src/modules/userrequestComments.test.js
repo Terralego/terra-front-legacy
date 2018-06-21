@@ -57,7 +57,13 @@ describe('SUBMIT_SUCCESS action', () => {
         properties: {
           comment: 'blabla',
         },
-        owner: 1,
+        owner: {
+          groups: ['user'],
+          properties: {
+            lastname: 'Janin',
+            firstname: 'Alexandra',
+          },
+        },
         userrequest: 21,
         feature: null,
       },
@@ -68,7 +74,7 @@ describe('SUBMIT_SUCCESS action', () => {
       comments: {
         15: { 1: { content: 'ok', date: '01/02/18' } },
         20: { 6: { content: 'a', date: '01/02/18' }, 7: { content: 'b', date: '01/02/18' } },
-        21: { 5: { content: 'blabla', date: '2018-05-18T16:48:09.299906+02:00' } },
+        21: { 5: { content: 'blabla', date: '2018-05-18T16:48:09.299906+02:00', author: 'Alexandra Janin' } },
       },
     };
     expect(userrequestComments(state, action)).toEqual(expectedState);
