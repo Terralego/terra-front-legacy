@@ -34,9 +34,9 @@ const CustomCheckbox = props => {
         )
       }
     >
-      <CheckboxGroup
-        {...propsField}
-      />
+      {propsField.options.map(option => (
+        <Checkbox style={{ display: 'block', margin: 0 }} {...option}>{option.label}</Checkbox>
+      ))}
     </FormItem>
   );
 };
