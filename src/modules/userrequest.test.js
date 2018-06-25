@@ -180,14 +180,18 @@ describe('userrequest async action', () => {
 
     FetchMock.post('*', 400, { overwriteRoutes: true });
 
-    return store.dispatch(submitData('Bonjour'))
+    return store.dispatch(submitData('Bonjour', null))
       .then(() => {
         const actions = store.getActions();
-        expect(actions).toContainEqual({ type: SUBMIT_DATA });
-        expect(actions).toContainEqual({
-          type: FAILURE_SUBMIT_DATA,
-          error: 'Cannot read property \'on\' of undefined',
-        });
+        expect(actions).toEqual([
+          { type: SUBMIT_DATA },
+          {
+            type: FAILURE_SUBMIT_DATA,
+            error: {
+              message: 'TypeError: Cannot read property \'on\' of undefined',
+            },
+          },
+        ]);
       });
   });
 });

@@ -5,11 +5,11 @@ import { Link, withRouter } from 'react-router-dom';
 import { List, Spin } from 'antd';
 import moment from 'moment';
 
-import { getUserrequestList } from 'modules/userrequestList';
+import { fetchUserrequestList } from 'modules/userrequestList';
 
 class UserrequestList extends React.Component {
   componentDidMount () {
-    this.props.getUserrequestList();
+    this.props.fetchUserrequestList();
   }
 
   render () {
@@ -60,7 +60,7 @@ const StateToProps = state => ({
 const DispatchToProps = dispatch =>
   bindActionCreators(
     {
-      getUserrequestList,
+      fetchUserrequestList,
     },
     dispatch,
   );

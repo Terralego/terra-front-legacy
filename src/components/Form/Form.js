@@ -6,7 +6,7 @@ import { Form as ReduxForm } from 'react-redux-form';
 import { withRouter } from 'react-router-dom';
 import moment from 'moment';
 
-import { getUserrequest, clear } from 'modules/userrequest';
+import { fetchUserrequest, clear } from 'modules/userrequest';
 import HeaderForm from 'components/Form/HeaderForm';
 import FormConfig from 'components/Form/Form.config';
 
@@ -16,7 +16,7 @@ class FormApp extends React.Component {
   componentDidMount () {
     if (this.props.match.params.id) {
       // If we route on a draft userrequest, load data
-      this.props.getUserrequest(this.props.match.params.id);
+      this.props.fetchUserrequest(this.props.match.params.id);
     } else {
       // Else, clear fields to get a blank form
       this.props.clear();
@@ -74,6 +74,6 @@ const StateToProps = state => ({
 });
 
 const DispatchToProps = dispatch =>
-  bindActionCreators({ getUserrequest, clear }, dispatch);
+  bindActionCreators({ fetchUserrequest, clear }, dispatch);
 
 export default withRouter(connect(StateToProps, DispatchToProps)(FormApp));

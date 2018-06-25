@@ -175,7 +175,7 @@ export const clear = () => ({
  * Submit data object
  * @param  {object} data : data that will be send to the server
  */
-export const submitData = data => ({
+export const submitData = (data, form = 'userrequest') => ({
   [CALL_API]: {
     endpoint: `/userrequest/${data.id ? `${data.id}/` : ''}`,
     types: [SUBMIT_DATA, SUCCESS_SUBMIT_DATA, FAILURE_SUBMIT_DATA],
@@ -186,7 +186,7 @@ export const submitData = data => ({
         state: 200, // SUBMITTED
       }),
     },
-    form: 'userrequest',
+    form,
   },
 });
 
@@ -194,7 +194,7 @@ export const submitData = data => ({
  * userrequest action : fetch userrequest
  * @param {string} id
  */
-export const getUserrequest = id => ({
+export const fetchUserrequest = id => ({
   [CALL_API]: {
     endpoint: `/userrequest/${id}`,
     types: [REQUEST_EXISTING, SUCCESS_EXISTING, FAILURE_EXISTING],

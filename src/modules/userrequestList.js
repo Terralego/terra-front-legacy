@@ -1,3 +1,5 @@
+import { createSelector } from 'reselect';
+
 import { CALL_API } from 'middlewares/api';
 
 export const REQUEST_ALL = 'userrequestList/REQUEST_ALL';
@@ -25,7 +27,13 @@ const initialState = {
   loading: false,
 };
 
-const getItemsFromResponse = response => {
+/**
+ * Get userrequests object with id keys
+ *
+ * @param  {object} response: response from get all request
+ * @return {object} object of userrequests by id
+ */
+function getItemsFromResponse (response) {
   if (!response.results || response.results.length < 1) {
     return null;
   }
@@ -34,7 +42,17 @@ const getItemsFromResponse = response => {
     items[userrequest.id] = userrequest;
   });
   return items;
-};
+}
+
+/**
+ * Get the userrequest id
+ *
+ * @param  {string} url: url of detail userrequest
+ * @return {string} item id
+ */
+function getItemIdFromUrl (url) {
+  return url.split('/').reverse()[1];
+}
 
 /**
  * userrequestList reducer
@@ -76,6 +94,16 @@ const userrequestList = (state = initialState, action) => {
           [action.data.id]: action.data,
         },
       };
+    case FAILURE_DETAIL:
+      return {
+        ...state,
+        items: {
+          ...state.items,
+          [getItemIdFromUrl(action.error.url)]: {
+            error: action.error,
+          },
+        },
+      };
     default:
       return state;
   }
@@ -83,11 +111,31 @@ const userrequestList = (state = initialState, action) => {
 
 export default userrequestList;
 
+/**
+ * SELECTORS
+ * --------------------------------------------------------- *
+ */
+
+/**
+ * getUserrequestsArray selector
+ * @param {object} state
+ * @returns {array} array of userrequest without errored items
+ */
+export const getUserrequestsArray = createSelector(
+  state => state.userrequestList.items,
+  items => Object.keys(items).map(key => items[key]).filter(item => !item.error),
+);
+
+
+/**
+ * ACTIONS
+ * --------------------------------------------------------- *
+ */
 
 /**
  * userrequestList action : fetch userrequest list
  */
-export const getUserrequestList = () => ({
+export const fetchUserrequestList = () => ({
   [CALL_API]: {
     endpoint: '/userrequest/',
     types: [REQUEST_ALL, SUCCESS_ALL, FAILURE_ALL],
@@ -99,7 +147,7 @@ export const getUserrequestList = () => ({
  * userrequest action : fetch userrequest
  * @param {string} id
  */
-export const getUserrequest = id => ({
+export const fetchUserrequest = id => ({
   [CALL_API]: {
     endpoint: `/userrequest/${id}`,
     types: [REQUEST_DETAIL, SUCCESS_DETAIL, FAILURE_DETAIL],

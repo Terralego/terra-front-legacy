@@ -9,16 +9,21 @@ async function handleErrors (response) {
     return data;
   }
 
-  let error = response.statusText;
+  const error = {
+    message: response.statusText || 'There was an error',
+    status: response.status,
+    url: response.url,
+  };
+
   if (data.password) {
-    error += `: Password : ${data.password[0]}`;
+    error.message += `: Password : ${data.password[0]}`;
   }
   if (data.username) {
-    error += `: Login : ${data.username[0]}`;
+    error.message += `: Login : ${data.username[0]}`;
   }
   if (data.non_field_errors
     && data.non_field_errors.length > 0) {
-    error += `: ${data.non_field_errors[0]}`;
+    error.message += `: ${data.non_field_errors[0]}`;
   }
 
   throw error;
