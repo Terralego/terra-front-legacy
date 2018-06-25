@@ -10,7 +10,7 @@ async function handleErrors (response) {
   }
 
   const error = {
-    message: response.statusText,
+    message: response.statusText || 'There was an error',
     status: response.status,
     url: response.url,
   };
