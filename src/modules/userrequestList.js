@@ -83,11 +83,31 @@ const userrequestList = (state = initialState, action) => {
 
 export default userrequestList;
 
+/**
+ * SELECTORS
+ * --------------------------------------------------------- *
+ */
+
+/**
+ * getUserrequestsArray selector
+ * @param {object} state
+ * @returns {array} array of userrequest without errored items
+ */
+export const getUserrequestsArray = createSelector(
+  state => state.userrequestList.items,
+  items => Object.keys(items).map(key => items[key]).filter(item => !item.error),
+);
+
+
+/**
+ * ACTIONS
+ * --------------------------------------------------------- *
+ */
 
 /**
  * userrequestList action : fetch userrequest list
  */
-export const getUserrequestList = () => ({
+export const fetchUserrequestList = () => ({
   [CALL_API]: {
     endpoint: '/userrequest/',
     types: [REQUEST_ALL, SUCCESS_ALL, FAILURE_ALL],
@@ -99,7 +119,7 @@ export const getUserrequestList = () => ({
  * userrequest action : fetch userrequest
  * @param {string} id
  */
-export const getUserrequest = id => ({
+export const fetchUserrequest = id => ({
   [CALL_API]: {
     endpoint: `/userrequest/${id}`,
     types: [REQUEST_DETAIL, SUCCESS_DETAIL, FAILURE_DETAIL],

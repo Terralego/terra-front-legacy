@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Redirect, withRouter } from 'react-router-dom';
 import { Spin, Row, Col, Card } from 'antd';
 
-import { getUserrequest } from 'modules/userrequestList';
+import { fetchUserrequest } from 'modules/userrequestList';
 import { getUserGroup } from 'modules/authentication';
 import Summary from 'components/Summary/Summary';
 import RequestStatus from 'components/RequestStatus/RequestStatus';
@@ -60,6 +60,6 @@ const StateToProps = (state, ownProps) => ({
 });
 
 const DispatchToProps = dispatch =>
-  bindActionCreators({ getUserrequest }, dispatch);
+  bindActionCreators({ fetchUserrequest }, dispatch);
 
 export default withRouter(connect(StateToProps, DispatchToProps)(Userrequest));

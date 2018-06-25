@@ -140,7 +140,7 @@ export const submitData = data => ({
  * userrequest action : fetch userrequest
  * @param {string} id
  */
-export const getUserrequest = id => ({
+export const fetchUserrequest = id => ({
   [CALL_API]: {
     endpoint: `/userrequest/${id}`,
     types: [REQUEST_EXISTING, SUCCESS_EXISTING, FAILURE_EXISTING],
