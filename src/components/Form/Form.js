@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, Button, message } from 'antd';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Form } from 'react-redux-form';
+import { Form as ReduxForm } from 'react-redux-form';
 import { withRouter } from 'react-router-dom';
 import moment from 'moment';
 
@@ -50,7 +50,7 @@ class FormApp extends React.Component {
             <h1>Nouvelle demande d'autorisation</h1>
           }
         </div>
-        <Form
+        <ReduxForm
           model="userrequest"
           onSubmit={userrequest => this.handleSubmit(userrequest)}
         >
@@ -63,7 +63,7 @@ class FormApp extends React.Component {
           <div style={{ margin: '24px 0', textAlign: 'right' }}>
             <Button size="large" type="primary" htmlType="submit">{FormConfig.confirmation.previewButton}</Button>
           </div>
-        </Form>
+        </ReduxForm>
       </div>
     );
   }

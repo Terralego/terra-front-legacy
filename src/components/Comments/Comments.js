@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Form } from 'react-redux-form';
+import { Form as ReduxForm } from 'react-redux-form';
 import { Spin, List, Button } from 'antd';
 import moment from 'moment';
 
@@ -33,7 +33,7 @@ class Comments extends React.Component {
     const { comments, loading, form, userGroup } = this.props;
 
     return (
-      <Form model="userrequestComments">
+      <ReduxForm model="userrequestComments">
         {userGroup !== 'user' && <Select
           placeholder="Choisir un destinataire"
           model=".is_internal"
@@ -84,7 +84,7 @@ class Comments extends React.Component {
             </List.Item>
           )}
         />}
-      </Form>
+      </ReduxForm>
     );
   }
 }
