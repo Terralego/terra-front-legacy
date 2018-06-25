@@ -29,7 +29,7 @@ export default () => next => action => {
       }
     })
     .catch(error => {
-      next({ error: error.message || 'There was an error.', type: errorType });
+      next({ error: error || 'There was an error.', type: errorType });
       if (form) {
         next(actions.setPending(form, false));
         next(actions.setSubmitFailed(form));

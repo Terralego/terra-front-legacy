@@ -1,3 +1,5 @@
+import { createSelector } from 'reselect';
+
 import { CALL_API } from 'middlewares/api';
 
 export const REQUEST_ALL = 'userrequestList/REQUEST_ALL';
@@ -25,7 +27,13 @@ const initialState = {
   loading: false,
 };
 
-const getItemsFromResponse = response => {
+/**
+ * Get userrequests object with id keys
+ *
+ * @param  {object} response: response from get all request
+ * @return {object} object of userrequests by id
+ */
+function getItemsFromResponse (response) {
   if (!response.results || response.results.length < 1) {
     return null;
   }
@@ -34,7 +42,17 @@ const getItemsFromResponse = response => {
     items[userrequest.id] = userrequest;
   });
   return items;
-};
+}
+
+/**
+ * Get the userrequest id
+ *
+ * @param  {string} url: url of detail userrequest
+ * @return {string} item id
+ */
+function getItemIdFromUrl (url) {
+  return url.split('/').reverse()[1];
+}
 
 /**
  * userrequestList reducer
@@ -74,6 +92,16 @@ const userrequestList = (state = initialState, action) => {
         items: {
           ...state.items,
           [action.data.id]: action.data,
+        },
+      };
+    case FAILURE_DETAIL:
+      return {
+        ...state,
+        items: {
+          ...state.items,
+          [getItemIdFromUrl(action.error.url)]: {
+            error: action.error,
+          },
         },
       };
     default:
