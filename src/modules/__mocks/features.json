@@ -1,0 +1,24 @@
+[
+  [
+    {
+      "type": "Feature",
+      "properties": {"id": "a"}
+    },
+    {
+      "type": "Feature",
+      "properties": {"id": "b"}
+    }
+  ],
+  {
+    "type": "Feature",
+    "properties": { "id": "c"}
+  },
+  {
+    "type": "Feature",
+    "properties": {"id": "d"}
+  },
+  {
+    "type": "Feature",
+    "properties": { "id": "e" }
+  }
+]

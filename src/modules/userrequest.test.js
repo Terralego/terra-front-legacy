@@ -12,11 +12,130 @@ import userrequest, {
   ADD_GEOSJON_FEATURE,
   removeRequestFeature,
   REMOVE_GEOSJON_FEATURE,
+  getFeaturesWithIncidence,
 } from './userrequest';
+
 import initialState from './userrequest-initial';
+import mockIntersection1 from './__mocks/intersect_response_1.json';
+import mockIntersection2 from './__mocks/intersect_response_2.json';
+import mockIntersection3 from './__mocks/intersect_response_3.json';
+
+const mockFeatures = [
+  {
+    type: 'Feature',
+    properties: { id: 'a' },
+  },
+  {
+    type: 'Feature',
+    properties: { id: 'b' },
+  },
+  {
+    type: 'Feature',
+    properties: { id: 'c' },
+  },
+  {
+    type: 'Feature',
+    properties: { id: 'd' },
+  },
+  {
+    type: 'Feature',
+    properties: { id: 'e' },
+  },
+];
 
 const middlewares = [thunk, api];
 const mockStore = configureMockStore(middlewares);
+
+describe('getFeaturesWithIncidence', () => {
+  it('should return an array of feature with incidences 1', () => {
+    expect(getFeaturesWithIncidence(mockIntersection1, mockFeatures)).toEqual([
+      {
+        type: 'Feature',
+        properties: {
+          id: 'a',
+          incidence: { GRIDCODE: 1,
+            date_from: '04-01',
+            date_to: '07-31' },
+        },
+      },
+      {
+        type: 'Feature',
+        properties: { id: 'b' },
+      },
+      {
+        type: 'Feature',
+        properties: { id: 'c' },
+      },
+      {
+        type: 'Feature',
+        properties: { id: 'd' },
+      },
+      {
+        type: 'Feature',
+        properties: { id: 'e' },
+      },
+    ]);
+  });
+  it('should return an array of feature with incidences 2', () => {
+    expect(getFeaturesWithIncidence(mockIntersection2, mockFeatures)).toEqual([
+
+      {
+        type: 'Feature',
+        properties: { id: 'a' },
+      },
+      {
+        type: 'Feature',
+        properties: {
+          id: 'b',
+          incidence: { GRIDCODE: 3,
+            date_from: '04-01',
+            date_to: '07-31' },
+        },
+      },
+      {
+        type: 'Feature',
+        properties: { id: 'c' },
+      },
+      {
+        type: 'Feature',
+        properties: { id: 'd' },
+      },
+      {
+        type: 'Feature',
+        properties: { id: 'e' },
+      },
+    ]);
+  }); it('should return an array of feature with incidences 3', () => {
+    expect(getFeaturesWithIncidence(mockIntersection3, mockFeatures)).toEqual([
+
+      {
+        type: 'Feature',
+        properties: { id: 'a' },
+      },
+      {
+        type: 'Feature',
+        properties: { id: 'b' },
+      },
+      {
+        type: 'Feature',
+        properties: {
+          id: 'c',
+          incidence: { GRIDCODE: 4,
+            date_from: '04-01',
+            date_to: '07-31' },
+        },
+      },
+      {
+        type: 'Feature',
+        properties: { id: 'd' },
+      },
+      {
+        type: 'Feature',
+        properties: { id: 'e' },
+      },
+    ]);
+  });
+});
 
 describe('userrequest reducer', () => {
   it('should have initial value equal to {}', () => {

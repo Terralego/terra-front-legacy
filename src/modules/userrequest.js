@@ -1,5 +1,6 @@
 import { CALL_API } from 'middlewares/api';
 
+
 import initialState from 'modules/userrequest-initial';
 
 export const UPDATE_DATA_PROPERTIES = 'userrequest/UPDATE_DATA_PROPERTIES';
@@ -21,8 +22,52 @@ export const REQUEST_EXISTING = 'userrequestList/REQUEST_EXISTING';
 export const SUCCESS_EXISTING = 'userrequestList/SUCCESS_EXISTING';
 export const FAILURE_EXISTING = 'userrequestList/FAILURE_EXISTING';
 
+export const POST_FEATURE = 'userrequest/POST_FEATURE';
+export const SUCCESS_POST_FEATURE = 'userrequest/SUCCESS_POST_FEATURE';
+export const FAILURE_POST_FEATURE = 'userrequest/FAILURE_POST_FEATURE';
+
 // New userrequest
 export const CLEAR = 'userrequestList/CLEAR';
+
+
+/**
+ * Creation of an initial gricode equal to zero, while mapping through the features
+ * collection this gridcode will be increased each time we meet a more restrictive gridcode.
+ * We finally return the most restrictive gridcode.
+ *
+ * @param  {object} response : response sent back after the post of the feature
+ * @param  {Array} features : the feature, we want obtain the gridcode
+ * @return {Array} the feature with this incidence
+ */
+export const getFeaturesWithIncidence = (response, features) => {
+  if (!response.results || response.results.length < 1) {
+    return features;
+  }
+
+  return features.map(feature => {
+    let incidence = { GRIDCODE: 0 };
+    if (feature.properties.id !== response.request.callbackid) {
+      return feature;
+    }
+    response.results.features.forEach(intersection => {
+      if (intersection.properties[0].GRIDCODE > incidence.GRIDCODE) {
+        incidence = {
+          GRIDCODE: intersection.properties[0].GRIDCODE,
+          date_from: intersection.properties[0].date_from,
+          date_to: intersection.properties[0].date_to,
+        };
+      }
+    });
+    return {
+      ...feature,
+      properties: {
+        ...feature.properties,
+        incidence,
+
+      },
+    };
+  });
+};
 
 /**
  * REDUCER
@@ -66,6 +111,15 @@ const userrequest = (state = initialState, action) => {
       return action.data;
     case CLEAR:
       return initialState;
+    case SUCCESS_POST_FEATURE:
+      return {
+        ...state,
+        geojson: {
+          ...state.geojson,
+          features: getFeaturesWithIncidence(action.data, state.geojson.features),
+        },
+      };
+
     default:
       return state;
   }
@@ -163,3 +217,27 @@ export const saveDraft = data => ({
     form: 'userrequest',
   },
 });
+
+/**
+ * Post feature object
+ * @param  {object} feature : feature sent to the server
+ * @param  {date} eventDateStart : Event start date
+ * @param  {date} eventDateEnd : Event end date
+ */
+export const getIntersections = (feature, eventDateStart, eventDateEnd) =>
+
+  ({
+    [CALL_API]: {
+      endpoint: '/layer/reference/intersects/',
+      types: [POST_FEATURE, SUCCESS_POST_FEATURE, FAILURE_POST_FEATURE],
+      config: {
+        method: 'POST',
+        body: JSON.stringify({
+          callbackid: feature.properties.id,
+          from: eventDateStart,
+          to: eventDateEnd,
+          geom: JSON.stringify(feature.geometry),
+        }),
+      },
+    },
+  });
