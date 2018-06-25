@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import Proptypes from 'prop-types';
-import { Form, DatePicker } from 'antd';
+import { Form, TimePicker } from 'antd';
 import { Control, Errors } from 'react-redux-form';
 
 const FormItem = Form.Item;
@@ -13,7 +13,7 @@ function validateStatus (fieldValue) {
   return '';
 }
 
-const CustomDatePicker = props => {
+const CustomTimePicker = props => {
   const propsField = { ...props };
   // props.value is a "moment" object
   // but it becomes a string when we register it to the store
@@ -38,30 +38,28 @@ const CustomDatePicker = props => {
         )
       }
     >
-      <DatePicker
-        {...propsField}
-      />
+      <TimePicker {...propsField} />
     </FormItem>
   );
 };
 
-const DatePickerField = props => (
+const TimePickerField = props => (
   <Control
     model={props.model}
     id={props.model}
     validators={{
-        required: val => ((val && (moment.isMoment(val) || val.length)) || !props.required),
+        required: val => ((val && val.length) || !props.required),
       }}
     withFieldValue
     mapProps={{
         errorMessages: () => props.errorMessages,
       }}
-    component={CustomDatePicker}
+    component={CustomTimePicker}
     {...props}
   />
 );
 
-DatePickerField.propTypes = {
+TimePickerField.propTypes = {
   model: Proptypes.string.isRequired,
   label: Proptypes.string,
   placeholder: Proptypes.string,
@@ -70,19 +68,14 @@ DatePickerField.propTypes = {
   errorMessages: Proptypes.shape({
     x: Proptypes.string,
   }),
-  autoFocus: Proptypes.oneOfType([
-    Proptypes.bool,
-    Proptypes.func,
-  ]),
 };
 
-DatePickerField.defaultProps = {
+TimePickerField.defaultProps = {
   label: null,
   placeholder: '',
-  format: 'DD-MM-YYYY',
+  format: 'kk',
   errorMessages: { required: 'Please fill this field' },
   required: false,
-  autoFocus: false,
 };
 
-export default DatePickerField;
+export default TimePickerField;
