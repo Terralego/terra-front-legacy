@@ -18,16 +18,13 @@ export const SUCCESS_SUBMIT_DATA = 'userrequest/SUCCESS_SUBMIT_DATA';
 export const FAILURE_SUBMIT_DATA = 'userrequest/FAILURE_SUBMIT_DATA';
 
 // Get draft request actions
-export const REQUEST_EXISTING = 'userrequestList/REQUEST_EXISTING';
-export const SUCCESS_EXISTING = 'userrequestList/SUCCESS_EXISTING';
-export const FAILURE_EXISTING = 'userrequestList/FAILURE_EXISTING';
+export const REQUEST_EXISTING = 'userrequest/REQUEST_EXISTING';
+export const SUCCESS_EXISTING = 'userrequest/SUCCESS_EXISTING';
+export const FAILURE_EXISTING = 'userrequest/FAILURE_EXISTING';
 
 export const POST_FEATURE = 'userrequest/POST_FEATURE';
 export const SUCCESS_POST_FEATURE = 'userrequest/SUCCESS_POST_FEATURE';
 export const FAILURE_POST_FEATURE = 'userrequest/FAILURE_POST_FEATURE';
-
-// New userrequest
-export const CLEAR = 'userrequestList/CLEAR';
 
 
 /**
@@ -109,7 +106,7 @@ const userrequest = (state = initialState, action) => {
       };
     case SUCCESS_EXISTING:
       return action.data;
-    case CLEAR:
+    case SUCCESS_SUBMIT_DATA:
       return initialState;
     case SUCCESS_POST_FEATURE:
       return {
@@ -161,14 +158,6 @@ export const addRequestFeature = feature => ({
 export const removeRequestFeature = featureId => ({
   type: REMOVE_GEOSJON_FEATURE,
   featureId,
-});
-
-/**
- * userrequest action
- * clear userrequest to get a blank form
- */
-export const clear = () => ({
-  type: CLEAR,
 });
 
 /**

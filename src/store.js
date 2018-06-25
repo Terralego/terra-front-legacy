@@ -1,6 +1,7 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import createHistory from 'history/createBrowserHistory';
+import persistState from 'redux-localstorage';
 import api from 'middlewares/api';
 import rootReducer from 'root-reducer';
 
@@ -36,6 +37,7 @@ const composedEnhancers = compose(
 export const store = createStore(
   rootReducer,
   composedEnhancers,
+  persistState(['userrequest', 'forms']),
 );
 
 export default store;
