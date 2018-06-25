@@ -2,11 +2,11 @@ import React from 'react';
 import { Card, Button, message } from 'antd';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Form as ReduxForm } from 'react-redux-form';
+import { Form as ReduxForm, track } from 'react-redux-form';
 import { withRouter } from 'react-router-dom';
 import moment from 'moment';
 
-import { fetchUserrequest, clear } from 'modules/userrequest';
+import { fetchUserrequest } from 'modules/userrequest';
 import HeaderForm from 'components/Form/HeaderForm';
 import FormConfig from 'components/Form/Form.config';
 
@@ -17,9 +17,6 @@ class FormApp extends React.Component {
     if (this.props.match.params.id) {
       // If we route on a draft userrequest, load data
       this.props.fetchUserrequest(this.props.match.params.id);
-    } else {
-      // Else, clear fields to get a blank form
-      this.props.clear();
     }
   }
 
@@ -51,7 +48,7 @@ class FormApp extends React.Component {
           }
         </div>
         <ReduxForm
-          model="userrequest"
+          model={track('userrequest')}
           onSubmit={userrequest => this.handleSubmit(userrequest)}
         >
           {FormConfig.steps.map(step => (
@@ -74,6 +71,6 @@ const StateToProps = state => ({
 });
 
 const DispatchToProps = dispatch =>
-  bindActionCreators({ fetchUserrequest, clear }, dispatch);
+  bindActionCreators({ fetchUserrequest }, dispatch);
 
 export default withRouter(connect(StateToProps, DispatchToProps)(FormApp));
