@@ -1,5 +1,5 @@
 import { CALL_API } from 'middlewares/api';
-// import moment from 'moment';
+
 
 import initialState from 'modules/userrequest-initial';
 
@@ -29,6 +29,16 @@ export const FAILURE_POST_FEATURE = 'userrequest/FAILURE_POST_FEATURE';
 // New userrequest
 export const CLEAR = 'userrequestList/CLEAR';
 
+
+/**
+ * Creation of an initial gricode equal to zero, while mapping through the features
+ * collection this gridcode will be increased each time we meet a more restrictive gridcode.
+ * We finally return the most restrictive gridcode.
+ *
+ * @param  {object} response : response sent back after the post of the feature
+ * @param  {Array} features : the feature, we want obtain the gridcode
+ * @return {Array} the feature with this incidence
+ */
 export const getFeaturesWithIncidence = (response, features) => {
   if (!response.results || response.results.length < 1) {
     return features;
