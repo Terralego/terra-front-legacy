@@ -4,7 +4,6 @@ import { Form, Checkbox } from 'antd';
 import { Control, Errors } from 'react-redux-form';
 
 const FormItem = Form.Item;
-const CheckboxGroup = Checkbox.Group;
 
 function validateStatus (fieldValue) {
   if (!fieldValue.valid && fieldValue.touched && !fieldValue.focus) {
