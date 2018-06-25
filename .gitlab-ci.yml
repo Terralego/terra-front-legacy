@@ -14,41 +14,36 @@ npm_install:
     - npm --version
     - npm set registry=http://10.1.0.5:4873/
     - npm ci
-  artifacts:
-    expire_in: 1 day
-    name: "node_modules_${CI_COMMIT_SHA}"
-    paths:
-      - node_modules
 
 # Tests stage
 
 npm_test:
   stage: tests
   script:
+    - npm set registry=http://10.1.0.5:4873/
+    - npm ci
     - npm test
-  dependencies:
-    - npm_install
 
 npm_run_lint:
   stage: tests
   script:
+    - npm set registry=http://10.1.0.5:4873/
+    - npm ci
     - npm run lint
-  dependencies:
-    - npm_install
 
 # Build stage
 
 npm_run_build:
   stage: build
   script:
+    - npm set registry=http://10.1.0.5:4873/
+    - npm ci
     - npm run build
   artifacts:
     expire_in: 1 week
     name: "build_${CI_COMMIT_SHA}"
     paths:
       - build
-  dependencies:
-    - npm_install
 
 # Deploy stage
 
