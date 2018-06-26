@@ -37,7 +37,7 @@ const Summary = props => {
   );
 };
 
-const DispatchToProps = dispatch => bindActionCreators({}, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
 
 Summary.propTypes = {
   data: PropTypes.shape({
@@ -49,5 +49,5 @@ Summary.propTypes = {
   }).isRequired,
 };
 
-export default connect(null, DispatchToProps)(Summary);
+export default connect(null, mapDispatchToProps)(Summary);
 

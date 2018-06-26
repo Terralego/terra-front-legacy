@@ -56,14 +56,14 @@ class Userrequest extends React.Component {
   }
 }
 
-const StateToProps = (state, ownProps) => ({
+const mapStateToProps = (state, ownProps) => ({
   // TODO: use Reselect for increase performances
   data: state.userrequestList.items[ownProps.match.params.id],
   loading: state.userrequestList.loading,
   userGroup: getUserGroup(state),
 });
 
-const DispatchToProps = dispatch =>
+const mapDispatchToProps = dispatch =>
   bindActionCreators({ fetchUserrequest }, dispatch);
 
-export default withRouter(connect(StateToProps, DispatchToProps)(Userrequest));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Userrequest));

@@ -73,11 +73,11 @@ class FormProperties extends React.Component {
   }
 }
 
-const StateToProps = state => ({
+const mapStateToProps = state => ({
   userrequest: state.userrequest,
   form: state.forms.userrequest.$form,
 });
 
-const DispatchToProps = dispatch => bindActionCreators({ submitData }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ submitData }, dispatch);
 
-export default withRouter(connect(StateToProps, DispatchToProps)(FormProperties));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(FormProperties));

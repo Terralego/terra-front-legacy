@@ -160,14 +160,14 @@ const RequestStatus = ({ userrequest, user, updateApprobationOrState }) => {
   );
 };
 
-const StateToProps = state => ({
+const mapStateToProps = state => ({
   user: {
     group: getUserGroup(state),
     uuid: state.authentication.payload && state.authentication.payload.user.uuid,
   },
 });
 
-const DispatchToProps = dispatch => ({
+const mapDispatchToProps = dispatch => ({
   updateApprobationOrState: (e, userrequest, user) => {
     if (e.type === 'state') {
       return dispatch(updateStateAndApprobation(userrequest, e.value, user.uuid));
@@ -176,5 +176,5 @@ const DispatchToProps = dispatch => ({
   },
 });
 
-export default connect(StateToProps, DispatchToProps)(RequestStatus);
+export default connect(mapStateToProps, mapDispatchToProps)(RequestStatus);
 

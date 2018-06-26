@@ -93,7 +93,7 @@ Comments.propTypes = {
   userrequestId: PropTypes.string.isRequired,
 };
 
-const StateToProps = (state, props) => ({
+const mapStateToProps = (state, props) => ({
   userGroup: getUserGroup(state),
   comments: getCommentsByUserrequest(state, props.userrequestId),
   loading: state.userrequestComments.loading,
@@ -101,7 +101,7 @@ const StateToProps = (state, props) => ({
   comment: state.userrequestComments,
 });
 
-const DispatchToProps = dispatch =>
+const mapDispatchToProps = dispatch =>
   bindActionCreators({ fetchUserrequestComments, submitComment }, dispatch);
 
-export default connect(StateToProps, DispatchToProps)(Comments);
+export default connect(mapStateToProps, mapDispatchToProps)(Comments);

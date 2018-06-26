@@ -51,13 +51,13 @@ class UserrequestList extends React.Component {
   }
 }
 
-const StateToProps = state => ({
+const mapStateToProps = state => ({
   // TODO: use Reselect for increase performances
   items: Object.keys(state.userrequestList.items).map(key => state.userrequestList.items[key]),
   loading: state.userrequestList.loading,
 });
 
-const DispatchToProps = dispatch =>
+const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       fetchUserrequestList,
@@ -65,4 +65,4 @@ const DispatchToProps = dispatch =>
     dispatch,
   );
 
-export default withRouter(connect(StateToProps, DispatchToProps)(UserrequestList));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(UserrequestList));

@@ -51,10 +51,10 @@ const Breadcrumb = ({ location }) => (
   />
 );
 
-const DispatchToProps = dispatch =>
+const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {},
     dispatch,
   );
 
-export default withRouter(connect(null, DispatchToProps)(Breadcrumb));
+export default withRouter(connect(null, mapDispatchToProps)(Breadcrumb));
