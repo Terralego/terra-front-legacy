@@ -187,7 +187,7 @@ export const submitData = (data, form = 'userrequest') => ({
  */
 export const fetchUserrequest = id => ({
   [CALL_API]: {
-    endpoint: `/userrequest/${id}`,
+    endpoint: `/userrequest/${id}/`,
     types: [EXISTING_REQUEST, EXISTING_SUCCESS, EXISTING_FAILURE],
     config: { method: 'GET' },
   },

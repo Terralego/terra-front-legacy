@@ -150,7 +150,7 @@ export const fetchUserrequestList = () => ({
  */
 export const fetchUserrequest = id => ({
   [CALL_API]: {
-    endpoint: `/userrequest/${id}`,
+    endpoint: `/userrequest/${id}/`,
     types: [DETAIL_REQUEST, DETAIL_SUCCESS, DETAIL_FAILURE],
     config: { method: 'GET' },
   },
