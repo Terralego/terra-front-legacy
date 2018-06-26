@@ -147,7 +147,7 @@ export const updateItems = (userrequestId, comments) => dispatch => {
  */
 export const fetchUserrequestComments = userrequestId => ({
   [CALL_API]: {
-    endpoint: `/userrequest/${userrequestId}/comment`,
+    endpoint: `/userrequest/${userrequestId}/comment/`,
     types: [ALL_REQUEST, ALL_SUCCESS, ALL_FAILURE],
     config: {
       method: 'GET',
