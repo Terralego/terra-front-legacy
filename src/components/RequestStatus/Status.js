@@ -23,12 +23,12 @@ export const Status = ({ userrequestState, user, approbations }) => {
   return <Alert message={text} type={type || 'info'} />;
 };
 
-const StateToProps = state => ({
+const mapStateToProps = state => ({
   user: {
     group: getUserGroup(state),
     uuid: state.authentication.payload && state.authentication.payload.user.uuid,
   },
 });
 
-export default connect(StateToProps, null)(Status);
+export default connect(mapStateToProps, null)(Status);
 

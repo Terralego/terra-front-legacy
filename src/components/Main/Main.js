@@ -34,12 +34,12 @@ const Main = props => (
   </Layout>
 );
 
-const StateToProps = state => ({
+const mapStateToProps = state => ({
   isAuthenticated: state.authentication.isAuthenticated,
   user: state.authentication.payload && state.authentication.payload.user,
 });
 
-const DispatchToProps = dispatch =>
+const mapDispatchToProps = dispatch =>
   bindActionCreators({ logout }, dispatch);
 
-export default withRouter(connect(StateToProps, DispatchToProps)(Main));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Main));

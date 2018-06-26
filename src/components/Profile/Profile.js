@@ -54,11 +54,11 @@ const Profile = ({ form }) => (
 );
 
 
-const StateToProps = state => ({
+const mapStateToProps = state => ({
   profile: state.profile,
   form: state.forms.profile.$form,
 });
 
-const DispatchToProps = dispatch => bindActionCreators({}, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
 
-export default connect(StateToProps, DispatchToProps)(Profile);
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);

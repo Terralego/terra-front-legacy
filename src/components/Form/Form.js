@@ -66,11 +66,11 @@ class FormApp extends React.Component {
   }
 }
 
-const StateToProps = state => ({
+const mapStateToProps = state => ({
   ...state.userrequest,
 });
 
-const DispatchToProps = dispatch =>
+const mapDispatchToProps = dispatch =>
   bindActionCreators({ fetchUserrequest }, dispatch);
 
-export default withRouter(connect(StateToProps, DispatchToProps)(FormApp));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(FormApp));

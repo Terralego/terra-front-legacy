@@ -56,7 +56,7 @@ class Login extends Component {
 
 const FormLogin = Form.create()(Login);
 
-const DispatchToProps = dispatch =>
+const mapDispatchToProps = dispatch =>
   bindActionCreators({ loginUser }, dispatch);
 
-export default connect(null, DispatchToProps)(FormLogin);
+export default connect(null, mapDispatchToProps)(FormLogin);
