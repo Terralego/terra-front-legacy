@@ -1,26 +1,27 @@
 import { createSelector } from 'reselect';
 
 import { CALL_API } from 'middlewares/api';
+import { SUBMIT_REQUEST } from 'modules/userrequest';
 
-export const REQUEST_ALL = 'userrequestList/REQUEST_ALL';
-export const SUCCESS_ALL = 'userrequestList/SUCCESS_ALL';
-export const FAILURE_ALL = 'userrequestList/FAILURE_ALL';
-export const REQUEST_DETAIL = 'userrequestList/REQUEST_DETAIL';
-export const SUCCESS_DETAIL = 'userrequestList/SUCCESS_DETAIL';
-export const FAILURE_DETAIL = 'userrequestList/FAILURE_DETAIL';
+// Load all userrequest
+export const ALL_REQUEST = 'userrequestList/ALL_REQUEST';
+export const ALL_SUCCESS = 'userrequestList/ALL_SUCCESS';
+export const ALL_FAILURE = 'userrequestList/ALL_FAILURE';
+
+// Load userrequest detail
+export const DETAIL_REQUEST = 'userrequestList/DETAIL_REQUEST';
+export const DETAIL_SUCCESS = 'userrequestList/DETAIL_SUCCESS';
+export const DETAIL_FAILURE = 'userrequestList/DETAIL_FAILURE';
 
 // Change userrequest status
-export const REQUEST_STATE_CHANGE = 'userrequestList/REQUEST_STATE_CHANGE';
-export const SUCCESS_STATE_CHANGE = 'userrequestList/SUCCESS_STATE_CHANGE';
-export const FAILURE_STATE_CHANGE = 'userrequestList/FAILURE_STATE_CHANGE';
+export const STATE_CHANGE_REQUEST = 'userrequestList/STATE_CHANGE_REQUEST';
+export const STATE_CHANGE_SUCCESS = 'userrequestList/STATE_CHANGE_SUCCESS';
+export const STATE_CHANGE_FAILURE = 'userrequestList/STATE_CHANGE_FAILURE';
 
 // Change userrequest status
-export const REQUEST_APPROBATIONS_CHANGE = 'userrequestList/REQUEST_APPROBATIONS_CHANGE';
-export const SUCCESS_APPROBATIONS_CHANGE = 'userrequestList/SUCCESS_APPROBATIONS_CHANGE';
-export const FAILURE_APPROBATIONS_CHANGE = 'userrequestList/FAILURE_APPROBATIONS_CHANGE';
-
-// Submit userrequest actions
-export const SUCCESS_SUBMIT_DATA = 'userrequest/SUCCESS_SUBMIT_DATA';
+export const APPROBATIONS_CHANGE_REQUEST = 'userrequestList/APPROBATIONS_CHANGE_REQUEST';
+export const APPROBATIONS_CHANGE_SUCCESS = 'userrequestList/APPROBATIONS_CHANGE_SUCCESS';
+export const APPROBATIONS_CHANGE_FAILURE = 'userrequestList/APPROBATIONS_CHANGE_FAILURE';
 
 const initialState = {
   items: {},
@@ -59,24 +60,24 @@ function getItemIdFromUrl (url) {
  */
 const userrequestList = (state = initialState, action) => {
   switch (action.type) {
-    case REQUEST_ALL:
+    case ALL_REQUEST:
       return {
         ...state,
         loading: true,
       };
-    case SUCCESS_ALL:
+    case ALL_SUCCESS:
       return {
         ...state,
         loading: false,
         items: getItemsFromResponse(action.data),
       };
-    case REQUEST_DETAIL:
+    case DETAIL_REQUEST:
       return {
         ...state,
         loading: true,
       };
-    case SUCCESS_DETAIL:
-    case SUCCESS_SUBMIT_DATA:
+    case DETAIL_SUCCESS:
+    case SUBMIT_REQUEST:
       return {
         ...state,
         loading: false,
@@ -85,8 +86,8 @@ const userrequestList = (state = initialState, action) => {
           [action.data.id]: action.data,
         },
       };
-    case SUCCESS_STATE_CHANGE:
-    case SUCCESS_APPROBATIONS_CHANGE:
+    case STATE_CHANGE_SUCCESS:
+    case APPROBATIONS_CHANGE_SUCCESS:
       return {
         ...state,
         items: {
@@ -94,7 +95,7 @@ const userrequestList = (state = initialState, action) => {
           [action.data.id]: action.data,
         },
       };
-    case FAILURE_DETAIL:
+    case DETAIL_FAILURE:
       return {
         ...state,
         items: {
@@ -138,7 +139,7 @@ export const getUserrequestsArray = createSelector(
 export const fetchUserrequestList = () => ({
   [CALL_API]: {
     endpoint: '/userrequest/',
-    types: [REQUEST_ALL, SUCCESS_ALL, FAILURE_ALL],
+    types: [ALL_REQUEST, ALL_SUCCESS, ALL_FAILURE],
     config: { method: 'GET' },
   },
 });
@@ -150,7 +151,7 @@ export const fetchUserrequestList = () => ({
 export const fetchUserrequest = id => ({
   [CALL_API]: {
     endpoint: `/userrequest/${id}`,
-    types: [REQUEST_DETAIL, SUCCESS_DETAIL, FAILURE_DETAIL],
+    types: [DETAIL_REQUEST, DETAIL_SUCCESS, DETAIL_FAILURE],
     config: { method: 'GET' },
   },
 });
@@ -163,7 +164,7 @@ export const fetchUserrequest = id => ({
 export const updateState = (id, state) => ({
   [CALL_API]: {
     endpoint: `/userrequest/${id}/`,
-    types: [REQUEST_STATE_CHANGE, SUCCESS_STATE_CHANGE, FAILURE_STATE_CHANGE],
+    types: [STATE_CHANGE_REQUEST, STATE_CHANGE_SUCCESS, STATE_CHANGE_FAILURE],
     config: {
       method: 'PATCH',
       body: JSON.stringify({
@@ -182,7 +183,7 @@ export const updateState = (id, state) => ({
 export const updateStateAndApprobation = (data, status, userUuid) => ({
   [CALL_API]: {
     endpoint: `/userrequest/${data.id}/`,
-    types: [REQUEST_STATE_CHANGE, SUCCESS_STATE_CHANGE, FAILURE_STATE_CHANGE],
+    types: [STATE_CHANGE_REQUEST, STATE_CHANGE_SUCCESS, STATE_CHANGE_FAILURE],
     config: {
       method: 'PATCH',
       body: JSON.stringify({
@@ -208,7 +209,7 @@ export const updateStateAndApprobation = (data, status, userUuid) => ({
 export const updateApprobation = (data, status, userUuid) => ({
   [CALL_API]: {
     endpoint: `/userrequest/${data.id}/`,
-    types: [REQUEST_APPROBATIONS_CHANGE, SUCCESS_APPROBATIONS_CHANGE, FAILURE_APPROBATIONS_CHANGE],
+    types: [APPROBATIONS_CHANGE_REQUEST, APPROBATIONS_CHANGE_SUCCESS, APPROBATIONS_CHANGE_FAILURE],
     config: {
       method: 'PATCH',
       body: JSON.stringify({

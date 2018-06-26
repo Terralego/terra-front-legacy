@@ -3,9 +3,9 @@ import { CALL_API } from 'middlewares/api';
 export const UPDATE_VALUE = 'config/UPDATE_VALUE';
 
 // Get app config
-export const REQUEST_CONFIG = 'config/CONFIG';
-export const SUCCESS_CONFIG = 'config/SUCCESS_CONFIG';
-export const FAILURE_CONFIG = 'config/FAILURE_CONFIG';
+export const CONFIG_REQUEST = 'config/CONFIG_REQUEST';
+export const CONFIG_SUCCESS = 'config/CONFIG_SUCCESS';
+export const CONFIG_FAILURE = 'config/CONFIG_FAILURE';
 
 const initialState = {
   states: {
@@ -36,7 +36,7 @@ const userrequest = (state = initialState, action) => {
         [action.key]: action.value,
       };
     // TODO: uncomment when API is ready
-    // case SUCCESS_CONFIG:
+    // case CONFIG_SUCCESS:
     //   return {
     //     ...state,
     //     ...action.data,
@@ -73,7 +73,7 @@ export const updateConfigValue = (key, value) => ({
 export const getSettings = () => ({
   [CALL_API]: {
     endpoint: '/settings/',
-    types: [REQUEST_CONFIG, SUCCESS_CONFIG, FAILURE_CONFIG],
+    types: [CONFIG_REQUEST, CONFIG_SUCCESS, CONFIG_FAILURE],
     config: { method: 'GET' },
   },
 });

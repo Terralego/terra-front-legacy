@@ -8,6 +8,34 @@
 
 ## Usage
 
+### API requests
+
+API requests follow [redux-api-middleware](https://github.com/agraboso/redux-api-middleware) syntax.
+
+To make a request, we should use actions ending by request status :
+
+```javascript
+export const SUBMIT_REQUEST = 'userrequest/SUBMIT_REQUEST';
+export const SUBMIT_SUCCESS = 'userrequest/SUBMIT_SUCCESS';
+export const SUBMIT_FAILURE = 'userrequest/SUBMIT_FAILURE';
+```
+
+Then we could make a request using a Symbol action named `CALL_API`, with an array as types with 3 states (request, success, failure) :
+
+```javascript
+export const submit = data => ({
+  [CALL_API]: {
+    endpoint: `/url`,
+    types: [SUBMIT_REQUEST, SUBMIT_SUCCESS, SUBMIT_FAILURE],
+    config: {
+      method: 'POST',
+      body: JSON.stringify(data),
+    },
+  },
+});
+```
+
+
 ### `npm start`
 
 Build and watch files change without creating static files,

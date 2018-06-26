@@ -4,9 +4,9 @@ import FetchMock from 'fetch-mock';
 import api from 'middlewares/api';
 import userrequest, {
   UPDATE_DATA_PROPERTIES,
-  SUBMIT_DATA,
-  SUCCESS_SUBMIT_DATA,
-  FAILURE_SUBMIT_DATA,
+  SUBMIT_REQUEST,
+  SUBMIT_SUCCESS,
+  SUBMIT_FAILURE,
   submitData,
   addRequestFeature,
   ADD_GEOSJON_FEATURE,
@@ -159,7 +159,7 @@ describe('userrequest reducer', () => {
 });
 
 describe('userrequest async action', () => {
-  it('should SUBMIT_DATA, then if success SUCCESS_SUBMIT_DATA', () => {
+  it('should SUBMIT_REQUEST, then if success SUBMIT_SUCCESS', () => {
     const store = mockStore(initialState);
 
     FetchMock.post('*', { id: 'Hello' });
@@ -167,15 +167,15 @@ describe('userrequest async action', () => {
     return store.dispatch(submitData('Hello'))
       .then(() => {
         const actions = store.getActions();
-        expect(actions).toContainEqual({ type: SUBMIT_DATA });
+        expect(actions).toContainEqual({ type: SUBMIT_REQUEST });
         expect(actions).toContainEqual({
-          type: SUCCESS_SUBMIT_DATA,
+          type: SUBMIT_SUCCESS,
           data: { id: 'Hello' },
         });
       });
   });
 
-  it('should SUBMIT_DATA, then if failed FAILURE_SUBMIT_DATA', () => {
+  it('should SUBMIT_REQUEST, then if failed SUBMIT_FAILURE', () => {
     const store = mockStore(initialState);
 
     FetchMock.post('*', 400, { overwriteRoutes: true });
@@ -184,9 +184,9 @@ describe('userrequest async action', () => {
       .then(() => {
         const actions = store.getActions();
         expect(actions).toEqual([
-          { type: SUBMIT_DATA },
+          { type: SUBMIT_REQUEST },
           {
-            type: FAILURE_SUBMIT_DATA,
+            type: SUBMIT_FAILURE,
             error: {
               message: 'TypeError: Cannot read property \'on\' of undefined',
             },
