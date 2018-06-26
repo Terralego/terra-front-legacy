@@ -2,12 +2,13 @@ import { createSelector } from 'reselect';
 import moment from 'moment';
 import { CALL_API } from 'middlewares/api';
 
-export const REQUEST_ALL = 'userrequestComments/REQUEST_ALL';
-export const SUCCESS_ALL = 'userrequestComments/SUCCESS_ALL';
-export const FAILURE_ALL = 'userrequestComments/FAILURE_ALL';
-export const SUBMIT = 'userrequestComments/SUBMIT';
+export const ALL_REQUEST = 'userrequestComments/ALL_REQUEST';
+export const ALL_SUCCESS = 'userrequestComments/ALL_SUCCESS';
+export const ALL_FAILURE = 'userrequestComments/ALL_FAILURE';
+
+export const SUBMIT_REQUEST = 'userrequestComments/SUBMIT_REQUEST';
 export const SUBMIT_SUCCESS = 'userrequestComments/SUBMIT_SUCCESS';
-export const SUBMIT_FAILED = 'userrequestComments/SUBMIT_FAILED';
+export const SUBMIT_FAILURE = 'userrequestComments/SUBMIT_FAILURE';
 
 const initialState = {
   comments: {}, // comments by userrequestId
@@ -53,12 +54,12 @@ const parseCommentsByUserrequest = response => {
  */
 const userrequestComments = (state = initialState, action) => {
   switch (action.type) {
-    case REQUEST_ALL:
+    case ALL_REQUEST:
       return {
         ...state,
         loading: true,
       };
-    case SUCCESS_ALL:
+    case ALL_SUCCESS:
       return {
         ...state,
         loading: false,
@@ -68,12 +69,12 @@ const userrequestComments = (state = initialState, action) => {
           ...parseCommentsByUserrequest(action.data),
         },
       };
-    case FAILURE_ALL:
+    case ALL_FAILURE:
       return {
         ...state,
         fetched: true,
       };
-    case SUBMIT:
+    case SUBMIT_REQUEST:
       return {
         ...state,
         submitted: true,
@@ -92,7 +93,7 @@ const userrequestComments = (state = initialState, action) => {
           },
         },
       };
-    case SUBMIT_FAILED:
+    case SUBMIT_FAILURE:
       return {
         ...state,
         error: action.error,
@@ -134,7 +135,7 @@ export const getCommentsByUserrequest = createSelector(
  */
 export const updateItems = (userrequestId, comments) => dispatch => {
   dispatch({
-    type: SUCCESS_ALL,
+    type: ALL_SUCCESS,
     comments,
     userrequestId,
   });
@@ -147,7 +148,7 @@ export const updateItems = (userrequestId, comments) => dispatch => {
 export const fetchUserrequestComments = userrequestId => ({
   [CALL_API]: {
     endpoint: `/userrequest/${userrequestId}/comment`,
-    types: [REQUEST_ALL, SUCCESS_ALL, FAILURE_ALL],
+    types: [ALL_REQUEST, ALL_SUCCESS, ALL_FAILURE],
     config: {
       method: 'GET',
     },
@@ -162,7 +163,7 @@ export const fetchUserrequestComments = userrequestId => ({
 export const submitComment = (userrequestId, comment, isInternal) => ({
   [CALL_API]: {
     endpoint: `/userrequest/${userrequestId}/comment/`,
-    types: [SUBMIT, SUBMIT_SUCCESS, SUBMIT_FAILED],
+    types: [SUBMIT_REQUEST, SUBMIT_SUCCESS, SUBMIT_FAILURE],
     config: {
       method: 'POST',
       body: JSON.stringify({

@@ -3,28 +3,30 @@ import { CALL_API } from 'middlewares/api';
 
 import initialState from 'modules/userrequest-initial';
 
+// Modify userrequest object action types
 export const UPDATE_DATA_PROPERTIES = 'userrequest/UPDATE_DATA_PROPERTIES';
 export const ADD_GEOSJON_FEATURE = 'userrequest/ADD_GEOSJON_FEATURE';
 export const REMOVE_GEOSJON_FEATURE = 'userrequest/REMOVE_GEOSJON_FEATURE';
 
-// Save draft userrequest actions
-export const SAVE_DRAFT = 'userrequest/SAVE_DRAFT';
-export const SUCCESS_SAVE_DRAFT = 'userrequest/SUBMIT_DRAFT_SUCCESS';
-export const FAILURE_SAVE_DRAFT = 'userrequest/SUBMIT_DRAFT_FAILED';
+// Save draft userrequest actions types
+export const SAVE_DRAFT_REQUEST = 'userrequest/SAVE_DRAFT_REQUEST';
+export const SAVE_DRAFT_SUCCESS = 'userrequest/SAVE_DRAFT_SUCCESS';
+export const SAVE_DRAFT_FAILED = 'userrequest/SAVE_DRAFT_FAILED';
 
-// Submit userrequest actions
-export const SUBMIT_DATA = 'userrequest/SUBMIT_DATA';
-export const SUCCESS_SUBMIT_DATA = 'userrequest/SUCCESS_SUBMIT_DATA';
-export const FAILURE_SUBMIT_DATA = 'userrequest/FAILURE_SUBMIT_DATA';
+// Submit userrequest actions types
+export const SUBMIT_REQUEST = 'userrequest/SUBMIT_REQUEST';
+export const SUBMIT_SUCCESS = 'userrequest/SUBMIT_SUCCESS';
+export const SUBMIT_FAILURE = 'userrequest/SUBMIT_FAILURE';
 
-// Get draft request actions
-export const REQUEST_EXISTING = 'userrequest/REQUEST_EXISTING';
-export const SUCCESS_EXISTING = 'userrequest/SUCCESS_EXISTING';
-export const FAILURE_EXISTING = 'userrequest/FAILURE_EXISTING';
+// Get draft request actions types
+export const EXISTING_REQUEST = 'userrequest/EXISTING_REQUEST';
+export const EXISTING_SUCCESS = 'userrequest/EXISTING_SUCCESS';
+export const EXISTING_FAILURE = 'userrequest/EXISTING_FAILURE';
 
-export const POST_FEATURE = 'userrequest/POST_FEATURE';
-export const SUCCESS_POST_FEATURE = 'userrequest/SUCCESS_POST_FEATURE';
-export const FAILURE_POST_FEATURE = 'userrequest/FAILURE_POST_FEATURE';
+// Get feature intersection actions types
+export const INTERSECT_REQUEST = 'userrequest/INTERSECT_REQUEST';
+export const INTERSECT_SUCCESS = 'userrequest/INTERSECT_SUCCESS';
+export const INTERSECT_FAILURE = 'userrequest/INTERSECT_FAILURE';
 
 
 /**
@@ -100,15 +102,15 @@ const userrequest = (state = initialState, action) => {
             .filter(feature => feature.properties.id !== action.featureId),
         },
       };
-    case SUCCESS_SAVE_DRAFT:
+    case SAVE_DRAFT_SUCCESS:
       return {
         ...action.data,
       };
-    case SUCCESS_EXISTING:
+    case EXISTING_SUCCESS:
       return action.data;
-    case SUCCESS_SUBMIT_DATA:
+    case SUBMIT_SUCCESS:
       return initialState;
-    case SUCCESS_POST_FEATURE:
+    case INTERSECT_SUCCESS:
       return {
         ...state,
         geojson: {
@@ -167,7 +169,7 @@ export const removeRequestFeature = featureId => ({
 export const submitData = (data, form = 'userrequest') => ({
   [CALL_API]: {
     endpoint: `/userrequest/${data.id ? `${data.id}/` : ''}`,
-    types: [SUBMIT_DATA, SUCCESS_SUBMIT_DATA, FAILURE_SUBMIT_DATA],
+    types: [SUBMIT_REQUEST, SUBMIT_SUCCESS, SUBMIT_FAILURE],
     config: {
       method: data.id ? 'PUT' : 'POST',
       body: JSON.stringify({
@@ -186,7 +188,7 @@ export const submitData = (data, form = 'userrequest') => ({
 export const fetchUserrequest = id => ({
   [CALL_API]: {
     endpoint: `/userrequest/${id}`,
-    types: [REQUEST_EXISTING, SUCCESS_EXISTING, FAILURE_EXISTING],
+    types: [EXISTING_REQUEST, EXISTING_SUCCESS, EXISTING_FAILURE],
     config: { method: 'GET' },
   },
 });
@@ -198,7 +200,7 @@ export const fetchUserrequest = id => ({
 export const saveDraft = data => ({
   [CALL_API]: {
     endpoint: `/userrequest/${data.id ? `${data.id}/` : ''}`,
-    types: [SAVE_DRAFT, SUCCESS_SAVE_DRAFT, FAILURE_SAVE_DRAFT],
+    types: [SAVE_DRAFT_REQUEST, SAVE_DRAFT_SUCCESS, SAVE_DRAFT_FAILED],
     config: {
       method: data.id ? 'PUT' : 'POST',
       body: JSON.stringify(data),
@@ -218,7 +220,7 @@ export const getIntersections = (feature, eventDateStart, eventDateEnd) =>
   ({
     [CALL_API]: {
       endpoint: '/layer/reference/intersects/',
-      types: [POST_FEATURE, SUCCESS_POST_FEATURE, FAILURE_POST_FEATURE],
+      types: [INTERSECT_REQUEST, INTERSECT_SUCCESS, INTERSECT_FAILURE],
       config: {
         method: 'POST',
         body: JSON.stringify({
