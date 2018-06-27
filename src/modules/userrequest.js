@@ -29,7 +29,7 @@ export const INTERSECT_REQUEST = 'userrequest/INTERSECT_REQUEST';
 export const INTERSECT_SUCCESS = 'userrequest/INTERSECT_SUCCESS';
 export const INTERSECT_FAILURE = 'userrequest/INTERSECT_FAILURE';
 
-// Reset form after sumit success
+// Reset form after submit success
 export const RESET_FORM = 'userrequest/RESET_FORM';
 
 /**
