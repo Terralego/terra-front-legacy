@@ -22,11 +22,12 @@ class TerraDrawMap extends Component {
     this.sourceDraw = new ol.source.Vector({ wrapX: false });
     if (this.props.features.length) {
       this.sourceDraw
-        .addFeatures((new ol.format.GeoJSON()).readFeatures({
-          type: 'FeatureCollection',
-          features: this.props.features,
+        .addFeatures((new ol.format.GeoJSON({
           dataProjection: 'EPSG:4326',
           featureProjection: 'EPSG:3857',
+        })).readFeatures({
+          type: 'FeatureCollection',
+          features: this.props.features,
         }));
     }
     this.vectorDraw = new ol.layer.Vector({
@@ -132,7 +133,7 @@ class TerraDrawMap extends Component {
     }
 
     this.sourceDraw.on('addfeature', event => {
-      if (this.props.getGeometryOnDrawEnd) {
+      if (this.props.getGeometryOnDrawEnd && !event.feature.id) {
         const id = guid();
         this.props.getGeometryOnDrawEnd({
           type: 'Feature',
