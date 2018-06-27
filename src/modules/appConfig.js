@@ -1,4 +1,5 @@
 import { CALL_API } from 'middlewares/api';
+import { RESET_FORM } from 'modules/userrequest';
 
 export const UPDATE_VALUE = 'config/UPDATE_VALUE';
 
@@ -22,6 +23,10 @@ const initialState = {
     ACCEPTED: 2,
     REFUSED: -1,
   },
+
+  // Form default states
+  formMode: 'edit',
+  drawMode: 'pointer',
 };
 
 /**
@@ -41,6 +46,11 @@ const userrequest = (state = initialState, action) => {
     //     ...state,
     //     ...action.data,
     //   };
+    case RESET_FORM:
+      return {
+        ...state,
+        formMode: 'edit',
+      };
     default:
       return state;
   }

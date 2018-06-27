@@ -5,7 +5,6 @@ import Form from 'components/Form/Form';
 import UserrequestList from 'components/Userrequest/UserrequestList';
 import Userrequest from 'components/Userrequest/Userrequest';
 import Login from 'components/Login/Login';
-import FormSummary from 'components/Form/FormSummary';
 
 export const routes = [{
   path: '/',
@@ -39,14 +38,6 @@ export const routes = [{
   path: '/request/:id',
   name: 'Edit existing request',
   component: Form,
-  icon: 'form',
-  protected: true,
-  hideBG: true,
-  hideHeader: true,
-}, {
-  path: '/request-preview',
-  name: 'Request Preview',
-  component: FormSummary,
   icon: 'form',
   protected: true,
   hideBG: true,

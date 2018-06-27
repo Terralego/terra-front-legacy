@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
@@ -6,11 +7,14 @@ import { withRouter } from 'react-router-dom';
 import { Button, Modal, Alert } from 'antd';
 import Summary from 'components/Summary/Summary';
 import FormConfig from 'components/Form/Form.config';
-import { submitData } from 'modules/userrequest';
+import HeaderForm from 'components/Form/HeaderForm';
+import { submitData, resetForm } from 'modules/userrequest';
 
 
-class FormProperties extends React.Component {
-  handleAction = () => {
+class FormSummary extends React.Component {
+  handleAction () {
+    // Reset form to initial value
+    this.props.resetForm();
     this.props.history.push('/manage-request');
   }
 
@@ -18,15 +22,11 @@ class FormProperties extends React.Component {
     this.props.submitData(this.props.userrequest);
   }
 
-  editForm = () => {
-    // TODO: save as draft before
-    this.props.history.push(`/request/${this.props.userrequest.id}/`);
-  }
-
   render () {
     const { userrequest, form } = this.props;
     return (
       <div>
+        <HeaderForm />
         <Summary data={userrequest} />
 
         {!form.valid && <Alert
@@ -39,7 +39,7 @@ class FormProperties extends React.Component {
         <div style={{ margin: '24px 0', textAlign: 'right' }}>
           <Button
             size="large"
-            onClick={this.editForm}
+            onClick={this.props.editForm}
             style={{ marginRight: 8 }}
           >
             {FormConfig.confirmation.editButton}
@@ -61,7 +61,7 @@ class FormProperties extends React.Component {
           title={FormConfig.confirmation.modal.title}
           closable={false}
           footer={[
-            <Button key="submit" type="primary" onClick={this.handleAction}>
+            <Button key="submit" type="primary" onClick={() => this.handleAction()}>
               {FormConfig.confirmation.modal.action}
             </Button>,
           ]}
@@ -78,6 +78,13 @@ const mapStateToProps = state => ({
   form: state.forms.userrequest.$form,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({ submitData }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({
+  submitData,
+  resetForm,
+}, dispatch);
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(FormProperties));
+FormSummary.propTypes = {
+  editForm: PropTypes.func.isRequired,
+};
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(FormSummary));
