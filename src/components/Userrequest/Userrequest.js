@@ -26,7 +26,7 @@ class Userrequest extends React.Component {
         return <Redirect to="/manage-request" from={this.props.location.pathname} />;
       }
       // If userrequest is in draft status
-      // and user group is user, redirect to editabled request
+      // and user group is user, redirect to editable request
       if (data.state === DRAFT_STATUS
         && this.props.userGroup === 'user') {
         return (

@@ -9,9 +9,9 @@ import userrequest, {
   SUBMIT_FAILURE,
   submitData,
   addRequestFeature,
-  ADD_GEOSJON_FEATURE,
+  ADD_GEOJSON_FEATURE,
   removeRequestFeature,
-  REMOVE_GEOSJON_FEATURE,
+  REMOVE_GEOJSON_FEATURE,
   getFeaturesWithIncidence,
 } from './userrequest';
 
@@ -218,10 +218,10 @@ describe('addRequestFeature action', () => {
     },
   };
 
-  it('should dispatch a ADD_GEOSJON_FEATURE action type', () => {
+  it('should dispatch a ADD_GEOJSON_FEATURE action type', () => {
     store.dispatch(addRequestFeature(feature));
     const actions = store.getActions();
-    expect(actions[0].type).toEqual(ADD_GEOSJON_FEATURE);
+    expect(actions[0].type).toEqual(ADD_GEOJSON_FEATURE);
   });
 
   it('should add a feature in geojson', () => {
@@ -249,10 +249,10 @@ describe('removeRequestFeature action', () => {
     },
   });
 
-  it('should dispatch a REMOVE_GEOSJON_FEATURE action type', () => {
+  it('should dispatch a REMOVE_GEOJSON_FEATURE action type', () => {
     store.dispatch(removeRequestFeature('b'));
     const actions = store.getActions();
-    expect(actions[0].type).toEqual(REMOVE_GEOSJON_FEATURE);
+    expect(actions[0].type).toEqual(REMOVE_GEOJSON_FEATURE);
   });
 
   it('should add a feature in geojson', () => {
