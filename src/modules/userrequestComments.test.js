@@ -40,7 +40,7 @@ describe('userrequestComments selector', () => {
 });
 
 describe('SUBMIT_SUCCESS action', () => {
-  it('should add new comment when recieve data', () => {
+  it('should add new comment when receive data', () => {
     const state = {
       comments: {
         15: { 1: { content: 'ok', date: '01/02/18' } },

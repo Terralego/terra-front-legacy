@@ -120,7 +120,7 @@ export default userrequestList;
 /**
  * getUserrequestsArray selector
  * @param {object} state
- * @returns {array} array of userrequest without errored items
+ * @returns {array} array of userrequest without erroneous items
  */
 export const getUserrequestsArray = createSelector(
   state => state.userrequestList.items,
@@ -176,7 +176,7 @@ export const updateState = (id, state) => ({
 
 /**
  * updateStateAndApprobations action : update state of a userrequest
- * @param {object} userrequest - data that we wan't change approbations
+ * @param {object} userrequest - data we want to change the approbation
  * @param {number} status - N2 approbation status
  * @param {string} userUuid - uuid of N1 that request approbation
  */
@@ -202,7 +202,7 @@ export const updateStateAndApprobation = (data, status, userUuid) => ({
 
 /**
  * userrequest action : update approbation status from N1 user
- * @param {object} userrequest - data that we wan't change approbations
+ * @param {object} userrequest - data we want to change the approbation
  * @param {number} status - N1 approbation status
  * @param {string} userUuid - uuid of N1 that request approbation
  */

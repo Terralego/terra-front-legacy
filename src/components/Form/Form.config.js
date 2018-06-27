@@ -15,7 +15,7 @@ const FormConfig = {
     modal: {
       title: 'Request sent',
       action: 'Go to requests list',
-      text: 'Submit successed!',
+      text: 'Submit succeeded!',
     },
   },
   status: [

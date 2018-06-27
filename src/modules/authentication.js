@@ -87,7 +87,7 @@ export default authentication;
 export const getUserGroup = createSelector(
   state => state.authentication.payload && state.authentication.payload.user,
   // Temporary we get first item
-  // TODO: find a way to implemant authorization with multiple groups
+  // TODO: find a way to implement authorization with multiple groups
   user => user && user.groups[0],
 );
 
@@ -140,7 +140,7 @@ export function resetToken () {
 }
 
 /**
- * Recieve token
+ * Receive token
  * @param {object} payload
  */
 export const receiveToken = payload => ({
@@ -159,7 +159,7 @@ export const logout = () => dispatch => {
 /**
  * Make a refresh request to the API.
  *
- * Allow the user to not relog if the current token
+ * Allow the user to not re-login if the current token
  * is still in the period of 'refresh token allowed'.
  *
  */

@@ -5,7 +5,7 @@ to alter default Webpack & Jest configuration provided by
 [create-react-app](https://github.com/facebook/create-react-app).
 
 - [`index.js`](./index.js) is the entry point linking to :
-  - [`webpack.js`](./webpack.js) wich alters Webpack configuration,
+  - [`webpack.js`](./webpack.js) which alters Webpack configuration,
   - [`jest.js`](./jest.js) alters Jest configuration.
 - [`settings.js`](./settings.js) stores the values shared by the two previous
   files.
