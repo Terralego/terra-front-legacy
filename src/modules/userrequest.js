@@ -5,8 +5,8 @@ import initialState from 'modules/userrequest-initial';
 
 // Modify userrequest object action types
 export const UPDATE_DATA_PROPERTIES = 'userrequest/UPDATE_DATA_PROPERTIES';
-export const ADD_GEOSJON_FEATURE = 'userrequest/ADD_GEOSJON_FEATURE';
-export const REMOVE_GEOSJON_FEATURE = 'userrequest/REMOVE_GEOSJON_FEATURE';
+export const ADD_GEOJSON_FEATURE = 'userrequest/ADD_GEOJSON_FEATURE';
+export const REMOVE_GEOJSON_FEATURE = 'userrequest/REMOVE_GEOJSON_FEATURE';
 
 // Save draft userrequest actions types
 export const SAVE_DRAFT_REQUEST = 'userrequest/SAVE_DRAFT_REQUEST';
@@ -82,7 +82,7 @@ const userrequest = (state = initialState, action) => {
           ...action.properties,
         },
       };
-    case ADD_GEOSJON_FEATURE:
+    case ADD_GEOJSON_FEATURE:
       return {
         ...state,
         geojson: {
@@ -93,7 +93,7 @@ const userrequest = (state = initialState, action) => {
           ],
         },
       };
-    case REMOVE_GEOSJON_FEATURE:
+    case REMOVE_GEOJSON_FEATURE:
       return {
         ...state,
         geojson: {
@@ -148,7 +148,7 @@ export const updateRequestProperties = properties => ({
  * @param  {object} properties : object of properties to add / update in userrequest object
  */
 export const addRequestFeature = feature => ({
-  type: ADD_GEOSJON_FEATURE,
+  type: ADD_GEOJSON_FEATURE,
   feature,
 });
 
@@ -158,7 +158,7 @@ export const addRequestFeature = feature => ({
  * @param  {object} properties : object of properties to remove / update in userrequest object
  */
 export const removeRequestFeature = featureId => ({
-  type: REMOVE_GEOSJON_FEATURE,
+  type: REMOVE_GEOJSON_FEATURE,
   featureId,
 });
 
