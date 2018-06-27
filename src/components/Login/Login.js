@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import { Form, Button, Input } from 'antd';
+import { Form, Button, Input, Row, Col } from 'antd';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 
 import { loginUser } from 'modules/authentication';
+
+import styles from './Login.module.scss';
 
 const FormItem = Form.Item;
 
@@ -32,23 +34,35 @@ class Login extends Component {
         <Redirect to={location.state ? location.state.from : '/'} />
         :
         <Form onSubmit={this.handleSubmit}>
-          <h2>Login</h2>
-          <FormItem label="Email" >
-            {getFieldDecorator('email', {
-              rules: [{ required: true, message: 'Veuillez saisir un titre' }],
-            })(<Input />)}
-          </FormItem>
+          <Row gutter={42} className={styles.row}>
+            <Col span={12} className={styles.login}>
+              <h2>Se connecter</h2>
+              <FormItem label="Email" >
+                {getFieldDecorator('email', {
+                  rules: [{ required: true, message: 'Veuillez saisir un titre' }],
+                })(<Input />)}
+              </FormItem>
 
-          <FormItem label="Password">
-            {getFieldDecorator('password', {
-            })(<Input type="password" />)}
-          </FormItem>
+              <FormItem label="Password">
+                {getFieldDecorator('password', {
+                })(<Input type="password" />)}
+              </FormItem>
 
-          <FormItem>
-            <Button type="primary" htmlType="submit" icon="arrow-right">
-              Login
-            </Button>
-          </FormItem>
+              <Button type="primary" htmlType="submit" icon="arrow-right">
+                Me connecter
+              </Button>
+            </Col>
+            <Col span={12} className={styles.signUp}>
+              <h2>Créer un compte</h2>
+              <p>Vous n'avez pas encore de compte ?</p>
+
+              <Link to="/profile">
+                <Button type="primary" icon="arrow-right">
+                  Créer un compte
+                </Button>
+              </Link>
+            </Col>
+          </Row>
         </Form>
     );
   }
