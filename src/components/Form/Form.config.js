@@ -6,6 +6,10 @@ const FormConfig = {
     { title: 'Projet', component: FormProject },
     { title: 'Where', component: FormWhere },
   ],
+  title: {
+    edit: 'Nouvelle demande d\'autorisation',
+    preview: 'Récapitulatif de la demande d\'autorisation',
+  },
   confirmation: {
     dratButton: 'Save as draft',
     previewButton: 'Preview your request',

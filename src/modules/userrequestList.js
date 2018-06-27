@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 
 import { CALL_API } from 'middlewares/api';
-import { SUBMIT_REQUEST } from 'modules/userrequest';
+import { SUBMIT_SUCCESS } from 'modules/userrequest';
 
 // Load all userrequest
 export const ALL_REQUEST = 'userrequestList/ALL_REQUEST';
@@ -77,7 +77,7 @@ const userrequestList = (state = initialState, action) => {
         loading: true,
       };
     case DETAIL_SUCCESS:
-    case SUBMIT_REQUEST:
+    case SUBMIT_SUCCESS:
       return {
         ...state,
         loading: false,

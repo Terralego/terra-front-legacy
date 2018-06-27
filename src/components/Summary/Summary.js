@@ -2,16 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Divider, Card } from 'antd';
+import { Card } from 'antd';
 
 const Summary = props => {
   const { data } = props;
 
   return (
     <div>
-      <h2>Demande</h2>
-      <Divider />
-
       <Card
         style={{ marginTop: 16 }}
         title="Project"
@@ -43,7 +40,7 @@ Summary.propTypes = {
   data: PropTypes.shape({
     feature: PropTypes.number,
     organisation: PropTypes.arrayOf(PropTypes.number),
-    owner: PropTypes.number,
+    owner: PropTypes.object,
     state: PropTypes.number,
     properties: PropTypes.object,
   }).isRequired,

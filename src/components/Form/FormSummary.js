@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
@@ -6,10 +7,11 @@ import { withRouter } from 'react-router-dom';
 import { Button, Modal, Alert } from 'antd';
 import Summary from 'components/Summary/Summary';
 import FormConfig from 'components/Form/Form.config';
+import HeaderForm from 'components/Form/HeaderForm';
 import { submitData } from 'modules/userrequest';
 
 
-class FormProperties extends React.Component {
+class FormSummary extends React.Component {
   handleAction = () => {
     this.props.history.push('/manage-request');
   }
@@ -18,15 +20,15 @@ class FormProperties extends React.Component {
     this.props.submitData(this.props.userrequest);
   }
 
-  editForm = () => {
-    // TODO: save as draft before
-    this.props.history.push(`/request/${this.props.userrequest.id}/`);
-  }
+  // editForm = () => {
+  //   this.props.history.push(`/request/${this.props.userrequest.id}/`);
+  // }
 
   render () {
     const { userrequest, form } = this.props;
     return (
       <div>
+        <HeaderForm />
         <Summary data={userrequest} />
 
         {!form.valid && <Alert
@@ -39,7 +41,7 @@ class FormProperties extends React.Component {
         <div style={{ margin: '24px 0', textAlign: 'right' }}>
           <Button
             size="large"
-            onClick={this.editForm}
+            onClick={this.props.editForm}
             style={{ marginRight: 8 }}
           >
             {FormConfig.confirmation.editButton}
@@ -80,4 +82,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators({ submitData }, dispatch);
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(FormProperties));
+FormSummary.propTypes = {
+  editForm: PropTypes.func.isRequired,
+};
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(FormSummary));

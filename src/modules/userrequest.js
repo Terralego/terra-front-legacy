@@ -205,7 +205,6 @@ export const saveDraft = data => ({
       method: data.id ? 'PUT' : 'POST',
       body: JSON.stringify(data),
     },
-    form: 'userrequest',
   },
 });
 

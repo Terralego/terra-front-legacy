@@ -10,6 +10,7 @@ function FormProject () {
         label="Title"
         placeholder="Give a title to your project"
         errorMessages={{ required: 'Please provide a title' }}
+        required
       />
 
       <Input
@@ -17,6 +18,7 @@ function FormProject () {
         label="Description"
         placeholder="Describe your project"
         errorMessages={{ required: 'Please provide a description' }}
+        required
       />
     </Fieldset>
   );
