@@ -25,14 +25,12 @@ export const routes = [{
   component: Profile,
   icon: 'paper-clip',
   protected: false,
-  hideBG: true,
 }, {
   path: '/new-request',
   name: 'New request',
   component: Form,
   icon: 'form',
   protected: false,
-  hideBG: true,
   hideHeader: true,
 }, {
   path: '/request/:id',
@@ -40,7 +38,6 @@ export const routes = [{
   component: Form,
   icon: 'form',
   protected: true,
-  hideBG: true,
   hideHeader: true,
 }, {
   path: '/manage-request',

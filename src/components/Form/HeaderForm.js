@@ -21,20 +21,17 @@ class HeaderForm extends React.Component {
       <header className={styles.header}>
         <Row gutter={16} type="flex" justify="space-between">
           <Col span={12}>
-            <Link to="">Retour</Link>
+            <Button onClick={this.props.history.goBack}>Retour</Button>
           </Col>
           <Col>
-            <Link to="">
-              <Button type="secondary" htmlType="button" onClick={this.saveDraft}>
-                <Icon type="save" />{FormConfig.confirmation.dratButton}
-              </Button>
-            </Link>
+            <Button type="primary" htmlType="button" onClick={this.saveDraft}>
+              <Icon type="save" />{FormConfig.confirmation.dratButton}
+            </Button>
             {this.props.showSubmit &&
-            <Link to="" style={{ marginLeft: 12 }}>
-              <Button type="primary" htmlType="submit">
-                <Icon type="check-circle-o" />{FormConfig.confirmation.submitButton}
-              </Button>
-            </Link>}
+            <Button type="primary" htmlType="submit">
+              <Icon type="check-circle-o" />{FormConfig.confirmation.submitButton}
+            </Button>
+            }
           </Col>
         </Row>
       </header>
