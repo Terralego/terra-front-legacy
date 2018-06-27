@@ -6,7 +6,8 @@ import { Form as ReduxForm, track } from 'react-redux-form';
 import { withRouter } from 'react-router-dom';
 import moment from 'moment';
 
-import { fetchUserrequest, saveDraft } from 'modules/userrequest';
+import { fetchUserrequest } from 'modules/userrequest';
+import { updateConfigValue } from 'modules/appConfig';
 
 import HeaderForm from 'components/Form/HeaderForm';
 import FormConfig from 'components/Form/Form.config';
@@ -29,10 +30,6 @@ const HeaderUserrequest = props => (
 );
 
 class FormApp extends React.Component {
-  state = {
-    mode: 'edit', // edit or preview
-  };
-
   componentDidMount () {
     if (this.props.match.params.id) {
       // If we route on a draft userrequest, load data
@@ -48,21 +45,19 @@ class FormApp extends React.Component {
   }
 
   previewForm = () => {
-    this.setState({ mode: 'preview' });
+    this.props.updateConfigValue('formMode', 'preview');
   }
 
   editForm = () => {
-    this.setState({ mode: 'edit' });
+    this.props.updateConfigValue('formMode', 'edit');
   }
 
   render () {
-    const { mode } = this.state;
-
     return (
       <div>
         <HeaderForm />
-        <HeaderUserrequest {...this.props} mode={mode} />
-        {mode ===  'edit' ?
+        <HeaderUserrequest {...this.props} />
+        {this.props.mode ===  'edit' ?
           <ReduxForm
             model={track('userrequest')}
             onSubmit={this.previewForm}
@@ -86,10 +81,12 @@ class FormApp extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  ...state.userrequest,
+  id: state.userrequest.id,
+  updated_at: state.userrequest.updated_at,
+  mode: state.appConfig.formMode,
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ fetchUserrequest, saveDraft }, dispatch);
+  bindActionCreators({ fetchUserrequest, updateConfigValue }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(FormApp));

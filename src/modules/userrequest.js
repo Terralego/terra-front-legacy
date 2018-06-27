@@ -1,5 +1,6 @@
-import { CALL_API } from 'middlewares/api';
+import { actions } from 'react-redux-form';
 
+import { CALL_API } from 'middlewares/api';
 
 import initialState from 'modules/userrequest-initial';
 
@@ -28,6 +29,8 @@ export const INTERSECT_REQUEST = 'userrequest/INTERSECT_REQUEST';
 export const INTERSECT_SUCCESS = 'userrequest/INTERSECT_SUCCESS';
 export const INTERSECT_FAILURE = 'userrequest/INTERSECT_FAILURE';
 
+// Reset form after sumit success
+export const RESET_FORM = 'userrequest/RESET_FORM';
 
 /**
  * Creation of an initial gricode equal to zero, while mapping through the features
@@ -161,6 +164,16 @@ export const removeRequestFeature = featureId => ({
   type: REMOVE_GEOSJON_FEATURE,
   featureId,
 });
+
+/**
+ * userrequest action
+ * resetForm restore form in its initial state with react-redux-form action
+ * and clear userrequest data
+ */
+export const resetForm = () => dispatch => {
+  dispatch(actions.setInitial('userrequest'));
+  return dispatch({ type: RESET_FORM });
+};
 
 /**
  * Submit data object

@@ -8,21 +8,19 @@ import { Button, Modal, Alert } from 'antd';
 import Summary from 'components/Summary/Summary';
 import FormConfig from 'components/Form/Form.config';
 import HeaderForm from 'components/Form/HeaderForm';
-import { submitData } from 'modules/userrequest';
+import { submitData, resetForm } from 'modules/userrequest';
 
 
 class FormSummary extends React.Component {
-  handleAction = () => {
+  handleAction () {
+    // Reset form to initial value
+    this.props.resetForm();
     this.props.history.push('/manage-request');
   }
 
   submitForm = () => {
     this.props.submitData(this.props.userrequest);
   }
-
-  // editForm = () => {
-  //   this.props.history.push(`/request/${this.props.userrequest.id}/`);
-  // }
 
   render () {
     const { userrequest, form } = this.props;
@@ -63,7 +61,7 @@ class FormSummary extends React.Component {
           title={FormConfig.confirmation.modal.title}
           closable={false}
           footer={[
-            <Button key="submit" type="primary" onClick={this.handleAction}>
+            <Button key="submit" type="primary" onClick={() => this.handleAction()}>
               {FormConfig.confirmation.modal.action}
             </Button>,
           ]}
@@ -80,7 +78,10 @@ const mapStateToProps = state => ({
   form: state.forms.userrequest.$form,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({ submitData }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({
+  submitData,
+  resetForm,
+}, dispatch);
 
 FormSummary.propTypes = {
   editForm: PropTypes.func.isRequired,
