@@ -27,11 +27,13 @@ class HeaderForm extends React.Component {
 
   render () {
     const { loadingSaveDraft } = this.state;
+    const { history, form } = this.props;
+
     return (
       <header className={styles.header}>
         <Row gutter={16} type="flex" justify="space-between">
           <Col span={12}>
-            <Button type="inverse" onClick={this.props.history.goBack}>
+            <Button type="primary" onClick={history.goBack}>
               <Icon type="left" />
               {FormConfig.confirmation.backButton}
             </Button>
