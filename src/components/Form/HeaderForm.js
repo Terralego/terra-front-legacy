@@ -28,7 +28,7 @@ class HeaderForm extends React.Component {
           </Col>
           <Col>
             <Button type="primary-dark" htmlType="button" onClick={this.saveDraft}>
-              <Icon type="save" />{FormConfig.confirmation.dratButton}
+              <Icon type="save" />{FormConfig.confirmation.draftButton}
             </Button>
             {this.props.showSubmit &&
             <Button type="primary-dark" htmlType="submit">
