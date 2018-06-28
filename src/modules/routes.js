@@ -32,6 +32,7 @@ export const routes = [{
   icon: 'form',
   protected: false,
   hideHeader: true,
+  hideFooter: true,
 }, {
   path: '/request/:id',
   name: 'Edit existing request',
@@ -39,6 +40,7 @@ export const routes = [{
   icon: 'form',
   protected: true,
   hideHeader: true,
+  hideFooter: true,
 }, {
   path: '/manage-request',
   name: 'Manage requests',
