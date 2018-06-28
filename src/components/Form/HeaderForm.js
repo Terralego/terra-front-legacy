@@ -11,12 +11,18 @@ import FormConfig from 'components/Form/Form.config';
 import styles from './HeaderForm.module.scss';
 
 class HeaderForm extends React.Component {
-  saveDraft = e => {
+  state = {
+    loadingSaveDraft: false,
+  }
+
+  saveDraft (e) {
+    this.setState({ loadingSaveDraft: true });
     this.props.saveDraft(this.props.userrequest);
     e.preventDefault();
   }
 
   render () {
+    const { loadingSaveDraft } = this.state;
     return (
       <header className={styles.header}>
         <Row gutter={16} type="flex" justify="space-between">
@@ -27,12 +33,18 @@ class HeaderForm extends React.Component {
             </Button>
           </Col>
           <Col>
-            <Button type="primary-dark" htmlType="button" onClick={this.saveDraft}>
-              <Icon type="save" />{FormConfig.confirmation.draftButton}
+            <Button
+              type="primary-dark"
+              htmlType="button"
+              onClick={e => this.saveDraft(e)}
+              loading={loadingSaveDraft}
+              icon="save"
+            >
+              {FormConfig.confirmation.draftButton}
             </Button>
             {this.props.showSubmit &&
-            <Button type="primary-dark" htmlType="submit">
-              <Icon type="check-circle-o" />{FormConfig.confirmation.submitButton}
+            <Button type="primary-dark" htmlType="submit" icon="check-circle-o">
+              {FormConfig.confirmation.submitButton}
             </Button>
             }
           </Col>
