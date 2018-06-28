@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { Button, Icon, Col, Row } from 'antd';
 import { withRouter } from 'react-router-dom';
 
-import { saveDraft } from 'modules/userrequest';
+import { saveDraft, submitData } from 'modules/userrequest';
 import FormConfig from 'components/Form/Form.config';
 
 import styles from './HeaderForm.module.scss';
@@ -13,6 +13,10 @@ import styles from './HeaderForm.module.scss';
 class HeaderForm extends React.Component {
   state = {
     loadingSaveDraft: false,
+  }
+
+  submitForm = () => {
+    this.props.submitData(this.props.userrequest);
   }
 
   saveDraft (e) {
@@ -43,7 +47,13 @@ class HeaderForm extends React.Component {
               {FormConfig.confirmation.draftButton}
             </Button>
             {this.props.showSubmit &&
-            <Button type="primary-dark" htmlType="submit" icon="check-circle-o">
+            <Button
+              type="primary-dark"
+              onClick={this.submitForm}
+              icon="arrow-right"
+              style={{ marginLeft: 12 }}
+              loading={form.loading}
+            >
               {FormConfig.confirmation.submitButton}
             </Button>
             }
@@ -64,9 +74,10 @@ HeaderForm.defaultProps = {
 
 const mapStateToProps = state => ({
   userrequest: state.userrequest,
+  form: state.forms.userrequest.$form,
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ saveDraft }, dispatch);
+  bindActionCreators({ saveDraft, submitData }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(HeaderForm));
