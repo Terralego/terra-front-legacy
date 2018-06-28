@@ -30,7 +30,7 @@ export const routes = [{
   name: 'New request',
   component: Form,
   icon: 'form',
-  protected: false,
+  protected: true,
   hideHeader: true,
   hideFooter: true,
 }, {
