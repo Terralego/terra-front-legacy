@@ -23,7 +23,7 @@ class HeaderForm extends React.Component {
           <Col span={12}>
             <Button type="inverse" onClick={this.props.history.goBack}>
               <Icon type="left" />
-              Retour
+              {FormConfig.confirmation.backButton}
             </Button>
           </Col>
           <Col>

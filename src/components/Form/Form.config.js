@@ -11,6 +11,7 @@ const FormConfig = {
     preview: 'Summary request',
   },
   confirmation: {
+    backButton: 'Back',
     draftButton: 'Save as draft',
     previewButton: 'Preview your request',
     editButton: 'Edit my request',
