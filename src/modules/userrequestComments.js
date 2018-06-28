@@ -120,7 +120,7 @@ const sortByDate = (a, b) => moment(a.date).isBefore(b.date);
  */
 export const getCommentsByUserrequest = createSelector(
   (state, userrequestId) => state.userrequestComments.comments[userrequestId] || {},
-  items => Object.keys(items).map(key => items[key]).sort(sortByDate),
+  items => Object.values(items).sort(sortByDate),
 );
 
 

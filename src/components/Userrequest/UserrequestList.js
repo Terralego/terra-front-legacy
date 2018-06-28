@@ -5,7 +5,7 @@ import { Link, withRouter } from 'react-router-dom';
 import { List, Spin } from 'antd';
 import moment from 'moment';
 
-import { fetchUserrequestList } from 'modules/userrequestList';
+import { fetchUserrequestList, getUserrequestArray } from 'modules/userrequestList';
 
 class UserrequestList extends React.Component {
   componentDidMount () {
@@ -52,8 +52,7 @@ class UserrequestList extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  // TODO: use Reselect for increase performances
-  items: Object.keys(state.userrequestList.items).map(key => state.userrequestList.items[key]),
+  items: getUserrequestArray(state),
   loading: state.userrequestList.loading,
 });
 
