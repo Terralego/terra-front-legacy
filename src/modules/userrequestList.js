@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
-
 import { CALL_API } from 'middlewares/api';
 import { SUBMIT_SUCCESS } from 'modules/userrequest';
+import { getUserGroup } from 'modules/authentication';
 
 // Load all userrequest
 export const ALL_REQUEST = 'userrequestList/ALL_REQUEST';
@@ -118,15 +118,39 @@ export default userrequestList;
  */
 
 /**
+ * getUserrequestsByUser selector
+ * @param {object} items
+ * @param {string} userGroup
+ * @param {number} draftStatus
+ * @returns {array} array of userrequest without draft if N1 or N2
+ */
+const getUserrequestsByUser = (items, userGroup, draftStatus) => {
+  const userrequestArray = Object.keys(items).map(key => items[key]).filter(item => !item.error);
+  if (userGroup === 'N1' || userGroup === 'N2') {
+    return userrequestArray.filter(userrequest => userrequest.state !== draftStatus);
+  }
+
+  return userrequestArray;
+};
+
+const getDraftStatus = createSelector(
+  state => state.appConfig.states.DRAFT,
+  draftStatus => draftStatus,
+);
+
+/**
  * getUserrequestsArray selector
  * @param {object} state
  * @returns {array} array of userrequest without erroneous items
  */
 export const getUserrequestsArray = createSelector(
-  state => state.userrequestList.items,
-  items => Object.keys(items).map(key => items[key]).filter(item => !item.error),
+  [
+    state => state.userrequestList.items,
+    getUserGroup,
+    getDraftStatus,
+  ],
+  (items, userGroup, draftStatus) => getUserrequestsByUser(items, userGroup, draftStatus),
 );
-
 
 /**
  * ACTIONS
