@@ -12,7 +12,7 @@ export const REMOVE_GEOJSON_FEATURE = 'userrequest/REMOVE_GEOJSON_FEATURE';
 // Save draft userrequest actions types
 export const SAVE_DRAFT_REQUEST = 'userrequest/SAVE_DRAFT_REQUEST';
 export const SAVE_DRAFT_SUCCESS = 'userrequest/SAVE_DRAFT_SUCCESS';
-export const SAVE_DRAFT_FAILED = 'userrequest/SAVE_DRAFT_FAILED';
+export const SAVE_DRAFT_FAILURE = 'userrequest/SAVE_DRAFT_FAILURE';
 
 // Submit userrequest actions types
 export const SUBMIT_REQUEST = 'userrequest/SUBMIT_REQUEST';
@@ -213,7 +213,7 @@ export const fetchUserrequest = id => ({
 export const saveDraft = data => ({
   [CALL_API]: {
     endpoint: `/userrequest/${data.id ? `${data.id}/` : ''}`,
-    types: [SAVE_DRAFT_REQUEST, SAVE_DRAFT_SUCCESS, SAVE_DRAFT_FAILED],
+    types: [SAVE_DRAFT_REQUEST, SAVE_DRAFT_SUCCESS, SAVE_DRAFT_FAILURE],
     config: {
       method: data.id ? 'PUT' : 'POST',
       body: JSON.stringify(data),

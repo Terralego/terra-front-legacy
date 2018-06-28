@@ -5,34 +5,58 @@ import PropTypes from 'prop-types';
 import { Button, Icon, Col, Row } from 'antd';
 import { withRouter } from 'react-router-dom';
 
-import { saveDraft } from 'modules/userrequest';
+import { saveDraft, submitData } from 'modules/userrequest';
 import FormConfig from 'components/Form/Form.config';
 
 import styles from './HeaderForm.module.scss';
 
 class HeaderForm extends React.Component {
-  saveDraft = e => {
+  state = {
+    loadingSaveDraft: false,
+  }
+
+  submitForm = () => {
+    this.props.submitData(this.props.userrequest);
+  }
+
+  saveDraft (e) {
+    this.setState({ loadingSaveDraft: true });
     this.props.saveDraft(this.props.userrequest);
     e.preventDefault();
   }
 
   render () {
+    const { loadingSaveDraft } = this.state;
+    const { history, form } = this.props;
+
     return (
       <header className={styles.header}>
         <Row gutter={16} type="flex" justify="space-between">
           <Col span={12}>
-            <Button type="inverse" onClick={this.props.history.goBack}>
+            <Button type="primary" onClick={history.goBack}>
               <Icon type="left" />
-              Retour
+              {FormConfig.confirmation.backButton}
             </Button>
           </Col>
           <Col>
-            <Button type="primary-dark" htmlType="button" onClick={this.saveDraft}>
-              <Icon type="save" />{FormConfig.confirmation.dratButton}
+            <Button
+              type="primary-dark"
+              htmlType="button"
+              onClick={e => this.saveDraft(e)}
+              loading={loadingSaveDraft}
+              icon="save"
+            >
+              {FormConfig.confirmation.draftButton}
             </Button>
             {this.props.showSubmit &&
-            <Button type="primary-dark" htmlType="submit">
-              <Icon type="check-circle-o" />{FormConfig.confirmation.submitButton}
+            <Button
+              type="primary-dark"
+              onClick={this.submitForm}
+              icon="arrow-right"
+              style={{ marginLeft: 12 }}
+              loading={form.pending}
+            >
+              {FormConfig.confirmation.submitButton}
             </Button>
             }
           </Col>
@@ -52,9 +76,10 @@ HeaderForm.defaultProps = {
 
 const mapStateToProps = state => ({
   userrequest: state.userrequest,
+  form: state.forms.userrequest.$form,
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ saveDraft }, dispatch);
+  bindActionCreators({ saveDraft, submitData }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(HeaderForm));

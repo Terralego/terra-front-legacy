@@ -6,6 +6,7 @@ import userrequestComments from 'modules/userrequestComments';
 import authentication from 'modules/authentication';
 import authenticationTimer from 'modules/authenticationTimer';
 import profile from 'modules/profile';
+import error from 'modules/error';
 import { createForms } from 'react-redux-form';
 
 export default combineReducers({
@@ -18,4 +19,5 @@ export default combineReducers({
   userrequestList,
   authentication,
   authenticationTimer,
+  error,
 });
