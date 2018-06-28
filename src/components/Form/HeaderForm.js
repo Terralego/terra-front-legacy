@@ -54,7 +54,7 @@ class HeaderForm extends React.Component {
               onClick={this.submitForm}
               icon="arrow-right"
               style={{ marginLeft: 12 }}
-              loading={form.loading}
+              loading={form.pending}
             >
               {FormConfig.confirmation.submitButton}
             </Button>
