@@ -34,8 +34,8 @@ class Login extends Component {
         <Redirect to={location.state ? location.state.from : '/'} />
         :
         <Form onSubmit={this.handleSubmit}>
-          <Row gutter={42} className={styles.row}>
-            <Col span={12} className={styles.login}>
+          <Row className={styles.row}>
+            <Col span={24} sm={12} className={styles.login}>
               <h2>Se connecter</h2>
               <FormItem label="Email" >
                 {getFieldDecorator('email', {
@@ -48,16 +48,16 @@ class Login extends Component {
                 })(<Input type="password" />)}
               </FormItem>
 
-              <Button type="primary" htmlType="submit" icon="arrow-right">
+              <Button type="primary" htmlType="submit" icon="arrow-right" className={styles.loginButton}>
                 Me connecter
               </Button>
             </Col>
-            <Col span={12} className={styles.signUp}>
+            <Col span={24} sm={12} className={styles.signup}>
               <h2>Créer un compte</h2>
               <p>Vous n'avez pas encore de compte ?</p>
 
               <Link to="/profile">
-                <Button type="primary" icon="arrow-right">
+                <Button type="default" icon="arrow-right" className={styles.signupButton}>
                   Créer un compte
                 </Button>
               </Link>
