@@ -125,7 +125,7 @@ export default userrequestList;
  * @returns {array} array of userrequest without draft if N1 or N2
  */
 const getUserrequestsByUser = (items, userGroup, draftStatus) => {
-  const userrequestArray = Object.keys(items).map(key => items[key]).filter(item => !item.error);
+  const userrequestArray = items.filter(item => !item.error);
   if (userGroup === 'N1' || userGroup === 'N2') {
     return userrequestArray.filter(userrequest => userrequest.state !== draftStatus);
   }
@@ -138,19 +138,25 @@ const getDraftStatus = createSelector(
   draftStatus => draftStatus,
 );
 
+export const getUserrequestArray = createSelector(
+  state => state.userrequestList.items,
+  items => Object.values(items),
+);
+
 /**
  * getUserrequestsArray selector
  * @param {object} state
  * @returns {array} array of userrequest without erroneous items
  */
-export const getUserrequestsArray = createSelector(
+export const getUserrequestsArrayFilteredByUser = createSelector(
   [
-    state => state.userrequestList.items,
+    getUserrequestArray,
     getUserGroup,
     getDraftStatus,
   ],
   (items, userGroup, draftStatus) => getUserrequestsByUser(items, userGroup, draftStatus),
 );
+
 
 /**
  * ACTIONS
