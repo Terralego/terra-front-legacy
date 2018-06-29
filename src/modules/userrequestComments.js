@@ -33,6 +33,7 @@ const getCommentData = data => ({
   content: data.properties.comment,
   date: data.created_at,
   author: getCommentAuthor(data.owner),
+  is_internal: data.is_internal,
 });
 
 const parseCommentsByUserrequest = response => {

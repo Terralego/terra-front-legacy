@@ -54,6 +54,7 @@ describe('SUBMIT_SUCCESS action', () => {
         id: 5,
         created_at: '2018-05-18T16:48:09.299906+02:00',
         updated_at: '2018-05-18T16:48:09.299949+02:00',
+        is_internal: true,
         properties: {
           comment: 'blabla',
         },
@@ -74,7 +75,12 @@ describe('SUBMIT_SUCCESS action', () => {
       comments: {
         15: { 1: { content: 'ok', date: '01/02/18' } },
         20: { 6: { content: 'a', date: '01/02/18' }, 7: { content: 'b', date: '01/02/18' } },
-        21: { 5: { content: 'blabla', date: '2018-05-18T16:48:09.299906+02:00', author: 'Alexandra Janin' } },
+        21: { 5: {
+          content: 'blabla',
+          date: '2018-05-18T16:48:09.299906+02:00',
+          author: 'Alexandra Janin',
+          is_internal: true,
+        } },
       },
     };
     expect(userrequestComments(state, action)).toEqual(expectedState);
