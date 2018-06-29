@@ -63,7 +63,7 @@ class FormApp extends React.Component {
             onSubmit={this.previewForm}
           >
             {FormConfig.steps.map(step => (
-              <Card title={step.title} key={`step_${step.title}`} style={{ marginTop: 16 }}>
+              <Card title={step.title} key={step.title} style={{ marginTop: 16 }}>
                 <step.component />
               </Card>
             ))}

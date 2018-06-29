@@ -38,5 +38,5 @@ export default props => {
     }
   });
 
-  return routesViews.map(route => <RouteWithSubRoutes key={`route_${route.path}`} {...route} />);
+  return routesViews.map(route => <RouteWithSubRoutes key={route.path} {...route} />);
 };

@@ -71,7 +71,7 @@ class Comments extends React.Component {
           dataSource={comments}
           renderItem={comment => (
             <List.Item
-              key={`comment_${comment.content}`}
+              key={comment.content}
               className={classnames({
                 [styles.internalItem]: comment.is_internal,
                 [styles.listItem]: true,

@@ -34,7 +34,7 @@ const CustomCheckbox = props => {
       }
     >
       {propsField.options.map(option => (
-        <Checkbox key={`checkbox_${props.name}_${option.value}`} style={{ display: 'block', margin: 0 }} {...option}>{option.label}</Checkbox>
+        <Checkbox key={`${props.name}_${option.value}`} style={{ display: 'block', margin: 0 }} {...option}>{option.label}</Checkbox>
       ))}
     </FormItem>
   );

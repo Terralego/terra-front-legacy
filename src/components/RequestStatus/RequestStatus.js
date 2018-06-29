@@ -52,7 +52,7 @@ const EvaluationMenu = ({ actions, handleClick }) => (
     {actions.map(action => (
       <Menu.Item
         className={classnames(styles.dropdownItem, styles[action.icon])}
-        key={`status_${action.value}`}
+        key={action.value}
         onClick={() => handleClick(action)}
         style={{ width: '100%' }}
       >

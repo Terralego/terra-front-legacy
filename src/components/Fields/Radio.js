@@ -38,7 +38,7 @@ const CustomRadio = props => {
     >
       <RadioGroup {...propsField}>
         {props.options.map(option => (
-          <RadioButton value={option.value} key={`radio_${props.name}_${option.value}`}>
+          <RadioButton value={option.value} key={`${props.name}_${option.value}`}>
             {option.label}
           </RadioButton>
         ))}
