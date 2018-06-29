@@ -38,7 +38,6 @@ const CustomSelect = props => {
       }
     >
       <Select
-        showSearch
         optionFilterProp="children"
         filterOption={handleFilter}
         value={props.value ? props.value : undefined}
