@@ -53,7 +53,7 @@ const MapDrawButtons = props => {
     <div style={style}>
       <RadioGroup onChange={handleChange} defaultValue={props.mode}>
         {props.availableButtons.map((button, i) => (
-          <RadioButton value={button} style={getStyle(i)} key={`drawmapbutton_${button}`}>
+          <RadioButton value={button} style={getStyle(i)} key={button}>
             <span style={{ display: 'flex', alignItems: 'center' }}>
               {button === 'pointer' && <Pointer color={getColor(button)} /> }
               {button === 'polygon' && <Polygon color={getColor(button)} />}
