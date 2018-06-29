@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Form as ReduxForm } from 'react-redux-form';
@@ -17,9 +18,11 @@ import Select from 'components/Fields/Select';
 
 import config from 'components/Comments/Comments.config';
 
+import styles from './Comments.module.scss';
+
 class Comments extends React.Component {
   componentDidMount () {
-    if (!this.props.loading && !this.props.fetched) {
+    if (!this.props.comments.length && !this.props.loading && !this.props.fetched) {
       this.props.fetchUserrequestComments(this.props.userrequestId);
     }
   }
@@ -67,13 +70,21 @@ class Comments extends React.Component {
           style={{ marginTop: 24 }}
           dataSource={comments}
           renderItem={comment => (
-            <List.Item key={`comment_${comment.content}`}>
+            <List.Item
+              key={`comment_${comment.content}`}
+              className={classnames({
+                [styles.internalItem]: comment.is_internal,
+                [styles.listItem]: true,
+              })}
+            >
               <List.Item.Meta
                 title={comment.author}
                 description={comment.content}
-                style={{ marginBottom: 16 }}
               />
               <div style={{ textAlign: 'right' }}>
+                {comment.is_internal &&
+                  <span className={styles.internal}>Message interne</span>
+                }
                 <span style={{ display: 'block', color: 'rgba(0, 0, 0, 0.45)' }}>
                   {moment(comment.date).format('DD/MM/YY')}
                 </span>
