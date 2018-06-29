@@ -12,6 +12,25 @@ function guid () {
   return `${s4()}${s4()}-${s4()}-${s4()}-${s4()}-${s4()}${s4()}${s4()}`;
 }
 
+const getLayerStyle = (layer, feature) => {
+  if (
+    layer.type === 'line' &&
+    feature.getProperties().layer === layer.layerName
+  ) {
+    return new ol.style.Style({
+      stroke: new ol.style.Stroke(layer.style.draw(feature.get(layer.style.property))),
+    });
+  } else if (
+    layer.type === 'polygon' &&
+    feature.getProperties().layer === layer.layerName
+  ) {
+    return new ol.style.Style({
+      fill: new ol.style.Fill(layer.style.draw(feature.get(layer.style.property))),
+    });
+  }
+  return null;
+};
+
 class TerraDrawMap extends Component {
   componentDidMount () {
     const sourceLayer = new ol.layer.Tile({
@@ -59,40 +78,8 @@ class TerraDrawMap extends Component {
         });
       },
     });
-    const vectorLayers = [];
-    const vectorSourceLayer = new ol.source.VectorTile({
-      format: new ol.format.MVT(),
-      url: this.props.config.sourceVectorUrl,
-      renderMode: 'hybrid',
-    });
-    this.props.config.vectorLayers.forEach(layer => {
-      const vectorLayer = new ol.layer.VectorTile({
-        name: layer.name,
-        maxResolution: 156543.03392804097 / (2 ** (layer.minZoom - 1)),
-        source: vectorSourceLayer,
-        zIndex: layer.zIndex ? layer.zIndex : 1,
-        style: feature => {
-          if (
-            layer.type === 'line' &&
-            feature.getProperties().layer === layer.layerName
-          ) {
-            return new ol.style.Style({
-              stroke: new ol.style.Stroke(layer.style.draw(feature.get(layer.style.property))),
-            });
-          } else if (
-            layer.type === 'polygon' &&
-            feature.getProperties().layer === layer.layerName
-          ) {
-            return new ol.style.Style({
-              fill: new ol.style.Fill(layer.style.draw(feature.get(layer.style.property))),
-            });
-          }
-          return null;
-        },
-      });
 
-      vectorLayers.push(vectorLayer);
-    });
+    const vectorLayers = this.initVectorTilesLayer();
 
     const view = new ol.View({
       center: ol.proj.fromLonLat(this.props.center),
@@ -152,6 +139,21 @@ class TerraDrawMap extends Component {
     });
   }
 
+  componentDidUpdate (prevProps) {
+    if (this.props.sourceVectorOptions !== prevProps.sourceVectorOptions) {
+      // Get existing layers if any
+      const layers = this.map && this.map.getLayers().getArray();
+
+      this.props.config.vectorLayers.forEach(vectorLayer => {
+        layers.forEach(layer => {
+          if (layer.get('name') === vectorLayer.name) {
+            layer.setSource(this.getVectorLayerSource());
+          }
+        });
+      });
+    }
+  }
+
   onHover (event) {
     const features = this.map.getFeaturesAtPixel(event.pixel, {
       layerFilter: e =>
@@ -183,6 +185,34 @@ class TerraDrawMap extends Component {
     // this.map.addInteraction(this.modify);
     this.map.addInteraction(this.select);
     // this.map.addInteraction(this.snap);
+  }
+
+  getVectorLayerSource () {
+    return new ol.source.VectorTile({
+      format: new ol.format.MVT(),
+      url: `${this.props.config.sourceVectorUrl}${this.props.sourceVectorOptions}`,
+      renderMode: 'hybrid',
+    });
+  }
+
+  initVectorTilesLayer () {
+    const vectorLayers = [];
+
+    const getVectorLayer = layer => new ol.layer.VectorTile({
+      id: `${layer.name}_${this.props.sourceVectorOptions}`,
+      name: layer.name,
+      maxResolution: 156543.03392804097 / (2 ** (layer.minZoom - 1)),
+      source: this.getVectorLayerSource(),
+      zIndex: layer.zIndex ? layer.zIndex : 1,
+      style: feature => getLayerStyle(layer, feature),
+    });
+
+    this.props.config.vectorLayers.forEach(data => {
+      const vectorLayer = getVectorLayer(data);
+      vectorLayers.push(vectorLayer);
+    });
+
+    return vectorLayers;
   }
 
   unsetSelectionMode () {
@@ -268,6 +298,7 @@ TerraDrawMap.propTypes = {
       layerName: PropTypes.string,
     })),
   }),
+  sourceVectorOptions: PropTypes.string,
   minZoom: PropTypes.number,
   maxZoom: PropTypes.number,
   zoom: PropTypes.number,
@@ -281,6 +312,7 @@ TerraDrawMap.propTypes = {
 
 TerraDrawMap.defaultProps = {
   config: { sourceVectorUrl: '', vectorLayers: [] },
+  sourceVectorOptions: '',
   minZoom: 11,
   maxZoom: 20,
   zoom: 11,
