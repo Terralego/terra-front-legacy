@@ -1,6 +1,6 @@
 const initialState = {
   email: '',
-  paddword: '',
+  password: '',
   properties: {
     firstname: '',
     lastname: '',
