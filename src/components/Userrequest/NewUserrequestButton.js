@@ -12,9 +12,10 @@ const NewUserrequestButton = props => {
   return (
     <Link to="/new-request">
       <Button
-        className={props.className}
         icon="file-add"
-        type="primary"
+        type={props.type || 'primary'}
+        className={props.className}
+        style={props.style}
       >
         Créer une nouvelle demande
       </Button>
