@@ -9,7 +9,10 @@ const SideMenu = () => (
     {routes.map(route => {
       if (route.routes && route.submenu) {
         return (
-          <Menu.SubMenu key={route.path} title={<span>{route.icon && <Icon type={route.icon} />}{route.name}</span>}>
+          <Menu.SubMenu
+            key={route.path}
+            title={<span>{route.icon && <Icon type={route.icon} />}{route.name}</span>}
+          >
             {route.routes.map(subroute => (
 
               <Menu.Item key={subroute.path}>
