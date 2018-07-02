@@ -140,7 +140,7 @@ const getDraftStatus = createSelector(
 
 export const getUserrequestArray = createSelector(
   state => state.userrequestList.items,
-  items => Object.values(items),
+  items => (items ? Object.values(items) : []),
 );
 
 /**
