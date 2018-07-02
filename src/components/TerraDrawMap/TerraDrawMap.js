@@ -29,11 +29,18 @@ const getLayerStyle = (layer, feature) => {
 
 class TerraDrawMap extends Component {
   componentDidMount () {
+    /**
+     * TODO: Doc
+     */
     const sourceLayer = new ol.layer.Tile({
       source: new ol.source.OSM({
         url: this.props.osmSource,
       }),
     });
+
+    /**
+     * TODO: Doc
+     */
     this.sourceDraw = new ol.source.Vector({ wrapX: false });
     if (this.props.features.length) {
       this.sourceDraw
@@ -45,6 +52,10 @@ class TerraDrawMap extends Component {
           features: this.props.features,
         }));
     }
+
+    /**
+     * TODO: Doc
+     */
     this.vectorDraw = new ol.layer.Vector({
       source: this.sourceDraw,
       zIndex: 100,
@@ -77,6 +88,9 @@ class TerraDrawMap extends Component {
 
     const vectorLayers = this.initVectorTilesLayer();
 
+    /**
+     * TODO: Doc
+     */
     const view = new ol.View({
       center: ol.proj.fromLonLat(this.props.center),
       zoom: this.props.zoom,
@@ -90,6 +104,9 @@ class TerraDrawMap extends Component {
         .split(','),
     });
 
+    /**
+     * TODO: Doc
+     */
     this.map = new ol.Map({
       controls: ol.control
         .defaults({
@@ -108,13 +125,16 @@ class TerraDrawMap extends Component {
     // this.snap = new ol.interaction.Snap({ source: this.sourceDraw });
 
     if (this.props.getDataOnHover) {
-      this.map.on('pointermove', e => this.onHover(e));
+      this.map.on('pointermove', this.onHover, this);
     }
 
     if (this.props.getDataOnClick) {
-      this.map.on('click', e => this.onClick(e));
+      this.map.on('click', this.onClick, this);
     }
 
+    /**
+     * TODO: Doc
+     */
     this.sourceDraw.on('addfeature', event => {
       if (this.props.getGeometryOnDrawEnd && !event.feature.id) {
         const id = guid();
@@ -150,32 +170,56 @@ class TerraDrawMap extends Component {
     }
   }
 
-  onHover (event) {
-    const features = this.map.getFeaturesAtPixel(event.pixel, {
-      layerFilter: e =>
-        this.props.config.vectorLayers
-          .map(a => a.name)
-          .indexOf(e.get('name')) !== -1,
-    });
+  componentWillUnmount () {
+    /**
+     * Unbind event to avoid leaks
+     */
+    this.map.un('pointermove', this.onHover, this);
+    this.map.un('click', this.onClick, this);
+  }
 
+  /**
+   * Hook for mouse move events
+   *
+   * @param {Event} event
+   * @memberof TerraDrawMap
+   */
+  onHover (event) {
+    // TODO: Mouse move events should be limited by throttling
+    const features = this.getOwnFeaturesAtPixel(event.pixel);
     if (features) {
       this.props.getDataOnHover(features[0].getProperties());
     }
   }
 
+  /**
+   * Hook for mouse click events
+   *
+   * @param {Event} event
+   * @memberof TerraDrawMap
+   */
   onClick (event) {
-    const features = this.map.getFeaturesAtPixel(event.pixel, {
-      layerFilter: e =>
-        this.props.config.vectorLayers
-          .map(a => a.name)
-          .indexOf(e.get('name')) !== -1,
-    });
-
+    const features = this.getOwnFeaturesAtPixel(event.pixel);
     if (features) {
       this.props.getDataOnClick(features[0].getProperties());
     }
   }
 
+  /**
+   * Get own (from props.config.vectorLayers) features that intersect a pixel
+   * on the viewport
+   *
+   * @param {ol.Pixel} pixel
+   * @returns
+   * @memberof TerraDrawMap
+   */
+  getOwnFeaturesAtPixel (pixel) {
+    return this.map.getFeaturesAtPixel(pixel, { layerFilter: this.isLayerInConfig.bind(this) });
+  }
+
+  /**
+   * TODO: Doc
+   */
   setSelectionMode () {
     this.stopDraw();
     // this.map.addInteraction(this.modify);
@@ -183,6 +227,9 @@ class TerraDrawMap extends Component {
     // this.map.addInteraction(this.snap);
   }
 
+  /**
+   * TODO: Doc
+   */
   getVectorLayerSource () {
     return new ol.source.VectorTile({
       format: new ol.format.MVT(),
@@ -191,6 +238,9 @@ class TerraDrawMap extends Component {
     });
   }
 
+  /**
+   * TODO: Doc
+   */
   initVectorTilesLayer () {
     const vectorLayers = [];
 
@@ -209,6 +259,18 @@ class TerraDrawMap extends Component {
     });
 
     return vectorLayers;
+  }
+
+  /**
+   * Filter to be used by OL getFeaturesAtPixel method
+   *
+   * @param {object} layerCandidate
+   * @returns true if layerCandidate is in props.config.vectorLayers
+   * @memberof TerraDrawMap
+   */
+  isLayerInConfig (layerCandidate) {
+    const layerCandidateName = layerCandidate.get('name');
+    return !!this.props.config.vectorLayers.find(layer => layer.name === layerCandidateName);
   }
 
   unsetSelectionMode () {
@@ -259,6 +321,9 @@ class TerraDrawMap extends Component {
     this.map.addInteraction(this.draw);
   }
 
+  /**
+   * TODO: Doc
+   */
   removeFeatureById (id) {
     this.sourceDraw.forEachFeature(feature => {
       if (feature.getId() === id) {
