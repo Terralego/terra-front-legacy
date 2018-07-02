@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Button, Icon, Col, Row } from 'antd';
-import { withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { saveDraft, submitData } from 'modules/userrequest';
 import FormConfig from 'components/Form/Form.config';
@@ -27,16 +27,18 @@ class HeaderForm extends React.Component {
 
   render () {
     const { loadingSaveDraft } = this.state;
-    const { history, form } = this.props;
+    const { form } = this.props;
 
     return (
       <header className={styles.header}>
         <Row gutter={16} type="flex" justify="space-between">
           <Col span={12}>
-            <Button type="primary" onClick={history.goBack}>
-              <Icon type="left" />
-              {FormConfig.confirmation.backButton}
-            </Button>
+            <Link to="/manage-request">
+              <Button type="primary">
+                <Icon type="left" />
+                {FormConfig.confirmation.backButton}
+              </Button>
+            </Link>
           </Col>
           <Col>
             <Button
@@ -82,4 +84,4 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ saveDraft, submitData }, dispatch);
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(HeaderForm));
+export default connect(mapStateToProps, mapDispatchToProps)(HeaderForm);
