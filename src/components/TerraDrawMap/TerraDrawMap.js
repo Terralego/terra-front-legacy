@@ -29,11 +29,18 @@ const getLayerStyle = (layer, feature) => {
 
 class TerraDrawMap extends Component {
   componentDidMount () {
+    /**
+     * TODO: Doc
+     */
     const sourceLayer = new ol.layer.Tile({
       source: new ol.source.OSM({
         url: this.props.osmSource,
       }),
     });
+
+    /**
+     * TODO: Doc
+     */
     this.sourceDraw = new ol.source.Vector({ wrapX: false });
     if (this.props.features.length) {
       this.sourceDraw
@@ -45,6 +52,10 @@ class TerraDrawMap extends Component {
           features: this.props.features,
         }));
     }
+
+    /**
+     * TODO: Doc
+     */
     this.vectorDraw = new ol.layer.Vector({
       source: this.sourceDraw,
       zIndex: 100,
@@ -77,6 +88,9 @@ class TerraDrawMap extends Component {
 
     const vectorLayers = this.initVectorTilesLayer();
 
+    /**
+     * TODO: Doc
+     */
     const view = new ol.View({
       center: ol.proj.fromLonLat(this.props.center),
       zoom: this.props.zoom,
@@ -90,6 +104,9 @@ class TerraDrawMap extends Component {
         .split(','),
     });
 
+    /**
+     * TODO: Doc
+     */
     this.map = new ol.Map({
       controls: ol.control
         .defaults({
@@ -115,6 +132,9 @@ class TerraDrawMap extends Component {
       this.map.on('click', this.onClick, this);
     }
 
+    /**
+     * TODO: Doc
+     */
     this.sourceDraw.on('addfeature', event => {
       if (this.props.getGeometryOnDrawEnd && !event.feature.id) {
         const id = guid();
@@ -197,6 +217,9 @@ class TerraDrawMap extends Component {
     return this.map.getFeaturesAtPixel(pixel, { layerFilter: this.isLayerInConfig.bind(this) });
   }
 
+  /**
+   * TODO: Doc
+   */
   setSelectionMode () {
     this.stopDraw();
     // this.map.addInteraction(this.modify);
@@ -204,6 +227,9 @@ class TerraDrawMap extends Component {
     // this.map.addInteraction(this.snap);
   }
 
+  /**
+   * TODO: Doc
+   */
   getVectorLayerSource () {
     return new ol.source.VectorTile({
       format: new ol.format.MVT(),
@@ -212,6 +238,9 @@ class TerraDrawMap extends Component {
     });
   }
 
+  /**
+   * TODO: Doc
+   */
   initVectorTilesLayer () {
     const vectorLayers = [];
 
@@ -292,6 +321,9 @@ class TerraDrawMap extends Component {
     this.map.addInteraction(this.draw);
   }
 
+  /**
+   * TODO: Doc
+   */
   removeFeatureById (id) {
     this.sourceDraw.forEachFeature(feature => {
       if (feature.getId() === id) {
