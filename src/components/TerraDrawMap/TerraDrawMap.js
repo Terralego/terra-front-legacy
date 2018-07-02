@@ -150,6 +150,14 @@ class TerraDrawMap extends Component {
     }
   }
 
+  componentWillUnmount () {
+    /**
+     * Unbind event to avoid leaks
+     */
+    this.map.un('pointermove', this.onHover, this);
+    this.map.un('click', this.onClick, this);
+  }
+
   onHover (event) {
     // TODO: Mouse move events should be limited by throttling
 
