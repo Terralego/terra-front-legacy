@@ -160,30 +160,29 @@ class TerraDrawMap extends Component {
 
   onHover (event) {
     // TODO: Mouse move events should be limited by throttling
-
-    const layerFilter = layerCandidate => {
-      const layerCandidateName = layerCandidate.get('name');
-      return this.props.config.vectorLayers.find(layer => layer.name === layerCandidateName);
-    };
-
-    const features = this.map.getFeaturesAtPixel(event.pixel, { layerFilter });
-
+    const features = this.getOwnFeaturesAtPixel(event.pixel);
     if (features) {
       this.props.getDataOnHover(features[0].getProperties());
     }
   }
 
   onClick (event) {
-    const features = this.map.getFeaturesAtPixel(event.pixel, {
-      layerFilter: e =>
-        this.props.config.vectorLayers
-          .map(a => a.name)
-          .indexOf(e.get('name')) !== -1,
-    });
-
+    const features = this.getOwnFeaturesAtPixel(event.pixel);
     if (features) {
       this.props.getDataOnClick(features[0].getProperties());
     }
+  }
+
+  /**
+   * Get own (from props.config.vectorLayers) features that intersect a pixel
+   * on the viewport
+   *
+   * @param {ol.Pixel} pixel
+   * @returns
+   * @memberof TerraDrawMap
+   */
+  getOwnFeaturesAtPixel (pixel) {
+    return this.map.getFeaturesAtPixel(pixel, { layerFilter: this.isLayerInConfig.bind(this) });
   }
 
   setSelectionMode () {
@@ -219,6 +218,18 @@ class TerraDrawMap extends Component {
     });
 
     return vectorLayers;
+  }
+
+  /**
+   * Filter to be used by OL getFeaturesAtPixel method
+   *
+   * @param {object} layerCandidate
+   * @returns true if layerCandidate is in props.config.vectorLayers
+   * @memberof TerraDrawMap
+   */
+  isLayerInConfig (layerCandidate) {
+    const layerCandidateName = layerCandidate.get('name');
+    return !!this.props.config.vectorLayers.find(layer => layer.name === layerCandidateName);
   }
 
   unsetSelectionMode () {
