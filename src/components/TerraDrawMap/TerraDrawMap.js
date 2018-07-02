@@ -127,7 +127,7 @@ class TerraDrawMap extends Component {
           properties: {
             id,
             name: event.feature.getGeometry().getType(),
-            created_at: Date.now(),
+            timestampCreatedAt: Date.now(),
           },
         });
         event.feature.getGeometry().transform('EPSG:4326', 'EPSG:3857');
