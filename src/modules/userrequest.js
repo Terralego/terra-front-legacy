@@ -1,6 +1,7 @@
 import { actions } from 'react-redux-form';
 
 import { CALL_API } from 'middlewares/api';
+import { getFeaturesWithIncidence } from 'helpers/userrequestHelpers';
 
 import initialState from 'modules/userrequest-initial';
 
@@ -31,45 +32,6 @@ export const INTERSECT_FAILURE = 'userrequest/INTERSECT_FAILURE';
 
 // Reset form after submit success
 export const RESET_FORM = 'userrequest/RESET_FORM';
-
-/**
- * Creation of an initial gricode equal to zero, while mapping through the features
- * collection this gridcode will be increased each time we meet a more restrictive gridcode.
- * We finally return the most restrictive gridcode.
- *
- * @param  {object} response : response sent back after the post of the feature
- * @param  {Array} features : the feature, we want obtain the gridcode
- * @return {Array} the feature with this incidence
- */
-export const getFeaturesWithIncidence = (response, features) => {
-  if (!response.results || response.results.length < 1) {
-    return features;
-  }
-
-  return features.map(feature => {
-    let incidence = { GRIDCODE: 0 };
-    if (feature.properties.id !== response.request.callbackid) {
-      return feature;
-    }
-    response.results.features.forEach(intersection => {
-      if (intersection.properties[0].GRIDCODE > incidence.GRIDCODE) {
-        incidence = {
-          GRIDCODE: intersection.properties[0].GRIDCODE,
-          date_from: intersection.properties[0].date_from,
-          date_to: intersection.properties[0].date_to,
-        };
-      }
-    });
-    return {
-      ...feature,
-      properties: {
-        ...feature.properties,
-        incidence,
-
-      },
-    };
-  });
-};
 
 /**
  * REDUCER
