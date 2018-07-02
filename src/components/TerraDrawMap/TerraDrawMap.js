@@ -158,6 +158,12 @@ class TerraDrawMap extends Component {
     this.map.un('click', this.onClick, this);
   }
 
+  /**
+   * Hook for mouse move events
+   *
+   * @param {Event} event
+   * @memberof TerraDrawMap
+   */
   onHover (event) {
     // TODO: Mouse move events should be limited by throttling
     const features = this.getOwnFeaturesAtPixel(event.pixel);
@@ -166,6 +172,12 @@ class TerraDrawMap extends Component {
     }
   }
 
+  /**
+   * Hook for mouse click events
+   *
+   * @param {Event} event
+   * @memberof TerraDrawMap
+   */
   onClick (event) {
     const features = this.getOwnFeaturesAtPixel(event.pixel);
     if (features) {
