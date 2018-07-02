@@ -6,6 +6,7 @@ import classnames from 'classnames';
 import Status from 'components/RequestStatus/Status';
 import { getUserGroup } from 'modules/authentication';
 import { updateStateAndApprobation, updateApprobation } from 'modules/userrequestList';
+import { getReviewer } from 'helpers/userrequestHelpers';
 
 import styles from './RequestStatus.module.scss';
 
@@ -69,15 +70,15 @@ const EvaluationMenu = ({ actions, handleClick }) => (
  * @param {object} user - user's group
  * @param {string} user.group - user's group
  * @param {string} user.uuid - user's uuid
- * @param {void} onApproved - change userrequest state (only for N1)
- * @param {void} updateState - change userrequest state (only for N2)
+ * @param {void} updateApprobationOrState - change userrequest state (N2) or approbation (N1)
+ * @param {object} reviewers list of reviewers (N1), by uuid as keys
  */
 const RequestStatus = ({ userrequest, user, updateApprobationOrState }) => {
   if (!user) {
     return null;
   }
 
-  const { state } = userrequest;
+  const { state, reviewers } = userrequest;
   const { approbations } = userrequest.properties;
 
   // If user already give evaluation, get the id, either set 0 (= PENDING)
@@ -143,7 +144,7 @@ const RequestStatus = ({ userrequest, user, updateApprobationOrState }) => {
               );
               return (
                 <List.Item key={approbation.n1}>
-                  {approbation.n1} : {onfEvaluation
+                  {getReviewer(reviewers, approbation.n1).email} : {onfEvaluation
                     ? (onfEvaluation.selectedLabel || onfEvaluation.label)
                     : 'En attente d\'évaluation'}
                 </List.Item>
@@ -160,11 +161,12 @@ const RequestStatus = ({ userrequest, user, updateApprobationOrState }) => {
   );
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state, ownProps) => ({
   user: {
     group: getUserGroup(state),
     uuid: state.authentication.payload && state.authentication.payload.user.uuid,
   },
+  reviewers: ownProps.userrequest.reviewers,
 });
 
 const mapDispatchToProps = dispatch => ({
