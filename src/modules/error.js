@@ -4,6 +4,7 @@ import {
   EXISTING_FAILURE,
   INTERSECT_FAILURE,
 } from 'modules/userrequest';
+import { SET_ERROR_MESSAGE } from 'modules/authentication';
 
 const initialState = null;
 
@@ -18,6 +19,8 @@ const errors = (state = initialState, action) => {
     case EXISTING_FAILURE:
     case INTERSECT_FAILURE:
       return action.error;
+    case SET_ERROR_MESSAGE:
+      return action.errorMessage;
     default:
       return state;
   }
