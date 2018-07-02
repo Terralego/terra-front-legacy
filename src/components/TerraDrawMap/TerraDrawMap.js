@@ -13,19 +13,15 @@ function guid () {
 }
 
 const getLayerStyle = (layer, feature) => {
-  if (
-    layer.type === 'line' &&
-    feature.getProperties().layer === layer.layerName
-  ) {
+  const sameLayerName = feature.getProperties().layer === layer.layerName;
+  const layerStyle = layer.style.draw(feature.get(layer.style.property));
+  if (layer.type === 'line' && sameLayerName) {
     return new ol.style.Style({
-      stroke: new ol.style.Stroke(layer.style.draw(feature.get(layer.style.property))),
+      stroke: new ol.style.Stroke(layerStyle),
     });
-  } else if (
-    layer.type === 'polygon' &&
-    feature.getProperties().layer === layer.layerName
-  ) {
+  } else if (layer.type === 'polygon' && sameLayerName) {
     return new ol.style.Style({
-      fill: new ol.style.Fill(layer.style.draw(feature.get(layer.style.property))),
+      fill: new ol.style.Fill(layerStyle),
     });
   }
   return null;
