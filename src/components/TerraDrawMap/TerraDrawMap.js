@@ -108,11 +108,11 @@ class TerraDrawMap extends Component {
     // this.snap = new ol.interaction.Snap({ source: this.sourceDraw });
 
     if (this.props.getDataOnHover) {
-      this.map.on('pointermove', e => this.onHover(e));
+      this.map.on('pointermove', this.onHover, this);
     }
 
     if (this.props.getDataOnClick) {
-      this.map.on('click', e => this.onClick(e));
+      this.map.on('click', this.onClick, this);
     }
 
     this.sourceDraw.on('addfeature', event => {
