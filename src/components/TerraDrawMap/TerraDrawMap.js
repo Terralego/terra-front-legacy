@@ -151,12 +151,14 @@ class TerraDrawMap extends Component {
   }
 
   onHover (event) {
-    const features = this.map.getFeaturesAtPixel(event.pixel, {
-      layerFilter: e =>
-        this.props.config.vectorLayers
-          .map(a => a.name)
-          .indexOf(e.get('name')) !== -1,
-    });
+    // TODO: Mouse move events should be limited by throttling
+
+    const layerFilter = layerCandidate => {
+      const layerCandidateName = layerCandidate.get('name');
+      return this.props.config.vectorLayers.find(layer => layer.name === layerCandidateName);
+    };
+
+    const features = this.map.getFeaturesAtPixel(event.pixel, { layerFilter });
 
     if (features) {
       this.props.getDataOnHover(features[0].getProperties());
