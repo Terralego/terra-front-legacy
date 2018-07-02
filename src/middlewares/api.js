@@ -14,7 +14,7 @@ export default () => next => action => {
   const { endpoint, types, config, form } = callAPI;
   const [requestType, successType, errorType] = types;
 
-  next({ type: requestType });
+  next({ type: requestType, url: endpoint });
   if (form) {
     next(actions.setPending(form, true));
   }
