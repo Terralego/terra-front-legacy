@@ -161,12 +161,11 @@ const RequestStatus = ({ userrequest, user, updateApprobationOrState }) => {
   );
 };
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = state => ({
   user: {
     group: getUserGroup(state),
     uuid: state.authentication.payload && state.authentication.payload.user.uuid,
   },
-  reviewers: ownProps.userrequest.reviewers,
 });
 
 const mapDispatchToProps = dispatch => ({
