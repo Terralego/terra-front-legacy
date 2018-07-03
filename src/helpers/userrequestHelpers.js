@@ -60,4 +60,4 @@ export const getReviewersByUuid = reviewers => {
  * @param {string} uuid
  * @returns {object} reviewer object with corresponding uuid
  */
-export const getReviewer = (reviewers, uuid) => getReviewersByUuid(reviewers)[uuid];
+export const getReviewer = (reviewers, uuid) => getReviewersByUuid(reviewers)[uuid] || {};
