@@ -54,6 +54,8 @@ export const routes = [{
       name: 'Manage request detail',
       component: Userrequest,
       protected: true,
+      hideHeader: true,
+      hideFooter: true,
     },
   ],
 }, {
