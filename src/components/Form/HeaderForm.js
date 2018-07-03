@@ -27,7 +27,7 @@ class HeaderForm extends React.Component {
 
   render () {
     const { loadingSaveDraft } = this.state;
-    const { form } = this.props;
+    const { form, showSubmit, showDraft } = this.props;
 
     return (
       <header className={styles.header}>
@@ -40,28 +40,32 @@ class HeaderForm extends React.Component {
               </Button>
             </Link>
           </Col>
-          <Col>
-            <Button
-              type="primary-dark"
-              htmlType="button"
-              onClick={e => this.saveDraft(e)}
-              loading={loadingSaveDraft}
-              icon="save"
-            >
-              {FormConfig.confirmation.draftButton}
-            </Button>
-            {this.props.showSubmit &&
-            <Button
-              type="primary-dark"
-              onClick={this.submitForm}
-              icon="arrow-right"
-              style={{ marginLeft: 12 }}
-              loading={form.pending}
-            >
-              {FormConfig.confirmation.submitButton}
-            </Button>
-            }
-          </Col>
+          { (showDraft || showSubmit) && (
+            <Col>
+              {showDraft &&
+                <Button
+                  type="primary-dark"
+                  htmlType="button"
+                  onClick={e => this.saveDraft(e)}
+                  loading={loadingSaveDraft}
+                  icon="save"
+                >
+                  {FormConfig.confirmation.draftButton}
+                </Button>
+              }
+              {showSubmit &&
+                <Button
+                  type="primary-dark"
+                  onClick={this.submitForm}
+                  icon="arrow-right"
+                  style={{ marginLeft: 12 }}
+                  loading={form.pending}
+                >
+                  {FormConfig.confirmation.submitButton}
+                </Button>
+              }
+            </Col>
+          )}
         </Row>
       </header>
     );
