@@ -1,3 +1,4 @@
+import { actions } from 'react-redux-form';
 import { createSelector } from 'reselect';
 import { disableTimerRefreshToken, enableTimerRefreshToken } from 'modules/authenticationTimer';
 import apiService from 'services/apiService';
@@ -153,6 +154,7 @@ export const receiveToken = payload => ({
 export const logout = () => dispatch => {
   dispatch(requestLogOut());
   dispatch(disableTimerRefreshToken());
+  dispatch(actions.reset('userrequest'));
   dispatch(resetToken());
 };
 
