@@ -55,7 +55,7 @@ class FormApp extends React.Component {
   render () {
     return (
       <div>
-        <HeaderForm />
+        <HeaderForm showDraft />
         <HeaderUserrequest {...this.props} />
         {this.props.mode ===  'edit' ?
           <ReduxForm

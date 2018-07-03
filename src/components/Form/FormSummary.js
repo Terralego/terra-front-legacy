@@ -26,7 +26,7 @@ class FormSummary extends React.Component {
     const { userrequest, form } = this.props;
     return (
       <div>
-        <HeaderForm showSubmit />
+        <HeaderForm showDraft showSubmit />
         <Summary data={userrequest} />
 
         {!form.valid && <Alert
