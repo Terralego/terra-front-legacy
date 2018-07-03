@@ -1,5 +1,6 @@
 import timerService from 'services/timerService';
 import { refreshToken } from 'modules/authentication';
+import settings from 'front-settings';
 
 export const SET_TIMERS = 'SET_TIMERS';
 export const REMOVE_TIMERS = 'REMOVE_TIMERS';
@@ -51,12 +52,11 @@ export function disableTimerRefreshToken () {
 
 export function enableTimerRefreshToken () {
   disableTimerRefreshToken();
-  return (dispatch, getState) => {
-    const { config } = getState();
+  return dispatch => {
     const timerState = {
       intervalIdRefresh: timerService.addTimer(() => {
         dispatch(refreshToken());
-      }, config.REFRESH_TOKEN),
+      }, settings.REFRESH_TOKEN),
     };
     dispatch(setTimers(timerState));
   };
