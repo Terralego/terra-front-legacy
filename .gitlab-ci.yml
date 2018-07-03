@@ -9,34 +9,33 @@ stages:
 # Instal stage
 
 npm_install:
+  tags: [shared-ci-docker]
   stage: install
   script:
-    - npm --version
-    - npm set registry=http://10.1.0.5:4873/
     - npm ci
 
 # Tests stage
 
 npm_test:
+  tags: [shared-ci-docker]
   stage: tests
   script:
-    - npm set registry=http://10.1.0.5:4873/
     - npm ci
     - npm test
 
 npm_run_lint:
+  tags: [shared-ci-docker]
   stage: tests
   script:
-    - npm set registry=http://10.1.0.5:4873/
     - npm ci
     - npm run lint
 
 # Build stage
 
 npm_run_build:
+  tags: [shared-ci-docker]
   stage: build
   script:
-    - npm set registry=http://10.1.0.5:4873/
     - npm ci
     - npm run build
   artifacts:
@@ -48,6 +47,7 @@ npm_run_build:
 # Deploy stage
 
 npm_run_deploy:
+  tags: [shared-ci-docker]
   stage: deploy
   when: manual
   script:
