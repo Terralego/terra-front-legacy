@@ -17,16 +17,12 @@ const initialState = {
   is_internal: false,
 };
 
-const getCommentAuthor = ({ groups, properties: { firstname, lastname } }) => {
-  if (groups[0] === 'N1') {
-    return 'Agent de terrain';
+const getCommentAuthor = ({ email, properties: { firstname, lastname } }) => {
+  if (firstname && lastname) {
+    return `${firstname} ${lastname}`;
   }
 
-  if (groups[0] === 'N2') {
-    return 'Agent ONF';
-  }
-
-  return `${firstname} ${lastname}`;
+  return email;
 };
 
 const getCommentData = data => ({
