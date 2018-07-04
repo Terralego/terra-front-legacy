@@ -6,19 +6,23 @@ stages:
   - build
   - deploy
 
+cache:
+  key: node_modules
+  paths:
+    - node_modules/
+
 before_script:
   - node --version
   - npm --version
-  - git status -s --ignored
+  - ls -alh
 
-# Instal stage
+# Install stage
 
 npm_install:
   tags: [shared-ci-docker]
   stage: install
   script:
-    - npm ci
-  allow_failure: true
+    - npm run ci_if_nolock
   artifacts:
     paths:
       - node_modules
