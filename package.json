@@ -23,6 +23,7 @@
     "node-sass": "~4.9.0",
     "openlayers": "~4.6.5",
     "prop-types": "~15.6.2",
+    "query-string": "~6.1.0",
     "react": "~16.4.1",
     "react-app-rewire-css-modules": "github:codebandits/react-app-rewire-css-modules#956a2330c2eb70cb5bc0795c0e83604e271d4a03",
     "react-app-rewire-eslint": "~0.2.3",
