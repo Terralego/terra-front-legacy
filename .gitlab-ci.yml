@@ -18,6 +18,7 @@ npm_install:
   stage: install
   script:
     - npm ci
+  allow_failure: true
   artifacts:
     paths:
       - node_modules
