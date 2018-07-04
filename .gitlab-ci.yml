@@ -22,7 +22,7 @@ npm_install:
     paths:
       - node_modules
     expire_in: 3 hours
-    name: "node_modules-${CI_COMMIT_SHA}"
+    name: "node_modules-$(sha1sum package-lock.json | cut -c1-7)"
 
 # Tests stage
 
