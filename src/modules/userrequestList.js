@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
 import { CALL_API } from 'middlewares/api';
+import settings from 'front-settings';
 import { SUBMIT_SUCCESS } from 'modules/userrequest';
 import { getUserGroup } from 'modules/authentication';
 
@@ -168,7 +169,7 @@ export const getUserrequestsArrayFilteredByUser = createSelector(
  */
 export const fetchUserrequestList = () => ({
   [CALL_API]: {
-    endpoint: '/userrequest/',
+    endpoint: `/userrequest/?limit=${settings.PAGE_SIZE}`,
     types: [ALL_REQUEST, ALL_SUCCESS, ALL_FAILURE],
     config: { method: 'GET' },
   },
