@@ -60,6 +60,8 @@ npm_run_build:
 
 npm_run_deploy:
   tags: [shared-ci-docker]
+  variables:
+    GIT_STRATEGY: none
   stage: deploy
   when: manual
   script:
