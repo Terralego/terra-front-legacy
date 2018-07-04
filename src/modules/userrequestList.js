@@ -27,6 +27,11 @@ export const APPROBATIONS_CHANGE_FAILURE = 'userrequestList/APPROBATIONS_CHANGE_
 const initialState = {
   items: {},
   loading: false,
+  pagination: {
+    count: 0,
+    next: null,
+    previous: null,
+  },
 };
 
 /**
@@ -71,6 +76,11 @@ const userrequestList = (state = initialState, action) => {
         ...state,
         loading: false,
         items: getItemsFromResponse(action.data),
+        pagination: {
+          count: action.data.count,
+          next: action.data.next,
+          previous: action.data.previous,
+        },
       };
     case DETAIL_REQUEST:
       return {
@@ -166,10 +176,13 @@ export const getUserrequestsArrayFilteredByUser = createSelector(
 
 /**
  * userrequestList action : fetch userrequest list
+ *
+ * @param limit {number|string} page size (max items per page)
+ * @param page {number|string} page number
  */
-export const fetchUserrequestList = () => ({
+export const fetchUserrequestList = (limit = settings.PAGE_SIZE, page = 1) => ({
   [CALL_API]: {
-    endpoint: `/userrequest/?limit=${settings.PAGE_SIZE}`,
+    endpoint: `/userrequest/?limit=${limit}&page=${page}`,
     types: [ALL_REQUEST, ALL_SUCCESS, ALL_FAILURE],
     config: { method: 'GET' },
   },
