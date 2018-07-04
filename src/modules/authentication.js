@@ -154,6 +154,7 @@ export const receiveToken = payload => ({
 export const logout = () => dispatch => {
   dispatch(requestLogOut());
   dispatch(disableTimerRefreshToken());
+  dispatch(actions.reset('login'));
   dispatch(actions.reset('userrequest'));
   dispatch(resetToken());
 };
@@ -193,12 +194,16 @@ export const refreshToken = () => dispatch => {
  */
 export const loginUser = ({ email, password }) => dispatch => {
   dispatch(requestToken());
+  dispatch(actions.setPending('login', true));
   // dispatch(setAuthentication());
 
   return apiService
     .login(email, password)
     .then(response => {
       dispatch(receiveToken());
+      dispatch(actions.setPending('login', false));
+      dispatch(actions.setSubmitted('login', true));
+      dispatch(actions.reset('login'));
       if (response && response.token) {
         tokenService.setToken(response.token);
         dispatch(setAuthentication());
@@ -208,5 +213,7 @@ export const loginUser = ({ email, password }) => dispatch => {
     .catch(error => {
       dispatch(receiveToken());
       dispatch(setErrorMessage(error));
+      dispatch(actions.setPending('login', false));
+      dispatch(actions.setSubmitFailed('login'));
     });
 };

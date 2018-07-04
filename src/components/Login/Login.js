@@ -1,54 +1,58 @@
 import React, { Component } from 'react';
-import { Form, Button, Input, Row, Col } from 'antd';
+import { Button, Row, Col } from 'antd';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
+import { Form as ReduxForm } from 'react-redux-form';
 
 import { loginUser } from 'modules/authentication';
+import Input from 'components/Fields/Input';
 
 import styles from './Login.module.scss';
 
-const FormItem = Form.Item;
-
-class Login extends Component {
+class FormLogin extends Component {
   constructor (props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleSubmit (event) {
-    event.preventDefault();
-    this.props.form.validateFields((err, values) => {
-      if (!err) {
-        this.props.loginUser(values);
-      }
-    });
+  handleSubmit () {
+    this.props.loginUser(this.props.login);
   }
 
   render () {
-    const { getFieldDecorator } = this.props.form;
-    const { isAuthenticated, location } = this.props;
+    const { isAuthenticated, location, form } = this.props;
 
     return (
       isAuthenticated ?
         <Redirect to={location.state ? location.state.from : '/'} />
         :
-        <Form onSubmit={this.handleSubmit}>
+        <ReduxForm model="login">
           <Row className={styles.row}>
             <Col span={24} sm={12} className={styles.login}>
               <h2>Se connecter</h2>
-              <FormItem label="Email" >
-                {getFieldDecorator('email', {
-                  rules: [{ required: true, message: 'Veuillez saisir un titre' }],
-                })(<Input />)}
-              </FormItem>
+              <Input
+                model=".email"
+                label="Email"
+                errorMessages={{ required: 'Veuillez saisir votre email' }}
+                required
+              />
 
-              <FormItem label="Password">
-                {getFieldDecorator('password', {
-                })(<Input type="password" />)}
-              </FormItem>
+              <Input
+                model=".password"
+                type="password"
+                label="Mot de passe"
+                errorMessages={{ required: 'Veuillez saisir votre mot de passe' }}
+                required
+              />
 
-              <Button type="primary" htmlType="submit" icon="arrow-right" className={styles.loginButton}>
+              <Button
+                type="primary"
+                icon="arrow-right"
+                className={styles.loginButton}
+                onClick={this.handleSubmit}
+                loading={form.pending}
+              >
                 Me connecter
               </Button>
             </Col>
@@ -63,14 +67,17 @@ class Login extends Component {
               </Link>
             </Col>
           </Row>
-        </Form>
+        </ReduxForm>
     );
   }
 }
 
-const FormLogin = Form.create()(Login);
+const mapStateToProps = state => ({
+  login: state.login,
+  form: state.forms.login.$form,
+});
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ loginUser }, dispatch);
 
-export default connect(null, mapDispatchToProps)(FormLogin);
+export default connect(mapStateToProps, mapDispatchToProps)(FormLogin);
