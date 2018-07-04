@@ -6,6 +6,11 @@ stages:
   - build
   - deploy
 
+before_script:
+  - node --version
+  - npm --version
+  - git status -s --ignored
+
 # Instal stage
 
 npm_install:
