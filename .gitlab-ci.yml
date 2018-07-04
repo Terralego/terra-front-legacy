@@ -13,6 +13,11 @@ npm_install:
   stage: install
   script:
     - npm ci
+  artifacts:
+    paths:
+      - node_modules
+    expire_in: 3 hours
+    name: "node_modules-${CI_COMMIT_SHA}"
 
 # Tests stage
 
@@ -20,14 +25,12 @@ npm_test:
   tags: [shared-ci-docker]
   stage: tests
   script:
-    - npm ci
     - npm test
 
 npm_run_lint:
   tags: [shared-ci-docker]
   stage: tests
   script:
-    - npm ci
     - npm run lint
 
 # Build stage
@@ -36,11 +39,10 @@ npm_run_build:
   tags: [shared-ci-docker]
   stage: build
   script:
-    - npm ci
     - npm run build
   artifacts:
-    expire_in: 1 week
-    name: "build_${CI_COMMIT_SHA}"
+    expire_in: 2 days
+    name: "build-${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHA}"
     paths:
       - build
 
