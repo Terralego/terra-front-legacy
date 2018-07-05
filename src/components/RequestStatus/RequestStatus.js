@@ -8,7 +8,7 @@ import { getUserGroup } from 'modules/authentication';
 import { updateStateAndApprobation, updateApprobation } from 'modules/userrequestList';
 import { getReviewer } from 'helpers/userrequestHelpers';
 
-import styles from './RequestStatus.module.scss';
+import './RequestStatus.scss';
 
 const actionsN1 = [
   { label: 'En cours de traitement', value: 0, icon: 'pause', type: 'approbation' },
@@ -49,10 +49,10 @@ const getUsersApprobationList = approbations => {
 };
 
 const EvaluationMenu = ({ actions, handleClick }) => (
-  <Menu className={styles.dropdownMenu}>
+  <Menu className="dropdownMenu">
     {actions.map(action => (
       <Menu.Item
-        className={classnames(styles.dropdownItem, styles[action.icon])}
+        className={classnames('dropdownItem', [action.icon])}
         key={action.value}
         onClick={() => handleClick(action)}
         style={{ width: '100%' }}
@@ -73,93 +73,130 @@ const EvaluationMenu = ({ actions, handleClick }) => (
  * @param {void} updateApprobationOrState - change userrequest state (N2) or approbation (N1)
  * @param {object} reviewers list of reviewers (N1), by uuid as keys
  */
-const RequestStatus = ({ userrequest, user, updateApprobationOrState }) => {
-  if (!user) {
-    return null;
+class RequestStatus extends React.Component {
+  state = {
+    menuVisible: false,
+    loading: false,
+  };
+
+  componentWillReceiveProps () {
+    this.setState({
+      menuVisible: false,
+      loading: false,
+    });
   }
 
-  const { state, reviewers } = userrequest;
-  const { approbations } = userrequest.properties;
+  handleMenuClick (event, userrequest, user) {
+    this.setState({ menuVisible: false, loading: true });
+    this.props.updateApprobationOrState(event, userrequest, user);
+  }
 
-  // If user already give evaluation, get the id, either set 0 (= PENDING)
-  const selfEvaluationId = approbations[user.uuid] || 0;
-  const selfEvaluation = getEvaluationFromValue([...actionsN1, ...actionsN2], selfEvaluationId);
+  handleVisibleChange = flag => {
+    this.setState({ menuVisible: flag });
+  }
 
-  if (user.group === 'N1') {
+  render () {
+    const { userrequest, user } = this.props;
+    const { menuVisible, loading } = this.state;
+
+    if (!user) {
+      return null;
+    }
+    const { state, reviewers } = userrequest;
+    const { approbations } = userrequest.properties;
+
+    // If user already give evaluation, get the id, either set 0 (= PENDING)
+    const selfEvaluationId = approbations[user.uuid] || 0;
+    const selfEvaluation = getEvaluationFromValue([...actionsN1, ...actionsN2], selfEvaluationId);
+
+    if (user.group === 'N1') {
+      return (
+        <Card title="Évaluation de niv 1">
+          <Status userrequestState={state} approbations={approbations} user={user} />
+          <div className="statusActions">
+            <p>Votre approbation :</p>
+            <Dropdown
+              overlay={(
+                <EvaluationMenu
+                  actions={actionsN1}
+                  handleClick={e => this.handleMenuClick(e, userrequest, user)}
+                />
+              )}
+              trigger={['click']}
+              onVisibleChange={this.handleVisibleChange}
+              visible={menuVisible}
+            >
+              <Button
+                className={classnames('actionsButton', [selfEvaluation.icon])}
+                icon={selfEvaluation.icon}
+                loading={loading}
+              >
+                <span className="actionsButtonLabel">
+                  {selfEvaluation.selectedLabel || selfEvaluation.label}
+                </span>
+                <Icon type="down" />
+              </Button>
+            </Dropdown>
+          </div>
+        </Card>
+      );
+    }
+
+    if (user.group === 'N2') {
+      return (
+        <Card title="Évaluation de niv 2">
+          <div styles={{ textAlign: 'center' }}>
+            <p>Status de la demande :</p>
+            <Dropdown
+              overlay={(
+                <EvaluationMenu
+                  actions={actionsN2}
+                  handleClick={e => this.handleMenuClick(e, userrequest, user)}
+                />
+              )}
+              trigger={['click']}
+              onVisibleChange={this.handleVisibleChange}
+              visible={menuVisible}
+            >
+              <Button
+                icon={selfEvaluation.icon}
+                className={classnames('actionsButton', [selfEvaluation.icon])}
+                loading={loading}
+              >
+                <span className="actionsButtonLabel">
+                  {selfEvaluation.selectedLabel || selfEvaluation.label}
+                </span>
+                <Icon type="down" />
+              </Button>
+            </Dropdown>
+
+            <List
+              size="small"
+              dataSource={getUsersApprobationList(approbations)}
+              renderItem={approbation => {
+                const onfEvaluation = getEvaluationFromValue(
+                  [...actionsN1, ...actionsN2],
+                  approbation.value,
+                );
+                return (
+                  <List.Item key={approbation.n1}>
+                    {getReviewer(reviewers, approbation.n1).email} : {onfEvaluation
+                      ? (onfEvaluation.selectedLabel || onfEvaluation.label)
+                      : 'En attente d\'évaluation'}
+                  </List.Item>
+                );
+              }}
+            />
+          </div>
+        </Card>
+      );
+    }
+
     return (
-      <Card title="Évaluation de niv 1">
-        <Status userrequestState={state} approbations={approbations} user={user} />
-        <div className={styles.actions}>
-          <p>Votre approbation :</p>
-          <Dropdown
-            overlay={(
-              <EvaluationMenu
-                actions={actionsN1}
-                handleClick={e => updateApprobationOrState(e, userrequest, user)}
-              />
-            )}
-            trigger={['click']}
-          >
-            <Button className={classnames(styles.actionsButton, styles[selfEvaluation.icon])}>
-              <span className={styles.actionsButtonLabel}>
-                <Icon type={selfEvaluation.icon} />
-                &nbsp;{selfEvaluation.selectedLabel || selfEvaluation.label}
-              </span> <Icon type="down" />
-            </Button>
-          </Dropdown>
-        </div>
-      </Card>
+      <Status userrequestState={state} approbations={approbations} user={user} />
     );
   }
-
-  if (user.group === 'N2') {
-    return (
-      <Card title="Évaluation de niv 2">
-        <div styles={{ textAlign: 'center' }}>
-          <p>Status de la demande :</p>
-          <Dropdown
-            overlay={(
-              <EvaluationMenu
-                actions={actionsN2}
-                handleClick={e => updateApprobationOrState(e, userrequest, user)}
-              />
-            )}
-            trigger={['click']}
-          >
-            <Button className={classnames(styles.actionsButton, styles[selfEvaluation.icon])}>
-              <span className={styles.actionsButtonLabel}>
-                <Icon type={selfEvaluation.icon} />
-                &nbsp;{selfEvaluation.selectedLabel || selfEvaluation.label}
-              </span> <Icon type="down" />
-            </Button>
-          </Dropdown>
-
-          <List
-            size="small"
-            dataSource={getUsersApprobationList(approbations)}
-            renderItem={approbation => {
-              const onfEvaluation = getEvaluationFromValue(
-                [...actionsN1, ...actionsN2],
-                approbation.value,
-              );
-              return (
-                <List.Item key={approbation.n1}>
-                  {getReviewer(reviewers, approbation.n1).email} : {onfEvaluation
-                    ? (onfEvaluation.selectedLabel || onfEvaluation.label)
-                    : 'En attente d\'évaluation'}
-                </List.Item>
-              );
-            }}
-          />
-        </div>
-      </Card>
-    );
-  }
-
-  return (
-    <Status userrequestState={state} approbations={approbations} user={user} />
-  );
-};
+}
 
 const mapStateToProps = state => ({
   user: {

@@ -1,4 +1,4 @@
-.actions {
+.statusActions {
   margin-top: 12px;
   text-align: center;
 }
@@ -66,4 +66,12 @@
       color: rgba(0, 0, 0, 0.85);
     }
   }
+}
+
+.ant-btn.ant-btn-loading:not(.ant-btn-circle):not(.ant-btn-circle-outline):not(.ant-btn-icon-only) {
+  padding: 0 15px;
+}
+
+.ant-btn.ant-btn-loading:not(.ant-btn-circle):not(.ant-btn-circle-outline):not(.ant-btn-icon-only) .anticon {
+  margin: 0;
 }
