@@ -28,8 +28,11 @@ class Comments extends React.Component {
   }
 
   handleSubmit = () => {
-    const { userrequestId, comment } = this.props;
-    this.props.submitComment(userrequestId, comment.text, comment.is_internal);
+    const { userrequestId, comment, userGroup } = this.props;
+    // Only N2 can choose if message is private or not
+    // If N1, always set internal to true
+    const internal = userGroup === 'N2' ? comment.is_internal : true;
+    this.props.submitComment(userrequestId, comment.text, internal);
   }
 
   render () {
@@ -37,13 +40,16 @@ class Comments extends React.Component {
 
     return (
       <ReduxForm model="userrequestComments">
-        {userGroup !== 'user' && <Select
+        {userGroup === 'N2' && <Select
           placeholder="Choisir un destinataire"
           model=".is_internal"
           options={config.recipientsOptions}
           errorMessages={{ required: 'Veuillez choisir un destinataire' }}
           required
         />}
+        {userGroup === 'N1' &&
+          <p>Votre message ne sera visible qu'en interne.</p>
+        }
         <TextArea
           style={{ marginBottom: 12 }}
           model=".text"
