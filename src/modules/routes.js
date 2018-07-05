@@ -20,11 +20,17 @@ export const routes = [{
   icon: 'paper-clip',
   protected: false,
 }, {
+  path: '/new-profile',
+  name: 'Create an account',
+  component: Profile,
+  icon: 'paper-clip',
+  protected: false,
+}, {
   path: '/profile',
   name: 'Profile',
   component: Profile,
   icon: 'paper-clip',
-  protected: false,
+  protected: true,
 }, {
   path: '/new-request',
   name: 'New request',
