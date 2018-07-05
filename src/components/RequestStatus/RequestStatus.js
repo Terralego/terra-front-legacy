@@ -37,15 +37,19 @@ const getEvaluationFromValue = (options, value) => (
 
 /**
  * getUsersApprobationList
+ * Return an array of approbation for all user exept current N2
  *
  * @param {object} approbations - array of approbations
+ * @param {object} user - current user
  * @return {array} array of approbations by N1 identifier
  */
-const getUsersApprobationList = approbations => {
+const getUsersApprobationList = (approbations, user) => {
   if (!approbations) {
     return [];
   }
-  return Object.keys(approbations).map(uuid => ({ n1: uuid, value: approbations[uuid] }));
+  return Object.keys(approbations)
+    .filter(uuid => uuid !== user.uuid)
+    .map(uuid => ({ n1: uuid, value: approbations[uuid] }));
 };
 
 const EvaluationMenu = ({ actions, handleClick }) => (
@@ -172,7 +176,7 @@ class RequestStatus extends React.Component {
 
             <List
               size="small"
-              dataSource={getUsersApprobationList(approbations)}
+              dataSource={getUsersApprobationList(approbations, user)}
               renderItem={approbation => {
                 const onfEvaluation = getEvaluationFromValue(
                   [...actionsN1, ...actionsN2],
