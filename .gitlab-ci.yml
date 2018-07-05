@@ -7,7 +7,6 @@ stages:
   - deploy
 
 cache:
-  key: node_modules
   paths:
     - node_modules/
 
