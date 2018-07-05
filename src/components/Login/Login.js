@@ -27,9 +27,9 @@ class FormLogin extends Component {
       isAuthenticated ?
         <Redirect to={location.state ? location.state.from : '/'} />
         :
-        <ReduxForm model="login">
-          <Row className={styles.row}>
-            <Col span={24} sm={12} className={styles.login}>
+        <Row className={styles.row} gutter={24}>
+          <Col span={24} sm={{ span: 10, offset: 1 }} className={styles.login}>
+            <ReduxForm model="login">
               <h2>Se connecter</h2>
               <Input
                 model=".email"
@@ -55,19 +55,32 @@ class FormLogin extends Component {
               >
                 Me connecter
               </Button>
-            </Col>
-            <Col span={24} sm={12} className={styles.signup}>
+            </ReduxForm>
+          </Col>
+          <Col span={24} sm={{ span: 1, offset: 1 }} className={styles.separator} />
+          <Col span={24} sm={{ span: 10 }} className={styles.signup}>
+            <ReduxForm model="signup">
               <h2>Créer un compte</h2>
               <p>Vous n'avez pas encore de compte ?</p>
 
               <Link to="/profile">
-                <Button type="default" icon="arrow-right" className={styles.signupButton}>
-                  Créer un compte
+                <Input
+                  model=".signupEmail"
+                  label="Saisissez votre adresse email"
+                  errorMessages={{ required: 'Veuillez saisir votre email' }}
+                  required
+                />
+                <Button
+                  type="primary"
+                  icon="arrow-right"
+                  className={styles.signupButton}
+                >
+                Créer un compte
                 </Button>
               </Link>
-            </Col>
-          </Row>
-        </ReduxForm>
+            </ReduxForm>
+          </Col>
+        </Row>
     );
   }
 }

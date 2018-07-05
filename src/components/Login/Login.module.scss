@@ -4,20 +4,29 @@
   flex-wrap: wrap;
 }
 
-.login {
-  border-right: solid 1px #e8e8e8;
-  padding: 0 30px 0 20px;
+.separator {
+  border-left: solid 1px #e8e8e8;
+  margin-right: 12px;
+  height: 230px;
+  width: 1px;
 }
 
 .signup {
-  text-align: center;
   padding: 0 20px;
+}
+
+.loginButton, .signupButton {
+  margin-top: 12px;
+  float: right;
 }
 
 @media (max-width: 768px) {
   .login {
     padding: 0;
-    border-color: transparent;
+  }
+
+  .separator {
+    display: none;
   }
 
   .signup {
