@@ -18,19 +18,21 @@ const CustomCheckbox = props => {
   delete propsField.errorMessages;
   delete propsField.required;
 
+  const errorMessages = (props.fieldValue.errors && props.fieldValue.errors.required)
+    ? { required: props.errorMessages.required }
+    : props.errorMessages;
+
   return (
     <FormItem
       label={props.label}
       validateStatus={validateStatus(props.fieldValue)}
-      required={props.required}
+      required={!!errorMessages.required}
       help={
-        props.required && (
-          <Errors
-            model={props.name}
-            show={field => field.touched && !field.focus}
-            messages={props.errorMessages}
-          />
-        )
+        <Errors
+          model={props.name}
+          show={field => field.touched && !field.focus}
+          messages={errorMessages}
+        />
       }
     >
       {propsField.options.map(option => (
@@ -40,23 +42,52 @@ const CustomCheckbox = props => {
   );
 };
 
-function CheckboxField (props) {
+const CheckboxField = props => {
+  const required = props.required || props.errorMessages.required;
+  let rules = {};
+  let messages = {};
+
+  Object.keys(props.errorMessages).forEach(item => {
+    if (props.errorMessages[item].rule) {
+      rules[item] = props.errorMessages[item].rule;
+    }
+    if (props.errorMessages[item].message) {
+      messages[item] = props.errorMessages[item].message;
+    }
+  });
+
+  /*
+  * If "required" is truthy
+  * and "errorMessages" is not set
+  * we set default message and rules
+  */
+  if (required) {
+    if (!rules.required) {
+      rules = {
+        ...rules,
+        required: val => val && val.length,
+      };
+    }
+    if (!messages.required) {
+      messages = {
+        ...messages,
+        required: 'This field is mandatory',
+      };
+    }
+  }
+
   return (
     <Control
       model={props.model}
       id={props.model}
-      validators={{
-        required: val => ((val && val.length) || !props.required),
-      }}
+      validators={rules}
       withFieldValue
-      mapProps={{
-        errorMessages: () => props.errorMessages,
-      }}
+      mapProps={messages}
       component={CustomCheckbox}
       {...props}
     />
   );
-}
+};
 
 CheckboxField.propTypes = {
   model: Proptypes.string.isRequired,
@@ -69,7 +100,7 @@ CheckboxField.propTypes = {
 
 CheckboxField.defaultProps = {
   placeholder: '',
-  errorMessages: { required: 'Please fill this field' },
+  errorMessages: {},
 };
 
 export default CheckboxField;

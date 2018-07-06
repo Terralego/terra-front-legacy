@@ -21,19 +21,21 @@ const CustomRadio = props => {
   delete propsField.options;
   delete propsField.required;
 
+  const errorMessages = (props.fieldValue.errors && props.fieldValue.errors.required)
+    ? { required: props.errorMessages.required }
+    : props.errorMessages;
+
   return (
     <FormItem
       label={props.label}
       validateStatus={validateStatus(props.fieldValue)}
-      required={props.required}
+      required={!!errorMessages.required}
       help={
-        props.required && (
-          <Errors
-            model={props.name}
-            show={field => field.touched && !field.focus}
-            messages={props.errorMessages}
-          />
-        )
+        <Errors
+          model={props.name}
+          show={field => field.touched && !field.focus}
+          messages={errorMessages}
+        />
       }
     >
       <RadioGroup {...propsField}>

@@ -44,8 +44,7 @@ class Comments extends React.Component {
           placeholder="Choisir un destinataire"
           model=".is_internal"
           options={config.recipientsOptions}
-          errorMessages={{ required: 'Veuillez choisir un destinataire' }}
-          required
+          errorMessages={{ required: { message: 'Veuillez choisir un destinataire' } }}
         />}
         {userGroup === 'N1' &&
           <p>Votre message ne sera visible qu'en interne.</p>
@@ -54,8 +53,7 @@ class Comments extends React.Component {
           style={{ marginBottom: 12 }}
           model=".text"
           placeholder="Entrez votre message..."
-          errorMessages={{ required: 'Veuillez écrire un message' }}
-          required
+          errorMessages={{ required: { message: 'Veuillez écrire un message' } }}
         />
         <div style={{ textAlign: 'right' }}>
           <Button

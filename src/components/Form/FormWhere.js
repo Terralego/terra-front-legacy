@@ -9,13 +9,13 @@ function FormWhere () {
         model=".city"
         label="City"
         placeholder="What is your city?"
-        errorMessages={{ required: 'Please provide a city' }}
+        errorMessages={{ required: { message: 'Please provide a city' } }}
       />
       <Input
         model=".state"
         label="State"
         placeholder="What is you state?"
-        errorMessages={{ required: 'Please provide a state' }}
+        errorMessages={{ required: { message: 'Please provide a state' } }}
       />
     </Fieldset>
   );
