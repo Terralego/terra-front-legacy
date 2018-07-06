@@ -9,9 +9,11 @@ import Header from 'components/Header/Header';
 import Breadcrumb from 'components/Breadcrumb/Breadcrumb';
 import SideMenu from 'components/SideMenu/SideMenu';
 import RouteViews from 'components/RouteViews/RouteViews';
+import ScrollToTop from 'components/ScrollToTop/ScrollToTop';
 
 const Main = props => (
   <Layout style={{ height: '100vh' }}>
+    <ScrollToTop />
     <Header {...props} />
     <Layout>
       <Layout.Sider
