@@ -6,13 +6,27 @@ stages:
   - build
   - deploy
 
-# Instal stage
+cache:
+  paths:
+    - node_modules/
+
+before_script:
+  - node --version
+  - npm --version
+  - ls -alh
+
+# Install stage
 
 npm_install:
   tags: [shared-ci-docker]
   stage: install
   script:
-    - npm ci
+    - npm run ci_if_nolock
+  artifacts:
+    paths:
+      - node_modules
+    expire_in: 3 hours
+    name: "node_modules-$(sha1sum package-lock.json | cut -c1-7)"
 
 # Tests stage
 
@@ -20,14 +34,12 @@ npm_test:
   tags: [shared-ci-docker]
   stage: tests
   script:
-    - npm ci
     - npm test
 
 npm_run_lint:
   tags: [shared-ci-docker]
   stage: tests
   script:
-    - npm ci
     - npm run lint
 
 # Build stage
@@ -36,11 +48,10 @@ npm_run_build:
   tags: [shared-ci-docker]
   stage: build
   script:
-    - npm ci
     - npm run build
   artifacts:
-    expire_in: 1 week
-    name: "build_${CI_COMMIT_SHA}"
+    expire_in: 2 days
+    name: "build-${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHA}"
     paths:
       - build
 
@@ -48,6 +59,8 @@ npm_run_build:
 
 npm_run_deploy:
   tags: [shared-ci-docker]
+  variables:
+    GIT_STRATEGY: none
   stage: deploy
   when: manual
   script:

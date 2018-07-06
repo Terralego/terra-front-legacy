@@ -46,6 +46,8 @@
     "whatwg-fetch": "~2.0.4"
   },
   "scripts": {
+    "ci_if_nolock": "test -f node_modules/package-lock.$(sha1sum package-lock.json | cut -d' ' -f1) && echo 'node_modules matches package-lock: not (re)installing.' || npm ci && npm run touchlock",
+    "touchlock": "touch node_modules/package-lock.$(sha1sum package-lock.json | cut -d' ' -f1)",
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
     "build:force": "REACT_APP_FORCE_BUILD=true npm run build",
