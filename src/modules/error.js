@@ -5,6 +5,7 @@ import {
   INTERSECT_FAILURE,
 } from 'modules/userrequest';
 import { SET_ERROR_MESSAGE } from 'modules/authentication';
+import { CONFIG_FAILURE } from 'modules/appConfig';
 
 const initialState = null;
 
@@ -18,6 +19,7 @@ const errors = (state = initialState, action) => {
     case SUBMIT_FAILURE:
     case EXISTING_FAILURE:
     case INTERSECT_FAILURE:
+    case CONFIG_FAILURE:
       return action.error;
     case SET_ERROR_MESSAGE:
       return action.errorMessage;
