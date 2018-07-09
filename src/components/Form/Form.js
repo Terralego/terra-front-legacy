@@ -6,6 +6,7 @@ import { Form as ReduxForm, track } from 'react-redux-form';
 import { withRouter, Prompt } from 'react-router-dom';
 import moment from 'moment';
 
+import { fetchUserrequest } from 'modules/userrequestList';
 import { resetForm } from 'modules/userrequest';
 import { updateConfigValue } from 'modules/appConfig';
 
@@ -67,9 +68,13 @@ class FormApp extends React.Component {
       <div>
         <Prompt
           when={this.props.form.touched}
-          message={location => (
-            location.pathname.startsWith('/manage-request') ? true : `Are you sure you want to go to ${location.pathname}?`
-          )}
+          message={location => {
+            if (location.pathname.startsWith('/manage-request/detail')
+            && this.props.location.pathname === '/new-request') {
+              return true;
+            }
+            return `Are you sure you want to go to ${location.pathname}?`;
+          }}
         />
         <HeaderForm showDraft />
         <HeaderUserrequest {...this.props} />
@@ -90,7 +95,6 @@ class FormApp extends React.Component {
         :
           <FormSummary editForm={this.editForm} />
         }
-
       </div>
     );
   }
@@ -103,6 +107,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ updateConfigValue, resetForm }, dispatch);
+  bindActionCreators({ fetchUserrequest, updateConfigValue, resetForm }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(FormApp));

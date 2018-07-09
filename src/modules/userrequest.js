@@ -21,11 +21,6 @@ export const SUBMIT_REQUEST = 'userrequest/SUBMIT_REQUEST';
 export const SUBMIT_SUCCESS = 'userrequest/SUBMIT_SUCCESS';
 export const SUBMIT_FAILURE = 'userrequest/SUBMIT_FAILURE';
 
-// Get draft request actions types
-export const EXISTING_REQUEST = 'userrequest/EXISTING_REQUEST';
-export const EXISTING_SUCCESS = 'userrequest/EXISTING_SUCCESS';
-export const EXISTING_FAILURE = 'userrequest/EXISTING_FAILURE';
-
 // Get feature intersection actions types
 export const INTERSECT_REQUEST = 'userrequest/INTERSECT_REQUEST';
 export const INTERSECT_SUCCESS = 'userrequest/INTERSECT_SUCCESS';
@@ -131,7 +126,7 @@ export const removeRequestFeature = featureId => ({
  * openDraft set already loaded userrequest in userrequest form
  */
 export const openDraft = data => ({
-  type: EXISTING_SUCCESS,
+  type: DETAIL_SUCCESS,
   data,
 });
 

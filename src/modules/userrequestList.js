@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 import { CALL_API } from 'middlewares/api';
 import settings from 'front-settings';
-import { SUBMIT_SUCCESS } from 'modules/userrequest';
+import { SUBMIT_SUCCESS, SAVE_DRAFT_SUCCESS } from 'modules/userrequest';
 import { getUserGroup } from 'modules/authentication';
 
 // Load all userrequest
@@ -89,6 +89,7 @@ const userrequestList = (state = initialState, action) => {
       };
     case DETAIL_SUCCESS:
     case SUBMIT_SUCCESS:
+    case SAVE_DRAFT_SUCCESS:
       return {
         ...state,
         loading: false,
