@@ -4,14 +4,17 @@ import classnames from 'classnames';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Form as ReduxForm } from 'react-redux-form';
-import { Spin, List, Button } from 'antd';
+import { Spin, List, Button, Modal, Icon } from 'antd';
 import moment from 'moment';
+import FormMap from 'components/FormMap/FormMap';
 
 import { getUserGroup } from 'modules/authentication';
 import {
   fetchUserrequestComments,
   getCommentsByUserrequest,
   submitComment,
+  addRequestCommentFeature,
+  removeRequestCommentFeature,
 } from 'modules/userrequestComments';
 import TextArea from 'components/Fields/TextArea';
 import Select from 'components/Fields/Select';
@@ -21,10 +24,20 @@ import config from 'components/Comments/Comments.config';
 import styles from './Comments.module.scss';
 
 class Comments extends React.Component {
+  state = {
+    showDrawMap: false,
+    geojson: false,
+    attachments: ['Titre de ma première pièce jointe', 'Titre de ma seconde pièce jointe'],
+  };
+
   componentDidMount () {
     if (!this.props.comments.length && !this.props.loading && !this.props.fetched) {
       this.props.fetchUserrequestComments(this.props.userrequestId);
     }
+  }
+
+  onOkHandle = () => {
+    this.setState({ showDrawMap: !this.state.showDrawMap, geojson: true });
   }
 
   handleSubmit = () => {
@@ -56,6 +69,37 @@ class Comments extends React.Component {
           errorMessages={{ required: { message: 'Veuillez écrire un message' } }}
         />
         <div style={{ textAlign: 'right' }}>
+          {this.state.showDrawMap &&
+            <Modal
+              title="Basic Modal"
+              visible={this.state.showDrawMap}
+              onOk={this.onOkHandle}
+              onCancel={() => this.setState({ showDrawMap: !this.state.showDrawMap })}
+            >
+              <FormMap
+                features={[]}
+                drawMode="pointer"
+                activity={{
+                  type: '',
+                  eventDates: Array(1),
+                  uid: 0,
+                  participantCount: '1',
+                  publicCount: '0',
+                }}
+                editable
+                onAddFeature={this.props.addRequestCommentFeature}
+                onRemoveFeature={this.props.removeRequestCommentFeature}
+              />
+            </Modal>
+          }
+          <Button
+            style={{ marginRight: 10 }}
+            type="default"
+            icon="edit"
+            onClick={() => this.setState({ showDrawMap: !this.state.showDrawMap })}
+          >
+            Rééditer un tracé
+          </Button>
           <Button
             type="primary"
             htmlType="submit"
@@ -66,6 +110,14 @@ class Comments extends React.Component {
           >
             Envoyer
           </Button>
+          {this.state.geojson &&
+            <p style={{ marginTop: 7, fontSize: '0.8em' }}>
+              <strong><Icon type="paper-clip" /> Tracé prêt à l'envoi</strong>
+            </p>
+          }
+          {this.state.attachments &&
+            this.state.attachments.map(paper =>
+              <p style={{ marginTop: 7, fontSize: '0.8em' }}><strong><Icon type="pushpin-o" /> {paper}</strong></p>)}
         </div>
 
         {loading
@@ -117,6 +169,11 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ fetchUserrequestComments, submitComment }, dispatch);
+  bindActionCreators({
+    fetchUserrequestComments,
+    submitComment,
+    addRequestCommentFeature, // Action Creator encore inutilisé
+    removeRequestCommentFeature, // Action Creator encore inutilisé
+  }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Comments);

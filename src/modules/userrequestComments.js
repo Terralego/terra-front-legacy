@@ -10,7 +10,15 @@ export const SUBMIT_REQUEST = 'userrequestComments/SUBMIT_REQUEST';
 export const SUBMIT_SUCCESS = 'userrequestComments/SUBMIT_SUCCESS';
 export const SUBMIT_FAILURE = 'userrequestComments/SUBMIT_FAILURE';
 
+export const ADD_GEOJSON_COMMENT_FEATURE = 'ADD_GEOJSON_COMMENT_FEATURE';
+export const REMOVE_GEOJSON_COMMENT_FEATURE = 'REMOVE_GEOJSON_COMMENT_FEATURE';
+
 const initialState = {
+  geojson: {
+    type: 'FeatureCollection',
+    features: [],
+  },
+  attachments: {}, // Object contenant les futures pièces jointes
   comments: {}, // comments by userrequestId
   loading: false, // loading comments list
   text: '',
@@ -95,6 +103,26 @@ const userrequestComments = (state = initialState, action) => {
         ...state,
         error: action.error,
       };
+    case ADD_GEOJSON_COMMENT_FEATURE:
+      return {
+        ...state,
+        geojson: {
+          ...state.geojson,
+          features: [
+            ...state.geojson.features,
+            action.feature,
+          ],
+        },
+      };
+    case REMOVE_GEOJSON_COMMENT_FEATURE:
+      return {
+        ...state,
+        geojson: {
+          ...state.geojson,
+          features: state.geojson.features
+            .filter(feature => feature.properties.id !== action.featureId),
+        },
+      };
     default:
       return state;
   }
@@ -170,4 +198,24 @@ export const submitComment = (userrequestId, comment, isInternal) => ({
     },
     form: 'userrequestComments',
   },
+});
+
+/**
+ * userrequest action
+ * addRequestFeature add or update an object of properties
+ * @param  {object} properties : object of properties to add / update in userrequest object
+ */
+export const addRequestCommentFeature = feature => ({
+  type: ADD_GEOJSON_COMMENT_FEATURE,
+  feature,
+});
+
+/**
+ * userrequest action
+ * removeRequestFeature remove or update an object of properties
+ * @param  {object} properties : object of properties to remove / update in userrequest object
+ */
+export const removeRequestCommentFeature = featureId => ({
+  type: REMOVE_GEOJSON_COMMENT_FEATURE,
+  featureId,
 });
