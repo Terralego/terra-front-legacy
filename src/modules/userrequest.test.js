@@ -70,7 +70,7 @@ describe('userrequest async action', () => {
           {
             type: SUBMIT_FAILURE,
             error: {
-              message: 'TypeError: Cannot read property \'on\' of undefined',
+              message: 'Une erreur est survenue',
             },
           },
         ]);

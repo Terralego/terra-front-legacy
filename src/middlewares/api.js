@@ -31,7 +31,7 @@ export default () => next => action => {
     .catch(error => {
       if (error instanceof Error) {
         next({
-          error: { message: error.toString() },
+          error: { message: 'Une erreur est survenue' },
           type: errorType,
         });
       } else {
