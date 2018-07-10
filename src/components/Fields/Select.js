@@ -44,9 +44,19 @@ const CustomSelect = props => {
         {...propsField}
       >{props.options.map(option => (
         props.categories ?
-          <Select.OptGroup key={option.value} label={option.label}>
+          <Select.OptGroup
+            key={option.value}
+            label={
+              <span style={{ fontWeight: 'bold', color: '#2b2b2b', fontSize: 14 }}>{option.label}</span>
+            }
+          >
             {option.children.map(opt => (
-              <Select.Option key={opt.value} value={`${option.value},${opt.value}`} label={opt.label} category={option.value}>
+              <Select.Option
+                key={opt.value}
+                value={`${option.value},${opt.value}`}
+                label={opt.label}
+                category={option.value}
+              >
                 {opt.label}
               </Select.Option>
               ))}
