@@ -20,8 +20,21 @@ class UserrequestList extends React.Component {
   };
 
   componentDidMount () {
+    // If no results, load it
     const query = queryString.parse(this.props.location.search);
-    this.props.fetchUserrequestList(query.limit, query.page);
+    if (this.props.items.length < 1 && !this.props.loading) {
+      this.props.fetchUserrequestList(query.limit, query.page);
+    }
+
+    this.unlisten = this.props.history.listen(location => {
+      if (this.props.location.search !== location.search) {
+        this.props.fetchUserrequestList(query.limit, query.page);
+      }
+    });
+  }
+
+  componentWillUnmount () {
+    this.unlisten();
   }
 
   onSelectChange = selectedRowKeys => {
