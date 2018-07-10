@@ -50,7 +50,7 @@ class Comments extends React.Component {
 
   render () {
     const { comments, loading, form, userGroup } = this.props;
-
+    const { showDrawMap, geojson, attachments } = this.state;
     return (
       <ReduxForm model="userrequestComments">
         {userGroup === 'N2' && <Select
@@ -69,12 +69,12 @@ class Comments extends React.Component {
           errorMessages={{ required: { message: 'Veuillez écrire un message' } }}
         />
         <div style={{ textAlign: 'right' }}>
-          {this.state.showDrawMap &&
+          {showDrawMap &&
             <Modal
               title="Basic Modal"
-              visible={this.state.showDrawMap}
+              visible={showDrawMap}
               onOk={this.onOkHandle}
-              onCancel={() => this.setState({ showDrawMap: !this.state.showDrawMap })}
+              onCancel={() => this.setState({ showDrawMap: !showDrawMap })}
             >
               <FormMap
                 features={[]}
@@ -96,7 +96,7 @@ class Comments extends React.Component {
             style={{ marginRight: 10 }}
             type="default"
             icon="edit"
-            onClick={() => this.setState({ showDrawMap: !this.state.showDrawMap })}
+            onClick={() => this.setState({ showDrawMap: !showDrawMap })}
           >
             Rééditer un tracé
           </Button>
@@ -110,13 +110,13 @@ class Comments extends React.Component {
           >
             Envoyer
           </Button>
-          {this.state.geojson &&
+          {geojson &&
             <p style={{ marginTop: 7, fontSize: '0.8em' }}>
               <strong><Icon type="paper-clip" /> Tracé prêt à l'envoi</strong>
             </p>
           }
-          {this.state.attachments &&
-            this.state.attachments.map(paper =>
+          {attachments &&
+            attachments.map(paper =>
               <p style={{ marginTop: 7, fontSize: '0.8em' }}><strong><Icon type="pushpin-o" /> {paper}</strong></p>)}
         </div>
 
