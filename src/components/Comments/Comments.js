@@ -27,7 +27,7 @@ class Comments extends React.Component {
   state = {
     showDrawMap: false,
     geojson: false,
-    attachments: ['Titre de ma première pièce jointe', 'Titre de ma seconde pièce jointe'],
+    attachments: [],
   };
 
   componentDidMount () {
