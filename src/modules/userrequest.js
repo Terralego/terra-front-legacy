@@ -2,6 +2,7 @@ import { actions } from 'react-redux-form';
 
 import { CALL_API } from 'middlewares/api';
 import { getFeaturesWithIncidence } from 'helpers/userrequestHelpers';
+import { DETAIL_SUCCESS } from 'modules/userrequestList';
 
 import initialState from 'modules/userrequest-initial';
 
@@ -19,11 +20,6 @@ export const SAVE_DRAFT_FAILURE = 'userrequest/SAVE_DRAFT_FAILURE';
 export const SUBMIT_REQUEST = 'userrequest/SUBMIT_REQUEST';
 export const SUBMIT_SUCCESS = 'userrequest/SUBMIT_SUCCESS';
 export const SUBMIT_FAILURE = 'userrequest/SUBMIT_FAILURE';
-
-// Get draft request actions types
-export const EXISTING_REQUEST = 'userrequest/EXISTING_REQUEST';
-export const EXISTING_SUCCESS = 'userrequest/EXISTING_SUCCESS';
-export const EXISTING_FAILURE = 'userrequest/EXISTING_FAILURE';
 
 // Get feature intersection actions types
 export const INTERSECT_REQUEST = 'userrequest/INTERSECT_REQUEST';
@@ -68,12 +64,10 @@ const userrequest = (state = initialState, action) => {
         },
       };
     case SAVE_DRAFT_SUCCESS:
-      return {
-        ...action.data,
-      };
-    case EXISTING_SUCCESS:
+    case DETAIL_SUCCESS:
       return action.data;
     case SUBMIT_SUCCESS:
+    case RESET_FORM:
       return initialState;
     case INTERSECT_SUCCESS:
       return {
@@ -129,6 +123,16 @@ export const removeRequestFeature = featureId => ({
 
 /**
  * userrequest action
+ * openDraft set already loaded userrequest in userrequest form
+ */
+export const openDraft = data => ({
+  type: DETAIL_SUCCESS,
+  data,
+});
+
+
+/**
+ * userrequest action
  * resetForm restore form in its initial state with react-redux-form action
  * and clear userrequest data
  */
@@ -153,18 +157,6 @@ export const submitData = (data, form = 'userrequest') => ({
       }),
     },
     form,
-  },
-});
-
-/**
- * userrequest action : fetch userrequest
- * @param {string} id
- */
-export const fetchUserrequest = id => ({
-  [CALL_API]: {
-    endpoint: `/userrequest/${id}/`,
-    types: [EXISTING_REQUEST, EXISTING_SUCCESS, EXISTING_FAILURE],
-    config: { method: 'GET' },
   },
 });
 

@@ -5,22 +5,30 @@ import { Redirect, withRouter } from 'react-router-dom';
 import { Spin, Row, Col, Card } from 'antd';
 
 import { fetchUserrequest } from 'modules/userrequestList';
+import { openDraft } from 'modules/userrequest';
 import { getUserGroup } from 'modules/authentication';
 import Summary from 'components/Summary/Summary';
 import RequestStatus from 'components/RequestStatus/RequestStatus';
 import Comments from 'components/Comments/Comments';
+import Form from 'components/Form/Form';
 
 const DRAFT_STATUS = 100;
 
 class Userrequest extends React.Component {
   componentDidMount () {
+    if (this.props.data && this.props.data.state === DRAFT_STATUS) {
+      this.props.openDraft(this.props.data);
+    }
     if (!this.props.data && !this.props.loading) {
       this.props.fetchUserrequest(this.props.match.params.id);
     }
   }
 
   render () {
-    const { data } = this.props;
+    const { data, loading } = this.props;
+    if (loading) {
+      return <Spin style={{ margin: '30px auto', width: '100%' }} />;
+    }
     if (data) {
       if (data.error && data.error.status === 404) {
         return <Redirect to="/manage-request" from={this.props.location.pathname} />;
@@ -30,10 +38,7 @@ class Userrequest extends React.Component {
       if (data.state === DRAFT_STATUS
         && this.props.userGroup === 'user') {
         return (
-          <Redirect
-            to={{ pathname: `/request/${data.id}`, state: { from: this.props.location.pathname } }}
-            from={this.props.location.pathname}
-          />
+          <Form {...this.props} />
         );
       }
     }
@@ -64,6 +69,6 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ fetchUserrequest }, dispatch);
+  bindActionCreators({ fetchUserrequest, openDraft }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Userrequest));

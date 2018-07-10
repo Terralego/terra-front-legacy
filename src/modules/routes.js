@@ -40,14 +40,6 @@ export const routes = [{
   hideHeader: true,
   hideFooter: true,
 }, {
-  path: '/request/:id',
-  name: 'Edit existing request',
-  component: Form,
-  icon: 'form',
-  protected: true,
-  hideHeader: true,
-  hideFooter: true,
-}, {
   path: '/manage-request',
   name: 'Manage requests',
   component: UserrequestList,
