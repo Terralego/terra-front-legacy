@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, Card, Alert } from 'antd';
+import { Row, Col, Card } from 'antd';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
@@ -8,7 +8,7 @@ import { updateConfigValue } from 'modules/appConfig';
 import MapDrawButtons from 'components/MapDrawButtons/MapDrawButtons';
 import TerraDrawMap from 'components/TerraDrawMap/TerraDrawMap';
 import MapLegend from 'components/MapLegend/MapLegend';
-import { publicMessages, TerraDrawMapConfig, mapLegend } from './FormMap.config';
+import { TerraDrawMapConfig, mapLegend } from './FormMap.config';
 
 class FormMap extends Component {
   constructor (props) {
@@ -62,7 +62,6 @@ class FormMap extends Component {
 
   removeFeature (id) {
     this.mapContainer.removeFeatureById(id);
-    // this.props.removeRequestFeature(id);
     this.props.onRemoveFeature(id);
   }
 
@@ -81,7 +80,7 @@ class FormMap extends Component {
             labels={{
               pointer: 'Sélection',
               polygon: 'Dessiner une zone',
-              line: 'Tracer un parcours',
+              line: 'Tracer un trait',
               point: 'Définir un point',
             }}
             handleChange={mode => this.props.updateConfigValue('drawMode', mode)}
@@ -103,23 +102,13 @@ class FormMap extends Component {
             osmSource="https://{a-c}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png"
           />
           <MapLegend
-            title="Niveaux d'incidence"
+            title="Légende"
             legend={mapLegend}
             style={{ width: 300, position: 'absolute', bottom: 12, right: 18, zIndex: 1 }}
           />
         </Col>
         <Col span={24} lg={24}>
-          <Card title="Zone de l'activité">
-            {this.props.audience >= 300 && (
-              <Alert
-                message="Remarque"
-                description={publicMessages[1].text}
-                type="warning"
-                showIcon
-                style={{ marginBottom: 24 }}
-              />
-            )}
-          </Card>
+          <Card title="Carte" />
         </Col>
       </Row>
     );
