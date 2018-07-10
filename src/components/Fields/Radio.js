@@ -52,8 +52,7 @@ const CustomRadio = props => {
 function RadioField (props) {
   return (
     <Control
-      model={props.model}
-      id={props.model}
+      id={props.id || props.model}
       validators={{
         required: val => ((val && val.length) || !props.required),
       }}

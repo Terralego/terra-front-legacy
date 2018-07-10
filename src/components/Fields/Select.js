@@ -110,8 +110,7 @@ const SelectField = props => {
 
   return (
     <Control.select
-      model={props.model}
-      id={props.model}
+      id={props.id || props.model}
       validators={rules}
       withFieldValue
       mapProps={{

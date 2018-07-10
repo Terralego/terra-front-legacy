@@ -82,8 +82,7 @@ const DatePickerField = props => {
 
   return (
     <Control
-      model={props.model}
-      id={props.model}
+      id={props.id || props.model}
       validators={rules}
       withFieldValue
       mapProps={{

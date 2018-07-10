@@ -78,7 +78,6 @@ const InputField = props => {
 
   return (
     <Control
-      model={props.model}
       id={props.id || props.model}
       validators={rules}
       withFieldValue
