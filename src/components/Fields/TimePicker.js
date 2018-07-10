@@ -14,29 +14,23 @@ function validateStatus (fieldValue) {
 }
 
 const CustomTimePicker = props => {
-  const propsField = { ...props };
+  const { errorMessages, fieldValue, label, name, ...propsField } = props;
   // props.value is a "moment" object
   // but it becomes a string when we register it to the store
   propsField.value = (moment.isMoment(props.value) || props.value !== '') ? moment(props.value) : null;
   delete propsField.withFieldValue;
-  delete propsField.errorMessages;
-  delete propsField.fieldValue;
   delete propsField.required;
-
-  const errorMessages = (props.fieldValue.errors && props.fieldValue.errors.required)
-    ? { required: props.errorMessages.required }
-    : props.errorMessages;
 
   return (
     <FormItem
-      label={props.label}
-      validateStatus={validateStatus(props.fieldValue)}
+      label={label}
+      validateStatus={validateStatus(fieldValue)}
       required={!!errorMessages.required}
       help={
         <Errors
-          model={props.name}
+          model={name}
           show={field => field.touched && !field.focus}
-          messages={props.errorMessages}
+          messages={fieldValue.errors.required ? { ...errorMessages.required } : errorMessages}
         />
       }
     >

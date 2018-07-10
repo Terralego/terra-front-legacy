@@ -13,25 +13,20 @@ function validateStatus (fieldValue) {
 }
 
 const CustomCheckbox = props => {
-  const propsField = { ...props };
+  const { errorMessages, fieldValue, label, name, ...propsField } = props;
   delete propsField.withFieldValue;
-  delete propsField.errorMessages;
   delete propsField.required;
-
-  const errorMessages = (props.fieldValue.errors && props.fieldValue.errors.required)
-    ? { required: props.errorMessages.required }
-    : props.errorMessages;
 
   return (
     <FormItem
-      label={props.label}
-      validateStatus={validateStatus(props.fieldValue)}
+      label={label}
+      validateStatus={validateStatus(fieldValue)}
       required={!!errorMessages.required}
       help={
         <Errors
-          model={props.name}
+          model={name}
           show={field => field.touched && !field.focus}
-          messages={errorMessages}
+          messages={fieldValue.errors.required ? { ...errorMessages.required } : errorMessages}
         />
       }
     >

@@ -16,29 +16,24 @@ const handleFilter = (inputValue, option) => option.props.children
   .toUpperCase().indexOf(inputValue.toUpperCase()) !== -1;
 
 const CustomSelect = props => {
-  const propsField = { ...props };
+  const { errorMessages, fieldValue, label, name, ...propsField } = props;
   delete propsField.withFieldValue;
-  delete propsField.errorMessages;
   delete propsField.value;
   delete propsField.required;
 
-  const errorMessages = (props.fieldValue.errors && props.fieldValue.errors.required)
-    ? { required: props.errorMessages.required }
-    : props.errorMessages;
-
   return (
     <FormItem
-      label={props.label}
-      validateStatus={validateStatus(props.fieldValue)}
+      label={label}
+      validateStatus={validateStatus(fieldValue)}
       required={!!errorMessages.required}
-      help={(
+      help={
         <Errors
-          model={props.name}
+          model={name}
           show={field => field.touched && !field.focus}
-          messages={errorMessages}
+          messages={fieldValue.errors.required ? { ...errorMessages.required } : errorMessages}
           component={item => <div>{item.children}</div>}
         />
-      )}
+      }
     >
       <Select
         optionFilterProp="children"
