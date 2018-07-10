@@ -1,67 +1,160 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Link, withRouter } from 'react-router-dom';
-import { List, Spin } from 'antd';
-import moment from 'moment';
+import { withRouter } from 'react-router-dom';
+import { Table, Icon, Modal, Button } from 'antd';
+import queryString from 'query-string';
 
-import { fetchUserrequestList, getUserrequestArray } from 'modules/userrequestList';
+import getColumns from 'helpers/userrequestListColumns';
+import NewUserrequestButton from 'components/Userrequest/NewUserrequestButton';
+import Pagination from 'components/Userrequest/Pagination';
+import { getUserGroup } from 'modules/authentication';
+import { submitData } from 'modules/userrequest';
+import { fetchUserrequestList, updateState, getUserrequestsArrayFilteredByUser } from 'modules/userrequestList';
+
+import styles from './UserrequestList.module.scss';
 
 class UserrequestList extends React.Component {
+  state = {
+    selectedRowKeys: [],
+  };
+
   componentDidMount () {
-    this.props.fetchUserrequestList();
+    const query = queryString.parse(this.props.location.search);
+    this.props.fetchUserrequestList(query.limit, query.page);
+  }
+
+  onSelectChange = selectedRowKeys => {
+    this.setState({ selectedRowKeys });
+  }
+
+  /**
+   * getSelectedItems
+   * @param  {array} properties : this.props.items
+   * @return {array} properties : clone of this.props.items filter by selected items
+   */
+  getSelectedItems = () => (
+    this.props.items
+      .filter(item => this.state.selectedRowKeys.includes(item.id))
+      .map(item => ({
+        ...item,
+        properties: {
+          ...item.properties,
+        },
+      }))
+  )
+
+  handleCopy = () => {
+    const selectedItems = this.getSelectedItems();
+    Modal.confirm({
+      title: selectedItems.length > 1 ? 'Êtes-vous sûr de vouloir dupliquer ces demandes ?' : 'Êtes-vous sûr de vouloir dupliquer cette demande ?',
+      content: selectedItems.length > 1 ? 'Les nouvelles demandes prendront le statut "Brouillon".' : 'La nouvelle demande prendra le statut "Brouillon".',
+      onOk: () => {
+        selectedItems
+          .forEach(selectedItem => {
+            const item = { ...selectedItem };
+            delete item.id;
+            item.properties.title += ' - copie';
+            this.props.saveDraft(item);
+          });
+        this.setState({
+          selectedRowKeys: [],
+        });
+      },
+    });
+  }
+
+  handleCancel = () => {
+    const selectedItems = this.getSelectedItems();
+    Modal.confirm({
+      title: selectedItems.length > 1 ? 'Êtes-vous sûr de vouloir annuler ces demandes ?' : 'Êtes-vous sûr de vouloir annuler cette demande ?',
+      content: selectedItems.length > 1 ? 'Les nouvelles demandes prendront le statut "Annuler".' : 'La nouvelle demande prendra le statut "Annuler".',
+      onOk: () => {
+        selectedItems
+          .forEach(item => {
+            this.props.updateState(item.id, -2);
+          });
+        this.setState({
+          selectedRowKeys: [],
+        });
+      },
+    });
+  }
+
+  handleClickOnRow (id) {
+    this.props.history.push(`/manage-request/detail/${id}`);
   }
 
   render () {
-    // TODO : find a better solution
-    // Here all requests are always loaded, even on detail page
-    if (this.props.location.pathname.indexOf('detail') !== -1) {
-      return null;
-    }
+    const { selectedRowKeys } = this.state;
+    const { userGroup, columns } = this.props;
+
+    const rowSelection = {
+      selectedRowKeys,
+      onChange: this.onSelectChange,
+    };
+    const hasSelected = selectedRowKeys.length > 0;
 
     return (
       <div>
-        <h1>Demandes de validation</h1>
-        <List
-          dataSource={this.props.items}
-          renderItem={item => (
-            <List.Item key={item.id}>
-              <List.Item.Meta
-                title={<Link to={`/manage-request/detail/${item.id}`}>{item.properties.title}</Link>}
-                description={item.properties.description}
-              />
-              <div>
-                {item.properties.eventDateType === 'day' &&
-                <p>Le {moment(item.properties.eventStartDate).format('DD/MM/YYYY')}</p>}
-                {item.properties.eventDateType === 'period' &&
-                <p>
-                  Du {moment(item.properties.eventStartDate).format('DD/MM/YYYY')} au {moment(item.properties.eventEndDate).format('DD/MM/YYYY')}
-                </p>}
-              </div>
-            </List.Item>
-          )}
-        />
-        {this.props.loading && (
-          <div className="demo-loading-container">
-            <Spin />
+        <div className={styles.header}>
+          <h1 className={styles.header__title}>Demandes d&apos;autorisation</h1>
+          <NewUserrequestButton className={styles.header__button} />
+        </div>
+        {(userGroup !== 'N1' && userGroup !== 'N2') && (
+          <div className={styles.actions}>
+            <Button
+              className={styles.actions__button}
+              onClick={this.handleCopy}
+              disabled={!hasSelected}
+            >
+              <Icon type="copy" />
+              Dupliquer {selectedRowKeys.length} {selectedRowKeys.length > 1 ? 'demandes sélectionnées' : 'demande sélectionnée'}
+            </Button>
+            <Button
+              className={styles.actions__button}
+              type="danger"
+              onClick={this.handleCancel}
+              disabled={!hasSelected}
+            >
+              <Icon type="minus-circle-o" className={styles.actions__iconCancel} />
+              Annuler {selectedRowKeys.length} {selectedRowKeys.length > 1 ? 'demandes sélectionnées' : 'demande sélectionnée'}
+            </Button>
           </div>
         )}
+        <Table
+          rowKey="id"
+          columns={columns}
+          dataSource={this.props.items}
+          rowSelection={(userGroup !== 'N1' && userGroup !== 'N2') ? rowSelection : null}
+          loading={this.props.loading}
+          onRow={record => (
+            {
+              onClick: () => {
+                this.handleClickOnRow(record.id);
+              },
+            }
+          )}
+          pagination={false}
+        />
+        <Pagination />
       </div>
     );
   }
 }
 
-const mapStateToProps = state => ({
-  items: getUserrequestArray(state),
+const StateToProps = state => ({
+  items: getUserrequestsArrayFilteredByUser(state),
   loading: state.userrequestList.loading,
+  userGroup: getUserGroup(state),
+  columns: getColumns(getUserGroup(state)),
 });
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      fetchUserrequestList,
-    },
-    dispatch,
-  );
+const DispatchToProps = dispatch =>
+  bindActionCreators({
+    fetchUserrequestList,
+    submitData,
+    updateState,
+  }, dispatch);
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(UserrequestList));
+export default withRouter(connect(StateToProps, DispatchToProps)(UserrequestList));

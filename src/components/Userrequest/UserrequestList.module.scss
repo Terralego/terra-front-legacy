@@ -1,0 +1,40 @@
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  &__title,
+  &__button {
+    margin-bottom: 24px;
+  }
+};
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  &__button {
+    margin-bottom: 12px;
+    margin-left: 12px;
+  }
+  &__iconCancel {
+    transform: rotate(-45deg);
+  }
+}
+
+.pagination {
+  text-align: right;
+  margin-top: 12px;
+  clear: both;
+}
+
+@media (max-width: 768px) {
+  .actions {
+    display: block;
+    &__button {
+      margin-bottom: 12px;
+      margin-left: 0;
+      margin-right: 12px;
+    }
+  }
+}
