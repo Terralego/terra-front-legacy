@@ -44,12 +44,12 @@ const CustomTimePicker = props => {
 
 const TimePickerField = props => {
   const required = props.required || props.errorMessages.required;
-  let rules = {};
+  let validators = {};
   let messages = {};
 
   Object.keys(props.errorMessages).forEach(item => {
     if (props.errorMessages[item].rule) {
-      rules[item] = props.errorMessages[item].rule;
+      validators[item] = props.errorMessages[item].rule;
     }
     if (props.errorMessages[item].message) {
       messages[item] = props.errorMessages[item].message;
@@ -62,9 +62,9 @@ const TimePickerField = props => {
   * we set default message and rules
   */
   if (required) {
-    if (!rules.required) {
-      rules = {
-        ...rules,
+    if (!validators.required) {
+      validators = {
+        ...validators,
         required: val => val && val.length,
       };
     }
@@ -79,7 +79,7 @@ const TimePickerField = props => {
   return (
     <Control
       id={props.id || props.model}
-      validators={rules}
+      validators={validators}
       withFieldValue
       mapProps={{
         errorMessages: () => messages,

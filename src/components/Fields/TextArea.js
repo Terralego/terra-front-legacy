@@ -41,11 +41,11 @@ const CustomTextArea = props => {
 
 const TextAreaField = props => {
   const required = props.required || props.errorMessages.required;
-  let rules = {};
+  let validators = {};
   let messages = {};
 
   Object.keys(props.errorMessages).forEach(item => {
-    rules[item] = props.errorMessages[item].rule;
+    validators[item] = props.errorMessages[item].rule;
     messages[item] = props.errorMessages[item].message;
   });
 
@@ -55,9 +55,9 @@ const TextAreaField = props => {
   * we set default message and rules
   */
   if (required) {
-    if (!rules.required) {
-      rules = {
-        ...rules,
+    if (!validators.required) {
+      validators = {
+        ...validators,
         required: val => val && val.length,
       };
     }
@@ -71,7 +71,7 @@ const TextAreaField = props => {
   return (
     <Control
       id={props.id || props.model}
-      validators={rules}
+      validators={validators}
       withFieldValue
       mapProps={{
         errorMessages: messages,

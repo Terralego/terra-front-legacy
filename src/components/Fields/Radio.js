@@ -48,17 +48,48 @@ const CustomRadio = props => {
 };
 
 function RadioField (props) {
+  const required = props.required || props.errorMessages.required;
+  let validators = {};
+  let messages = {};
+
+  Object.keys(props.errorMessages).forEach(item => {
+    if (props.errorMessages[item].rule) {
+      validators[item] = props.errorMessages[item].rule;
+    }
+    if (props.errorMessages[item].message) {
+      messages[item] = props.errorMessages[item].message;
+    }
+  });
+
+  /*
+  * If "required" is truthy
+  * and "errorMessages" is not set
+  * we set default message and rules
+  */
+  if (required) {
+    if (!validators.required) {
+      validators = {
+        ...validators,
+        required: val => val && val.length,
+      };
+    }
+    if (!messages.required) {
+      messages = {
+        ...messages,
+        required: 'This field is mandatory',
+      };
+    }
+  }
+
   return (
     <Control
       id={props.id || props.model}
-      validators={{
-        required: val => ((val && val.length) || !props.required),
-      }}
+      validators={validators}
+      withFieldValue
       mapProps={{
         errorMessages: () => props.errorMessages,
         options: () => props.options,
       }}
-      withFieldValue
       component={CustomRadio}
       {...props}
     />
