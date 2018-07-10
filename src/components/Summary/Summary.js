@@ -47,4 +47,3 @@ Summary.propTypes = {
 };
 
 export default connect(null, mapDispatchToProps)(Summary);
-
