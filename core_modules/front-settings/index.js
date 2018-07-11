@@ -7,6 +7,7 @@ const defaultSettings = {
   SOURCE_VECTOR_URL: 'https://onf-staging.eu.ngrok.io/api/layer', // TODO : change with generic API
   REFRESH_TOKEN: 300000,
   PAGE_SIZE: 10,
+  TIME_TO_STALE: 300000, // 5 min
 };
 
 /**

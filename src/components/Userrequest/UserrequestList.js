@@ -10,7 +10,7 @@ import NewUserrequestButton from 'components/Userrequest/NewUserrequestButton';
 import Pagination from 'components/Userrequest/Pagination';
 import { getUserGroup } from 'modules/authentication';
 import { submitData } from 'modules/userrequest';
-import { fetchUserrequestList, updateState, getUserrequestsArrayFilteredByUser } from 'modules/userrequestList';
+import { updateUserrequestList, updateState, getUserrequestsArrayFilteredByUser } from 'modules/userrequestList';
 
 import styles from './UserrequestList.module.scss';
 
@@ -20,16 +20,11 @@ class UserrequestList extends React.Component {
   };
 
   componentDidMount () {
-    // If no results, load it
     const query = queryString.parse(this.props.location.search);
-    if (this.props.items.length < 1 && !this.props.loading) {
-      this.props.fetchUserrequestList(query.limit, query.page);
-    }
+    this.props.updateUserrequestList(query.limit, query.page);
 
-    this.unlisten = this.props.history.listen(location => {
-      if (this.props.location.search !== location.search) {
-        this.props.fetchUserrequestList(query.limit, query.page);
-      }
+    this.unlisten = this.props.history.listen(() => {
+      this.props.updateUserrequestList(query.limit, query.page);
     });
   }
 
@@ -165,7 +160,8 @@ const StateToProps = state => ({
 
 const DispatchToProps = dispatch =>
   bindActionCreators({
-    fetchUserrequestList,
+    // fetchUserrequestList,
+    updateUserrequestList,
     submitData,
     updateState,
   }, dispatch);

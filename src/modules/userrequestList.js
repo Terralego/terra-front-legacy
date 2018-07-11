@@ -6,6 +6,7 @@ import { getUserGroup } from 'modules/authentication';
 
 // Load all userrequest
 export const ALL_REQUEST = 'userrequestList/ALL_REQUEST';
+export const ALL_ABORT_REQUEST = 'userrequestList/ALL_ABORT_REQUEST';
 export const ALL_SUCCESS = 'userrequestList/ALL_SUCCESS';
 export const ALL_FAILURE = 'userrequestList/ALL_FAILURE';
 
@@ -32,6 +33,7 @@ const initialState = {
     next: null,
     previous: null,
   },
+  lastFetched: 0,
 };
 
 /**
@@ -81,6 +83,7 @@ const userrequestList = (state = initialState, action) => {
           next: action.data.next,
           previous: action.data.previous,
         },
+        lastFetched: Date.now(),
       };
     case DETAIL_REQUEST:
       return {
@@ -176,6 +179,13 @@ export const getUserrequestsArrayFilteredByUser = createSelector(
  */
 
 /**
+ * abortRequest call when data is fresh, no need to perform new request
+ */
+export const abortRequest = () => ({
+  type: ALL_ABORT_REQUEST,
+});
+
+/**
  * userrequestList action : fetch userrequest list
  *
  * @param limit {number|string} page size (max items per page)
@@ -188,6 +198,27 @@ export const fetchUserrequestList = (limit = settings.PAGE_SIZE, page = 1) => ({
     config: { method: 'GET' },
   },
 });
+
+/**
+ * updateUserrequestList is called every time we wan't userrequest list data
+ * it's check last fetch date and if data is stale, dispatch fetchUserrequestList action
+ *
+ * @param limit {number|string} page size (max items per page)
+ * @param page {number|string} page number
+ */
+export const updateUserrequestList = (limit = settings.PAGE_SIZE, page = 1) => (
+  (dispatch, getState) => {
+    // Get the last fetched date
+    const timeSinceLastFetch = getState().userrequestList.lastFetched;
+    // perform the async call if the data is older than the allowed limit
+    const isDataStale = Date.now() - timeSinceLastFetch > settings.TIME_TO_STALE;
+
+    if (isDataStale) {
+      return dispatch(fetchUserrequestList(limit, page));
+    }
+    return dispatch(abortRequest());
+  }
+);
 
 /**
  * userrequest action : fetch userrequest
