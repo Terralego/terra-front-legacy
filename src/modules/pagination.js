@@ -184,18 +184,29 @@ export default createPaginator;
  * --------------------------------------------------------- *
  */
 
-// TODO: optimize and use createSelector
-// and add tests
+/**
+ * getCurrentPageResults returns items contains in requested page
+ *
+ * @param items {object} all loaded items
+ * @param pagination {object} pagination object
+ * @returns {array} array of requested items
+ */
 export const getCurrentPageResults = createSelector(
   [
-    (items, pagination) => pagination.pages[pagination.currentPage],
+    (_, pagination) => pagination.pages[pagination.currentPage],
     items => items,
   ],
   (currentPage, items) => (typeof currentPage === 'undefined' ? [] : Object.values(pick(items || [], currentPage.ids))),
 );
 
 // TODO: optimize and use createSelector
-// and add tests
+/**
+ * getPaginationParams returns items contains in requested page
+ *
+ * @param pagination {object} pagination object
+ * @param params {string} query parameters
+ * @returns {object} query params and items per page count
+ */
 export const getPaginationParams = (pagination, params) => {
   let paginationParams = params;
   let count = 0;
