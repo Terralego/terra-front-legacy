@@ -16,29 +16,27 @@ export default () => next => action => {
   const [requestType, successType, errorType] = types;
   const payload = {
     endpoint,
-    params,
   };
-  next({
-    type: requestType,
-    endpoint,
-    params,
-  });
-  if (form) {
-    next(actions.setPending(form, true));
-  }
   // Passing the authenticated boolean back in our data will
   // let us distinguish between normal and secret quotes
   let url = endpoint;
   if (params) {
     url += `?${queryString.stringify(params)}`;
+    payload.params = params;
+  }
+  next({
+    type: requestType,
+    ...payload,
+  });
+  if (form) {
+    next(actions.setPending(form, true));
   }
   return apiService.request(url, config)
     .then(response => {
       next({
         data: response.data,
         type: successType,
-        endpoint,
-        params,
+        ...payload,
       });
       if (form) {
         next(actions.setPending(form, false));

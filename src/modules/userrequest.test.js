@@ -49,10 +49,14 @@ describe('userrequest async action', () => {
     return store.dispatch(submitData('Hello'))
       .then(() => {
         const actions = store.getActions();
-        expect(actions).toContainEqual({ type: SUBMIT_REQUEST, endpoint: '/userrequest/' });
+        expect(actions).toContainEqual({
+          type: SUBMIT_REQUEST,
+          endpoint: '/userrequest/',
+        });
         expect(actions).toContainEqual({
           type: SUBMIT_SUCCESS,
           data: { id: 'Hello' },
+          endpoint: '/userrequest/',
         });
       });
   });
