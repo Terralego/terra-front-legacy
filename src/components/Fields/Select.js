@@ -16,25 +16,25 @@ const handleFilter = (inputValue, option) => option.props.children
   .toUpperCase().indexOf(inputValue.toUpperCase()) !== -1;
 
 const CustomSelect = props => {
-  const propsField = { ...props };
+  const { errorMessages, fieldValue, label, name, ...propsField } = props;
   delete propsField.withFieldValue;
-  delete propsField.errorMessages;
   delete propsField.value;
   delete propsField.required;
 
   return (
     <FormItem
-      label={props.label}
-      validateStatus={validateStatus(props.fieldValue)}
-      required={props.required}
+      label={label}
+      validateStatus={validateStatus(fieldValue)}
+      required={!!errorMessages.required}
       help={
-        props.required && (
-          <Errors
-            model={props.name}
-            show={field => field.touched && !field.focus}
-            messages={props.errorMessages}
-          />
-        )
+        <Errors
+          model={name}
+          show={field => field.touched && !field.focus}
+          messages={
+            fieldValue.errors.required ? { required: errorMessages.required } : errorMessages
+          }
+          component={item => <div>{item.children}</div>}
+        />
       }
     >
       <Select
@@ -71,17 +71,47 @@ const CustomSelect = props => {
   );
 };
 
-function SelectField (props) {
+const SelectField = props => {
+  const required = props.required || props.errorMessages.required;
+  let validators = {};
+  let messages = {};
+
+  Object.keys(props.errorMessages).forEach(item => {
+    if (props.errorMessages[item].rule) {
+      validators[item] = props.errorMessages[item].rule;
+    }
+    if (props.errorMessages[item].message) {
+      messages[item] = props.errorMessages[item].message;
+    }
+  });
+
+  /*
+  * If "required" is truthy
+  * and "errorMessages" is not set
+  * we set default message and rules
+  */
+  if (required) {
+    if (!validators.required) {
+      validators = {
+        ...validators,
+        required: val => val && val.length,
+      };
+    }
+    if (!messages.required) {
+      messages = {
+        ...messages,
+        required: 'This field is mandatory',
+      };
+    }
+  }
+
   return (
     <Control.select
-      model={props.model}
-      id={props.model}
-      validators={{
-        required: !props.required || (val => val && val.length),
-      }}
+      id={props.id || props.model}
+      validators={validators}
       withFieldValue
       mapProps={{
-        errorMessages: () => props.errorMessages,
+        errorMessages: () => messages,
         options: () => props.options,
         categories: () => props.categories,
       }}
@@ -89,7 +119,7 @@ function SelectField (props) {
       {...props}
     />
   );
-}
+};
 
 SelectField.propTypes = {
   model: Proptypes.string.isRequired,

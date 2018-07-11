@@ -14,28 +14,27 @@ function validateStatus (fieldValue) {
 }
 
 const CustomTimePicker = props => {
-  const propsField = { ...props };
+  const { errorMessages, fieldValue, label, name, ...propsField } = props;
   // props.value is a "moment" object
   // but it becomes a string when we register it to the store
   propsField.value = (moment.isMoment(props.value) || props.value !== '') ? moment(props.value) : null;
   delete propsField.withFieldValue;
-  delete propsField.errorMessages;
-  delete propsField.fieldValue;
   delete propsField.required;
 
   return (
     <FormItem
-      label={props.label}
-      validateStatus={validateStatus(props.fieldValue)}
-      required={props.required}
+      label={label}
+      validateStatus={validateStatus(fieldValue)}
+      required={!!errorMessages.required}
       help={
-        props.required && (
-          <Errors
-            model={props.name}
-            show={field => field.touched && !field.focus}
-            messages={props.errorMessages}
-          />
-        )
+        <Errors
+          model={name}
+          show={field => field.touched && !field.focus}
+          messages={
+            fieldValue.errors.required ? { required: errorMessages.required } : errorMessages
+          }
+          component={item => <div>{item.children}</div>}
+        />
       }
     >
       <TimePicker {...propsField} />
@@ -43,21 +42,53 @@ const CustomTimePicker = props => {
   );
 };
 
-const TimePickerField = props => (
-  <Control
-    model={props.model}
-    id={props.model}
-    validators={{
-        required: val => ((val && val.length) || !props.required),
+const TimePickerField = props => {
+  const required = props.required || props.errorMessages.required;
+  let validators = {};
+  let messages = {};
+
+  Object.keys(props.errorMessages).forEach(item => {
+    if (props.errorMessages[item].rule) {
+      validators[item] = props.errorMessages[item].rule;
+    }
+    if (props.errorMessages[item].message) {
+      messages[item] = props.errorMessages[item].message;
+    }
+  });
+
+  /*
+  * If "required" is truthy
+  * and "errorMessages" is not set
+  * we set default message and rules
+  */
+  if (required) {
+    if (!validators.required) {
+      validators = {
+        ...validators,
+        required: val => val && val.length,
+      };
+    }
+    if (!messages.required) {
+      messages = {
+        ...messages,
+        required: 'This field is mandatory',
+      };
+    }
+  }
+
+  return (
+    <Control
+      id={props.id || props.model}
+      validators={validators}
+      withFieldValue
+      mapProps={{
+        errorMessages: () => messages,
       }}
-    withFieldValue
-    mapProps={{
-        errorMessages: () => props.errorMessages,
-      }}
-    component={CustomTimePicker}
-    {...props}
-  />
-);
+      component={CustomTimePicker}
+      {...props}
+    />
+  );
+};
 
 TimePickerField.propTypes = {
   model: Proptypes.string.isRequired,
@@ -74,7 +105,7 @@ TimePickerField.defaultProps = {
   label: null,
   placeholder: '',
   format: 'kk',
-  errorMessages: { required: 'Please fill this field' },
+  errorMessages: {},
   required: false,
 };
 

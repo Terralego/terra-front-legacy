@@ -13,7 +13,6 @@ const Profile = ({ form }) => (
       type="email"
       label="Email"
       placeholder="Your email address"
-      errorMessages={{ required: 'This field is mandatory' }}
       required
     />
     <Input
@@ -21,20 +20,17 @@ const Profile = ({ form }) => (
       type="password"
       label="Password"
       placeholder="Your password"
-      errorMessages={{ required: 'This field is mandatory' }}
       required
     />
     <Fieldset model=".properties">
       <Input
         model=".firstname"
         label="First name"
-        errorMessages={{ required: 'This field is mandatory' }}
         required
       />
       <Input
         model=".lastname"
         label="First name"
-        errorMessages={{ required: 'This field is mandatory' }}
         required
       />
     </Fieldset>

@@ -13,25 +13,24 @@ function validateStatus (fieldValue) {
 }
 
 const CustomInput = props => {
-  const propsField = { ...props };
+  const { errorMessages, fieldValue, label, name, ...propsField } = props;
   delete propsField.withFieldValue;
-  delete propsField.errorMessages;
-  delete propsField.fieldValue;
   delete propsField.required;
 
   return (
     <FormItem
-      label={props.label}
-      validateStatus={validateStatus(props.fieldValue)}
-      required={props.required}
+      label={label}
+      validateStatus={validateStatus(fieldValue)}
+      required={!!errorMessages.required}
       help={
-        props.required && (
-          <Errors
-            model={props.name}
-            show={field => field.touched && !field.focus}
-            messages={props.errorMessages}
-          />
-        )
+        <Errors
+          model={name}
+          show={field => field.touched && !field.focus}
+          messages={
+            fieldValue.errors.required ? { required: errorMessages.required } : errorMessages
+          }
+          component={item => <div>{item.children}</div>}
+        />
       }
     >
       <Input {...propsField} />
@@ -39,23 +38,53 @@ const CustomInput = props => {
   );
 };
 
-function InputField (props) {
+const InputField = props => {
+  const required = props.required || props.errorMessages.required;
+  let validators = {};
+  let messages = {};
+
+  Object.keys(props.errorMessages).forEach(item => {
+    if (props.errorMessages[item].rule) {
+      validators[item] = props.errorMessages[item].rule;
+    }
+    if (props.errorMessages[item].message) {
+      messages[item] = props.errorMessages[item].message;
+    }
+  });
+
+  /*
+  * If "required" is truthy
+  * and "errorMessages" is not set
+  * we set default message and rules
+  */
+  if (required) {
+    if (!validators.required) {
+      validators = {
+        ...validators,
+        required: val => val && val.length,
+      };
+    }
+    if (!messages.required) {
+      messages = {
+        ...messages,
+        required: 'This field is mandatory',
+      };
+    }
+  }
+
   return (
     <Control
-      model={props.model}
       id={props.id || props.model}
-      validators={{
-        required: val => ((val && val.length) || !props.required),
-      }}
+      validators={validators}
       withFieldValue
       mapProps={{
-        errorMessages: () => props.errorMessages,
+        errorMessages: () => messages,
       }}
       component={CustomInput}
       {...props}
     />
   );
-}
+};
 
 InputField.propTypes = {
   model: Proptypes.string.isRequired,

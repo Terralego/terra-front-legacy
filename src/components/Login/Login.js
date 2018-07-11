@@ -34,15 +34,14 @@ class FormLogin extends Component {
               <Input
                 model=".email"
                 label="Email"
-                errorMessages={{ required: 'Veuillez saisir votre email' }}
-                required
+                errorMessages={{ required: { message: 'Please provide an email' } }}
               />
 
               <Input
                 model=".password"
                 type="password"
                 label="Mot de passe"
-                errorMessages={{ required: 'Veuillez saisir votre mot de passe' }}
+                errorMessages={{ required: { message: 'Please provide a password' } }}
                 required
               />
 
@@ -67,8 +66,7 @@ class FormLogin extends Component {
                 <Input
                   model=".signupEmail"
                   label="Saisissez votre adresse email"
-                  errorMessages={{ required: 'Veuillez saisir votre email' }}
-                  required
+                  errorMessages={{ required: { message: 'Please provide a password' } }}
                 />
                 <Button
                   type="primary"
