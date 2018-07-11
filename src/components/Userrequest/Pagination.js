@@ -15,7 +15,7 @@ class Pagination extends React.Component {
   render () {
     const { pagination, location } = this.props;
     const query = queryString.parse(location.search);
-    const current = query.page ? parseInt(query.page, 10) : null;
+    const current = query.page ? parseInt(query.page, 10) : 1;
     const pageSize = query.limit ? parseInt(query.limit, 10) : null;
 
     return (
