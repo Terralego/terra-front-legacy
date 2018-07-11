@@ -3,7 +3,9 @@ import { createSelector } from 'reselect';
 import queryString from 'query-string';
 import settings from 'front-settings';
 import { CALL_API } from 'middlewares/api';
+import pick from 'lodash.pick';
 
+export const ABORT_REQUEST = 'pagination/ABORT_REQUEST';
 export const REQUEST_PAGE = 'pagination/REQUEST_PAGE';
 export const RECEIVE_PAGE = 'pagination/RECEIVE_PAGE';
 
@@ -13,7 +15,13 @@ export const PAGE_ABORT_REQUEST = 'pagination/PAGE_ABORT_REQUEST';
 export const PAGE_SUCCESS = 'pagination/PAGE_SUCCESS';
 export const PAGE_FAILURE = 'pagination/PAGE_FAILURE';
 
-export const countReducer = (state = {}, action = {}) => {
+
+/**
+ * REDUCERS
+ * --------------------------------------------------------- *
+ */
+
+export const paramsReducer = (state = {}, action = {}) => {
   const { type, data, params } = action;
   const key = queryString.stringify(params);
 
@@ -44,10 +52,11 @@ const pagesReducer = (state = {}, action = {}) => {
         },
       };
     case PAGE_SUCCESS:
+
       return {
         ...state,
         [action.params.page]: {
-          ids: action.data.results.filter(item => item.id),
+          ids: action.data.results.map(item => item.id),
           fetching: false,
         },
       };
@@ -59,54 +68,105 @@ const pagesReducer = (state = {}, action = {}) => {
 const currentPageReducer = (state = 1, action = {}) =>
   (action.type === PAGE_REQUEST ? action.params.page : state);
 
-const createPaginator = (endpoint, resultKey = 'results') => {
-  const requestPage = search => {
+
+const itemsReducer = (state = {}, action = {}) => {
+  const newItems = {};
+  switch (action.type) {
+    case PAGE_SUCCESS:
+      action.data.results.forEach(item => {
+        newItems[item.id] = item;
+      });
+
+      return {
+        ...state,
+        items: newItems,
+      };
+    default:
+      return state;
+  }
+};
+
+/**
+ * ACITIONS
+ * --------------------------------------------------------- *
+ */
+
+/**
+ * abortRequest call when data is fresh, no need to perform new request
+ */
+export const abortRequest = () => ({
+  type: ABORT_REQUEST,
+});
+
+/**
+ * fetchPage action : fetch requested page
+ * @param {string} id
+ */
+export const fetchPage = params => ({
+  [CALL_API]: {
+    types: [PAGE_REQUEST, PAGE_SUCCESS, PAGE_FAILURE],
+    config: { method: 'GET' },
+    endpoint: '/userrequest/',
+    params,
+  },
+});
+
+const getPageFromCache = (params, pageLoaded) => (
+  (dispatch, getState) => {
+    const store = getState();
+    // Get the last fetched date
+    const timeSinceLastFetch = store.userrequestList.lastFetched;
+    // // perform the async call if the data is older than the allowed limit
+    const isDataStale = Date.now() - timeSinceLastFetch > settings.TIME_TO_STALE;
+
+    if (isDataStale || !pageLoaded) {
+      return dispatch(fetchPage(params));
+    }
+    return dispatch(abortRequest());
+  }
+);
+
+/**
+ * requestPage
+ *
+ * @param search {string} search query parameters
+ */
+const requestPage = search => (
+  (dispatch, getState) => {
+    const store = getState();
     let params = {
       limit: settings.PAGE_SIZE,
       page: 1,
     };
 
+    let pageLoaded = false;
+
     if (search !== '') {
       params = queryString.parse(search);
+      pageLoaded = store.pagination.userrequestList.params[search.slice(1)];
     }
+    return dispatch(getPageFromCache(params, pageLoaded));
+  }
+);
 
-    return ({
-      [CALL_API]: {
-        types: [PAGE_REQUEST, PAGE_SUCCESS, PAGE_FAILURE],
-        config: { method: 'GET' },
-        endpoint: '/userrequest/',
-        params,
-      },
-    });
-  };
+/**
+ * createPaginator
+ * --------------------------------------------------------- *
+ */
+const initialState = {
+  pages: {},
+  currentPage: 1,
+  params: {},
+};
 
-  const onlyForEndpoint = reducer => (state = {
-    pages: {},
-    currentPage: 1,
-  }, action = {}) =>
+const createPaginator = endpoint => {
+  const onlyForEndpoint = reducer => (state = initialState, action = {}) =>
     (action.endpoint === endpoint ? reducer(state, action) : state);
-
-  const itemsReducer = (items = {}, action = {}) => {
-    const newItems = {};
-    switch (action.type) {
-      case PAGE_SUCCESS:
-        action.data[resultKey].forEach(item => {
-          newItems[item.id] = item;
-        });
-
-        return {
-          ...items,
-          ...newItems,
-        };
-      default:
-        return items;
-    }
-  };
 
   const reducer = onlyForEndpoint(combineReducers({
     pages: pagesReducer,
     currentPage: currentPageReducer,
-    count: countReducer,
+    params: paramsReducer,
   }));
 
   return {
@@ -125,12 +185,17 @@ export default createPaginator;
  */
 
 // TODO: optimize and use createSelector
-export const getCurrentPageResults = (items, pagination) => {
-  const currentPage = pagination.pages[pagination.currentPage];
-  return typeof currentPage === 'undefined' ? [] : Object.values(currentPage.ids);
-};
+// and add tests
+export const getCurrentPageResults = createSelector(
+  [
+    (items, pagination) => pagination.pages[pagination.currentPage],
+    items => items,
+  ],
+  (currentPage, items) => (typeof currentPage === 'undefined' ? [] : Object.values(pick(items || [], currentPage.ids))),
+);
 
 // TODO: optimize and use createSelector
+// and add tests
 export const getPaginationParams = (pagination, params) => {
   let paginationParams = params;
   let count = 0;
@@ -139,9 +204,9 @@ export const getPaginationParams = (pagination, params) => {
     paginationParams = `?limit=${settings.PAGE_SIZE}&page=${1}`;
   }
 
-  if (pagination && pagination.count) {
+  if (pagination && pagination.params) {
     // We remove first char
-    count = pagination.count[paginationParams.slice(1)];
+    count = pagination.params[paginationParams.slice(1)];
   }
 
   const parseParams = queryString.parse(paginationParams);
