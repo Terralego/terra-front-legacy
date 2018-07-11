@@ -87,7 +87,7 @@ const itemsReducer = (state = {}, action = {}) => {
 };
 
 /**
- * ACITIONS
+ * ACTIONS
  * --------------------------------------------------------- *
  */
 
