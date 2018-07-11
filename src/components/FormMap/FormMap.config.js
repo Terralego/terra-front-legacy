@@ -10,6 +10,10 @@ export const mapLegend = [
   { color: '#c0d37b', label: 'Ma seconde légende' },
 ];
 
+export const mapTitleLegend = {
+  title: 'Légende',
+};
+
 export default {
   TerraDrawMapConfig,
 };

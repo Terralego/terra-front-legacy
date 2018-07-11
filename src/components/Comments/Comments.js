@@ -87,7 +87,7 @@ class Comments extends React.Component {
                   publicCount: '0',
                 }}
                 editable
-                onAddFeature={this.props.addRequestCommentFeature}
+                onAddFeature={[this.props.addRequestCommentFeature]}
                 onRemoveFeature={this.props.removeRequestCommentFeature}
               />
             </Modal>

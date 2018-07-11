@@ -5,10 +5,13 @@ import { connect } from 'react-redux';
 
 import { updateConfigValue } from 'modules/appConfig';
 
+import { getActivityFeatures } from 'helpers/activityHelpers';
+import FeaturesList from 'components/FormMap/FeatureList';
 import MapDrawButtons from 'components/MapDrawButtons/MapDrawButtons';
 import TerraDrawMap from 'components/TerraDrawMap/TerraDrawMap';
 import MapLegend from 'components/MapLegend/MapLegend';
-import { TerraDrawMapConfig, mapLegend } from './FormMap.config';
+import { TerraDrawMapConfig, mapLegend, mapTitleLegend } from 'components/FormMap/FormMap.config';
+
 
 class FormMap extends Component {
   constructor (props) {
@@ -49,7 +52,7 @@ class FormMap extends Component {
   }
 
   getGeometryOnDrawEnd (data) {
-    const { activity: { uid } } = this.props;
+    const { activity: { uid, eventDateStart, eventDateEnd } } = this.props;
     const feature = {
       ...data,
       properties: {
@@ -57,7 +60,7 @@ class FormMap extends Component {
         activity: uid,
       },
     };
-    this.props.onAddFeature(feature);
+    this.props.onAddFeature.forEach(func => func(feature, eventDateStart, eventDateEnd));
   }
 
   removeFeature (id) {
@@ -66,7 +69,8 @@ class FormMap extends Component {
   }
 
   render () {
-    const { drawMode, editable } = this.props;
+    const { features, drawMode, editable, activity } = this.props;
+    const activityFeatures = getActivityFeatures(features, activity.uid);
 
     return (
       <Row gutter={24} style={{ paddingBottom: 24 }}>
@@ -102,13 +106,19 @@ class FormMap extends Component {
             osmSource="https://{a-c}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png"
           />
           <MapLegend
-            title="Légende"
+            title={mapTitleLegend.title}
             legend={mapLegend}
             style={{ width: 300, position: 'absolute', bottom: 12, right: 18, zIndex: 1 }}
           />
         </Col>
         <Col span={24} lg={24}>
-          <Card title="Carte" />
+          <Card title="Carte">
+            <FeaturesList
+              features={activityFeatures}
+              removeFeature={this.removeFeature}
+              editable={editable}
+            />
+          </Card>
         </Col>
       </Row>
     );
