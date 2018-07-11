@@ -115,19 +115,9 @@ class FormMap extends Component {
   }
 }
 
-const parseIntOr0 = (inputString, radix = 10) => {
-  const parsed = parseInt(inputString, radix);
-  return Number.isNaN(parsed) ? 0 : parsed;
-};
-
-const getAudience = ({ publicCount, participantCount }) =>
-  parseIntOr0(publicCount) + parseIntOr0(participantCount);
-
-
 const StateToProps = (state, ownProps) => ({
   drawMode: state.appConfig.drawMode,
   features: ownProps.features || state.userrequest.geojson.features,
-  audience: getAudience(ownProps.activity),
 });
 
 const DispatchToProps = dispatch =>
