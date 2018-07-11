@@ -3,14 +3,16 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Table, Icon, Modal, Button } from 'antd';
-import queryString from 'query-string';
 
-import getColumns from 'helpers/userrequestListColumns';
-import NewUserrequestButton from 'components/Userrequest/NewUserrequestButton';
-import Pagination from 'components/Userrequest/Pagination';
 import { getUserGroup } from 'modules/authentication';
 import { submitData } from 'modules/userrequest';
-import { updateUserrequestList, updateState, getUserrequestsArrayFilteredByUser } from 'modules/userrequestList';
+import { requestUserrequestPage, updateState, getUserrequestsArrayFilteredByUser } from 'modules/userrequestList';
+import { getPaginationParams, isCurrentPageFetching } from 'modules/pagination';
+
+import getColumns from 'helpers/userrequestListColumns';
+
+import NewUserrequestButton from 'components/Userrequest/NewUserrequestButton';
+import Pagination from 'components/Userrequest/Pagination';
 
 import styles from './UserrequestList.module.scss';
 
@@ -20,16 +22,7 @@ class UserrequestList extends React.Component {
   };
 
   componentDidMount () {
-    const query = queryString.parse(this.props.location.search);
-    this.props.updateUserrequestList(query.limit, query.page);
-
-    this.unlisten = this.props.history.listen(() => {
-      this.props.updateUserrequestList(query.limit, query.page);
-    });
-  }
-
-  componentWillUnmount () {
-    this.unlisten();
+    this.props.requestUserrequestPage(this.props.location.search);
   }
 
   onSelectChange = selectedRowKeys => {
@@ -95,7 +88,7 @@ class UserrequestList extends React.Component {
 
   render () {
     const { selectedRowKeys } = this.state;
-    const { userGroup, columns } = this.props;
+    const { userGroup, columns, pagination } = this.props;
 
     const rowSelection = {
       selectedRowKeys,
@@ -145,23 +138,23 @@ class UserrequestList extends React.Component {
           )}
           pagination={false}
         />
-        <Pagination />
+        <Pagination params={pagination.params} count={pagination.count} />
       </div>
     );
   }
 }
 
-const StateToProps = state => ({
+const StateToProps = (state, ownProps) => ({
   items: getUserrequestsArrayFilteredByUser(state),
-  loading: state.userrequestList.loading,
+  loading: isCurrentPageFetching(state.pagination.userrequestList),
   userGroup: getUserGroup(state),
   columns: getColumns(getUserGroup(state)),
+  pagination: getPaginationParams(state.pagination.userrequestList, ownProps.location.search),
 });
 
 const DispatchToProps = dispatch =>
   bindActionCreators({
-    // fetchUserrequestList,
-    updateUserrequestList,
+    requestUserrequestPage,
     submitData,
     updateState,
   }, dispatch);

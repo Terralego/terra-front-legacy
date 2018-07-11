@@ -1,5 +1,6 @@
 import apiService from 'services/apiService';
 import { actions } from 'react-redux-form';
+import queryString from 'query-string';
 
 export const CALL_API = Symbol('Call API');
 
@@ -11,18 +12,31 @@ export default () => next => action => {
     return next(action);
   }
 
-  const { endpoint, types, config, form } = callAPI;
+  const { endpoint, params, types, config, form } = callAPI;
   const [requestType, successType, errorType] = types;
 
-  next({ type: requestType, url: endpoint });
+  next({
+    type: requestType,
+    endpoint,
+    params,
+  });
   if (form) {
     next(actions.setPending(form, true));
   }
   // Passing the authenticated boolean back in our data will
   // let us distinguish between normal and secret quotes
-  return apiService.request(endpoint, config)
+  let url = endpoint;
+  if (params) {
+    url += `?${queryString.stringify(params)}`;
+  }
+  return apiService.request(url, config)
     .then(response => {
-      next({ data: response.data, type: successType });
+      next({
+        data: response.data,
+        type: successType,
+        endpoint,
+        params,
+      });
       if (form) {
         next(actions.setPending(form, false));
         next(actions.setSubmitted(form, true));

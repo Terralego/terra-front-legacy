@@ -1,14 +1,10 @@
 import { createSelector } from 'reselect';
+import { combineReducers } from 'redux';
 import { CALL_API } from 'middlewares/api';
 import settings from 'front-settings';
 import { SUBMIT_SUCCESS, SAVE_DRAFT_SUCCESS } from 'modules/userrequest';
 import { getUserGroup } from 'modules/authentication';
-
-// Load all userrequest
-export const ALL_REQUEST = 'userrequestList/ALL_REQUEST';
-export const ALL_ABORT_REQUEST = 'userrequestList/ALL_ABORT_REQUEST';
-export const ALL_SUCCESS = 'userrequestList/ALL_SUCCESS';
-export const ALL_FAILURE = 'userrequestList/ALL_FAILURE';
+import createPaginator, { getCurrentPageResults } from 'modules/pagination';
 
 // Load userrequest detail
 export const DETAIL_REQUEST = 'userrequestList/DETAIL_REQUEST';
@@ -25,33 +21,19 @@ export const APPROBATIONS_CHANGE_REQUEST = 'userrequestList/APPROBATIONS_CHANGE_
 export const APPROBATIONS_CHANGE_SUCCESS = 'userrequestList/APPROBATIONS_CHANGE_SUCCESS';
 export const APPROBATIONS_CHANGE_FAILURE = 'userrequestList/APPROBATIONS_CHANGE_FAILURE';
 
-const initialState = {
-  items: {},
-  loading: false,
-  pagination: {
-    count: 0,
-    next: null,
-    previous: null,
-  },
-  lastFetched: 0,
-};
 
-/**
- * Get userrequests object with id keys
- *
- * @param  {object} response: response from get all request
- * @return {object} object of userrequests by id
- */
-function getItemsFromResponse (response) {
-  if (!response.results || response.results.length < 1) {
-    return null;
-  }
-  const items = {};
-  response.results.forEach(userrequest => {
-    items[userrequest.id] = userrequest;
-  });
-  return items;
-}
+export const userrequestPaginator = createPaginator('/userrequest/');
+
+// const initialState = {
+//   items: {},
+//   loading: false,
+//   // pagination: {
+//   //   count: 0,
+//   //   next: null,
+//   //   previous: null,
+//   // },
+//   lastFetched: 0,
+// };
 
 /**
  * Get the userrequest id
@@ -66,66 +48,68 @@ function getItemIdFromUrl (url) {
 /**
  * userrequestList reducer
  */
-const userrequestList = (state = initialState, action) => {
+const userrequestList = (state = {}, action) => {
   switch (action.type) {
-    case ALL_REQUEST:
-      return {
-        ...state,
-        loading: true,
-      };
-    case ALL_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-        items: getItemsFromResponse(action.data),
-        pagination: {
-          count: action.data.count,
-          next: action.data.next,
-          previous: action.data.previous,
-        },
-        lastFetched: Date.now(),
-      };
-    case DETAIL_REQUEST:
-      return {
-        ...state,
-        loading: true,
-      };
-    case DETAIL_SUCCESS:
-    case SUBMIT_SUCCESS:
-    case SAVE_DRAFT_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-        items: {
-          ...state.items,
-          [action.data.id]: action.data,
-        },
-      };
-    case STATE_CHANGE_SUCCESS:
-    case APPROBATIONS_CHANGE_SUCCESS:
-      return {
-        ...state,
-        items: {
-          ...state.items,
-          [action.data.id]: action.data,
-        },
-      };
-    case DETAIL_FAILURE:
-      return {
-        ...state,
-        items: {
-          ...state.items,
-          [getItemIdFromUrl(action.error.url)]: {
-            error: action.error,
-          },
-        },
-      };
+    // case ALL_REQUEST:
+    //   return {
+    //     ...state,
+    //     loading: true,
+    //   };
+    // case PAGE_SUCCESS:
+    //   return {
+    //     ...state,
+    //     loading: false,
+    //     items: getItemsFromResponse(action.data),
+    //     // pagination: {
+    //     //   count: action.data.count,
+    //     //   next: action.data.next,
+    //     //   previous: action.data.previous,
+    //     // },
+    //     lastFetched: Date.now(),
+    //   };
+    // case DETAIL_REQUEST:
+    //   return {
+    //     ...state,
+    //     loading: true,
+    //   };
+    // case DETAIL_SUCCESS:
+    // case SUBMIT_SUCCESS:
+    // case SAVE_DRAFT_SUCCESS:
+    //   return {
+    //     ...state,
+    //     loading: false,
+    //     items: {
+    //       ...state.items,
+    //       [action.data.id]: action.data,
+    //     },
+    //   };
+    // case STATE_CHANGE_SUCCESS:
+    // case APPROBATIONS_CHANGE_SUCCESS:
+    //   return {
+    //     ...state,
+    //     items: {
+    //       ...state.items,
+    //       [action.data.id]: action.data,
+    //     },
+    //   };
+    // case DETAIL_FAILURE:
+    //   return {
+    //     ...state,
+    //     items: {
+    //       ...state.items,
+    //       [getItemIdFromUrl(action.error.url)]: {
+    //         error: action.error,
+    //       },
+    //     },
+    //   };
     default:
-      return state;
+      return userrequestPaginator.itemsReducer(state, action);
   }
 };
 
 export default userrequestList;
+
+export const requestUserrequestPage = userrequestPaginator.requestPage;
 
 /**
  * SELECTORS
@@ -154,8 +138,12 @@ const getDraftStatus = createSelector(
 );
 
 export const getUserrequestArray = createSelector(
-  state => state.userrequestList.items,
-  items => (items ? Object.values(items) : []),
+  state => state,
+  state => getCurrentPageResults(
+    state.userrequestList,
+    state.pagination.userrequestList,
+    '/userrequest/',
+  ),
 );
 
 /**
