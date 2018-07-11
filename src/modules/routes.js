@@ -13,6 +13,7 @@ export const routes = [{
   icon: 'home',
   exact: true,
   protected: false,
+  fullscreen: true,
 }, {
   path: '/about',
   name: 'About',
