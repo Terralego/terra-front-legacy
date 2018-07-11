@@ -14,7 +14,10 @@ export default () => next => action => {
 
   const { endpoint, params, types, config, form } = callAPI;
   const [requestType, successType, errorType] = types;
-
+  const payload = {
+    endpoint,
+    params,
+  };
   next({
     type: requestType,
     endpoint,
