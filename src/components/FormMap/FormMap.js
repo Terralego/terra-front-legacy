@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import { updateConfigValue } from 'modules/appConfig';
 
-import { getActivityFeatures } from 'helpers/activityHelpers';
+import { getActivityFeatures, getDatesQueryOptions } from 'helpers/activityHelpers';
 import FeaturesList from 'components/FormMap/FeatureList';
 import MapDrawButtons from 'components/MapDrawButtons/MapDrawButtons';
 import TerraDrawMap from 'components/TerraDrawMap/TerraDrawMap';
@@ -92,8 +92,9 @@ class FormMap extends Component {
         }
         <Col span={24} lg={24} style={{ height: 450 }}>
           <TerraDrawMap
-            features={[]}
+            features={activityFeatures}
             config={TerraDrawMapConfig}
+            sourceVectorOptions={getDatesQueryOptions(activity.eventDates)}
             minZoom={11}
             maxZoom={20}
             zoom={13}
@@ -106,13 +107,13 @@ class FormMap extends Component {
             osmSource="https://{a-c}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png"
           />
           <MapLegend
-            title={mapTitleLegend.title}
+            title={mapTitleLegend.titleLegend}
             legend={mapLegend}
             style={{ width: 300, position: 'absolute', bottom: 12, right: 18, zIndex: 1 }}
           />
         </Col>
         <Col span={24} lg={24}>
-          <Card title="Carte">
+          <Card title={mapTitleLegend.title}>
             <FeaturesList
               features={activityFeatures}
               removeFeature={this.removeFeature}

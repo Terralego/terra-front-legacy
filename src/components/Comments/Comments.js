@@ -172,8 +172,8 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators({
     fetchUserrequestComments,
     submitComment,
-    addRequestCommentFeature, // Action Creator encore inutilisé
-    removeRequestCommentFeature, // Action Creator encore inutilisé
+    addRequestCommentFeature,
+    removeRequestCommentFeature,
   }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Comments);

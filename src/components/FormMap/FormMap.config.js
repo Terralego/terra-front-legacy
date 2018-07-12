@@ -11,7 +11,8 @@ export const mapLegend = [
 ];
 
 export const mapTitleLegend = {
-  title: 'Légende',
+  title: 'Carte',
+  titleLegend: 'Légende',
 };
 
 export default {
