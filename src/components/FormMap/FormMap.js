@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import { updateConfigValue } from 'modules/appConfig';
 
-import { getActivityFeatures, getDatesQueryOptions } from 'helpers/activityHelpers';
+import { getActivityFeatures, getDatesQueryOptions } from 'helpers/mapHelper/mapHelper';
 import FeaturesList from 'components/FormMap/FeatureList';
 import MapDrawButtons from 'components/MapDrawButtons/MapDrawButtons';
 import TerraDrawMap from 'components/TerraDrawMap/TerraDrawMap';
