@@ -14,7 +14,7 @@
     "antd": "~3.7.0",
     "axios-mock-adapter": "~1.15.0",
     "classnames": "~2.2.6",
-    "eslint": "~5.0.1",
+    "eslint": "~4.19.1",
     "eslint-config-makina": "~0.4.3",
     "fetch-mock": "~6.5.0",
     "history": "~4.7.2",
