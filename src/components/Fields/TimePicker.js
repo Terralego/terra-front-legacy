@@ -65,7 +65,7 @@ const TimePickerField = props => {
     if (!validators.required) {
       validators = {
         ...validators,
-        required: val => val && val.length,
+        required: val => val && (val.length || moment(val).isValid()),
       };
     }
     if (!messages.required) {
