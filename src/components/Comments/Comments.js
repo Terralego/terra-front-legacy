@@ -27,7 +27,6 @@ class Comments extends React.Component {
   state = {
     showDrawMap: false,
     geojson: false,
-    attachments: [],
   };
 
   componentDidMount () {
@@ -36,21 +35,22 @@ class Comments extends React.Component {
     }
   }
 
-  onOkHandle = () => {
+  handleMapSubmit = () => {
     this.setState({ showDrawMap: !this.state.showDrawMap, geojson: true });
   }
 
   handleSubmit = () => {
     const { userrequestId, comment, userGroup } = this.props;
+    this.setState({ geojson: false }); // On arrête d'afficher la note de prêt à l'envoi du geojson.
     // Only N2 can choose if message is private or not
     // If N1, always set internal to true
     const internal = userGroup === 'N2' ? comment.is_internal : true;
-    this.props.submitComment(userrequestId, comment.text, internal);
+    this.props.submitComment(userrequestId, comment, internal);
   }
 
   render () {
     const { comments, loading, form, userGroup } = this.props;
-    const { showDrawMap, geojson, attachments } = this.state;
+    const { showDrawMap, geojson } = this.state;
     return (
       <ReduxForm model="userrequestComments">
         {userGroup === 'N2' && <Select
@@ -73,7 +73,7 @@ class Comments extends React.Component {
             <Modal
               title="Basic Modal"
               visible={showDrawMap}
-              onOk={this.onOkHandle}
+              onOk={this.handleMapSubmit}
               onCancel={() => this.setState({ showDrawMap: !showDrawMap })}
             >
               <FormMap
@@ -115,9 +115,6 @@ class Comments extends React.Component {
               <strong><Icon type="paper-clip" /> Tracé prêt à l'envoi</strong>
             </p>
           }
-          {attachments &&
-            attachments.map(paper =>
-              <p style={{ marginTop: 7, fontSize: '0.8em' }}><strong><Icon type="pushpin-o" /> {paper}</strong></p>)}
         </div>
 
         {loading

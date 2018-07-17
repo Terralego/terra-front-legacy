@@ -10,8 +10,8 @@ export const SUBMIT_REQUEST = 'userrequestComments/SUBMIT_REQUEST';
 export const SUBMIT_SUCCESS = 'userrequestComments/SUBMIT_SUCCESS';
 export const SUBMIT_FAILURE = 'userrequestComments/SUBMIT_FAILURE';
 
-export const ADD_GEOJSON_COMMENT_FEATURE = 'ADD_GEOJSON_COMMENT_FEATURE';
-export const REMOVE_GEOJSON_COMMENT_FEATURE = 'REMOVE_GEOJSON_COMMENT_FEATURE';
+export const GEOJSON_COMMENT_FEATURE_ADD = 'GEOJSON_COMMENT_FEATURE_ADD';
+export const GEOJSON_COMMENT_FEATURE_REMOVE = 'GEOJSON_COMMENT_FEATURE_REMOVE';
 
 const initialState = {
   geojson: {
@@ -86,7 +86,8 @@ const userrequestComments = (state = initialState, action) => {
         sent: false,
         error: null,
       };
-    case SUBMIT_SUCCESS:
+    case SUBMIT_SUCCESS: {
+      console.log(action);
       return {
         ...state,
         text: '',
@@ -98,12 +99,13 @@ const userrequestComments = (state = initialState, action) => {
           },
         },
       };
+    }
     case SUBMIT_FAILURE:
       return {
         ...state,
         error: action.error,
       };
-    case ADD_GEOJSON_COMMENT_FEATURE:
+    case GEOJSON_COMMENT_FEATURE_ADD:
       return {
         ...state,
         geojson: {
@@ -114,7 +116,7 @@ const userrequestComments = (state = initialState, action) => {
           ],
         },
       };
-    case REMOVE_GEOJSON_COMMENT_FEATURE:
+    case GEOJSON_COMMENT_FEATURE_REMOVE:
       return {
         ...state,
         geojson: {
@@ -192,8 +194,9 @@ export const submitComment = (userrequestId, comment, isInternal) => ({
     config: {
       method: 'POST',
       body: JSON.stringify({
-        properties: { comment },
+        properties: { comment: comment.text },
         is_internal: isInternal,
+        geojson: { ...comment.geojson },
       }),
     },
     form: 'userrequestComments',
@@ -206,7 +209,7 @@ export const submitComment = (userrequestId, comment, isInternal) => ({
  * @param {object} properties : object of properties to add / update in userrequestComment object
  */
 export const addRequestCommentFeature = feature => ({
-  type: ADD_GEOJSON_COMMENT_FEATURE,
+  type: GEOJSON_COMMENT_FEATURE_ADD,
   feature,
 });
 
@@ -216,6 +219,6 @@ export const addRequestCommentFeature = feature => ({
  * @param {object} properties : object of properties to remove / update in userrequestComment object
  */
 export const removeRequestCommentFeature = featureId => ({
-  type: REMOVE_GEOJSON_COMMENT_FEATURE,
+  type: GEOJSON_COMMENT_FEATURE_REMOVE,
   featureId,
 });
