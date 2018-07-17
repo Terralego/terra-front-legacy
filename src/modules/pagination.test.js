@@ -63,18 +63,37 @@ describe('pagination selector', () => {
       ]);
   });
 
-  it('getPaginationParams should return an array of page 2 items', () => {
+  it('getPaginationParams should return params of page 1', () => {
     const pagination = {
-      currentPage: 2,
-      pages,
+      params: {
+        'limit=100&page=1': 4,
+      },
     };
-    expect(getPaginationParams(pagination, '?limit=100&page=1'))
+    const queryParams = '?limit=100&page=1';
+    expect(getPaginationParams(pagination, queryParams))
       .toEqual({
         params: {
           limit: 100,
           page: 1,
         },
-        count: 0,
+        count: 4,
+      });
+  });
+
+  it('getPaginationParams should allow unknow query params', () => {
+    const pagination = {
+      params: {
+        'limit=100&page=1': 4,
+      },
+    };
+    const queryParams = '?limit=100&page=1&truc=40';
+    expect(getPaginationParams(pagination, queryParams))
+      .toEqual({
+        params: {
+          limit: 100,
+          page: 1,
+        },
+        count: 4,
       });
   });
 });

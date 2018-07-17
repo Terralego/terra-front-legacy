@@ -5,10 +5,6 @@ import settings from 'front-settings';
 import { CALL_API } from 'middlewares/api';
 import pick from 'lodash.pick';
 
-export const ABORT_REQUEST = 'pagination/ABORT_REQUEST';
-export const REQUEST_PAGE = 'pagination/REQUEST_PAGE';
-export const RECEIVE_PAGE = 'pagination/RECEIVE_PAGE';
-
 // Pages request actions
 export const PAGE_REQUEST = 'pagination/PAGE_REQUEST';
 export const PAGE_ABORT_REQUEST = 'pagination/PAGE_ABORT_REQUEST';
@@ -17,24 +13,42 @@ export const PAGE_FAILURE = 'pagination/PAGE_FAILURE';
 
 
 /**
+ * HELPERS
+ * --------------------------------------------------------- *
+ */
+
+/**
+ * getQueryFingerprint returns a fingerprint to identify page request parameters
+ * @param {string} limit : max results per page
+ * @param {string} page : page number
+ * @returns {string} a string composed of limit and page
+ */
+const getQueryFingerprint = (limit, page) => `limit=${limit}&page=${page}`;
+
+/**
  * REDUCERS
  * --------------------------------------------------------- *
  */
 
 export const paramsReducer = (state = {}, action = {}) => {
   const { type, data, params } = action;
-  const key = queryString.stringify(params);
 
+  if (!params) {
+    return state;
+  }
+
+  const { limit, page } = params;
+  const queryFingerprint = getQueryFingerprint(limit, page);
   switch (type) {
     case PAGE_REQUEST:
       return {
         ...state,
-        [key]: undefined,
+        [queryFingerprint]: undefined,
       };
     case PAGE_SUCCESS:
       return {
         ...state,
-        [key]: data.count,
+        [queryFingerprint]: data.count,
       };
     default:
       return state;
@@ -52,7 +66,6 @@ const pagesReducer = (state = {}, action = {}) => {
         },
       };
     case PAGE_SUCCESS:
-
       return {
         ...state,
         [action.params.page]: {
@@ -65,9 +78,14 @@ const pagesReducer = (state = {}, action = {}) => {
   }
 };
 
-const currentPageReducer = (state = 1, action = {}) =>
-  (action.type === PAGE_REQUEST ? action.params.page : state);
-
+const currentPageReducer = (state = 1, action = {}) => {
+  switch (action.type) {
+    case PAGE_REQUEST:
+      return action.params.page;
+    default:
+      return state;
+  }
+};
 
 const itemsReducer = (state = {}, action = {}) => {
   const newItems = {};
@@ -76,7 +94,6 @@ const itemsReducer = (state = {}, action = {}) => {
       action.data.results.forEach(item => {
         newItems[item.id] = item;
       });
-
       return {
         ...state,
         items: newItems,
@@ -94,24 +111,26 @@ const itemsReducer = (state = {}, action = {}) => {
 /**
  * abortRequest call when data is fresh, no need to perform new request
  */
-export const abortRequest = () => ({
-  type: ABORT_REQUEST,
+export const abortRequest = (endpoint, params) => ({
+  type: PAGE_REQUEST,
+  endpoint,
+  params,
 });
 
 /**
  * fetchPage action : fetch requested page
  * @param {string} id
  */
-export const fetchPage = params => ({
+export const fetchPage = (endpoint, params) => ({
   [CALL_API]: {
     types: [PAGE_REQUEST, PAGE_SUCCESS, PAGE_FAILURE],
     config: { method: 'GET' },
-    endpoint: '/userrequest/',
+    endpoint,
     params,
   },
 });
 
-const getPageFromCache = (params, pageLoaded) => (
+const getPageFromCache = (endpoint, params, pageLoaded) => (
   (dispatch, getState) => {
     const store = getState();
     // Get the last fetched date
@@ -120,9 +139,9 @@ const getPageFromCache = (params, pageLoaded) => (
     const isDataStale = Date.now() - timeSinceLastFetch > settings.TIME_TO_STALE;
 
     if (isDataStale || !pageLoaded) {
-      return dispatch(fetchPage(params));
+      return dispatch(fetchPage(endpoint, params));
     }
-    return dispatch(abortRequest());
+    return dispatch(abortRequest(endpoint, params));
   }
 );
 
@@ -131,7 +150,7 @@ const getPageFromCache = (params, pageLoaded) => (
  *
  * @param search {string} search query parameters
  */
-const requestPage = search => (
+const requestPage = (endpoint, search) => (
   (dispatch, getState) => {
     const store = getState();
     let params = {
@@ -145,7 +164,7 @@ const requestPage = search => (
       params = queryString.parse(search);
       pageLoaded = store.pagination.userrequestList.params[search.slice(1)];
     }
-    return dispatch(getPageFromCache(params, pageLoaded));
+    return dispatch(getPageFromCache(endpoint, params, pageLoaded));
   }
 );
 
@@ -159,6 +178,14 @@ const initialState = {
   params: {},
 };
 
+/**
+ * createPaginator is used to create a pagination for any module / component
+ * with a server-side pagination
+ *
+ * @param endpoint {string} name of paginated module
+ * @returns {object} an object composed with current page options,
+ * reducers (params, pages, currentPage, items), see above in REDUCERS
+ */
 const createPaginator = endpoint => {
   const onlyForEndpoint = reducer => (state = initialState, action = {}) =>
     (action.endpoint === endpoint ? reducer(state, action) : state);
@@ -199,7 +226,6 @@ export const getCurrentPageResults = createSelector(
   (currentPage, items) => (typeof currentPage === 'undefined' ? [] : Object.values(pick(items || [], currentPage.ids))),
 );
 
-// TODO: optimize and use createSelector
 /**
  * getPaginationParams returns items contains in requested page
  *
@@ -208,24 +234,14 @@ export const getCurrentPageResults = createSelector(
  * @returns {object} query params and items per page count
  */
 export const getPaginationParams = (pagination, params) => {
-  let paginationParams = params;
-  let count = 0;
-
-  if (params === '') {
-    paginationParams = `?limit=${settings.PAGE_SIZE}&page=${1}`;
-  }
-
-  if (pagination && pagination.params) {
-    // We remove first char
-    count = pagination.params[paginationParams.slice(1)];
-  }
-
-  const parseParams = queryString.parse(paginationParams);
+  const { limit, page } = queryString.parse(params);
+  const queryFingerprint = getQueryFingerprint(limit, page);
+  const count = pagination ? pagination.params[queryFingerprint] : 0;
 
   return {
     params: {
-      limit: parseInt(parseParams.limit, 10) || settings.PAGE_SIZE,
-      page: parseInt(parseParams.page, 10) || 1,
+      limit: +limit || settings.PAGE_SIZE,
+      page: +page || 1,
     },
     count,
   };
@@ -233,3 +249,4 @@ export const getPaginationParams = (pagination, params) => {
 
 export const isCurrentPageFetching = pagination =>
   (pagination.pages[pagination.currentPage] || { fetching: true }).fetching;
+

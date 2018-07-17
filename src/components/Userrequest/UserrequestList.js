@@ -138,7 +138,7 @@ class UserrequestList extends React.Component {
           )}
           pagination={false}
         />
-        <Pagination params={pagination.params} count={pagination.count} />
+        <Pagination {...pagination} />
       </div>
     );
   }

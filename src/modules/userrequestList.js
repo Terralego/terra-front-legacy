@@ -150,7 +150,7 @@ export const getUserrequestsArrayFilteredByUser = createSelector(
  *
  * @param search {string} search query parameters
  */
-export const requestUserrequestPage = userrequestPaginator.requestPage;
+export const requestUserrequestPage = search => userrequestPaginator.requestPage('/userrequest/', search);
 
 /**
  * userrequest action : fetch userrequest
