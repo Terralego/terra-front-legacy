@@ -26,6 +26,19 @@ export const PAGE_FAILURE = 'pagination/PAGE_FAILURE';
 const getQueryFingerprint = (limit, page) => `limit=${limit}&page=${page}`;
 
 /**
+ * getParams returns a an object with page and limit
+ * @param {string} search : search parameters from url
+ * @returns {object} params object
+ */
+const getParams = search => (search && search !== ''
+  ? queryString.parse(search)
+  : {
+    limit: settings.PAGE_SIZE,
+    page: 1,
+  }
+);
+
+/**
  * REDUCERS
  * --------------------------------------------------------- *
  */
@@ -157,17 +170,9 @@ const getPageFromCache = (endpoint, params, pageLoaded) => (
 const requestPage = (endpoint, search) => (
   (dispatch, getState) => {
     const store = getState();
-    let params = {
-      limit: settings.PAGE_SIZE,
-      page: 1,
-    };
-
-    let pageLoaded = false;
-
-    if (search !== '') {
-      params = queryString.parse(search);
-      pageLoaded = store.pagination.userrequestList.params[search.slice(1)];
-    }
+    const params = getParams(search);
+    const queryFingerprint = getQueryFingerprint(params.limit, params.page);
+    const pageLoaded = store.pagination.userrequestList.params[queryFingerprint];
     return dispatch(getPageFromCache(endpoint, params, pageLoaded));
   }
 );
@@ -227,7 +232,9 @@ export const getCurrentPageResults = createSelector(
     (_, pagination) => pagination.pages[pagination.currentPage],
     items => items,
   ],
-  (currentPage, items) => (!currentPage ? [] : Object.values(pick(items || [], currentPage.ids))),
+  (currentPage = {}, items = []) => (
+    currentPage.ids ? Object.values(pick(items, currentPage.ids)) : []
+  ),
 );
 
 /**
@@ -237,8 +244,8 @@ export const getCurrentPageResults = createSelector(
  * @param params {string} query parameters
  * @returns {object} query params and items per page count
  */
-export const getPaginationParams = (pagination, params) => {
-  const { limit, page } = queryString.parse(params);
+export const getPaginationParams = (pagination, search) => {
+  const { limit, page } = getParams(search);
   const queryFingerprint = getQueryFingerprint(limit, page);
   const count = pagination ? pagination.params[queryFingerprint] : 0;
 

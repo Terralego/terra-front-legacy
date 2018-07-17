@@ -12,7 +12,6 @@ class Pagination extends React.Component {
 
   render () {
     const { params, count } = this.props;
-
     return (
       <AntPagination
         defaultCurrent={1}
