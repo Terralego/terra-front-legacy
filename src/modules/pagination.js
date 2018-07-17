@@ -227,7 +227,7 @@ export const getCurrentPageResults = createSelector(
     (_, pagination) => pagination.pages[pagination.currentPage],
     items => items,
   ],
-  (currentPage, items) => (typeof currentPage === 'undefined' ? [] : Object.values(pick(items || [], currentPage.ids))),
+  (currentPage, items) => (!currentPage ? [] : Object.values(pick(items || [], currentPage.ids))),
 );
 
 /**
