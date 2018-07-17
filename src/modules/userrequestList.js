@@ -1,13 +1,8 @@
 import { createSelector } from 'reselect';
 import { CALL_API } from 'middlewares/api';
-import settings from 'front-settings';
 import { SUBMIT_SUCCESS, SAVE_DRAFT_SUCCESS } from 'modules/userrequest';
 import { getUserGroup } from 'modules/authentication';
-
-// Load all userrequest
-export const ALL_REQUEST = 'userrequestList/ALL_REQUEST';
-export const ALL_SUCCESS = 'userrequestList/ALL_SUCCESS';
-export const ALL_FAILURE = 'userrequestList/ALL_FAILURE';
+import createPaginator, { getCurrentPageResults, PAGE_SUCCESS } from 'modules/pagination';
 
 // Load userrequest detail
 export const DETAIL_REQUEST = 'userrequestList/DETAIL_REQUEST';
@@ -24,32 +19,14 @@ export const APPROBATIONS_CHANGE_REQUEST = 'userrequestList/APPROBATIONS_CHANGE_
 export const APPROBATIONS_CHANGE_SUCCESS = 'userrequestList/APPROBATIONS_CHANGE_SUCCESS';
 export const APPROBATIONS_CHANGE_FAILURE = 'userrequestList/APPROBATIONS_CHANGE_FAILURE';
 
+
+export const userrequestPaginator = createPaginator('/userrequest/');
+
 const initialState = {
   items: {},
   loading: false,
-  pagination: {
-    count: 0,
-    next: null,
-    previous: null,
-  },
+  lastFetched: 0,
 };
-
-/**
- * Get userrequests object with id keys
- *
- * @param  {object} response: response from get all request
- * @return {object} object of userrequests by id
- */
-function getItemsFromResponse (response) {
-  if (!response.results || response.results.length < 1) {
-    return null;
-  }
-  const items = {};
-  response.results.forEach(userrequest => {
-    items[userrequest.id] = userrequest;
-  });
-  return items;
-}
 
 /**
  * Get the userrequest id
@@ -66,21 +43,10 @@ function getItemIdFromUrl (url) {
  */
 const userrequestList = (state = initialState, action) => {
   switch (action.type) {
-    case ALL_REQUEST:
+    case PAGE_SUCCESS:
       return {
-        ...state,
-        loading: true,
-      };
-    case ALL_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-        items: getItemsFromResponse(action.data),
-        pagination: {
-          count: action.data.count,
-          next: action.data.next,
-          previous: action.data.previous,
-        },
+        ...userrequestPaginator.itemsReducer(state, action),
+        lastFetched: Date.now(),
       };
     case DETAIL_REQUEST:
       return {
@@ -118,7 +84,7 @@ const userrequestList = (state = initialState, action) => {
         },
       };
     default:
-      return state;
+      return userrequestPaginator.itemsReducer(state, action);
   }
 };
 
@@ -151,8 +117,12 @@ const getDraftStatus = createSelector(
 );
 
 export const getUserrequestArray = createSelector(
-  state => state.userrequestList.items,
-  items => (items ? Object.values(items) : []),
+  state => state,
+  state => getCurrentPageResults(
+    state.userrequestList.items,
+    state.pagination.userrequestList,
+    '/userrequest/',
+  ),
 );
 
 /**
@@ -176,18 +146,11 @@ export const getUserrequestsArrayFilteredByUser = createSelector(
  */
 
 /**
- * userrequestList action : fetch userrequest list
+ * requestUserrequestPage
  *
- * @param limit {number|string} page size (max items per page)
- * @param page {number|string} page number
+ * @param search {string} search query parameters
  */
-export const fetchUserrequestList = (limit = settings.PAGE_SIZE, page = 1) => ({
-  [CALL_API]: {
-    endpoint: `/userrequest/?limit=${limit}&page=${page}`,
-    types: [ALL_REQUEST, ALL_SUCCESS, ALL_FAILURE],
-    config: { method: 'GET' },
-  },
-});
+export const requestUserrequestPage = search => userrequestPaginator.requestPage('/userrequest/', search);
 
 /**
  * userrequest action : fetch userrequest
