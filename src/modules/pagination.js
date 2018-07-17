@@ -81,6 +81,7 @@ const pagesReducer = (state = {}, action = {}) => {
 const currentPageReducer = (state = 1, action = {}) => {
   switch (action.type) {
     case PAGE_REQUEST:
+    case PAGE_ABORT_REQUEST:
       return action.params.page;
     default:
       return state;
@@ -96,7 +97,10 @@ const itemsReducer = (state = {}, action = {}) => {
       });
       return {
         ...state,
-        items: newItems,
+        items: {
+          ...state.items,
+          ...newItems,
+        },
       };
     default:
       return state;
@@ -112,7 +116,7 @@ const itemsReducer = (state = {}, action = {}) => {
  * abortRequest call when data is fresh, no need to perform new request
  */
 export const abortRequest = (endpoint, params) => ({
-  type: PAGE_REQUEST,
+  type: PAGE_ABORT_REQUEST,
   endpoint,
   params,
 });
