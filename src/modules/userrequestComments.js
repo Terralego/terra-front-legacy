@@ -86,8 +86,7 @@ const userrequestComments = (state = initialState, action) => {
         sent: false,
         error: null,
       };
-    case SUBMIT_SUCCESS: {
-      console.log(action);
+    case SUBMIT_SUCCESS:
       return {
         ...state,
         text: '',
@@ -99,7 +98,6 @@ const userrequestComments = (state = initialState, action) => {
           },
         },
       };
-    }
     case SUBMIT_FAILURE:
       return {
         ...state,
