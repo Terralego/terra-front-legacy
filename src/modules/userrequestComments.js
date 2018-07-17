@@ -10,7 +10,15 @@ export const SUBMIT_REQUEST = 'userrequestComments/SUBMIT_REQUEST';
 export const SUBMIT_SUCCESS = 'userrequestComments/SUBMIT_SUCCESS';
 export const SUBMIT_FAILURE = 'userrequestComments/SUBMIT_FAILURE';
 
+export const GEOJSON_COMMENT_FEATURE_ADD = 'GEOJSON_COMMENT_FEATURE_ADD';
+export const GEOJSON_COMMENT_FEATURE_REMOVE = 'GEOJSON_COMMENT_FEATURE_REMOVE';
+
 const initialState = {
+  geojson: {
+    type: 'FeatureCollection',
+    features: [],
+  },
+  attachments: {}, // Object contenant les futures pièces jointes
   comments: {}, // comments by userrequestId
   loading: false, // loading comments list
   text: '',
@@ -95,6 +103,26 @@ const userrequestComments = (state = initialState, action) => {
         ...state,
         error: action.error,
       };
+    case GEOJSON_COMMENT_FEATURE_ADD:
+      return {
+        ...state,
+        geojson: {
+          ...state.geojson,
+          features: [
+            ...state.geojson.features,
+            action.feature,
+          ],
+        },
+      };
+    case GEOJSON_COMMENT_FEATURE_REMOVE:
+      return {
+        ...state,
+        geojson: {
+          ...state.geojson,
+          features: state.geojson.features
+            .filter(feature => feature.properties.id !== action.featureId),
+        },
+      };
     default:
       return state;
   }
@@ -164,10 +192,31 @@ export const submitComment = (userrequestId, comment, isInternal) => ({
     config: {
       method: 'POST',
       body: JSON.stringify({
-        properties: { comment },
+        properties: { comment: comment.text },
         is_internal: isInternal,
+        geojson: { ...comment.geojson },
       }),
     },
     form: 'userrequestComments',
   },
+});
+
+/**
+ * userrequestComments action
+ * add GEOJSON RequestCommentFeature add or update an object of properties
+ * @param {object} properties : object of properties to add / update in userrequestComment object
+ */
+export const addRequestCommentFeature = feature => ({
+  type: GEOJSON_COMMENT_FEATURE_ADD,
+  feature,
+});
+
+/**
+* userrequestComments action
+* add GEOJSON RequestCommentFeature add or update an object of properties
+ * @param {object} properties : object of properties to remove / update in userrequestComment object
+ */
+export const removeRequestCommentFeature = featureId => ({
+  type: GEOJSON_COMMENT_FEATURE_REMOVE,
+  featureId,
 });
