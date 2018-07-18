@@ -5,7 +5,7 @@ export const SIGNUP_SUCCESS = 'userrequest/SIGNUP_SUCCESS';
 export const SIGNUP_FAILURE = 'userrequest/SIGNUP_FAILURE';
 
 const initialState = {
-  signupEmail: '',
+  email: '',
 };
 
 /**
@@ -20,12 +20,6 @@ const signup = (state = initialState, action) => {
 };
 
 export default signup;
-
-/**
- * SELECTORS
- * --------------------------------------------------------- *
- */
-
 
 /**
  * ACTIONS
@@ -46,5 +40,6 @@ export const signUp = email => ({
         email,
       }),
     },
+    form: 'signup',
   },
 });

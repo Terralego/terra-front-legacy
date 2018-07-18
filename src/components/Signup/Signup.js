@@ -11,16 +11,18 @@ import styles from './Signup.module.scss';
 
 class FormLogin extends Component {
   handleSubmit = () => {
-    this.props.signUp(this.props.login);
+    this.props.signUp(this.props.signup.email);
   }
 
   render () {
+    const { form } = this.props;
     return (
       <ReduxForm model="signup">
         <h2>Créer un compte</h2>
         <p>Vous n'avez pas encore de compte ?</p>
         <Input
-          model=".signupEmail"
+          model=".email"
+          id="signupEmail"
           label="Saisissez votre adresse email"
           errorMessages={{ required: { message: 'Veuillez saisir une adresse email' } }}
         />
@@ -28,6 +30,8 @@ class FormLogin extends Component {
           type="primary"
           icon="arrow-right"
           className={styles.button}
+          loading={form.pending}
+          onClick={this.handleSubmit}
         >
           Créer un compte
         </Button>
@@ -37,8 +41,8 @@ class FormLogin extends Component {
 }
 
 const mapStateToProps = state => ({
-  login: state.login,
-  form: state.forms.login.$form,
+  signup: state.signup,
+  form: state.forms.signup.$form,
 });
 
 const mapDispatchToProps = dispatch =>

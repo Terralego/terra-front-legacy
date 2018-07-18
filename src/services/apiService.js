@@ -63,15 +63,20 @@ export default {
    * @param  {string} endpoint
    * @param  {object} config
    */
-  request: async (endpoint, config) =>
-    handleErrors(await fetch(`${settings.API_URL}${endpoint}`, {
+  request: async (endpoint, config) => {
+    const headers = { ...options.headers };
+    const token = tokenService.getToken();
+
+    if (token) {
+      headers.Authorization = `JWT ${token}`;
+    }
+
+    return handleErrors(await fetch(`${settings.API_URL}${endpoint}`, {
       method: 'GET',
+      headers,
       ...options,
-      headers: {
-        ...options.headers,
-        Authorization: `JWT ${tokenService.getToken()}`,
-      },
       ...config,
     }))
-      .then(response => ({ data: response })),
+      .then(response => ({ data: response }));
+  },
 };
