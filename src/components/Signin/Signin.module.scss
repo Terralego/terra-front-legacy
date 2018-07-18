@@ -1,0 +1,10 @@
+.button {
+  margin-top: 12px;
+  float: right;
+}
+
+@media (max-width: 768px) {
+  .button {
+    width: 100%;
+  }
+}
