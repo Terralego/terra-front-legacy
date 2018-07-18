@@ -12,11 +12,20 @@ export const SUBMIT_FAILURE = 'userrequestComments/SUBMIT_FAILURE';
 
 export const GEOJSON_COMMENT_FEATURE_ADD = 'GEOJSON_COMMENT_FEATURE_ADD';
 export const GEOJSON_COMMENT_FEATURE_REMOVE = 'GEOJSON_COMMENT_FEATURE_REMOVE';
+export const GEOJSON_COMMENT_NEW_FEATURE_REMOVE = 'GEOJSON_COMMENT_NEW_FEATURE_REMOVE';
+export const SENDING_GEOJSON_FEATURES = 'SENDING_GEOJSON_FEATURES';
+export const GEOJSON_COMMENT_FEATURE_CANCELED = 'GEOJSON_COMMENT_FEATURE_CANCELED';
 
 const initialState = {
   geojson: {
     type: 'FeatureCollection',
     features: [],
+  },
+  sendingFeatures: {
+    geojson: {
+      type: 'FeatureCollection',
+      features: [],
+    },
   },
   attachments: {}, // Object contenant les futures pièces jointes
   comments: {}, // comments by userrequestId
@@ -123,6 +132,37 @@ const userrequestComments = (state = initialState, action) => {
             .filter(feature => feature.properties.id !== action.featureId),
         },
       };
+    case GEOJSON_COMMENT_NEW_FEATURE_REMOVE:
+      return {
+        ...state,
+        geojson: {
+          ...state.geojson,
+          features: [],
+        },
+        sendingFeatures: {
+          geojson: {
+            ...state.geojson,
+            features: [],
+          },
+        },
+      };
+    case SENDING_GEOJSON_FEATURES:
+      return {
+        ...state,
+        sendingFeatures: {
+          geojson: {
+            ...state.geojson,
+          },
+        },
+      };
+    case GEOJSON_COMMENT_FEATURE_CANCELED:
+      return {
+        ...state,
+        geojson: {
+          ...state.geojson,
+          features: [],
+        },
+      };
     default:
       return state;
   }
@@ -194,7 +234,7 @@ export const submitComment = (userrequestId, comment, isInternal) => ({
       body: JSON.stringify({
         properties: { comment: comment.text },
         is_internal: isInternal,
-        geojson: { ...comment.geojson },
+        geojson: { ...comment.sendingFeatures.geojson },
       }),
     },
     form: 'userrequestComments',
@@ -219,4 +259,24 @@ export const addRequestCommentFeature = feature => ({
 export const removeRequestCommentFeature = featureId => ({
   type: GEOJSON_COMMENT_FEATURE_REMOVE,
   featureId,
+});
+
+/**
+* userrequestComments action
+* remove all geojson properties in comments
+ */
+export const removeRequestCommentNewFeature = () => ({
+  type: GEOJSON_COMMENT_NEW_FEATURE_REMOVE,
+});
+
+/**
+* userrequestComments action
+* get all properties to send if user submit the comment
+ */
+export const geojsonSendingFeatures = () => ({
+  type: SENDING_GEOJSON_FEATURES,
+});
+
+export const removeRequestCommentByCancel = () => ({
+  type: GEOJSON_COMMENT_FEATURE_CANCELED,
 });
