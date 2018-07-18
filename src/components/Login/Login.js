@@ -8,7 +8,7 @@ import Signup from 'components/Signup/Signup';
 
 import styles from './Login.module.scss';
 
-const FormLogin = props => {
+const Login = props => {
   const { isAuthenticated, location } = props;
 
   return (
@@ -32,4 +32,4 @@ const mapStateToProps = state => ({
   form: state.forms.login.$form,
 });
 
-export default connect(mapStateToProps, null)(FormLogin);
+export default connect(mapStateToProps, null)(Login);
