@@ -4,14 +4,14 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Form as ReduxForm } from 'react-redux-form';
 
-import { signUp } from 'modules/signup';
+import { signUp } from 'modules/account';
 import Input from 'components/Fields/Input';
 
 import styles from './Signup.module.scss';
 
 class FormLogin extends Component {
   handleSubmit = () => {
-    this.props.signUp(this.props.signup.email);
+    this.props.signUp(this.props.account.email);
   }
 
   render () {
@@ -41,8 +41,8 @@ class FormLogin extends Component {
 }
 
 const mapStateToProps = state => ({
-  signup: state.signup,
-  form: state.forms.signup.$form,
+  account: state.account,
+  form: state.forms.account.$form,
 });
 
 const mapDispatchToProps = dispatch =>

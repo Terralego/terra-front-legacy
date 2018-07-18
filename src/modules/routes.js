@@ -5,6 +5,8 @@ import Form from 'components/Form/Form';
 import UserrequestList from 'components/Userrequest/UserrequestList';
 import Userrequest from 'components/Userrequest/Userrequest';
 import Login from 'components/Login/Login';
+import CreateAccount from 'components/Account/CreateAccount';
+import Account from 'components/Account/Account';
 
 export const routes = [{
   path: '/',
@@ -20,11 +22,17 @@ export const routes = [{
   icon: 'paper-clip',
   protected: false,
 }, {
-  path: '/new-profile',
+  path: '/create-account/:uidb64/:token/',
   name: 'Create an account',
-  component: Profile,
+  component: CreateAccount,
   icon: 'paper-clip',
   protected: false,
+}, {
+  path: '/account',
+  name: 'Account',
+  component: Account,
+  icon: 'account',
+  protected: true,
 }, {
   path: '/profile',
   name: 'Profile',
