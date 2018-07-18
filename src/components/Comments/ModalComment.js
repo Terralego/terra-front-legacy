@@ -5,10 +5,8 @@ import { connect } from 'react-redux';
 import { Modal, Button, Icon } from 'antd';
 import FormMap from 'components/FormMap/FormMap';
 
-import { getUserGroup } from 'modules/authentication';
 import {
   fetchUserrequestComments,
-  getCommentsByUserrequest,
   submitComment,
   addRequestCommentFeature,
   removeRequestCommentFeature,
