@@ -15,6 +15,9 @@ import {
   submitComment,
   addRequestCommentFeature,
   removeRequestCommentFeature,
+  removeRequestCommentNewFeature,
+  geojsonSendingFeatures,
+  removeRequestCommentByCancel,
 } from 'modules/userrequestComments';
 import TextArea from 'components/Fields/TextArea';
 import Select from 'components/Fields/Select';
@@ -26,7 +29,6 @@ import styles from './Comments.module.scss';
 class Comments extends React.Component {
   state = {
     showDrawMap: false,
-    geojson: false,
   };
 
   componentDidMount () {
@@ -35,22 +37,34 @@ class Comments extends React.Component {
     }
   }
 
+  handleMapCancel = () => {
+    this.setState({ showDrawMap: !this.state.showDrawMap });
+    this.props.removeRequestCommentByCancel();
+  }
+
+  handleMapRemove = () => {
+    this.props.removeRequestCommentNewFeature();
+  }
+
   handleMapSubmit = () => {
-    this.setState({ showDrawMap: !this.state.showDrawMap, geojson: true });
+    this.setState({ showDrawMap: !this.state.showDrawMap });
+    this.props.geojsonSendingFeatures();
   }
 
   handleSubmit = () => {
     const { userrequestId, comment, userGroup } = this.props;
-    this.setState({ geojson: false }); // On arrête d'afficher la note de prêt à l'envoi du geojson.
     // Only N2 can choose if message is private or not
     // If N1, always set internal to true
     const internal = userGroup === 'N2' ? comment.is_internal : true;
     this.props.submitComment(userrequestId, comment, internal);
+    // On arrête d'afficher la note de prêt à l'envoi du geojson.
+    this.props.removeRequestCommentNewFeature();
   }
 
   render () {
     const { comments, loading, form, userGroup } = this.props;
-    const { showDrawMap, geojson } = this.state;
+    const { features } = this.props.comment.sendingFeatures.geojson;
+    const { showDrawMap } = this.state;
     return (
       <ReduxForm model="userrequestComments">
         {userGroup === 'N2' && <Select
@@ -74,7 +88,7 @@ class Comments extends React.Component {
               title="Basic Modal"
               visible={showDrawMap}
               onOk={this.handleMapSubmit}
-              onCancel={() => this.setState({ showDrawMap: !showDrawMap })}
+              onCancel={this.handleMapCancel}
             >
               <FormMap
                 features={[]}
@@ -92,13 +106,29 @@ class Comments extends React.Component {
               />
             </Modal>
           }
+          {features.length !== 0 &&
+            <div style={{ fontSize: '0.9em' }}>
+              <p style={{ marginTop: 7 }}>
+                <strong><Icon type="paper-clip" /> Tracé prêt à l'envoi</strong>
+                <Button
+                  style={{ marginLeft: 10 }}
+                  type="danger"
+                  icon="cross"
+                  size="small"
+                  onClick={this.handleMapRemove}
+                >
+                  Supprimer le tracé
+                </Button>
+              </p>
+            </div>
+            }
           <Button
             style={{ marginRight: 10 }}
             type="default"
             icon="edit"
             onClick={() => this.setState({ showDrawMap: !showDrawMap })}
           >
-            Rééditer un tracé
+            {features.length !== 0 ? 'Modifier le tracé' : 'Rééditer un tracé'}
           </Button>
           <Button
             type="primary"
@@ -110,11 +140,6 @@ class Comments extends React.Component {
           >
             Envoyer
           </Button>
-          {geojson &&
-            <p style={{ marginTop: 7, fontSize: '0.8em' }}>
-              <strong><Icon type="paper-clip" /> Tracé prêt à l'envoi</strong>
-            </p>
-          }
         </div>
 
         {loading
@@ -171,6 +196,9 @@ const mapDispatchToProps = dispatch =>
     submitComment,
     addRequestCommentFeature,
     removeRequestCommentFeature,
+    removeRequestCommentNewFeature,
+    geojsonSendingFeatures,
+    removeRequestCommentByCancel,
   }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Comments);
