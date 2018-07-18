@@ -73,8 +73,8 @@ export default {
 
     return handleErrors(await fetch(`${settings.API_URL}${endpoint}`, {
       method: 'GET',
-      headers,
       ...options,
+      headers,
       ...config,
     }))
       .then(response => ({ data: response }));
