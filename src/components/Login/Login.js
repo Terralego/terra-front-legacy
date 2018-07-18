@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Button, Row, Col } from 'antd';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Redirect, Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { Form as ReduxForm } from 'react-redux-form';
 
 import { loginUser } from 'modules/authentication';
@@ -61,21 +61,18 @@ class FormLogin extends Component {
             <ReduxForm model="signup">
               <h2>Créer un compte</h2>
               <p>Vous n'avez pas encore de compte ?</p>
-
-              <Link to="/profile">
-                <Input
-                  model=".signupEmail"
-                  label="Saisissez votre adresse email"
-                  errorMessages={{ required: { message: 'Please provide a password' } }}
-                />
-                <Button
-                  type="primary"
-                  icon="arrow-right"
-                  className={styles.signupButton}
-                >
+              <Input
+                model=".signupEmail"
+                label="Saisissez votre adresse email"
+                errorMessages={{ required: { message: 'Veuillez saisir une adresse email' } }}
+              />
+              <Button
+                type="primary"
+                icon="arrow-right"
+                className={styles.signupButton}
+              >
                 Créer un compte
-                </Button>
-              </Link>
+              </Button>
             </ReduxForm>
           </Col>
         </Row>

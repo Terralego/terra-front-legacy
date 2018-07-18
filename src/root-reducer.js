@@ -13,11 +13,14 @@ export default combineReducers({
   ...createForms({
     userrequest,
     userrequestComments,
+    profile,
     login: {
       email: '',
       password: '',
     },
-    profile,
+    signup: {
+      signupEmail: '',
+    },
   }),
   appConfig,
   userrequestList,
