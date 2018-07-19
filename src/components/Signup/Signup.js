@@ -9,6 +9,14 @@ import Input from 'components/Fields/Input';
 
 import styles from './Signup.module.scss';
 
+const SuccessMessage = () => (
+  <Alert
+    message="Votre inscription a bien été prise en compte"
+    description="Merci de cliquer sur le lien dans le mail qui vient de vous être envoyé."
+    type="info"
+  />
+);
+
 class FormLogin extends Component {
   handleSubmit = () => {
     this.props.signUp(this.props.account.email);
@@ -16,38 +24,40 @@ class FormLogin extends Component {
 
   render () {
     const { form, account } = this.props;
-    if (account.emailSent) {
-      return (
-        <div>
-          Un email vient de vous être envoyé
-        </div>
-      );
-    }
 
     return (
-      <ReduxForm model="account">
+      <div>
         <h2>Créer un compte</h2>
-        <p>Vous n'avez pas encore de compte ?</p>
-        <Input
-          model=".email"
-          id="signupEmail"
-          label="Saisissez votre adresse email"
-          errorMessages={{ required: { message: 'Veuillez saisir une adresse email' } }}
-        />
 
-        {account.signupError
-          && <Alert message={account.signupError} type="error" />
+        {account.emailSent &&
+          <SuccessMessage />
         }
-        <Button
-          type="primary"
-          icon="arrow-right"
-          className={styles.button}
-          loading={form.pending}
-          onClick={this.handleSubmit}
-        >
-          Créer un compte
-        </Button>
-      </ReduxForm>
+
+        {!account.emailSent &&
+          <ReduxForm model="account">
+            <p>Vous n'avez pas encore de compte ?</p>
+            <Input
+              model=".email"
+              id="signupEmail"
+              label="Saisissez votre adresse email"
+              errorMessages={{ required: { message: 'Veuillez saisir une adresse email' } }}
+            />
+
+            {account.signupError
+              && <Alert message={account.signupError} type="error" />
+            }
+            <Button
+              type="primary"
+              icon="arrow-right"
+              className={styles.button}
+              loading={form.pending}
+              onClick={this.handleSubmit}
+            >
+              Créer un compte
+            </Button>
+          </ReduxForm>
+        }
+      </div>
     );
   }
 }
