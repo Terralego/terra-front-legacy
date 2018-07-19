@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button } from 'antd';
+import { Button, Alert } from 'antd';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Form as ReduxForm } from 'react-redux-form';
@@ -15,9 +15,17 @@ class FormLogin extends Component {
   }
 
   render () {
-    const { form } = this.props;
+    const { form, account } = this.props;
+    if (account.emailSent) {
+      return (
+        <div>
+          Un email vient de vous être envoyé
+        </div>
+      );
+    }
+
     return (
-      <ReduxForm model="signup">
+      <ReduxForm model="account">
         <h2>Créer un compte</h2>
         <p>Vous n'avez pas encore de compte ?</p>
         <Input
@@ -26,6 +34,10 @@ class FormLogin extends Component {
           label="Saisissez votre adresse email"
           errorMessages={{ required: { message: 'Veuillez saisir une adresse email' } }}
         />
+
+        {account.signupError
+          && <Alert message={account.signupError} type="error" />
+        }
         <Button
           type="primary"
           icon="arrow-right"

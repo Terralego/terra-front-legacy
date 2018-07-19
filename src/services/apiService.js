@@ -21,6 +21,9 @@ async function handleErrors (response) {
   if (data.username) {
     error.message += `: Login : ${data.username[0]}`;
   }
+  if (data.email) {
+    error.message += `: Email : ${data.email[0]}`;
+  }
   if (data.non_field_errors
     && data.non_field_errors.length > 0) {
     error.message += `: ${data.non_field_errors[0]}`;

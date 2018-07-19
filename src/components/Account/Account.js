@@ -3,14 +3,11 @@ import { withRouter } from 'react-router-dom';
 
 import ResetPassWord from 'components/Account/ResetPassword';
 
-const Account = props => {
-  const [uidb64, token] = props.location.pathname.split('/').slice(2);
-  return (
-    <div>
-      <h2>Choisissez un nouveau mot de passe pour activer votre compte</h2>
-      <ResetPassWord uidb64Token={`${uidb64}/${token}/`} />
-    </div>
-  );
-};
+const Account = () => (
+  <div>
+    <h1>Modifier mon mot de passe</h1>
+    <ResetPassWord />
+  </div>
+);
 
 export default withRouter(Account);

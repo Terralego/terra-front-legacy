@@ -8,7 +8,7 @@ const CreateAccount = props => {
   return (
     <div>
       <h2>Choisissez un nouveau mot de passe pour activer votre compte</h2>
-      <ResetPassWord uidb64Token={`${uidb64}/${token}/`} />
+      <ResetPassWord uidb64={uidb64} token={token} />
     </div>
   );
 };
