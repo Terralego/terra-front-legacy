@@ -8,7 +8,6 @@ import {
   addRequestCommentFeature,
   removeRequestCommentFeature,
   removeRequestCommentNewFeature,
-  geojsonSendingFeatures,
 } from 'modules/userrequestComments';
 
 
@@ -16,29 +15,37 @@ class ModalComment extends React.Component {
   state = {
     showDrawMap: false,
     features: [],
-    func: features => {
-      this.setState({ features: [...this.state.features, { ...features }] });
-    },
   };
 
+  addLocalRequest = features => {
+    this.setState({ features: [...this.state.features, { ...features }] });
+  }
+
   handleMapCancel = () => {
-    this.setState({ features: [], showDrawMap: !this.state.showDrawMap });
+    this.setState({
+      showDrawMap: !this.state.showDrawMap,
+      features: [...this.props.comment.geojson.features],
+    });
   }
 
   handleMapRemove = id => {
     this.props.removeRequestCommentFeature(id);
-    this.props.geojsonSendingFeatures();
   }
 
   handleMapSubmit = () => {
     this.setState({ showDrawMap: !this.state.showDrawMap });
     this.props.addRequestCommentFeature(this.state.features);
-    this.props.geojsonSendingFeatures();
+  }
+
+  removeRequestCommentFeature = id => {
+    this.setState({
+      features: this.state.features.filter(feature => feature.properties.id !== id),
+    });
+    this.props.removeRequestCommentFeature();
   }
 
   render () {
-    console.log(this.state);
-    const { features, func, showDrawMap } = this.state;
+    const { features, showDrawMap } = this.state;
     const { features: reduxFeatures } = this.props.comment.geojson;
     return (
       <div>
@@ -60,8 +67,8 @@ class ModalComment extends React.Component {
                 publicCount: '0',
               }}
               editable
-              onAddFeature={[func]}
-              onRemoveFeature={this.props.removeRequestCommentFeature}
+              onAddFeature={[this.addLocalRequest]}
+              onRemoveFeature={this.removeRequestCommentFeature}
             />
           </Modal>
         }
@@ -100,7 +107,6 @@ const mapDispatchToProps = dispatch =>
     addRequestCommentFeature,
     removeRequestCommentFeature,
     removeRequestCommentNewFeature,
-    geojsonSendingFeatures,
   }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(ModalComment);

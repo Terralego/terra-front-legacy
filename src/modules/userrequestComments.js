@@ -111,7 +111,6 @@ const userrequestComments = (state = initialState, action) => {
         geojson: {
           ...state.geojson,
           features: [
-            ...state.geojson.features,
             ...action.feature,
           ],
         },
@@ -131,13 +130,6 @@ const userrequestComments = (state = initialState, action) => {
         geojson: {
           ...state.geojson,
           features: [],
-        },
-      };
-    case SENDING_GEOJSON_FEATURES:
-      return {
-        ...state,
-        geojson: {
-          ...state.geojson,
         },
       };
     default:
@@ -244,12 +236,4 @@ export const removeRequestCommentFeature = featureId => ({
  */
 export const removeRequestCommentNewFeature = () => ({
   type: GEOJSON_COMMENT_NEW_FEATURE_REMOVE,
-});
-
-/**
-* userrequestComments action
-* get all properties to send if user submit the comment
- */
-export const geojsonSendingFeatures = () => ({
-  type: SENDING_GEOJSON_FEATURES,
 });
