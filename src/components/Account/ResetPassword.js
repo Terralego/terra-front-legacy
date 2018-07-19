@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Form } from 'react-redux-form';
 import { Button } from 'antd';
+import { Redirect } from 'react-router-dom';
 
 import { newPassword, changePassword } from 'modules/account';
 import Input from 'components/Fields/Input';
@@ -21,7 +22,12 @@ class ResetPassword extends React.Component {
   }
 
   render () {
-    const { form } = this.props;
+    const { form, account } = this.props;
+
+    if (account.active) {
+      return <Redirect to="/login" />;
+    }
+
     return (
       <Form model="account.password">
         <Input

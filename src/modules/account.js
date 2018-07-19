@@ -20,7 +20,7 @@ const initialState = {
   },
   signupError: '',
   emailSent: false,
-  activated: false,
+  active: false,
 };
 
 /**
@@ -43,14 +43,14 @@ const account = (state = initialState, action) => {
         ...state,
         signupError: action.error.message,
       };
-    case CHANGE_PASSWORD_SUCCESS:
+    case NEW_PASSWORD_SUCCESS:
       return {
         ...state,
         password: {
           new_password1: '',
           new_password2: '',
         },
-        activated: true,
+        active: true,
       };
     default:
       return state;
