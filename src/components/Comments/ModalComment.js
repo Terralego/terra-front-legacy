@@ -5,24 +5,24 @@ import { Modal, Button, Icon } from 'antd';
 import FormMap from 'components/FormMap/FormMap';
 
 import {
-  fetchUserrequestComments,
-  submitComment,
   addRequestCommentFeature,
   removeRequestCommentFeature,
   removeRequestCommentNewFeature,
   geojsonSendingFeatures,
-  removeDefaultFeatures,
 } from 'modules/userrequestComments';
 
 
 class ModalComment extends React.Component {
   state = {
     showDrawMap: false,
+    features: [],
+    func: features => {
+      this.setState({ features: [...this.state.features, { ...features }] });
+    },
   };
 
   handleMapCancel = () => {
-    this.props.removeDefaultFeatures();
-    this.setState({ showDrawMap: !this.state.showDrawMap });
+    this.setState({ features: [], showDrawMap: !this.state.showDrawMap });
   }
 
   handleMapRemove = id => {
@@ -32,14 +32,14 @@ class ModalComment extends React.Component {
 
   handleMapSubmit = () => {
     this.setState({ showDrawMap: !this.state.showDrawMap });
+    this.props.addRequestCommentFeature(this.state.features);
     this.props.geojsonSendingFeatures();
   }
 
   render () {
-    const { showDrawMap } = this.state;
-    const { features } = this.props.comment.geojson;
-    const { features: featureSending } = this.props.comment.sendingFeatures.geojson;
-
+    console.log(this.state);
+    const { features, func, showDrawMap } = this.state;
+    const { features: reduxFeatures } = this.props.comment.geojson;
     return (
       <div>
         {showDrawMap &&
@@ -50,7 +50,7 @@ class ModalComment extends React.Component {
             onCancel={this.handleMapCancel}
           >
             <FormMap
-              features={[]}
+              features={features}
               drawMode="pointer"
               activity={{
                 type: '',
@@ -60,34 +60,21 @@ class ModalComment extends React.Component {
                 publicCount: '0',
               }}
               editable
-              onAddFeature={[this.props.addRequestCommentFeature]}
+              onAddFeature={[func]}
               onRemoveFeature={this.props.removeRequestCommentFeature}
             />
-            <div style={{ fontSize: '0.9em' }}>
-              {features.map(feature => (
-                <p style={{ marginTop: 7 }}>
-                  <strong><Icon type="paper-clip" /> Tracé numéro {feature.properties.id} prêt à l'envoi</strong>
-                  <Button
-                    style={{ marginLeft: 10 }}
-                    type="danger"
-                    icon="cross"
-                    size="small"
-                    onClick={() => this.handleMapRemove(feature.properties.id)}
-                  >
-                    Supprimer le tracé
-                  </Button>
-                </p>))}
-            </div>
           </Modal>
         }
-        {featureSending.length !== 0 &&
+        {reduxFeatures.length !== 0 &&
         <p>
           <strong style={{ fontSize: '0.9em' }}><Icon type="paper-clip" /> Pièce jointe en attente d'envoi</strong>
           <Button
             type="danger"
             icon="edit"
             size="small"
-            onClick={() => this.props.removeRequestCommentNewFeature()}
+            onClick={() =>
+              this.props.removeRequestCommentNewFeature() &&
+              this.setState({ features: [] })}
           >
             Supprimer tous les tracés
           </Button>
@@ -97,7 +84,7 @@ class ModalComment extends React.Component {
           icon="edit"
           onClick={() => this.setState({ showDrawMap: !showDrawMap })}
         >
-          {featureSending.length !== 0 ? 'Modifier des tracés' : 'Rééditer un tracé'}
+          {reduxFeatures.length !== 0 ? 'Modifier des tracés' : 'Rééditer un tracé'}
         </Button>
       </div>
     );
@@ -110,13 +97,10 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators({
-    fetchUserrequestComments,
-    submitComment,
     addRequestCommentFeature,
     removeRequestCommentFeature,
     removeRequestCommentNewFeature,
     geojsonSendingFeatures,
-    removeDefaultFeatures,
   }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(ModalComment);
