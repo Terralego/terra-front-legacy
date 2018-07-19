@@ -14,7 +14,7 @@ export const GEOJSON_COMMENT_FEATURE_ADD = 'GEOJSON_COMMENT_FEATURE_ADD';
 export const GEOJSON_COMMENT_FEATURE_REMOVE = 'GEOJSON_COMMENT_FEATURE_REMOVE';
 export const GEOJSON_COMMENT_NEW_FEATURE_REMOVE = 'GEOJSON_COMMENT_NEW_FEATURE_REMOVE';
 export const SENDING_GEOJSON_FEATURES = 'SENDING_GEOJSON_FEATURES';
-export const GEOJSON_COMMENT_FEATURE_CANCELED = 'GEOJSON_COMMENT_FEATURE_CANCELED';
+export const REMOVE_DEFAULT_FEATURES = 'REMOVE_DEFAULT_FEATURES';
 
 const initialState = {
   geojson: {
@@ -155,12 +155,11 @@ const userrequestComments = (state = initialState, action) => {
           },
         },
       };
-    case GEOJSON_COMMENT_FEATURE_CANCELED:
+    case REMOVE_DEFAULT_FEATURES:
       return {
         ...state,
         geojson: {
-          ...state.geojson,
-          features: [],
+          ...state.sendingFeatures.geojson,
         },
       };
     default:
@@ -277,6 +276,6 @@ export const geojsonSendingFeatures = () => ({
   type: SENDING_GEOJSON_FEATURES,
 });
 
-export const removeRequestCommentByCancel = () => ({
-  type: GEOJSON_COMMENT_FEATURE_CANCELED,
+export const removeDefaultFeatures = () => ({
+  type: REMOVE_DEFAULT_FEATURES,
 });

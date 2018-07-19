@@ -11,7 +11,7 @@ import {
   removeRequestCommentFeature,
   removeRequestCommentNewFeature,
   geojsonSendingFeatures,
-  removeRequestCommentByCancel,
+  removeDefaultFeatures,
 } from 'modules/userrequestComments';
 
 
@@ -21,12 +21,13 @@ class ModalComment extends React.Component {
   };
 
   handleMapCancel = () => {
+    this.props.removeDefaultFeatures();
     this.setState({ showDrawMap: !this.state.showDrawMap });
-    this.props.removeRequestCommentByCancel();
   }
 
-  handleMapRemove = () => {
-    this.props.removeRequestCommentNewFeature();
+  handleMapRemove = id => {
+    this.props.removeRequestCommentFeature(id);
+    this.props.geojsonSendingFeatures();
   }
 
   handleMapSubmit = () => {
@@ -36,7 +37,8 @@ class ModalComment extends React.Component {
 
   render () {
     const { showDrawMap } = this.state;
-    const { features } = this.props.comment.sendingFeatures.geojson;
+    const { features } = this.props.comment.geojson;
+    const { features: featureSending } = this.props.comment.sendingFeatures.geojson;
 
     return (
       <div>
@@ -61,30 +63,41 @@ class ModalComment extends React.Component {
               onAddFeature={[this.props.addRequestCommentFeature]}
               onRemoveFeature={this.props.removeRequestCommentFeature}
             />
+            <div style={{ fontSize: '0.9em' }}>
+              {features.map(feature => (
+                <p style={{ marginTop: 7 }}>
+                  <strong><Icon type="paper-clip" /> Tracé numéro {feature.properties.id} prêt à l'envoi</strong>
+                  <Button
+                    style={{ marginLeft: 10 }}
+                    type="danger"
+                    icon="cross"
+                    size="small"
+                    onClick={() => this.handleMapRemove(feature.properties.id)}
+                  >
+                    Supprimer le tracé
+                  </Button>
+                </p>))}
+            </div>
           </Modal>
         }
-        {features.length !== 0 &&
-          <div style={{ fontSize: '0.9em' }}>
-            <p style={{ marginTop: 7 }}>
-              <strong><Icon type="paper-clip" /> Tracé prêt à l'envoi</strong>
-              <Button
-                style={{ marginLeft: 10 }}
-                type="danger"
-                icon="cross"
-                size="small"
-                onClick={this.handleMapRemove}
-              >
-                Supprimer le tracé
-              </Button>
-            </p>
-          </div>
-        }
+        {featureSending.length !== 0 &&
+        <p>
+          <strong style={{ fontSize: '0.9em' }}><Icon type="paper-clip" /> Pièce jointe en attente d'envoi</strong>
+          <Button
+            type="danger"
+            icon="edit"
+            size="small"
+            onClick={() => this.props.removeRequestCommentNewFeature()}
+          >
+            Supprimer tous les tracés
+          </Button>
+        </p>}
         <Button
           type="default"
           icon="edit"
           onClick={() => this.setState({ showDrawMap: !showDrawMap })}
         >
-          {features.length !== 0 ? 'Modifier le tracé' : 'Rééditer un tracé'}
+          {featureSending.length !== 0 ? 'Modifier des tracés' : 'Rééditer un tracé'}
         </Button>
       </div>
     );
@@ -103,7 +116,7 @@ const mapDispatchToProps = dispatch =>
     removeRequestCommentFeature,
     removeRequestCommentNewFeature,
     geojsonSendingFeatures,
-    removeRequestCommentByCancel,
+    removeDefaultFeatures,
   }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(ModalComment);
