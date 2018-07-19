@@ -7,17 +7,19 @@ import authentication from 'modules/authentication';
 import authenticationTimer from 'modules/authenticationTimer';
 import profile from 'modules/profile';
 import error from 'modules/error';
+import account from 'modules/account';
 import { createForms } from 'react-redux-form';
 
 export default combineReducers({
   ...createForms({
     userrequest,
     userrequestComments,
+    profile,
+    account,
     login: {
       email: '',
       password: '',
     },
-    profile,
   }),
   appConfig,
   userrequestList,

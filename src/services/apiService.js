@@ -21,6 +21,9 @@ async function handleErrors (response) {
   if (data.username) {
     error.message += `: Login : ${data.username[0]}`;
   }
+  if (data.email) {
+    error.message += `: Email : ${data.email[0]}`;
+  }
   if (data.non_field_errors
     && data.non_field_errors.length > 0) {
     error.message += `: ${data.non_field_errors[0]}`;
@@ -63,15 +66,20 @@ export default {
    * @param  {string} endpoint
    * @param  {object} config
    */
-  request: async (endpoint, config) =>
-    handleErrors(await fetch(`${settings.API_URL}${endpoint}`, {
+  request: async (endpoint, config) => {
+    const headers = { ...options.headers };
+    const token = tokenService.getToken();
+
+    if (token) {
+      headers.Authorization = `JWT ${token}`;
+    }
+
+    return handleErrors(await fetch(`${settings.API_URL}${endpoint}`, {
       method: 'GET',
       ...options,
-      headers: {
-        ...options.headers,
-        Authorization: `JWT ${tokenService.getToken()}`,
-      },
+      headers,
       ...config,
     }))
-      .then(response => ({ data: response })),
+      .then(response => ({ data: response }));
+  },
 };

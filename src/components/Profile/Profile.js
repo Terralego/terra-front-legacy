@@ -8,20 +8,6 @@ import Input from 'components/Fields/Input';
 
 const Profile = ({ form }) => (
   <Form model="profile">
-    <Input
-      model=".email"
-      type="email"
-      label="Email"
-      placeholder="Your email address"
-      required
-    />
-    <Input
-      model=".password"
-      type="password"
-      label="Password"
-      placeholder="Your password"
-      required
-    />
     <Fieldset model=".properties">
       <Input
         model=".firstname"

@@ -33,6 +33,7 @@ const Header = ({ isAuthenticated, logout, user }) => (
       >
         <Menu.SubMenu title={<span><Icon type="user" />{user.email || 'Mon compte'}</span>}>
           <Menu.ItemGroup title="Prénom Nom">
+            <Menu.Item key="account"><Icon type="setting" /> Modifier mon mot de passe</Menu.Item>
             <Menu.Item key="account"><Icon type="setting" /> Profil</Menu.Item>
             <Menu.Item key="manage-request"><Link to="/manage-request"><Icon type="file-text" />Mes demandes</Link></Menu.Item>
             <Menu.Item key="request"><Link to="/request"><Icon type="file-add" /> Créer une demande</Link></Menu.Item>
