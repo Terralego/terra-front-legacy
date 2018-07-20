@@ -12,6 +12,7 @@ export const SUBMIT_FAILURE = 'userrequestComments/SUBMIT_FAILURE';
 
 export const GEOJSON_COMMENT_FEATURE_ADD = 'GEOJSON_COMMENT_FEATURE_ADD';
 export const GEOJSON_COMMENT_FEATURE_REMOVE = 'GEOJSON_COMMENT_FEATURE_REMOVE';
+export const GEOJSON_COMMENT_NEW_FEATURE_REMOVE = 'GEOJSON_COMMENT_NEW_FEATURE_REMOVE';
 
 const initialState = {
   geojson: {
@@ -109,8 +110,7 @@ const userrequestComments = (state = initialState, action) => {
         geojson: {
           ...state.geojson,
           features: [
-            ...state.geojson.features,
-            action.feature,
+            ...action.feature,
           ],
         },
       };
@@ -121,6 +121,14 @@ const userrequestComments = (state = initialState, action) => {
           ...state.geojson,
           features: state.geojson.features
             .filter(feature => feature.properties.id !== action.featureId),
+        },
+      };
+    case GEOJSON_COMMENT_NEW_FEATURE_REMOVE:
+      return {
+        ...state,
+        geojson: {
+          ...state.geojson,
+          features: [],
         },
       };
     default:
@@ -219,4 +227,12 @@ export const addRequestCommentFeature = feature => ({
 export const removeRequestCommentFeature = featureId => ({
   type: GEOJSON_COMMENT_FEATURE_REMOVE,
   featureId,
+});
+
+/**
+* userrequestComments action
+* remove all geojson properties in comments
+ */
+export const removeRequestCommentNewFeature = () => ({
+  type: GEOJSON_COMMENT_NEW_FEATURE_REMOVE,
 });

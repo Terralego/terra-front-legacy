@@ -4,18 +4,17 @@ import classnames from 'classnames';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Form as ReduxForm } from 'react-redux-form';
-import { Spin, List, Button, Modal, Icon } from 'antd';
+import { Spin, List, Button } from 'antd';
 import moment from 'moment';
-import FormMap from 'components/FormMap/FormMap';
 
 import { getUserGroup } from 'modules/authentication';
 import {
   fetchUserrequestComments,
   getCommentsByUserrequest,
   submitComment,
-  addRequestCommentFeature,
-  removeRequestCommentFeature,
+  removeRequestCommentNewFeature,
 } from 'modules/userrequestComments';
+import ModalComment from 'components/Comments/ModalComment';
 import TextArea from 'components/Fields/TextArea';
 import Select from 'components/Fields/Select';
 
@@ -24,33 +23,24 @@ import config from 'components/Comments/Comments.config';
 import styles from './Comments.module.scss';
 
 class Comments extends React.Component {
-  state = {
-    showDrawMap: false,
-    geojson: false,
-  };
-
   componentDidMount () {
     if (!this.props.comments.length && !this.props.loading && !this.props.fetched) {
       this.props.fetchUserrequestComments(this.props.userrequestId);
     }
   }
 
-  handleMapSubmit = () => {
-    this.setState({ showDrawMap: !this.state.showDrawMap, geojson: true });
-  }
-
   handleSubmit = () => {
     const { userrequestId, comment, userGroup } = this.props;
-    this.setState({ geojson: false }); // On arrête d'afficher la note de prêt à l'envoi du geojson.
     // Only N2 can choose if message is private or not
     // If N1, always set internal to true
     const internal = userGroup === 'N2' ? comment.is_internal : true;
     this.props.submitComment(userrequestId, comment, internal);
+    // On arrête d'afficher la note de prêt à l'envoi du geojson.
+    this.props.removeRequestCommentNewFeature();
   }
 
   render () {
     const { comments, loading, form, userGroup } = this.props;
-    const { showDrawMap, geojson } = this.state;
     return (
       <ReduxForm model="userrequestComments">
         {userGroup === 'N2' && <Select
@@ -69,38 +59,9 @@ class Comments extends React.Component {
           errorMessages={{ required: { message: 'Veuillez écrire un message' } }}
         />
         <div style={{ textAlign: 'right' }}>
-          {showDrawMap &&
-            <Modal
-              title="Basic Modal"
-              visible={showDrawMap}
-              onOk={this.handleMapSubmit}
-              onCancel={() => this.setState({ showDrawMap: !showDrawMap })}
-            >
-              <FormMap
-                features={[]}
-                drawMode="pointer"
-                activity={{
-                  type: '',
-                  eventDates: Array(1),
-                  uid: 0,
-                  participantCount: '1',
-                  publicCount: '0',
-                }}
-                editable
-                onAddFeature={[this.props.addRequestCommentFeature]}
-                onRemoveFeature={this.props.removeRequestCommentFeature}
-              />
-            </Modal>
-          }
+          <ModalComment />
           <Button
-            style={{ marginRight: 10 }}
-            type="default"
-            icon="edit"
-            onClick={() => this.setState({ showDrawMap: !showDrawMap })}
-          >
-            Rééditer un tracé
-          </Button>
-          <Button
+            style={{ marginTop: 10 }}
             type="primary"
             htmlType="submit"
             icon="arrow-right"
@@ -110,11 +71,6 @@ class Comments extends React.Component {
           >
             Envoyer
           </Button>
-          {geojson &&
-            <p style={{ marginTop: 7, fontSize: '0.8em' }}>
-              <strong><Icon type="paper-clip" /> Tracé prêt à l'envoi</strong>
-            </p>
-          }
         </div>
 
         {loading
@@ -169,8 +125,7 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators({
     fetchUserrequestComments,
     submitComment,
-    addRequestCommentFeature,
-    removeRequestCommentFeature,
+    removeRequestCommentNewFeature,
   }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Comments);
