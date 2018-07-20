@@ -12,7 +12,7 @@ export const NEW_PASSWORD_REQUEST = 'userrequest/NEW_PASSWORD_REQUEST';
 export const NEW_PASSWORD_SUCCESS = 'userrequest/NEW_PASSWORD_SUCCESS';
 export const NEW_PASSWORD_FAILURE = 'userrequest/NEW_PASSWORD_FAILURE';
 
-const initialState = {
+export const initialState = {
   email: '',
   password: {
     new_password1: '',
