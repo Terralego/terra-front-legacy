@@ -60,7 +60,7 @@ class FormMap extends Component {
         activity: uid,
       },
     };
-    this.props.onAddFeature.forEach(func => func(feature, eventDateStart, eventDateEnd));
+    this.props.onAddFeature(feature, eventDateStart, eventDateEnd);
   }
 
   removeFeature (id) {

@@ -68,7 +68,7 @@ class ModalComment extends React.Component {
                 publicCount: '0',
               }}
               editable
-              onAddFeature={[this.addLocalRequest]}
+              onAddFeature={this.addLocalRequest}
               onRemoveFeature={this.removeRequestCommentFeature}
             />
           </Modal>
