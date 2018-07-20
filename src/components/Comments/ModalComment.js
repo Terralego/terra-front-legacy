@@ -46,7 +46,7 @@ class ModalComment extends React.Component {
 
   render () {
     const { features, showDrawMap } = this.state;
-    const { features: reduxFeatures } = this.props.comment.geojson;
+    const reduxFeatures = this.props.comment.geojson.features;
     return (
       <div>
         {showDrawMap &&
