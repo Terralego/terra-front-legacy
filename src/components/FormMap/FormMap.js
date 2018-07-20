@@ -69,7 +69,7 @@ class FormMap extends Component {
   }
 
   render () {
-    const { features, drawMode, editable, activity } = this.props;
+    const { features, drawMode, editable, activity, withIncidence } = this.props;
     const activityFeatures = getActivityFeatures(features, activity.uid);
 
     return (
@@ -118,6 +118,7 @@ class FormMap extends Component {
               features={activityFeatures}
               removeFeature={this.removeFeature}
               editable={editable}
+              withIncidence={withIncidence}
             />
           </Card>
         </Col>
