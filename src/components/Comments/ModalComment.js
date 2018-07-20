@@ -51,10 +51,11 @@ class ModalComment extends React.Component {
       <div>
         {showDrawMap &&
           <Modal
-            title="Basic Modal"
+            title="Editer un tracé"
             visible={showDrawMap}
             onOk={this.handleMapSubmit}
             onCancel={this.handleMapCancel}
+            width="800px"
           >
             <FormMap
               features={features}
