@@ -3,8 +3,7 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  &__title,
-  &__button {
+  > * {
     margin-bottom: 24px;
   }
 };

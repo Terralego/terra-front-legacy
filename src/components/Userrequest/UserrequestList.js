@@ -13,6 +13,7 @@ import getColumns from 'helpers/userrequestListColumns';
 
 import NewUserrequestButton from 'components/Userrequest/NewUserrequestButton';
 import Pagination from 'components/Userrequest/Pagination';
+import Search from 'components/Userrequest/Search';
 
 import styles from './UserrequestList.module.scss';
 
@@ -101,6 +102,9 @@ class UserrequestList extends React.Component {
         <div className={styles.header}>
           <h1 className={styles.header__title}>Demandes d&apos;autorisation</h1>
           <NewUserrequestButton className={styles.header__button} />
+        </div>
+        <div className={styles.header}>
+          <Search />
         </div>
         {(userGroup !== 'N1' && userGroup !== 'N2') && (
           <div className={styles.actions}>
