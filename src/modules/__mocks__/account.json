@@ -1,0 +1,107 @@
+{
+  "SIGNUP_SUCCESS": {
+    "active": false,
+    "email": "",
+    "emailSent": true,
+    "password": {
+      "new_password1": "",
+      "new_password2": ""
+    },
+    "signupError": ""
+  },
+  "SIGNUP_FAILURE": {
+    "active": false,
+    "email": "",
+    "emailSent": false,
+    "password": { "new_password1": "", "new_password2": "" },
+    "signupError": "error message"
+  },
+  "NEW_PASSWORD_SUCCESS": {
+    "active": true,
+    "email": "",
+    "emailSent": false,
+    "password": { "new_password1": "", "new_password2": "" },
+    "signupError": ""
+  },
+  "signUp": {
+    "default": {
+      "config": {
+        "body":
+          "{\"email\":{\"new_password1\":\"new_password1\",\"new_password2\":\"new_password2\"}}",
+        "method": "POST"
+      },
+      "endpoint": "/accounts/register/",
+      "form": "account",
+      "types": [
+        "userrequest/SIGNUP_REQUEST",
+        "userrequest/SIGNUP_SUCCESS",
+        "userrequest/SIGNUP_FAILURE"
+      ]
+    },
+    "noargs": {
+      "config": { "body": "{}", "method": "POST" },
+      "endpoint": "/accounts/register/",
+      "form": "account",
+      "types": [
+        "userrequest/SIGNUP_REQUEST",
+        "userrequest/SIGNUP_SUCCESS",
+        "userrequest/SIGNUP_FAILURE"
+      ]
+    }
+  },
+  "newPassword": {
+    "default": {
+      "endpoint": "/accounts/change-password/reset/faked_uidb64/faked_token/",
+      "types": [
+        "userrequest/NEW_PASSWORD_REQUEST",
+        "userrequest/NEW_PASSWORD_SUCCESS",
+        "userrequest/NEW_PASSWORD_FAILURE"
+      ],
+      "config": {
+        "method": "POST",
+        "body":
+          "{\"new_password1\":\"new_password1\",\"new_password2\":\"new_password2\"}"
+      },
+      "form": "account"
+    },
+    "noargs": {
+      "endpoint": "/accounts/change-password/reset///",
+      "types": [
+        "userrequest/NEW_PASSWORD_REQUEST",
+        "userrequest/NEW_PASSWORD_SUCCESS",
+        "userrequest/NEW_PASSWORD_FAILURE"
+      ],
+      "config": {
+        "method": "POST",
+        "body": "{}"
+      },
+      "form": "account"
+    }
+  },
+  "changePassword": {
+    "default": {
+      "config": {
+        "body":
+          "{\"new_password1\":\"new_password1\",\"new_password2\":\"new_password2\"}",
+        "method": "POST"
+      },
+      "endpoint": "/accounts/change-password/reset/",
+      "form": "account",
+      "types": [
+        "userrequest/CHANGE_PASSWORD_REQUEST",
+        "userrequest/CHANGE_PASSWORD_SUCCESS",
+        "userrequest/CHANGE_PASSWORD_FAILURE"
+      ]
+    },
+    "noargs": {
+      "config": { "body": "{}", "method": "POST" },
+      "endpoint": "/accounts/change-password/reset/",
+      "form": "account",
+      "types": [
+        "userrequest/CHANGE_PASSWORD_REQUEST",
+        "userrequest/CHANGE_PASSWORD_SUCCESS",
+        "userrequest/CHANGE_PASSWORD_FAILURE"
+      ]
+    }
+  }
+}
