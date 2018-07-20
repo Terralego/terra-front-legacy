@@ -17,8 +17,8 @@ class ModalComment extends React.Component {
     features: [],
   };
 
-  addLocalRequest = features => {
-    this.setState({ features: [...this.state.features, { ...features }] });
+  addLocalRequest = feature => {
+    this.setState({ features: [...this.state.features, feature] });
   }
 
   handleMapCancel = () => {
