@@ -73,9 +73,16 @@ class ModalComment extends React.Component {
             />
           </Modal>
         }
+        <Button
+          type="default"
+          icon="edit"
+          onClick={() => this.setState({ showDrawMap: !showDrawMap })}
+        >
+          {reduxFeatures.length !== 0 ? 'Modifier des tracés' : 'Rééditer un tracé'}
+        </Button>
         {reduxFeatures.length !== 0 &&
         <p>
-          <strong style={{ fontSize: '0.9em' }}><Icon type="paper-clip" /> Pièce jointe en attente d'envoi</strong>
+          <strong style={{ fontSize: '0.9em' }}><Icon type="paper-clip" /> Tracé(s) en attente d'envoi</strong>
           <Button
             type="danger"
             icon="edit"
@@ -87,13 +94,6 @@ class ModalComment extends React.Component {
             Supprimer tous les tracés
           </Button>
         </p>}
-        <Button
-          type="default"
-          icon="edit"
-          onClick={() => this.setState({ showDrawMap: !showDrawMap })}
-        >
-          {reduxFeatures.length !== 0 ? 'Modifier des tracés' : 'Rééditer un tracé'}
-        </Button>
       </div>
     );
   }

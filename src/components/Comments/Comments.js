@@ -17,6 +17,8 @@ import {
 import ModalComment from 'components/Comments/ModalComment';
 import TextArea from 'components/Fields/TextArea';
 import Select from 'components/Fields/Select';
+import FormMap from 'components/FormMap/FormMap';
+
 
 import config from 'components/Comments/Comments.config';
 
@@ -58,10 +60,10 @@ class Comments extends React.Component {
           placeholder="Entrez votre message..."
           errorMessages={{ required: { message: 'Veuillez écrire un message' } }}
         />
-        <div style={{ textAlign: 'right' }}>
+        <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
           <ModalComment />
           <Button
-            style={{ marginTop: 10 }}
+            style={{ marginLeft: 10 }}
             type="primary"
             htmlType="submit"
             icon="arrow-right"
@@ -101,6 +103,22 @@ class Comments extends React.Component {
                   {moment(comment.date).format('HH[h]mm')}
                 </span>
               </div>
+              {/* {<FormMap
+                features={[
+                  {
+                    type: 'Feature',
+                    geometry: {
+                      type: 'LineString',
+                    },
+                    coordinates: [{ 0: { 0: 2.619763893084242 }, 1: { 1: 48.427269827425164 } }],
+                    properties: {
+                      id: '38599e32-7a3a-780e-08fd-b3c62774b8a0',
+                      name: 'LineString',
+                    },
+                  },
+                ]}
+              />} */}
+              {/* {comment.geojson && <FormMap features={comment.geojson.features} />} */}
             </List.Item>
           )}
         />}
