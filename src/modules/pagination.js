@@ -23,7 +23,7 @@ export const PAGE_FAILURE = 'pagination/PAGE_FAILURE';
  * @param {string} page : page number
  * @returns {string} a string composed of limit and page
  */
-const getQueryFingerprint = (limit = settings.PAGE_SIZE, page = 1, search) => {
+const getQueryFingerprint = (limit, page, search) => {
   let query = `limit=${limit}&page=${page}`;
   if (search) {
     query += `&search=${search}`;
@@ -36,31 +36,28 @@ const getQueryFingerprint = (limit = settings.PAGE_SIZE, page = 1, search) => {
  * @param {string} search : search parameters from url
  * @returns {object} params object
  */
-const getParams = search => (search && search !== ''
-  ? queryString.parse(search)
-  : {
-    limit: settings.PAGE_SIZE,
-    page: 1,
-    search: '',
-  }
-);
+const getParams = search => {
+  const params = queryString.parse(search);
+  return {
+    limit: parseInt(params.limit, 10) || settings.PAGE_SIZE,
+    page: parseInt(params.page, 10) || 1,
+    search: params.search || '',
+  };
+};
 
 /**
  * SELECTORS
  * --------------------------------------------------------- *
  */
 
-const getCurrentPages = (pagination, queries) => {
-  if (!pagination) {
-    return {};
-  }
-  const params = queryString.parse(queries);
+export const getCurrentPages = (pagination = { queries: {} }, queries) => {
+  const params = getParams(queries);
   const key = getQueryFingerprint(params.limit, params.page, params.search);
   return pagination.queries[key] ? pagination.queries[key].pages : {};
 };
 
-const getCurrentPage = (pagination, queryParams) =>
-  getCurrentPages(pagination, queryParams)[pagination.currentPage] || {};
+export const getCurrentPage = (pagination, queryParams) =>
+  getCurrentPages(pagination, queryParams)[pagination.currentPage || 1] || {};
 
 /**
  * getCurrentPageResults returns items contains in requested page
@@ -75,7 +72,7 @@ export const getCurrentPageResults = createSelector(
     getCurrentPage,
     (pagination, queryParams, items) => items,
   ],
-  (currentPage = {}, items = []) => (
+  (currentPage, items = []) => (
     currentPage.ids ? Object.values(pick(items, currentPage.ids)) : []
   ),
 );
@@ -87,15 +84,15 @@ export const getCurrentPageResults = createSelector(
  * @param params {string} query parameters
  * @returns {object} query params and items per page count
  */
-export const getPaginationParams = (pagination, queryParams) => {
+export const getPaginationParams = (pagination = { queries: {} }, queryParams) => {
   const { limit, page, search } = getParams(queryParams);
   const key = getQueryFingerprint(limit, page, search);
   const count = pagination.queries[key] ? pagination.queries[key].count : 0;
 
   return {
     params: {
-      limit: +limit || settings.PAGE_SIZE,
-      page: +page || 1,
+      limit: +limit,
+      page: +page,
       search,
     },
     count,
@@ -184,10 +181,7 @@ const itemsReducer = (state = {}, action = {}) => {
       });
       return {
         ...state,
-        items: {
-          ...state.items,
-          ...newItems,
-        },
+        ...newItems,
       };
     default:
       return state;
@@ -226,7 +220,7 @@ export const fetchPage = (endpoint, params) => ({
  *
  * @param search {string} search query parameters
  */
-const requestPage = (endpoint, queryParams, key) => (
+export const requestPage = (endpoint, queryParams, key) => (
   (dispatch, getState) => {
     const store = getState();
     const params = getParams(queryParams);

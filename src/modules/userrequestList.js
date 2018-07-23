@@ -22,10 +22,6 @@ export const APPROBATIONS_CHANGE_FAILURE = 'userrequestList/APPROBATIONS_CHANGE_
 
 export const userrequestPaginator = createPaginator('/userrequest/');
 
-const initialState = {
-  items: {},
-};
-
 /**
  * Get the userrequest id
  *
@@ -39,7 +35,7 @@ function getItemIdFromUrl (url) {
 /**
  * userrequestList reducer
  */
-const userrequestList = (state = initialState, action) => {
+const userrequestList = (state = {}, action) => {
   switch (action.type) {
     case PAGE_SUCCESS:
       return {
@@ -53,29 +49,20 @@ const userrequestList = (state = initialState, action) => {
     case SUBMIT_SUCCESS:
     case SAVE_DRAFT_SUCCESS:
       return {
-        ...state,
-        items: {
-          ...state.items,
-          [action.data.id]: action.data,
-        },
+        ...state.items,
+        [action.data.id]: action.data,
       };
     case STATE_CHANGE_SUCCESS:
     case APPROBATIONS_CHANGE_SUCCESS:
       return {
-        ...state,
-        items: {
-          ...state.items,
-          [action.data.id]: action.data,
-        },
+        ...state.items,
+        [action.data.id]: action.data,
       };
     case DETAIL_FAILURE:
       return {
-        ...state,
-        items: {
-          ...state.items,
-          [getItemIdFromUrl(action.error.url)]: {
-            error: action.error,
-          },
+        ...state.items,
+        [getItemIdFromUrl(action.error.url)]: {
+          error: action.error,
         },
       };
     default:
@@ -119,7 +106,7 @@ export const getUserrequestArray = createSelector(
   (state, query) => getCurrentPageResults(
     state.pagination.userrequestList,
     query,
-    state.userrequestList.items,
+    state.userrequestList,
   ),
 );
 
