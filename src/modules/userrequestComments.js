@@ -14,12 +14,16 @@ export const GEOJSON_COMMENT_FEATURE_ADD = 'GEOJSON_COMMENT_FEATURE_ADD';
 export const GEOJSON_COMMENT_FEATURE_REMOVE = 'GEOJSON_COMMENT_FEATURE_REMOVE';
 export const GEOJSON_COMMENT_NEW_FEATURE_REMOVE = 'GEOJSON_COMMENT_NEW_FEATURE_REMOVE';
 
+export const COMMENT_ATTACHMENT_ADD = 'COMMENT_ATTACHMENT_ADD';
+export const COMMENT_ATTACHMENT_REMOVE = 'COMMENT_ATTACHMENT_REMOVE';
+export const COMMENT_ALL_ATTACHMENTS_REMOVE = 'COMMENT_ALL_ATTACHMENTS_REMOVE';
+
 const initialState = {
   geojson: {
     type: 'FeatureCollection',
     features: [],
   },
-  attachments: {}, // Object contenant les futures pièces jointes
+  attachments: [],
   comments: {}, // comments by userrequestId
   loading: false, // loading comments list
   text: '',
@@ -131,6 +135,25 @@ const userrequestComments = (state = initialState, action) => {
           features: [],
         },
       };
+    case COMMENT_ATTACHMENT_ADD:
+      return {
+        ...state,
+        attachments: [
+          ...state.attachments,
+          action.attachment,
+        ],
+      };
+    case COMMENT_ATTACHMENT_REMOVE:
+      return {
+        ...state,
+        attachments: state.attachments
+          .filter(attachment => attachment.uid !== action.attachmentUid),
+      };
+    case COMMENT_ALL_ATTACHMENTS_REMOVE:
+      return {
+        ...state,
+        attachments: [],
+      };
     default:
       return state;
   }
@@ -193,22 +216,24 @@ export const fetchUserrequestComments = userrequestId => ({
  * @param {number} userrequestId
  * @param {string} new comment text
  */
-export const submitComment = (userrequestId, comment, isInternal) => ({
-  [CALL_API]: {
-    endpoint: `/userrequest/${userrequestId}/comment/`,
-    types: [SUBMIT_REQUEST, SUBMIT_SUCCESS, SUBMIT_FAILURE],
-    config: {
-      method: 'POST',
-      body: JSON.stringify({
-        properties: { comment: comment.text },
-        is_internal: isInternal,
-        geojson: { ...comment.geojson },
-      }),
+export const submitComment = (userrequestId, comment, isInternal) => {
+  const formData = new FormData();
+  formData.append('attachment', comment.attachments);
+  formData.append('properties', JSON.stringify({ comment: comment.text }));
+  formData.append('is_internal', isInternal);
+  return ({
+    [CALL_API]: {
+      endpoint: `/userrequest/${userrequestId}/comment/`,
+      types: [SUBMIT_REQUEST, SUBMIT_SUCCESS, SUBMIT_FAILURE],
+      config: {
+        headers: { 'Content-Type': 'multipart/form-data;' },
+        method: 'POST',
+        body: formData,
+      },
+      form: 'userrequestComments',
     },
-    form: 'userrequestComments',
-  },
-});
-
+  });
+};
 /**
  * userrequestComments action
  * add GEOJSON RequestCommentFeature add or update an object of properties
@@ -235,4 +260,32 @@ export const removeRequestCommentFeature = featureId => ({
  */
 export const removeRequestCommentNewFeature = () => ({
   type: GEOJSON_COMMENT_NEW_FEATURE_REMOVE,
+});
+
+/**
+ * userrequestComments action
+ * add attachments
+ * @param {object} properties: object of properties to add / update in userrequestComment object
+ */
+export const addAttachment = attachment => ({
+  type: COMMENT_ATTACHMENT_ADD,
+  attachment,
+});
+
+/**
+ * userrequestComments action
+ * remove attachments
+ * @param {object} properties: object of properties to remove / update in userrequestComment object
+ */
+export const removeAttachment = attachmentUid => ({
+  type: COMMENT_ATTACHMENT_REMOVE,
+  attachmentUid,
+});
+
+/**
+ * userrequestComments action
+ * remove all attachments
+ */
+export const removeAllAttachments = () => ({
+  type: COMMENT_ALL_ATTACHMENTS_REMOVE,
 });

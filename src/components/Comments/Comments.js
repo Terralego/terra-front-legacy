@@ -13,12 +13,13 @@ import {
   getCommentsByUserrequest,
   submitComment,
   removeRequestCommentNewFeature,
+  removeAllAttachments,
 } from 'modules/userrequestComments';
 import ModalComment from 'components/Comments/ModalComment';
 import TextArea from 'components/Fields/TextArea';
 import Select from 'components/Fields/Select';
 import FormMap from 'components/FormMap/FormMap';
-
+import UploadAttachment from 'components/UploadAttachment/UploadAttachment';
 
 import config from 'components/Comments/Comments.config';
 
@@ -41,8 +42,9 @@ class Comments extends React.Component {
     // If N1, always set internal to true
     const internal = userGroup === 'N2' ? comment.is_internal : true;
     this.props.submitComment(userrequestId, comment, internal);
-    // On arrête d'afficher la note de prêt à l'envoi du geojson.
+    // On arrête d'afficher la note de prêt à l'envoi du geojson et on supprime les pièces jointes
     this.props.removeRequestCommentNewFeature();
+    this.props.removeAllAttachments();
   }
 
   render () {
@@ -66,6 +68,7 @@ class Comments extends React.Component {
         />
         <div className={styles.buttons}>
           <ModalComment />
+          <UploadAttachment />
           <Button
             style={{ marginLeft: 10 }}
             type="primary"
@@ -159,6 +162,7 @@ const mapDispatchToProps = dispatch =>
     fetchUserrequestComments,
     submitComment,
     removeRequestCommentNewFeature,
+    removeAllAttachments,
   }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Comments);
