@@ -24,8 +24,6 @@ export const userrequestPaginator = createPaginator('/userrequest/');
 
 const initialState = {
   items: {},
-  loading: false,
-  lastFetched: 0,
 };
 
 /**
@@ -46,19 +44,16 @@ const userrequestList = (state = initialState, action) => {
     case PAGE_SUCCESS:
       return {
         ...userrequestPaginator.itemsReducer(state, action),
-        lastFetched: Date.now(),
       };
     case DETAIL_REQUEST:
       return {
         ...state,
-        loading: true,
       };
     case DETAIL_SUCCESS:
     case SUBMIT_SUCCESS:
     case SAVE_DRAFT_SUCCESS:
       return {
         ...state,
-        loading: false,
         items: {
           ...state.items,
           [action.data.id]: action.data,
@@ -117,11 +112,14 @@ const getDraftStatus = createSelector(
 );
 
 export const getUserrequestArray = createSelector(
-  state => state,
-  state => getCurrentPageResults(
-    state.userrequestList.items,
+  [
+    state => state,
+    (_, query) => query,
+  ],
+  (state, query) => getCurrentPageResults(
     state.pagination.userrequestList,
-    '/userrequest/',
+    query,
+    state.userrequestList.items,
   ),
 );
 
@@ -150,7 +148,7 @@ export const getUserrequestsArrayFilteredByUser = createSelector(
  *
  * @param search {string} search query parameters
  */
-export const requestUserrequestPage = search => userrequestPaginator.requestPage('/userrequest/', search);
+export const requestUserrequestPage = search => userrequestPaginator.requestPage('/userrequest/', search, 'userrequestList');
 
 /**
  * userrequest action : fetch userrequest

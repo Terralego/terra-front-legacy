@@ -23,7 +23,15 @@ class UserrequestList extends React.Component {
   };
 
   componentDidMount () {
-    this.props.requestUserrequestPage(this.props.location.search);
+    if (!this.props.loading) {
+      this.props.requestUserrequestPage(this.props.location.search);
+    }
+  }
+
+  componentDidUpdate (prevProps) {
+    if (prevProps.location.search !== this.props.location.search && !this.props.loading) {
+      this.props.requestUserrequestPage(this.props.location.search);
+    }
   }
 
   onSelectChange = selectedRowKeys => {
@@ -148,19 +156,19 @@ class UserrequestList extends React.Component {
   }
 }
 
-const StateToProps = (state, ownProps) => ({
-  items: getUserrequestsArrayFilteredByUser(state),
-  loading: isCurrentPageFetching(state.pagination.userrequestList),
+const mapStateToProps = (state, ownProps) => ({
+  items: getUserrequestsArrayFilteredByUser(state, ownProps.location.search),
+  loading: isCurrentPageFetching(state.pagination.userrequestList, ownProps.location.search),
   userGroup: getUserGroup(state),
   columns: getColumns(getUserGroup(state)),
   pagination: getPaginationParams(state.pagination.userrequestList, ownProps.location.search),
 });
 
-const DispatchToProps = dispatch =>
+const mapDispatchToProps = dispatch =>
   bindActionCreators({
     requestUserrequestPage,
     submitData,
     updateState,
   }, dispatch);
 
-export default withRouter(connect(StateToProps, DispatchToProps)(UserrequestList));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(UserrequestList));

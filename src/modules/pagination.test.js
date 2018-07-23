@@ -34,9 +34,13 @@ describe('pagination selector', () => {
   it('getCurrentPageResults should return an array of page 1 items', () => {
     const pagination = {
       currentPage: 1,
-      pages,
+      queries: {
+        'limit=10&page=1': {
+          pages,
+        },
+      },
     };
-    expect(getCurrentPageResults(items, pagination))
+    expect(getCurrentPageResults(pagination, '?limit=10&page=1', items))
       .toEqual([
         {
           id: 'todo1',
@@ -52,9 +56,13 @@ describe('pagination selector', () => {
   it('getCurrentPageResults should return an array of page 2 items', () => {
     const pagination = {
       currentPage: 2,
-      pages,
+      queries: {
+        'limit=10&page=2': {
+          pages,
+        },
+      },
     };
-    expect(getCurrentPageResults(items, pagination))
+    expect(getCurrentPageResults(pagination, '?limit=10&page=2', items))
       .toEqual([
         {
           id: 'todo3',
@@ -65,8 +73,12 @@ describe('pagination selector', () => {
 
   it('getPaginationParams should return params of page 1', () => {
     const pagination = {
-      params: {
-        'limit=100&page=1': 4,
+      currentPage: 1,
+      queries: {
+        'limit=100&page=1': {
+          count: 4,
+          pages,
+        },
       },
     };
     const queryParams = '?limit=100&page=1';
@@ -82,8 +94,12 @@ describe('pagination selector', () => {
 
   it('getPaginationParams should allow unknow query params', () => {
     const pagination = {
-      params: {
-        'limit=100&page=1': 4,
+      currentPage: 1,
+      queries: {
+        'limit=100&page=1': {
+          count: 4,
+          pages,
+        },
       },
     };
     const queryParams = '?limit=100&page=1&truc=40';
