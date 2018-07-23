@@ -144,7 +144,7 @@ class UserrequestList extends React.Component {
     return (
       <div>
         <div className={styles.header}>
-          <h1 className={styles.header__title}>Demandes d&apos;autorisation</h1>
+          <h1 className={styles.header__title}>Déclarations d&apos;activité(s)</h1>
           <NewUserrequestButton className={styles.header__button} />
         </div>
         <div className={styles.header}>
