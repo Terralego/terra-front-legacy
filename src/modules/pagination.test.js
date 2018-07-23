@@ -1,4 +1,8 @@
 import configureMockStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
+import FetchMock from 'fetch-mock';
+
+import api from 'middlewares/api';
 import createPaginator, {
   getCurrentPageResults,
   getPaginationParams,
@@ -11,10 +15,6 @@ import createPaginator, {
   PAGE_REQUEST, PAGE_SUCCESS, PAGE_FAILURE,
 } from './pagination';
 
-import thunk from 'redux-thunk';
-import api from 'middlewares/api';
-
-import FetchMock from 'fetch-mock';
 // import api from 'middlewares/api';
 
 const middlewares = [api, thunk];
