@@ -23,8 +23,8 @@ export const PAGE_FAILURE = 'pagination/PAGE_FAILURE';
  * @param {string} page : page number
  * @returns {string} a string composed of limit and page
  */
-const getQueryFingerprint = (limit, search) => {
-  let query = `limit=${limit}`;
+const getQueryFingerprint = (limit, page, search) => {
+  let query = `limit=${limit}&page=${page}`;
   if (search) {
     query += `&search=${search}`;
   }
@@ -39,8 +39,8 @@ const getQueryFingerprint = (limit, search) => {
 const getParams = search => {
   const params = queryString.parse(search);
   return {
-    limit: parseInt(params.limit, 10) || settings.PAGE_SIZE,
-    page: parseInt(params.page, 10) || 1,
+    limit: params.limit ? parseInt(params.limit, 10) : settings.PAGE_SIZE,
+    page: params.page ? parseInt(params.page, 10) : 1,
     search: params.search || '',
   };
 };
@@ -50,14 +50,18 @@ const getParams = search => {
  * --------------------------------------------------------- *
  */
 
-export const getCurrentPages = (pagination = { queries: {} }, queries) => {
-  const params = getParams(queries);
-  const key = getQueryFingerprint(params.limit, params.search);
-  return pagination.queries && pagination.queries[key] ? pagination.queries[key].pages : {};
+/**
+ * getCurrentPage returns pagination data by queryFigerprint
+ *
+ * @param pagination {object} pagination object
+ * @param queryParams {string}
+ * @returns {object} object of requested queryParams
+ */
+export const getCurrentPage = (pagination = { queries: {} }, queryParams) => {
+  const params = getParams(queryParams);
+  const key = getQueryFingerprint(params.limit, params.page, params.search);
+  return pagination.queries && pagination.queries[key] ? pagination.queries[key] : {};
 };
-
-export const getCurrentPage = (pagination, queryParams) =>
-  getCurrentPages(pagination, queryParams)[pagination.currentPage || 1] || {};
 
 /**
  * getCurrentPageResults returns items contains in requested page
@@ -86,7 +90,7 @@ export const getCurrentPageResults = createSelector(
  */
 export const getPaginationParams = (pagination = { queries: {} }, queryParams) => {
   const { limit, page, search } = getParams(queryParams);
-  const key = getQueryFingerprint(limit, search);
+  const key = getQueryFingerprint(limit, page, search);
   const count = pagination.queries && pagination.queries[key] ? pagination.queries[key].count : 0;
 
   return {
@@ -124,22 +128,16 @@ export const queriesReducer = (state = {}, action = {}) => {
     return state;
   }
 
-  const { limit, search } = params;
-  const queryFingerprint = getQueryFingerprint(limit, search);
-  const fetchedPages = state[queryFingerprint] ? state[queryFingerprint].pages : {};
+  const { limit, page, search } = params;
+  const queryFingerprint = getQueryFingerprint(limit, page, search);
   switch (type) {
     case PAGE_REQUEST:
       return {
         ...state,
         [queryFingerprint]: {
           count: 0,
-          pages: {
-            ...fetchedPages,
-            [action.params.page]: {
-              ids: [],
-              fetching: true,
-            },
-          },
+          fetching: true,
+          ids: [],
         },
       };
     case PAGE_SUCCESS:
@@ -147,14 +145,9 @@ export const queriesReducer = (state = {}, action = {}) => {
         ...state,
         [queryFingerprint]: {
           count: data.count,
-          pages: {
-            ...fetchedPages,
-            [action.params.page]: {
-              ids: action.data.results.map(item => item.id),
-              fetching: false,
-              lastFetched: Date.now(),
-            },
-          },
+          ids: action.data.results.map(item => item.id),
+          fetching: false,
+          lastFetched: Date.now(),
         },
       };
     default:
@@ -224,7 +217,7 @@ export const requestPage = (endpoint, queryParams, key) => (
   (dispatch, getState) => {
     const store = getState();
     const params = getParams(queryParams);
-    const { lastFetched } = getCurrentPages(store.pagination[key], queryParams)[params.page] || {};
+    const { lastFetched } = getCurrentPage(store.pagination[key], queryParams);
 
     // perform the async call if the data is older than the allowed limit
     const isDataStale = Date.now() - lastFetched > settings.TIME_TO_STALE;

@@ -99,10 +99,8 @@ const getDraftStatus = createSelector(
 );
 
 export const getUserrequestArray = createSelector(
-  [
-    state => state,
-    (_, query) => query,
-  ],
+  state => state,
+  (_, query) => query,
   (state, query) => getCurrentPageResults(
     state.pagination.userrequestList,
     query,

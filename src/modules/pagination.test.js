@@ -6,7 +6,7 @@ import api from 'middlewares/api';
 import createPaginator, {
   getCurrentPageResults,
   getPaginationParams,
-  getCurrentPages,
+  getCurrentPage,
   isCurrentPageFetching,
   abortRequest,
   fetchPage,
@@ -37,23 +37,9 @@ describe('pagination SELECTORS', () => {
     },
   };
 
-  const pages = {
-    1: {
-      ids: ['todo1', 'todo2'],
-      fetching: false,
-    },
-    2: {
-      ids: ['todo3'],
-      fetching: false,
-    },
-    3: {
-      ids: [],
-      fetching: true,
-    },
-  };
   describe('getCurrentPages', () => {
     it('should returns an empty object if pagination is not defined', () => {
-      expect(getCurrentPages()).toEqual({});
+      expect(getCurrentPage()).toEqual({});
     });
   });
 
@@ -62,12 +48,13 @@ describe('pagination SELECTORS', () => {
       const pagination = {
         currentPage: 1,
         queries: {
-          'limit=10': {
-            pages,
+          'limit=10&page=1': {
+            ids: ['todo1', 'todo2'],
+            fetching: false,
           },
         },
       };
-      expect(getCurrentPageResults(pagination, '?limit=10', items))
+      expect(getCurrentPageResults(pagination, '?limit=10&page=1', items))
         .toEqual([
           {
             id: 'todo1',
@@ -85,7 +72,7 @@ describe('pagination SELECTORS', () => {
         currentPage: 1,
         queries: {},
       };
-      expect(getCurrentPageResults(pagination, '?limit=10', undefined))
+      expect(getCurrentPageResults(pagination, '?limit=10&page=1', undefined))
         .toEqual([]);
     });
 
@@ -93,15 +80,20 @@ describe('pagination SELECTORS', () => {
       const pagination = {
         queries: {},
       };
-      expect(getCurrentPageResults(pagination, '?limit=10', items))
+      expect(getCurrentPageResults(pagination, '?limit=10&page=1', items))
         .toEqual([]);
     });
 
     it('should return default query if no query parameters', () => {
       const pagination = {
         queries: {
-          'limit=10': {
-            pages,
+          'limit=10&page=1': {
+            ids: ['todo1', 'todo2'],
+            fetching: false,
+          },
+          'limit=10&page=2': {
+            ids: ['todo3'],
+            fetching: false,
           },
         },
       };
@@ -122,12 +114,13 @@ describe('pagination SELECTORS', () => {
       const pagination = {
         currentPage: 2,
         queries: {
-          'limit=10': {
-            pages,
+          'limit=10&page=2': {
+            ids: ['todo3'],
+            fetching: false,
           },
         },
       };
-      expect(getCurrentPageResults(pagination, '?limit=10', items))
+      expect(getCurrentPageResults(pagination, '?limit=10&page=2', items))
         .toEqual([
           {
             id: 'todo3',
@@ -142,13 +135,12 @@ describe('pagination SELECTORS', () => {
       const pagination = {
         currentPage: 1,
         queries: {
-          'limit=100': {
+          'limit=100&page=1': {
             count: 4,
-            pages,
           },
         },
       };
-      const queryParams = '?limit=100';
+      const queryParams = '?limit=100&page=1';
       expect(getPaginationParams(pagination, queryParams))
         .toEqual({
           params: {
@@ -164,13 +156,12 @@ describe('pagination SELECTORS', () => {
       const pagination = {
         currentPage: 1,
         queries: {
-          'limit=100': {
+          'limit=100&page=1': {
             count: 4,
-            pages,
           },
         },
       };
-      const queryParams = '?limit=100&truc=40';
+      const queryParams = '?limit=100&page=1&truc=40';
       expect(getPaginationParams(pagination, queryParams))
         .toEqual({
           params: {
@@ -183,7 +174,7 @@ describe('pagination SELECTORS', () => {
     });
 
     it('should return limit, page and search params of query string', () => {
-      const queryParams = '?limit=100&search=test';
+      const queryParams = '?limit=100&page=1&search=test';
       expect(getPaginationParams(undefined, queryParams))
         .toEqual({
           params: {
@@ -221,30 +212,30 @@ describe('pagination SELECTORS', () => {
   });
 
   describe('isCurrentPageFetching', () => {
-    it('should should return false if page is not fetching', () => {
+    it('should return false if page is not fetching', () => {
       const pagination = {
         currentPage: 2,
         queries: {
-          'limit=10': {
-            pages,
+          'limit=10&page=2': {
+            fetching: false,
           },
         },
       };
 
-      expect(isCurrentPageFetching(pagination, 'limit=10')).toEqual(false);
+      expect(isCurrentPageFetching(pagination, 'limit=10&page=2')).toEqual(false);
     });
 
-    it('should should return true if page is fetching', () => {
+    it('should return true if page is fetching', () => {
       const pagination = {
         currentPage: 3,
         queries: {
-          'limit=10': {
-            pages,
+          'limit=10&page=3': {
+            fetching: true,
           },
         },
       };
 
-      expect(isCurrentPageFetching(pagination, 'limit=10')).toEqual(true);
+      expect(isCurrentPageFetching(pagination, 'limit=10&page=3')).toEqual(true);
     });
   });
 });
@@ -296,21 +287,17 @@ describe('pagination ACTIONS', () => {
           test: {
             currentPage: 1,
             queries: {
-              'limit=10': {
+              'limit=10&page=1': {
                 count: 50,
-                pages: {
-                  1: {
-                    ids: [],
-                    fetching: false,
-                    lastFetched: Date.now(),
-                  },
-                },
+                ids: [],
+                fetching: false,
+                lastFetched: Date.now(),
               },
             },
           },
         },
       });
-      store.dispatch(requestPage('test', '?limit=10', 'test'));
+      store.dispatch(requestPage('test', '?limit=10&page=1', 'test'));
       const state = store.getActions();
       expect(state).toEqual([{
         type: PAGE_ABORT_REQUEST,
@@ -397,14 +384,10 @@ describe('pagination REDUCERS', () => {
       expect(testReducer).toEqual({
         currentPage: 1,
         queries: {
-          'limit=2': {
+          'limit=2&page=1': {
             count: 0,
-            pages: {
-              1: {
-                ids: [],
-                fetching: true,
-              },
-            },
+            ids: [],
+            fetching: true,
           },
         },
       });
@@ -428,24 +411,19 @@ describe('pagination REDUCERS', () => {
         },
       });
 
-      const { pages } = testReducer.queries['limit=2'];
-      expect(Object.keys(pages).length).toEqual(1);
-      expect(pages[1].ids).toEqual(['a', 'b']);
+      const { ids } = testReducer.queries['limit=2&page=1'];
+      expect(ids).toEqual(['a', 'b']);
     });
 
     it('should keep fetching pages on a new PAGE_SUCCESS action', () => {
       const state = {
         currentPage: 2,
         queries: {
-          'limit=2': {
+          'limit=2&page=1': {
             count: 3,
-            pages: {
-              1: {
-                ids: ['a', 'b'],
-                fetching: false,
-                lastFetched: 1,
-              },
-            },
+            ids: ['a', 'b'],
+            fetching: false,
+            lastFetched: 1,
           },
         },
       };
@@ -467,10 +445,11 @@ describe('pagination REDUCERS', () => {
       };
       const testReducer = testPaginaton(state, action);
 
-      const { pages } = testReducer.queries['limit=2'];
-      expect(Object.keys(pages).length).toEqual(2);
-      expect(pages[1].ids).toEqual(['a', 'b']);
-      expect(pages[2].ids).toEqual(['c']);
+      const page1 = testReducer.queries['limit=2&page=1'];
+      const page2 = testReducer.queries['limit=2&page=2'];
+
+      expect(page1.ids).toEqual(['a', 'b']);
+      expect(page2.ids).toEqual(['c']);
     });
   });
 });
