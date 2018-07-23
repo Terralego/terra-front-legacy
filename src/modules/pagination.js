@@ -23,8 +23,8 @@ export const PAGE_FAILURE = 'pagination/PAGE_FAILURE';
  * @param {string} page : page number
  * @returns {string} a string composed of limit and page
  */
-const getQueryFingerprint = (limit, page, search) => {
-  let query = `limit=${limit}&page=${page}`;
+const getQueryFingerprint = (limit, search) => {
+  let query = `limit=${limit}`;
   if (search) {
     query += `&search=${search}`;
   }
@@ -52,8 +52,8 @@ const getParams = search => {
 
 export const getCurrentPages = (pagination = { queries: {} }, queries) => {
   const params = getParams(queries);
-  const key = getQueryFingerprint(params.limit, params.page, params.search);
-  return pagination.queries[key] ? pagination.queries[key].pages : {};
+  const key = getQueryFingerprint(params.limit, params.search);
+  return pagination.queries && pagination.queries[key] ? pagination.queries[key].pages : {};
 };
 
 export const getCurrentPage = (pagination, queryParams) =>
@@ -86,8 +86,8 @@ export const getCurrentPageResults = createSelector(
  */
 export const getPaginationParams = (pagination = { queries: {} }, queryParams) => {
   const { limit, page, search } = getParams(queryParams);
-  const key = getQueryFingerprint(limit, page, search);
-  const count = pagination.queries[key] ? pagination.queries[key].count : 0;
+  const key = getQueryFingerprint(limit, search);
+  const count = pagination.queries && pagination.queries[key] ? pagination.queries[key].count : 0;
 
   return {
     params: {
@@ -124,8 +124,8 @@ export const queriesReducer = (state = {}, action = {}) => {
     return state;
   }
 
-  const { limit, page, search } = params;
-  const queryFingerprint = getQueryFingerprint(limit, page, search);
+  const { limit, search } = params;
+  const queryFingerprint = getQueryFingerprint(limit, search);
   const fetchedPages = state[queryFingerprint] ? state[queryFingerprint].pages : {};
   switch (type) {
     case PAGE_REQUEST:
@@ -240,10 +240,6 @@ export const requestPage = (endpoint, queryParams, key) => (
  * createPaginator
  * --------------------------------------------------------- *
  */
-const initialState = {
-  currentPage: 1,
-  queries: {},
-};
 
 /**
  * createPaginator is used to create a pagination for any module / component
@@ -251,10 +247,10 @@ const initialState = {
  *
  * @param endpoint {string} name of paginated module
  * @returns {object} an object composed with current page options,
- * reducers (params, pages, currentPage, items), see above in REDUCERS
+ * reducers (requestPage action, reducer, items), see above in REDUCERS
  */
 const createPaginator = endpoint => {
-  const onlyForEndpoint = reducer => (state = initialState, action = {}) =>
+  const onlyForEndpoint = reducer => (state = {}, action = {}) =>
     (action.endpoint === endpoint ? reducer(state, action) : state);
 
   const reducer = onlyForEndpoint(combineReducers({
