@@ -220,15 +220,21 @@ export const submitComment = (userrequestId, comment, isInternal) => {
   const formData = new FormData();
   formData.append('attachment', comment.attachments);
   formData.append('properties', JSON.stringify({ comment: comment.text }));
+  formData.append('geojson', JSON.stringify({ ...comment.geojson }));
   formData.append('is_internal', isInternal);
   return ({
     [CALL_API]: {
       endpoint: `/userrequest/${userrequestId}/comment/`,
       types: [SUBMIT_REQUEST, SUBMIT_SUCCESS, SUBMIT_FAILURE],
       config: {
-        headers: { 'Content-Type': 'multipart/form-data;' },
+        // headers: { 'Content-Type': 'multipart/form-data;' },
         method: 'POST',
-        body: formData,
+        // body: formData,
+        body: JSON.stringify({
+          properties: { comment: comment.text },
+          is_internal: isInternal,
+          goejson: { ...comment.geojson  },
+        }),
       },
       form: 'userrequestComments',
     },
