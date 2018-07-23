@@ -16,7 +16,6 @@ class UploadAttachment extends Component {
         this.props.removeAttachment(file.uid);
       },
       beforeUpload: file => {
-        console.log(file);
         this.props.addAttachment(file);
         return false;
       },
