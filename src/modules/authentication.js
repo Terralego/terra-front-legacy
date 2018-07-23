@@ -15,12 +15,16 @@ export const SET_ERROR_MESSAGE = 'authentication/SET_ERROR_MESSAGE';
 /**
  * Parse JWT
  * Decode token data
- * @param  {string} token
+ * @param {string} token
  */
-function parseJwt (token) {
-  const base64Url = token.split('.')[1];
-  const base64 = base64Url.replace('-', '+').replace('_', '/');
-  return JSON.parse(window.atob(base64));
+export function parseJwt (token) {
+  const [header, payload, signature] = token.split('.'); // eslint-disable-line no-unused-vars
+  const base64 = payload.replace('-', '+').replace('_', '/');
+  try {
+    return JSON.parse(atob(base64));
+  } catch (e) {
+    return {};
+  }
 }
 
 const initialState = {
