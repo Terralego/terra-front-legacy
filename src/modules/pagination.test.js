@@ -13,6 +13,7 @@ import createPaginator, {
   requestPage,
   PAGE_ABORT_REQUEST,
   PAGE_REQUEST, PAGE_SUCCESS, PAGE_FAILURE,
+  resetPaginationCache, RESET,
 } from './pagination';
 
 // import api from 'middlewares/api';
@@ -326,6 +327,14 @@ describe('pagination ACTIONS', () => {
       });
     });
   });
+
+  describe('resetPaginationCache', () => {
+    it('should return a PAGE_ABORT_REQUEST action', () => {
+      expect(resetPaginationCache()).toEqual({
+        type: RESET,
+      });
+    });
+  });
 });
 
 describe('pagination REDUCERS', () => {
@@ -450,6 +459,40 @@ describe('pagination REDUCERS', () => {
 
       expect(page1.ids).toEqual(['a', 'b']);
       expect(page2.ids).toEqual(['c']);
+    });
+  });
+
+  describe('resetPaginationCache', () => {
+    const testPaginatonA = createPaginator('a').reducer;
+    const testPaginatonB = createPaginator('b').reducer;
+    const state = {
+      currentPage: 2,
+      queries: {
+        'limit=2&page=1': {
+          count: 3,
+          ids: ['a', 'b'],
+          fetching: false,
+          lastFetched: 1,
+        },
+      },
+    };
+
+    const action = {
+      type: RESET,
+      endpoint: 'a',
+    };
+    const testReducerA = testPaginatonA(state, action);
+    const testReducerB = testPaginatonB(state);
+
+    it('should clear endpoint reducer', () => {
+      expect(testReducerA).toEqual({
+        currentPage: 1,
+        queries: {},
+      });
+    });
+
+    it('should not clear others endpoint reducer', () => {
+      expect(testReducerB).toEqual(state);
     });
   });
 });

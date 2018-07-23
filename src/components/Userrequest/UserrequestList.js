@@ -3,11 +3,12 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Table, Icon, Modal, Button } from 'antd';
+import queryString from 'query-string';
 
 import { getUserGroup } from 'modules/authentication';
-import { submitData } from 'modules/userrequest';
+import { submitData, saveDraft } from 'modules/userrequest';
 import { requestUserrequestPage, updateState, getUserrequestsArrayFilteredByUser } from 'modules/userrequestList';
-import { getPaginationParams, isCurrentPageFetching } from 'modules/pagination';
+import { getPaginationParams, isCurrentPageFetching, resetPaginationCache } from 'modules/pagination';
 
 import getColumns from 'helpers/userrequestListColumns';
 
@@ -53,6 +54,26 @@ class UserrequestList extends React.Component {
         },
       }))
   )
+
+  /**
+   * queryUpdate add query string parameter in url
+   * duplicate function with Search component : see https://github.com/supasate/connected-react-router
+   * to implement history change in actions / reducers
+   * @param {object} query : couple(s) of key / value parameter(s)
+   */
+  handleQueryUpdate = (query, reset) => {
+    const params = { ...query };
+    if (reset) {
+      this.props.resetPaginationCache('/userrequest/');
+      params.page = 1;
+    }
+    return this.props.history.push(`/manage-request/?${
+      queryString.stringify({
+        ...queryString.parse(this.props.location.search),
+        ...params,
+      })
+    }`);
+  }
 
   handleCopy = () => {
     const selectedItems = this.getSelectedItems();
@@ -112,7 +133,7 @@ class UserrequestList extends React.Component {
           <NewUserrequestButton className={styles.header__button} />
         </div>
         <div className={styles.header}>
-          <Search />
+          <Search handleQueryUpdate={this.handleQueryUpdate} />
         </div>
         {(userGroup !== 'N1' && userGroup !== 'N2') && (
           <div className={styles.actions}>
@@ -150,7 +171,7 @@ class UserrequestList extends React.Component {
           )}
           pagination={false}
         />
-        <Pagination {...pagination} />
+        <Pagination {...pagination} handleQueryUpdate={this.handleQueryUpdate} />
       </div>
     );
   }
@@ -167,7 +188,9 @@ const mapStateToProps = (state, ownProps) => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators({
     requestUserrequestPage,
+    resetPaginationCache,
     submitData,
+    saveDraft,
     updateState,
   }, dispatch);
 

@@ -11,6 +11,7 @@ export const PAGE_ABORT_REQUEST = 'pagination/PAGE_ABORT_REQUEST';
 export const PAGE_SUCCESS = 'pagination/PAGE_SUCCESS';
 export const PAGE_FAILURE = 'pagination/PAGE_FAILURE';
 
+export const RESET = 'pagination/RESET';
 
 /**
  * HELPERS
@@ -23,7 +24,7 @@ export const PAGE_FAILURE = 'pagination/PAGE_FAILURE';
  * @param {string} page : page number
  * @returns {string} a string composed of limit and page
  */
-const getQueryFingerprint = (limit, page, search) => {
+const getQueryFingerprint = ({ limit, page, search }) => {
   let query = `limit=${limit}&page=${page}`;
   if (search) {
     query += `&search=${search}`;
@@ -58,8 +59,7 @@ const getParams = search => {
  * @returns {object} object of requested queryParams
  */
 export const getCurrentPage = (pagination = { queries: {} }, queryParams) => {
-  const params = getParams(queryParams);
-  const key = getQueryFingerprint(params.limit, params.page, params.search);
+  const key = getQueryFingerprint(getParams(queryParams));
   return pagination.queries && pagination.queries[key] ? pagination.queries[key] : {};
 };
 
@@ -89,15 +89,15 @@ export const getCurrentPageResults = createSelector(
  * @returns {object} query params and items per page count
  */
 export const getPaginationParams = (pagination = { queries: {} }, queryParams) => {
-  const { limit, page, search } = getParams(queryParams);
-  const key = getQueryFingerprint(limit, page, search);
+  const params = getParams(queryParams);
+  const key = getQueryFingerprint(params);
   const count = pagination.queries && pagination.queries[key] ? pagination.queries[key].count : 0;
 
   return {
     params: {
-      limit: +limit,
-      page: +page,
-      search,
+      limit: +params.limit,
+      page: +params.page,
+      search: params.search,
     },
     count,
   };
@@ -123,18 +123,11 @@ export const isCurrentPageFetching = createSelector(
 
 export const queriesReducer = (state = {}, action = {}) => {
   const { type, data, params } = action;
-
-  if (!params) {
-    return state;
-  }
-
-  const { limit, page, search } = params;
-  const queryFingerprint = getQueryFingerprint(limit, page, search);
   switch (type) {
     case PAGE_REQUEST:
       return {
         ...state,
-        [queryFingerprint]: {
+        [getQueryFingerprint(params)]: {
           count: 0,
           fetching: true,
           ids: [],
@@ -143,13 +136,15 @@ export const queriesReducer = (state = {}, action = {}) => {
     case PAGE_SUCCESS:
       return {
         ...state,
-        [queryFingerprint]: {
+        [getQueryFingerprint(params)]: {
           count: data.count,
           ids: action.data.results.map(item => item.id),
           fetching: false,
           lastFetched: Date.now(),
         },
       };
+    case RESET:
+      return {};
     default:
       return state;
   }
@@ -160,6 +155,8 @@ const currentPageReducer = (state = 1, action = {}) => {
     case PAGE_REQUEST:
     case PAGE_ABORT_REQUEST:
       return action.params.page;
+    case RESET:
+      return 1;
     default:
       return state;
   }
@@ -176,6 +173,8 @@ const itemsReducer = (state = {}, action = {}) => {
         ...state,
         ...newItems,
       };
+    case RESET:
+      return {};
     default:
       return state;
   }
@@ -216,18 +215,28 @@ export const fetchPage = (endpoint, params) => ({
 export const requestPage = (endpoint, queryParams, key) => (
   (dispatch, getState) => {
     const store = getState();
-    const params = getParams(queryParams);
     const { lastFetched } = getCurrentPage(store.pagination[key], queryParams);
 
     // perform the async call if the data is older than the allowed limit
     const isDataStale = Date.now() - lastFetched > settings.TIME_TO_STALE;
 
+    const params = getParams(queryParams);
     if (isDataStale || !lastFetched) {
       return dispatch(fetchPage(endpoint, params));
     }
     return dispatch(abortRequest(endpoint, params));
   }
 );
+
+/**
+ * resetPaginationCache reset pagination object of given endpoint
+ *
+ * @param endpoint {string} endpoint of pagination that we wan't to clear
+ */
+export const resetPaginationCache = endpoint => ({
+  type: RESET,
+  endpoint,
+});
 
 /**
  * createPaginator
@@ -253,6 +262,7 @@ const createPaginator = endpoint => {
 
   return {
     requestPage,
+    resetPaginationCache,
     reducer,
     itemsReducer: onlyForEndpoint(itemsReducer),
   };
