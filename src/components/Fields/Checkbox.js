@@ -23,14 +23,16 @@ const CustomCheckbox = props => {
       validateStatus={validateStatus(fieldValue)}
       required={!!errorMessages.required}
       help={
-        <Errors
-          model={name}
-          show={field => field.touched && !field.focus}
-          messages={
+        validateStatus(fieldValue) ?
+          <Errors
+            model={name}
+            show={field => field.touched && !field.focus}
+            messages={
             fieldValue.errors.required ? { required: errorMessages.required } : errorMessages
           }
-          component={item => <div>{item.children}</div>}
-        />
+            component={item => <div>{item.children}</div>}
+          />
+        : null
       }
     >
       {propsField.options.map(option => (
