@@ -36,6 +36,7 @@ class UserrequestList extends React.Component {
 
     if (prevProps.draft.id !== this.props.draft.id) {
       this.props.resetPaginationCache('/userrequest/');
+      message.destroy();
     }
   }
 
@@ -85,7 +86,7 @@ class UserrequestList extends React.Component {
       title: selectedItems.length > 1 ? 'Êtes-vous sûr de vouloir dupliquer ces demandes ?' : 'Êtes-vous sûr de vouloir dupliquer cette demande ?',
       content: selectedItems.length > 1 ? 'Les nouvelles demandes prendront le statut "Brouillon".' : 'La nouvelle demande prendra le statut "Brouillon".',
       onOk: () => {
-        message.loading('Duplication de la demande en cours...');
+        message.loading('Duplication de la demande en cours...', 2.5);
         const item = selectedItems[0];
         delete item.id;
         item.properties.title += ' - copie';
@@ -120,11 +121,18 @@ class UserrequestList extends React.Component {
 
   render () {
     const { selectedRowKeys } = this.state;
-    const { draft, userGroup, columns, pagination } = this.props;
+    const { draft, location, userGroup, columns, pagination } = this.props;
 
     // If a draft newly created, redirect on its
     if (draft.id) {
-      return <Redirect to={`/manage-request/detail/${draft.id}`} />;
+      return (
+        <Redirect
+          to={{ pathname: `/manage-request/detail/${draft.id}`,
+          state: {
+            from: `${location.pathname}${location.search}`,
+          } }}
+        />
+      );
     }
 
     const rowSelection = {
