@@ -63,7 +63,7 @@ class Userrequest extends React.Component {
 
 const mapStateToProps = (state, ownProps) => ({
   // TODO: use Reselect for increase performances
-  data: state.userrequestList.items[ownProps.match.params.id],
+  data: state.userrequestList[ownProps.match.params.id],
   loading: state.userrequestList.loading,
   userGroup: getUserGroup(state),
 });

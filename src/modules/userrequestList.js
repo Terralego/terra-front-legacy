@@ -22,12 +22,6 @@ export const APPROBATIONS_CHANGE_FAILURE = 'userrequestList/APPROBATIONS_CHANGE_
 
 export const userrequestPaginator = createPaginator('/userrequest/');
 
-const initialState = {
-  items: {},
-  loading: false,
-  lastFetched: 0,
-};
-
 /**
  * Get the userrequest id
  *
@@ -41,46 +35,34 @@ function getItemIdFromUrl (url) {
 /**
  * userrequestList reducer
  */
-const userrequestList = (state = initialState, action) => {
+const userrequestList = (state = {}, action) => {
   switch (action.type) {
     case PAGE_SUCCESS:
       return {
         ...userrequestPaginator.itemsReducer(state, action),
-        lastFetched: Date.now(),
       };
     case DETAIL_REQUEST:
       return {
         ...state,
-        loading: true,
       };
     case DETAIL_SUCCESS:
     case SUBMIT_SUCCESS:
     case SAVE_DRAFT_SUCCESS:
       return {
-        ...state,
-        loading: false,
-        items: {
-          ...state.items,
-          [action.data.id]: action.data,
-        },
+        ...state.items,
+        [action.data.id]: action.data,
       };
     case STATE_CHANGE_SUCCESS:
     case APPROBATIONS_CHANGE_SUCCESS:
       return {
-        ...state,
-        items: {
-          ...state.items,
-          [action.data.id]: action.data,
-        },
+        ...state.items,
+        [action.data.id]: action.data,
       };
     case DETAIL_FAILURE:
       return {
-        ...state,
-        items: {
-          ...state.items,
-          [getItemIdFromUrl(action.error.url)]: {
-            error: action.error,
-          },
+        ...state.items,
+        [getItemIdFromUrl(action.error.url)]: {
+          error: action.error,
         },
       };
     default:
@@ -118,10 +100,11 @@ const getDraftStatus = createSelector(
 
 export const getUserrequestArray = createSelector(
   state => state,
-  state => getCurrentPageResults(
-    state.userrequestList.items,
+  (_, query) => query,
+  (state, query) => getCurrentPageResults(
     state.pagination.userrequestList,
-    '/userrequest/',
+    query,
+    state.userrequestList,
   ),
 );
 
@@ -150,7 +133,7 @@ export const getUserrequestsArrayFilteredByUser = createSelector(
  *
  * @param search {string} search query parameters
  */
-export const requestUserrequestPage = search => userrequestPaginator.requestPage('/userrequest/', search);
+export const requestUserrequestPage = search => userrequestPaginator.requestPage('/userrequest/', search, 'userrequestList');
 
 /**
  * userrequest action : fetch userrequest

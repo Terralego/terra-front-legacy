@@ -6,8 +6,8 @@ import settings from 'front-settings';
 import styles from './UserrequestList.module.scss';
 
 class Pagination extends React.Component {
-  handlePaginationChange = (page, pageSize) => {
-    this.props.history.push(`/manage-request/?limit=${pageSize}&page=${page}`);
+  handlePaginationChange = (page, limit) => {
+    this.props.handleQueryUpdate({ page, limit });
   }
 
   render () {

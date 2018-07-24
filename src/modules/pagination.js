@@ -11,6 +11,7 @@ export const PAGE_ABORT_REQUEST = 'pagination/PAGE_ABORT_REQUEST';
 export const PAGE_SUCCESS = 'pagination/PAGE_SUCCESS';
 export const PAGE_FAILURE = 'pagination/PAGE_FAILURE';
 
+export const RESET = 'pagination/RESET';
 
 /**
  * HELPERS
@@ -23,69 +24,127 @@ export const PAGE_FAILURE = 'pagination/PAGE_FAILURE';
  * @param {string} page : page number
  * @returns {string} a string composed of limit and page
  */
-const getQueryFingerprint = (limit, page) => `limit=${limit}&page=${page}`;
+const getQueryFingerprint = ({ limit, page, search }) => {
+  let query = `limit=${limit}&page=${page}`;
+  if (search) {
+    query += `&search=${search}`;
+  }
+  return query;
+};
 
 /**
  * getParams returns a an object with page and limit
  * @param {string} search : search parameters from url
  * @returns {object} params object
  */
-const getParams = search => (search && search !== ''
-  ? queryString.parse(search)
-  : {
-    limit: settings.PAGE_SIZE,
-    page: 1,
-  }
+const getParams = search => {
+  const params = queryString.parse(search);
+  return {
+    limit: params.limit ? parseInt(params.limit, 10) : settings.PAGE_SIZE,
+    page: params.page ? parseInt(params.page, 10) : 1,
+    search: params.search || '',
+  };
+};
+
+/**
+ * SELECTORS
+ * --------------------------------------------------------- *
+ */
+
+/**
+ * getCurrentPage returns pagination data by queryFigerprint
+ *
+ * @param pagination {object} pagination object
+ * @param queryParams {string}
+ * @returns {object} object of requested queryParams
+ */
+export const getCurrentPage = (pagination = { queries: {} }, queryParams) => {
+  const key = getQueryFingerprint(getParams(queryParams));
+  return pagination.queries && pagination.queries[key] ? pagination.queries[key] : {};
+};
+
+/**
+ * getCurrentPageResults returns items contains in requested page
+ *
+ * @param pagination {object} pagination object
+ * @param queryParams {string}
+ * @param items {object} all loaded items
+ * @returns {array} array of requested items
+ */
+export const getCurrentPageResults = createSelector(
+  [
+    getCurrentPage,
+    (pagination, queryParams, items) => items,
+  ],
+  (currentPage, items = []) => (
+    currentPage.ids ? Object.values(pick(items, currentPage.ids)) : []
+  ),
 );
+
+/**
+ * getPaginationParams returns items contains in requested page
+ *
+ * @param pagination {object} pagination object
+ * @param params {string} query parameters
+ * @returns {object} query params and items per page count
+ */
+export const getPaginationParams = (pagination = { queries: {} }, queryParams) => {
+  const params = getParams(queryParams);
+  const key = getQueryFingerprint(params);
+  const count = pagination.queries && pagination.queries[key] ? pagination.queries[key].count : 0;
+
+  return {
+    params: {
+      limit: +params.limit,
+      page: +params.page,
+      search: params.search,
+    },
+    count,
+  };
+};
+
+/**
+ * isCurrentPageFetching returns loading state of current page
+ *
+ * @param pagination {object} pagination object
+ * @param params {string} query parameters
+ * @returns {boolean} fetched
+ */
+export const isCurrentPageFetching = createSelector(
+  [getCurrentPage],
+  currentPage => currentPage.fetching,
+);
+
 
 /**
  * REDUCERS
  * --------------------------------------------------------- *
  */
 
-export const paramsReducer = (state = {}, action = {}) => {
+export const queriesReducer = (state = {}, action = {}) => {
   const { type, data, params } = action;
-
-  if (!params) {
-    return state;
-  }
-
-  const { limit, page } = params;
-  const queryFingerprint = getQueryFingerprint(limit, page);
   switch (type) {
     case PAGE_REQUEST:
       return {
         ...state,
-        [queryFingerprint]: undefined,
-      };
-    case PAGE_SUCCESS:
-      return {
-        ...state,
-        [queryFingerprint]: data.count,
-      };
-    default:
-      return state;
-  }
-};
-
-const pagesReducer = (state = {}, action = {}) => {
-  switch (action.type) {
-    case PAGE_REQUEST:
-      return {
-        ...state,
-        [action.params.page]: {
-          ids: [],
+        [getQueryFingerprint(params)]: {
+          count: 0,
           fetching: true,
+          ids: [],
         },
       };
     case PAGE_SUCCESS:
       return {
         ...state,
-        [action.params.page]: {
+        [getQueryFingerprint(params)]: {
+          count: data.count,
           ids: action.data.results.map(item => item.id),
           fetching: false,
+          lastFetched: Date.now(),
         },
       };
+    case RESET:
+      return {};
     default:
       return state;
   }
@@ -96,6 +155,8 @@ const currentPageReducer = (state = 1, action = {}) => {
     case PAGE_REQUEST:
     case PAGE_ABORT_REQUEST:
       return action.params.page;
+    case RESET:
+      return 1;
     default:
       return state;
   }
@@ -110,11 +171,10 @@ const itemsReducer = (state = {}, action = {}) => {
       });
       return {
         ...state,
-        items: {
-          ...state.items,
-          ...newItems,
-        },
+        ...newItems,
       };
+    case RESET:
+      return {};
     default:
       return state;
   }
@@ -147,15 +207,21 @@ export const fetchPage = (endpoint, params) => ({
   },
 });
 
-const getPageFromCache = (endpoint, params, pageLoaded) => (
+/**
+ * requestPage
+ *
+ * @param search {string} search query parameters
+ */
+export const requestPage = (endpoint, queryParams, key) => (
   (dispatch, getState) => {
     const store = getState();
-    // Get the last fetched date
-    const timeSinceLastFetch = store.userrequestList.lastFetched;
-    // // perform the async call if the data is older than the allowed limit
-    const isDataStale = Date.now() - timeSinceLastFetch > settings.TIME_TO_STALE;
+    const { lastFetched } = getCurrentPage(store.pagination[key], queryParams);
 
-    if (isDataStale || !pageLoaded) {
+    // perform the async call if the data is older than the allowed limit
+    const isDataStale = Date.now() - lastFetched > settings.TIME_TO_STALE;
+
+    const params = getParams(queryParams);
+    if (isDataStale || !lastFetched) {
       return dispatch(fetchPage(endpoint, params));
     }
     return dispatch(abortRequest(endpoint, params));
@@ -163,29 +229,19 @@ const getPageFromCache = (endpoint, params, pageLoaded) => (
 );
 
 /**
- * requestPage
+ * resetPaginationCache reset pagination object of given endpoint
  *
- * @param search {string} search query parameters
+ * @param endpoint {string} endpoint of pagination that we wan't to clear
  */
-const requestPage = (endpoint, search) => (
-  (dispatch, getState) => {
-    const store = getState();
-    const params = getParams(search);
-    const queryFingerprint = getQueryFingerprint(params.limit, params.page);
-    const pageLoaded = store.pagination.userrequestList.params[queryFingerprint];
-    return dispatch(getPageFromCache(endpoint, params, pageLoaded));
-  }
-);
+export const resetPaginationCache = endpoint => ({
+  type: RESET,
+  endpoint,
+});
 
 /**
  * createPaginator
  * --------------------------------------------------------- *
  */
-const initialState = {
-  pages: {},
-  currentPage: 1,
-  params: {},
-};
 
 /**
  * createPaginator is used to create a pagination for any module / component
@@ -193,71 +249,23 @@ const initialState = {
  *
  * @param endpoint {string} name of paginated module
  * @returns {object} an object composed with current page options,
- * reducers (params, pages, currentPage, items), see above in REDUCERS
+ * reducers (requestPage action, reducer, items), see above in REDUCERS
  */
 const createPaginator = endpoint => {
-  const onlyForEndpoint = reducer => (state = initialState, action = {}) =>
+  const onlyForEndpoint = reducer => (state = {}, action = {}) =>
     (action.endpoint === endpoint ? reducer(state, action) : state);
 
   const reducer = onlyForEndpoint(combineReducers({
-    pages: pagesReducer,
     currentPage: currentPageReducer,
-    params: paramsReducer,
+    queries: queriesReducer,
   }));
 
   return {
     requestPage,
+    resetPaginationCache,
     reducer,
     itemsReducer: onlyForEndpoint(itemsReducer),
   };
 };
 
 export default createPaginator;
-
-
-/**
- * SELECTORS
- * --------------------------------------------------------- *
- */
-
-/**
- * getCurrentPageResults returns items contains in requested page
- *
- * @param items {object} all loaded items
- * @param pagination {object} pagination object
- * @returns {array} array of requested items
- */
-export const getCurrentPageResults = createSelector(
-  [
-    (_, pagination) => pagination.pages[pagination.currentPage],
-    items => items,
-  ],
-  (currentPage = {}, items = []) => (
-    currentPage.ids ? Object.values(pick(items, currentPage.ids)) : []
-  ),
-);
-
-/**
- * getPaginationParams returns items contains in requested page
- *
- * @param pagination {object} pagination object
- * @param params {string} query parameters
- * @returns {object} query params and items per page count
- */
-export const getPaginationParams = (pagination, search) => {
-  const { limit, page } = getParams(search);
-  const queryFingerprint = getQueryFingerprint(limit, page);
-  const count = pagination ? pagination.params[queryFingerprint] : 0;
-
-  return {
-    params: {
-      limit: +limit || settings.PAGE_SIZE,
-      page: +page || 1,
-    },
-    count,
-  };
-};
-
-export const isCurrentPageFetching = pagination =>
-  (pagination.pages[pagination.currentPage] || { fetching: true }).fetching;
-

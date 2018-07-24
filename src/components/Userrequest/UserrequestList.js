@@ -3,16 +3,18 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Table, Icon, Modal, Button } from 'antd';
+import queryString from 'query-string';
 
 import { getUserGroup } from 'modules/authentication';
-import { submitData } from 'modules/userrequest';
+import { submitData, saveDraft } from 'modules/userrequest';
 import { requestUserrequestPage, updateState, getUserrequestsArrayFilteredByUser } from 'modules/userrequestList';
-import { getPaginationParams, isCurrentPageFetching } from 'modules/pagination';
+import { getPaginationParams, isCurrentPageFetching, resetPaginationCache } from 'modules/pagination';
 
 import getColumns from 'helpers/userrequestListColumns';
 
 import NewUserrequestButton from 'components/Userrequest/NewUserrequestButton';
 import Pagination from 'components/Userrequest/Pagination';
+import Search from 'components/Userrequest/Search';
 
 import styles from './UserrequestList.module.scss';
 
@@ -22,7 +24,15 @@ class UserrequestList extends React.Component {
   };
 
   componentDidMount () {
-    this.props.requestUserrequestPage(this.props.location.search);
+    if (!this.props.loading) {
+      this.props.requestUserrequestPage(this.props.location.search);
+    }
+  }
+
+  componentDidUpdate (prevProps) {
+    if (prevProps.location.search !== this.props.location.search && !this.props.loading) {
+      this.props.requestUserrequestPage(this.props.location.search);
+    }
   }
 
   onSelectChange = selectedRowKeys => {
@@ -44,6 +54,26 @@ class UserrequestList extends React.Component {
         },
       }))
   )
+
+  /**
+   * queryUpdate add query string parameter in url
+   * duplicate function with Search component : see https://github.com/supasate/connected-react-router
+   * to implement history change in actions / reducers
+   * @param {object} query : couple(s) of key / value parameter(s)
+   */
+  handleQueryUpdate = (query, reset) => {
+    const params = { ...query };
+    if (reset) {
+      this.props.resetPaginationCache('/userrequest/');
+      params.page = 1;
+    }
+    return this.props.history.push(`/manage-request/?${
+      queryString.stringify({
+        ...queryString.parse(this.props.location.search),
+        ...params,
+      })
+    }`);
+  }
 
   handleCopy = () => {
     const selectedItems = this.getSelectedItems();
@@ -102,6 +132,9 @@ class UserrequestList extends React.Component {
           <h1 className={styles.header__title}>Demandes d&apos;autorisation</h1>
           <NewUserrequestButton className={styles.header__button} />
         </div>
+        <div className={styles.header}>
+          <Search handleQueryUpdate={this.handleQueryUpdate} />
+        </div>
         {(userGroup !== 'N1' && userGroup !== 'N2') && (
           <div className={styles.actions}>
             <Button
@@ -138,25 +171,27 @@ class UserrequestList extends React.Component {
           )}
           pagination={false}
         />
-        <Pagination {...pagination} />
+        <Pagination {...pagination} handleQueryUpdate={this.handleQueryUpdate} />
       </div>
     );
   }
 }
 
-const StateToProps = (state, ownProps) => ({
-  items: getUserrequestsArrayFilteredByUser(state),
-  loading: isCurrentPageFetching(state.pagination.userrequestList),
+const mapStateToProps = (state, ownProps) => ({
+  items: getUserrequestsArrayFilteredByUser(state, ownProps.location.search),
+  loading: isCurrentPageFetching(state.pagination.userrequestList, ownProps.location.search),
   userGroup: getUserGroup(state),
   columns: getColumns(getUserGroup(state)),
   pagination: getPaginationParams(state.pagination.userrequestList, ownProps.location.search),
 });
 
-const DispatchToProps = dispatch =>
+const mapDispatchToProps = dispatch =>
   bindActionCreators({
     requestUserrequestPage,
+    resetPaginationCache,
     submitData,
+    saveDraft,
     updateState,
   }, dispatch);
 
-export default withRouter(connect(StateToProps, DispatchToProps)(UserrequestList));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(UserrequestList));

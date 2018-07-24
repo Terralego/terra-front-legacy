@@ -164,13 +164,16 @@ export const submitData = (data, form = 'userrequest') => ({
  * userrequest action : save userrequest as draft
  * @param {string} data
  */
-export const saveDraft = data => ({
+export const saveDraft = data => (dispatch, getState) => dispatch({
   [CALL_API]: {
     endpoint: `/userrequest/${data.id ? `${data.id}/` : ''}`,
     types: [SAVE_DRAFT_REQUEST, SAVE_DRAFT_SUCCESS, SAVE_DRAFT_FAILURE],
     config: {
       method: data.id ? 'PUT' : 'POST',
-      body: JSON.stringify(data),
+      body: JSON.stringify({
+        ...data,
+        state: getState().appConfig.states.DRAFT,
+      }),
     },
   },
 });
