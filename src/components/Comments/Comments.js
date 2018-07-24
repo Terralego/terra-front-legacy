@@ -92,12 +92,14 @@ class Comments extends React.Component {
                   [styles.internalItem]: comment.is_internal,
                   [styles.listItem]: true,
                 })}
+                style={{ marginBottom: -35, paddingBottom: 60 }}
               >
                 <List.Item.Meta
                   title={comment.author}
                   description={comment.content}
+                  style={{ marginTop: 10 }}
                 />
-                <div style={{ textAlign: 'right' }}>
+                <div style={{ textAlign: 'right', marginTop: 10 }}>
                   {comment.is_internal &&
                     <span className={styles.internal}>Message interne</span>
                   }
@@ -109,9 +111,8 @@ class Comments extends React.Component {
                   </span>
                 </div>
               </List.Item>
-              {comment.features !== undefined &&
+              {comment.features &&
                 <Button
-                  style={{ position: 'relative', bottom: 10 }}
                   type="default"
                   icon="edit"
                   size="small"
