@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { Button, Icon, Col, Row } from 'antd';
 import { Link } from 'react-router-dom';
 
-import { saveDraft, submitData } from 'modules/userrequest';
+import { saveDraft, submitData, resetForm } from 'modules/userrequest';
 import FormConfig from 'components/Form/Form.config';
 
 import styles from './HeaderForm.module.scss';
@@ -33,7 +33,7 @@ class HeaderForm extends React.Component {
       <header className={styles.header}>
         <Row gutter={16} type="flex" justify="space-between">
           <Col span={12}>
-            <Link to="/manage-request">
+            <Link to="/manage-request" onClick={this.props.resetForm}>
               <Button type="primary">
                 <Icon type="left" />
                 {FormConfig.confirmation.backButton}
@@ -86,6 +86,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ saveDraft, submitData }, dispatch);
+  bindActionCreators({ saveDraft, submitData, resetForm }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(HeaderForm);

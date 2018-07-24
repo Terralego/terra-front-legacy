@@ -1,8 +1,8 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
-import { Table, Icon, Modal, Button } from 'antd';
+import { withRouter, Redirect } from 'react-router-dom';
+import { Table, Icon, Modal, Button, message } from 'antd';
 import queryString from 'query-string';
 
 import { getUserGroup } from 'modules/authentication';
@@ -32,6 +32,10 @@ class UserrequestList extends React.Component {
   componentDidUpdate (prevProps) {
     if (prevProps.location.search !== this.props.location.search && !this.props.loading) {
       this.props.requestUserrequestPage(this.props.location.search);
+    }
+
+    if (prevProps.draft.id !== this.props.draft.id) {
+      this.props.resetPaginationCache('/userrequest/');
     }
   }
 
@@ -81,13 +85,11 @@ class UserrequestList extends React.Component {
       title: selectedItems.length > 1 ? 'Êtes-vous sûr de vouloir dupliquer ces demandes ?' : 'Êtes-vous sûr de vouloir dupliquer cette demande ?',
       content: selectedItems.length > 1 ? 'Les nouvelles demandes prendront le statut "Brouillon".' : 'La nouvelle demande prendra le statut "Brouillon".',
       onOk: () => {
-        selectedItems
-          .forEach(selectedItem => {
-            const item = { ...selectedItem };
-            delete item.id;
-            item.properties.title += ' - copie';
-            this.props.saveDraft(item);
-          });
+        message.loading('Duplication de la demande en cours...');
+        const item = selectedItems[0];
+        delete item.id;
+        item.properties.title += ' - copie';
+        this.props.saveDraft(item);
         this.setState({
           selectedRowKeys: [],
         });
@@ -118,7 +120,12 @@ class UserrequestList extends React.Component {
 
   render () {
     const { selectedRowKeys } = this.state;
-    const { userGroup, columns, pagination } = this.props;
+    const { draft, userGroup, columns, pagination } = this.props;
+
+    // If a draft newly created, redirect on its
+    if (draft.id) {
+      return <Redirect to={`/manage-request/detail/${draft.id}`} />;
+    }
 
     const rowSelection = {
       selectedRowKeys,
@@ -178,11 +185,13 @@ class UserrequestList extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
+  draft: state.userrequest,
   items: getUserrequestsArrayFilteredByUser(state, ownProps.location.search),
   loading: isCurrentPageFetching(state.pagination.userrequestList, ownProps.location.search),
   userGroup: getUserGroup(state),
   columns: getColumns(getUserGroup(state)),
   pagination: getPaginationParams(state.pagination.userrequestList, ownProps.location.search),
+  needUpdate: state.pagination.userrequestList.needUpdate,
 });
 
 const mapDispatchToProps = dispatch =>
