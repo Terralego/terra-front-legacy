@@ -1,7 +1,7 @@
 import store from 'store';
 
 const statusLabels = {
-  DRAFT: { text: 'Déclaration sauvegardée non envoyée', type: 'info' },
+  DRAFT: { text: 'Brouillon', type: 'info' },
   REFUSED: { text: 'Déclaration refusée', type: 'error' },
   CANCELED: { text: 'Déclaration annulée ', type: 'error' },
   ACCEPTED: { text: 'Déclaration acceptée', type: 'success' },
@@ -11,7 +11,7 @@ const statusLabels = {
   WAIT_NIV2: { text: 'En cours d’évaluation par l’instructeur de Niv 2', type: 'warning' },
   WAIT_USER: { text: 'En attente d\'éléments de la part du demandeur', type: 'warning' },
   // Specific for user
-  WAITING: { text: 'En cours de traitement par l\'ONF', type: 'warning' },
+  WAITING: { text: 'En cours de traitement', type: 'warning' },
   TO_COMPLETE: { text: 'En attente d\'éléments supplémentaires de votre part', type: 'warning' },
   NO_STATUS: { text: 'Pas de status connu', type: 'warning' },
 };
