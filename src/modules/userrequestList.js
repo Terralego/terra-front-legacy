@@ -49,18 +49,18 @@ const userrequestList = (state = {}, action) => {
     case SUBMIT_SUCCESS:
     case SAVE_DRAFT_SUCCESS:
       return {
-        ...state.items,
+        ...state,
         [action.data.id]: action.data,
       };
     case STATE_CHANGE_SUCCESS:
     case APPROBATIONS_CHANGE_SUCCESS:
       return {
-        ...state.items,
+        ...state,
         [action.data.id]: action.data,
       };
     case DETAIL_FAILURE:
       return {
-        ...state.items,
+        ...state,
         [getItemIdFromUrl(action.error.url)]: {
           error: action.error,
         },
