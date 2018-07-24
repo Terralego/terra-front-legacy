@@ -199,7 +199,6 @@ const mapStateToProps = (state, ownProps) => ({
   userGroup: getUserGroup(state),
   columns: getColumns(getUserGroup(state)),
   pagination: getPaginationParams(state.pagination.userrequestList, ownProps.location.search),
-  needUpdate: state.pagination.userrequestList.needUpdate,
 });
 
 const mapDispatchToProps = dispatch =>
