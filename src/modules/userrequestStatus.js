@@ -1,10 +1,10 @@
 import store from 'store';
 
 const statusLabels = {
-  DRAFT: { text: 'Demande sauvegardée non envoyée', type: 'info' },
-  REFUSED: { text: 'Demande refusée', type: 'error' },
-  CANCELED: { text: 'Demande annulée ', type: 'error' },
-  ACCEPTED: { text: 'Demande acceptée', type: 'success' },
+  DRAFT: { text: 'Déclaration sauvegardée non envoyée', type: 'info' },
+  REFUSED: { text: 'Déclaration refusée', type: 'error' },
+  CANCELED: { text: 'Déclaration annulée ', type: 'error' },
+  ACCEPTED: { text: 'Déclaration acceptée', type: 'success' },
   // Specific for N1 and N2
   TO_EVALUATE: { text: 'A évaluer', type: 'warning' },
   WAIT_NIV1: { text: 'En cours d’évaluation par l’instructeur de Niv 1', type: 'warning' },
