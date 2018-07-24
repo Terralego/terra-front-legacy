@@ -28,7 +28,6 @@ class HeaderForm extends React.Component {
   render () {
     const { loadingSaveDraft } = this.state;
     const { location, form, showSubmit, showDraft } = this.props;
-    console.log(location);
 
     return (
       <header className={styles.header}>

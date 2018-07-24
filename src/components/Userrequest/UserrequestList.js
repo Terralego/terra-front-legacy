@@ -155,10 +155,10 @@ class UserrequestList extends React.Component {
             <Button
               className={styles.actions__button}
               onClick={this.handleCopy}
-              disabled={!hasSelected}
+              disabled={!hasSelected || selectedRowKeys.length > 1}
             >
               <Icon type="copy" />
-              Dupliquer {selectedRowKeys.length} {selectedRowKeys.length > 1 ? 'demandes sélectionnées' : 'demande sélectionnée'}
+              Dupliquer la demande
             </Button>
             <Button
               className={styles.actions__button}
