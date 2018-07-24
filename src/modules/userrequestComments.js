@@ -233,7 +233,7 @@ export const submitComment = (userrequestId, comment, isInternal) => {
         body: JSON.stringify({
           properties: { comment: comment.text },
           is_internal: isInternal,
-          goejson: { ...comment.geojson  },
+          goejson: { ...comment.geojson },
         }),
       },
       form: 'userrequestComments',
