@@ -83,10 +83,10 @@ class UserrequestList extends React.Component {
   handleCopy = () => {
     const selectedItems = this.getSelectedItems();
     Modal.confirm({
-      title: selectedItems.length > 1 ? 'Êtes-vous sûr de vouloir dupliquer ces demandes ?' : 'Êtes-vous sûr de vouloir dupliquer cette demande ?',
-      content: selectedItems.length > 1 ? 'Les nouvelles demandes prendront le statut "Brouillon".' : 'La nouvelle demande prendra le statut "Brouillon".',
+      title: selectedItems.length > 1 ? "Êtes-vous sûr de vouloir dupliquer ces déclarations d'activités ?" : "Êtes-vous sûr de vouloir dupliquer cette déclaration d'activité ?",
+      content: selectedItems.length > 1 ? 'Les nouvelles déclarations prendront le statut "Brouillon".' : 'La nouvelle déclaration prendra le statut "Brouillon".',
       onOk: () => {
-        message.loading('Duplication de la demande en cours...', 2.5);
+        message.loading('Duplication de la déclaration en cours...', 2.5);
         const item = selectedItems[0];
         delete item.id;
         item.properties.title += ' - copie';
@@ -101,8 +101,8 @@ class UserrequestList extends React.Component {
   handleCancel = () => {
     const selectedItems = this.getSelectedItems();
     Modal.confirm({
-      title: selectedItems.length > 1 ? 'Êtes-vous sûr de vouloir annuler ces demandes ?' : 'Êtes-vous sûr de vouloir annuler cette demande ?',
-      content: selectedItems.length > 1 ? 'Les nouvelles demandes prendront le statut "Annuler".' : 'La nouvelle demande prendra le statut "Annuler".',
+      title: selectedItems.length > 1 ? 'Êtes-vous sûr de vouloir annuler ces déclarations ?' : 'Êtes-vous sûr de vouloir annuler cette déclaration ?',
+      content: selectedItems.length > 1 ? 'Les nouvelles déclarations prendront le statut "Annuler".' : 'La nouvelle déclaration prendra le statut "Annuler".',
       onOk: () => {
         selectedItems
           .forEach(item => {
@@ -144,7 +144,7 @@ class UserrequestList extends React.Component {
     return (
       <div>
         <div className={styles.header}>
-          <h1 className={styles.header__title}>Demandes d&apos;autorisation</h1>
+          <h1 className={styles.header__title}>Déclarations d&apos;activité(s)</h1>
           <NewUserrequestButton className={styles.header__button} />
         </div>
         <div className={styles.header}>
@@ -158,7 +158,7 @@ class UserrequestList extends React.Component {
               disabled={!hasSelected || selectedRowKeys.length > 1}
             >
               <Icon type="copy" />
-              Dupliquer la demande
+              Dupliquer la déclaration
             </Button>
             <Button
               className={styles.actions__button}
@@ -167,7 +167,7 @@ class UserrequestList extends React.Component {
               disabled={!hasSelected}
             >
               <Icon type="minus-circle-o" className={styles.actions__iconCancel} />
-              Annuler {selectedRowKeys.length} {selectedRowKeys.length > 1 ? 'demandes sélectionnées' : 'demande sélectionnée'}
+              Annuler {selectedRowKeys.length} {selectedRowKeys.length > 1 ? 'déclarations sélectionnées' : 'déclaration sélectionnée'}
             </Button>
           </div>
         )}

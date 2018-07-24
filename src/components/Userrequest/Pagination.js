@@ -19,7 +19,7 @@ class Pagination extends React.Component {
         className={styles.pagination}
         defaultPageSize={settings.PAGE_SIZE}
         pageSize={params.limit || settings.PAGE_SIZE}
-        showTotal={total => `Total ${total} demandes`}
+        showTotal={total => `Total ${total} déclarations`}
         total={count}
         onChange={this.handlePaginationChange}
       />

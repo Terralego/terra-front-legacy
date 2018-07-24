@@ -38,7 +38,7 @@ const HeaderUserrequest = props => (
 class FormApp extends React.Component {
   componentDidUpdate (prevProps) {
     if (isNewDraft(prevProps, this.props) || isExistingDraft(prevProps, this.props)) {
-      message.success('Votre demande a bien été sauvegardée !');
+      message.success('Votre déclaration a bien été sauvegardée !');
       this.props.history.push(`/manage-request/detail/${this.props.id}`);
     }
   }

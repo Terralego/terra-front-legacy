@@ -17,7 +17,7 @@ const NewUserrequestButton = props => {
         className={props.className}
         style={props.style}
       >
-        Créer une nouvelle demande
+        Déclarer une activité
       </Button>
     </Link>
   );
