@@ -1,33 +1,37 @@
 import React from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { withRouter, Route, Redirect } from 'react-router-dom';
+
 import routes from 'modules/routes';
+import Layout from 'components/Layout/Layout';
 
+const CustomRoute = ({ route, layout, ...props }) => (
+  <Layout {...layout} routes={route.routes}>
+    <route.component {...props} routes={route.routes} />
+  </Layout>
+);
 
-export default props => {
+const RouteViews = props => {
   // wrap <Route> and use this everywhere instead, then when
   // sub routes are added to any route it'll work
   const RouteWithSubRoutes = route => (
-    route.protected ?
-      <Route
-        exact={route.exact}
-        path={route.path}
-        render={() => (
-          props.isAuthenticated
-          ? <route.component {...props} routes={route.routes} />
-          : <Redirect
-            to={{ pathname: '/login', state: { from: props.location.pathname } }}
-            from={props.location.pathname}
+    <Route
+      exact={route.exact}
+      path={route.path}
+      render={() => (
+        route.protected && !props.isAuthenticated
+          ?
+            <Redirect
+              to={{ pathname: '/login', state: { from: props.location.pathname } }}
+              from={props.location.pathname}
+            />
+          : <CustomRoute
+            {...props}
+            route={route}
+            layout={route.layout}
           />
-        )}
-      />
-      : <Route
-        exact={route.exact}
-        path={route.path}
-        render={() => (
-          // pass the sub-routes down to keep nesting
-          <route.component {...props} routes={route.routes} />
-        )}
-      />
+      )}
+    />
   );
 
   // Concatenate all routes for child views
@@ -40,3 +44,9 @@ export default props => {
 
   return routesViews.map(route => <RouteWithSubRoutes key={route.path} {...route} />);
 };
+
+const mapStateToProps = state => ({
+  isAuthenticated: state.authentication.isAuthenticated,
+});
+
+export default withRouter(connect(mapStateToProps, null)(RouteViews));

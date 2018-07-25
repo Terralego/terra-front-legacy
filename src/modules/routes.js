@@ -15,7 +15,9 @@ export const routes = [{
   icon: 'home',
   exact: true,
   protected: false,
-  fullscreen: true,
+  layout: {
+    fullscreen: true,
+  },
 }, {
   path: '/about',
   name: 'About',
@@ -46,8 +48,10 @@ export const routes = [{
   component: Form,
   icon: 'form',
   protected: true,
-  hideHeader: true,
-  hideFooter: true,
+  layout: {
+    hideHeader: true,
+    hideFooter: true,
+  },
 }, {
   path: '/manage-request',
   name: 'Manage requests',
@@ -61,8 +65,10 @@ export const routes = [{
       name: 'Manage request detail',
       component: Userrequest,
       protected: true,
-      hideHeader: true,
-      hideFooter: true,
+      layout: {
+        hideHeader: true,
+        hideFooter: true,
+      },
     },
   ],
 }, {
