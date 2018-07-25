@@ -13,7 +13,7 @@ const Login = props => {
 
   return (
     isAuthenticated ?
-      <Redirect to={location.state ? location.state.from : '/'} />
+      <Redirect to={location.state ? location.state.from : '/manage-request'} />
       :
       <Row className={styles.row} gutter={24}>
         <Col span={24} sm={{ span: 10, offset: 1 }} className={styles.login}>
