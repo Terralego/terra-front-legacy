@@ -9,6 +9,7 @@ import {
   Popconfirm,
 } from 'antd';
 
+import withAuthentication from 'hoc/authentication';
 import Logo from 'components/Logo/Logo';
 import styles from './Header.module.scss';
 
@@ -66,4 +67,4 @@ const Header = ({ isAuthenticated, logout, user }) => (
   </Layout.Header>
 );
 
-export default Header;
+export default withAuthentication(Header);
