@@ -13,7 +13,7 @@ const AppWrapper = () => (
   <LocaleProvider locale={fr}>
     <Provider store={store}>
       <Router>
-        <RouteViews {...this.props} />
+        <RouteViews />
       </Router>
     </Provider>
   </LocaleProvider>
