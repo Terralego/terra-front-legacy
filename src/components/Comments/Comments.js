@@ -4,7 +4,7 @@ import classnames from 'classnames';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Form as ReduxForm } from 'react-redux-form';
-import { Spin, List, Button } from 'antd';
+import { Spin, List, Button, Modal } from 'antd';
 import moment from 'moment';
 
 import { getUserGroup } from 'modules/authentication';
@@ -17,12 +17,18 @@ import {
 import ModalComment from 'components/Comments/ModalComment';
 import TextArea from 'components/Fields/TextArea';
 import Select from 'components/Fields/Select';
+import FormMap from 'components/FormMap/FormMap';
+
 
 import config from 'components/Comments/Comments.config';
 
 import styles from './Comments.module.scss';
 
 class Comments extends React.Component {
+  state = {
+    showDrawMap: false,
+  }
+
   componentDidMount () {
     if (!this.props.comments.length && !this.props.loading && !this.props.fetched) {
       this.props.fetchUserrequestComments(this.props.userrequestId);
@@ -58,10 +64,10 @@ class Comments extends React.Component {
           placeholder="Entrez votre message..."
           errorMessages={{ required: { message: 'Veuillez écrire un message' } }}
         />
-        <div style={{ textAlign: 'right' }}>
+        <div className={styles.buttons}>
           <ModalComment />
           <Button
-            style={{ marginTop: 10 }}
+            style={{ marginLeft: 10 }}
             type="primary"
             htmlType="submit"
             icon="arrow-right"
@@ -79,31 +85,58 @@ class Comments extends React.Component {
           style={{ marginTop: 24 }}
           dataSource={comments}
           renderItem={comment => (
-            <List.Item
-              key={comment.content}
-              className={classnames({
-                [styles.internalItem]: comment.is_internal,
-                [styles.listItem]: true,
-              })}
-            >
-              <List.Item.Meta
-                title={comment.author}
-                description={comment.content}
-              />
-              <div style={{ textAlign: 'right' }}>
-                {comment.is_internal &&
-                  <span className={styles.internal}>Message interne</span>
-                }
-                <span style={{ display: 'block', color: 'rgba(0, 0, 0, 0.45)' }}>
-                  {moment(comment.date).format('DD/MM/YY')}
-                </span>
-                <span style={{ display: 'block', color: 'rgba(0, 0, 0, 0.45)', fontSize: 12 }}>
-                  {moment(comment.date).format('HH[h]mm')}
-                </span>
-              </div>
-            </List.Item>
+            <div>
+              <List.Item
+                key={comment.content}
+                className={classnames({
+                  [styles.internalItem]: comment.is_internal,
+                  [styles.listItem]: true,
+                })}
+                style={{ marginBottom: -35, paddingBottom: 60 }}
+              >
+                <List.Item.Meta
+                  title={comment.author}
+                  description={comment.content}
+                  style={{ marginTop: 10 }}
+                />
+                <div style={{ textAlign: 'right', marginTop: 10 }}>
+                  {comment.is_internal &&
+                    <span className={styles.internal}>Message interne</span>
+                  }
+                  <span style={{ display: 'block', color: 'rgba(0, 0, 0, 0.45)' }}>
+                    {moment(comment.date).format('DD/MM/YY')}
+                  </span>
+                  <span style={{ display: 'block', color: 'rgba(0, 0, 0, 0.45)', fontSize: 12 }}>
+                    {moment(comment.date).format('HH[h]mm')}
+                  </span>
+                </div>
+              </List.Item>
+              {comment.features &&
+                <Button
+                  type="default"
+                  icon="edit"
+                  size="small"
+                  onClick={() => this.setState({
+                      features: comment.features || [],
+                      activity: comment.activity || [],
+                      showDrawMap: !this.state.showDrawMap,
+                    })}
+                >
+                  Voir le tracé en pièce jointe
+                </Button>
+              }
+            </div>
           )}
         />}
+        <Modal
+          title="Tracé"
+          visible={this.state.showDrawMap}
+          onOk={() => this.setState({ showDrawMap: !this.state.showDrawMap })}
+          onCancel={() => this.setState({ showDrawMap: !this.state.showDrawMap })}
+          width="800px"
+        >
+          <FormMap feature={this.state.features} activity={this.state.activity} />
+        </Modal>
       </ReduxForm>
     );
   }
