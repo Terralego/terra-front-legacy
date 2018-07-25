@@ -9,11 +9,14 @@ import Signup from 'components/Signup/Signup';
 import styles from './Login.module.scss';
 
 const Login = props => {
-  const { isAuthenticated, location } = props;
-
+  const { isAuthenticated, location, userrequestList } = props;
+  let redirection = <Redirect to={location.state ? location.state.from : '/manage-request'} />;
+  if (!userrequestList) {
+    redirection = <Redirect to={location.state ? location.state.from : '/'} />;
+  }
   return (
     isAuthenticated ?
-      <Redirect to={location.state ? location.state.from : '/manage-request'} />
+      redirection
       :
       <Row className={styles.row} gutter={24}>
         <Col span={24} sm={{ span: 10, offset: 1 }} className={styles.login}>
@@ -30,6 +33,7 @@ const Login = props => {
 const mapStateToProps = state => ({
   login: state.login,
   form: state.forms.login.$form,
+  userrequestList: state.userrequestList,
 });
 
 export default connect(mapStateToProps, null)(Login);
