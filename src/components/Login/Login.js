@@ -10,7 +10,7 @@ import styles from './Login.module.scss';
 
 const Login = props => {
   const { isAuthenticated, location } = props;
-  console.log(location);
+
   return (
     isAuthenticated ?
       <Redirect to={location.state ? location.state.from : '/manage-request'} />
