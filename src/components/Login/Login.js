@@ -10,10 +10,10 @@ import styles from './Login.module.scss';
 
 const Login = props => {
   const { isAuthenticated, location } = props;
-
+  console.log(location);
   return (
     isAuthenticated ?
-      <Redirect to={location.state ? location.state.from : '/'} />
+      <Redirect to={location.state ? location.state.from : '/manage-request'} />
       :
       <Row className={styles.row} gutter={24}>
         <Col span={24} sm={{ span: 10, offset: 1 }} className={styles.login}>
