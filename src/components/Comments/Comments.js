@@ -5,24 +5,30 @@ import { connect } from 'react-redux';
 import { Form as ReduxForm } from 'react-redux-form';
 import { Button } from 'antd';
 
+import withAuthentication from 'hoc/authentication';
+import { canCommentInternal } from 'helpers/permissionsHelpers';
+
 import { submitComment } from 'modules/userrequestComment';
 
+import CommentRecipients from 'components/Comments/CommentRecipients';
 import CommentList from 'components/Comments/CommentList';
 import TextArea from 'components/Fields/TextArea';
 import UploadAttachment from 'components/UploadAttachment/UploadAttachment';
-
 import styles from 'components/Comments/Comments.module.scss';
 
 class Comments extends React.Component {
   handleSubmit = () => {
-    const { userrequestId, newComment } = this.props;
-    this.props.submitComment(userrequestId, newComment, false);
+    const { userrequestId, newComment, user } = this.props;
+    const internal = canCommentInternal(user.permissions, newComment.is_internal);
+    this.props.submitComment(userrequestId, newComment, internal);
   }
 
   render () {
     const { form, userrequestId } = this.props;
+
     return (
       <ReduxForm model="userrequestComment">
+        <CommentRecipients />
         <TextArea
           style={{ marginBottom: -12 }}
           model=".properties.comment"
@@ -61,4 +67,4 @@ const mapDispatchToProps = dispatch =>
     submitComment,
   }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(Comments);
+export default connect(mapStateToProps, mapDispatchToProps)(withAuthentication(Comments));
