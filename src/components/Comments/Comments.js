@@ -11,7 +11,7 @@ import CommentList from 'components/Comments/CommentList';
 import TextArea from 'components/Fields/TextArea';
 import UploadAttachment from 'components/UploadAttachment/UploadAttachment';
 
-import styles from './Comments.module.scss';
+import styles from 'components/Comments/Comments.module.scss';
 
 class Comments extends React.Component {
   handleSubmit = () => {
