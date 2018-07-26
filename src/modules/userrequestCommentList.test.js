@@ -1,10 +1,11 @@
-import {
-  SUBMIT_SUCCESS,
-} from './userrequestComment';
-
+import { SUBMIT_SUCCESS } from './userrequestComment';
 import userrequestCommentList, {
   getCommentsByUserrequest,
 } from './userrequestCommentList';
+
+jest.mock('front-settings', () => ({
+  BASE_URL: '',
+}));
 
 describe('userrequestCommentList selector', () => {
   it('should return an array of selected ids objects', () => {

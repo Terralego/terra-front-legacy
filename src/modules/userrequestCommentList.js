@@ -29,7 +29,7 @@ const getCommentData = data => ({
   is_internal: data.is_internal,
   geojson: data.geojson,
   attachment: data.filename ? {
-    url: `${settings.API_URL}${data.attachment_url}`,
+    url: `${settings.BASE_URL}${data.attachment_url}`,
     name: data.filename,
   } : null,
 });
