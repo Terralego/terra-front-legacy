@@ -20,3 +20,13 @@
   text-align: right;
   margin-top: 12px;
 }
+
+.commentItem {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.commentContent {
+  display: flex;
+}

@@ -27,10 +27,10 @@ const getCommentData = data => ({
   author: getCommentAuthor(data.owner),
   is_internal: data.is_internal,
   geojson: data.geojson,
-  attachment: {
+  attachment: data.filename ? {
     url: data.attachment_url,
     name: data.filename,
-  },
+  } : null,
 });
 
 const parseCommentsByUserrequest = response => {
