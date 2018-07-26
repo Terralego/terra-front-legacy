@@ -28,7 +28,7 @@
       "config": {
         "headers": {
           "Content-Type": "application/json"
-         },
+        },
         "body":
           "{\"email\":{\"new_password1\":\"new_password1\",\"new_password2\":\"new_password2\"}}",
         "method": "POST"
@@ -45,8 +45,9 @@
       "config": {
         "headers": {
           "Content-Type": "application/json"
-         },
-        "body": "{}", "method": "POST"
+        },
+        "body": "{}",
+        "method": "POST"
       },
       "endpoint": "/accounts/register/",
       "form": "account",
@@ -68,7 +69,7 @@
       "config": {
         "headers": {
           "Content-Type": "application/json"
-         },
+        },
         "method": "POST",
         "body":
           "{\"new_password1\":\"new_password1\",\"new_password2\":\"new_password2\"}"
@@ -84,7 +85,7 @@
       ],
       "config": {
         "headers": {
-         "Content-Type": "application/json"
+          "Content-Type": "application/json"
         },
         "method": "POST",
         "body": "{}"
@@ -97,7 +98,7 @@
       "config": {
         "headers": {
           "Content-Type": "application/json"
-         },
+        },
         "body":
           "{\"new_password1\":\"new_password1\",\"new_password2\":\"new_password2\"}",
         "method": "POST"
@@ -114,8 +115,9 @@
       "config": {
         "headers": {
           "Content-Type": "application/json"
-         },
-         "body": "{}", "method": "POST"
+        },
+        "body": "{}",
+        "method": "POST"
       },
       "endpoint": "/accounts/change-password/reset/",
       "form": "account",
