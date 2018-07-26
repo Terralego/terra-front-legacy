@@ -13,13 +13,17 @@ import getUserrequestStatus from 'modules/userrequestStatus';
  * @param {string} user.group - user's group
  * @param {string} user.uuid - user's uuid
  * @param {object} approbations - userrequest approbations
+ * @param {string} userrequestExpiry - expiration's date of the userrequest (format: YYYY-MM-DD)
  */
-export const Status = ({ userrequestState, user, approbations }) => {
+export const Status = ({ userrequestState, user, approbations, userrequestExpiry }) => {
   if (!userrequestState || !user) {
     return null;
   }
 
-  const { text, type } = getUserrequestStatus(userrequestState, approbations, user);
+  const {
+    text,
+    type,
+  } = getUserrequestStatus(userrequestState, approbations, user, userrequestExpiry);
   return <Alert message={text} type={type || 'info'} />;
 };
 
