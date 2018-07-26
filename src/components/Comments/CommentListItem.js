@@ -36,10 +36,7 @@ const CommentListItem = ({ comment }) => (
         </div>
       </div>
 
-      <CommentItemAttachments
-        attachment={comment.attachment}
-        geojson={comment.geojson}
-      />
+      <CommentItemAttachments {...comment} />
     </div>
   </List.Item>
 );
