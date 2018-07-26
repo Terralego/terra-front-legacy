@@ -14,17 +14,17 @@ import {
 class ModalComment extends React.Component {
   state = {
     showDrawMap: false,
-    features: [],
+    tempFeatures: [],
   };
 
   addLocalRequest = feature => {
-    this.setState({ features: [...this.state.features, feature] });
+    this.setState({ tempFeatures: [...this.state.tempFeatures, feature] });
   }
 
   handleMapCancel = () => {
     this.setState({
       showDrawMap: !this.state.showDrawMap,
-      features: [...this.props.comment.geojson.features],
+      tempFeatures: [...this.props.comment.geojson.tempFeatures],
     });
   }
 
@@ -34,19 +34,19 @@ class ModalComment extends React.Component {
 
   handleMapSubmit = () => {
     this.setState({ showDrawMap: !this.state.showDrawMap });
-    this.props.addRequestCommentFeature(this.state.features);
+    this.props.addRequestCommentFeature(this.state.tempFeatures);
   }
 
   removeRequestCommentFeature = id => {
     this.setState({
-      features: this.state.features.filter(feature => feature.properties.id !== id),
+      tempFeatures: this.state.tempFeatures.filter(feature => feature.properties.id !== id),
     });
     this.props.removeRequestCommentFeature();
   }
 
   render () {
-    const { features, showDrawMap } = this.state;
-    const reduxFeatures = this.props.comment.geojson.features;
+    const { tempFeatures, showDrawMap } = this.state;
+    const { features } = this.props.comment.geojson;
     return (
       <div>
         {showDrawMap &&
@@ -58,7 +58,7 @@ class ModalComment extends React.Component {
             width="800px"
           >
             <FormMap
-              features={features}
+              features={tempFeatures}
               drawMode="pointer"
               activity={{
                 type: '',
@@ -78,9 +78,9 @@ class ModalComment extends React.Component {
           icon="edit"
           onClick={() => this.setState({ showDrawMap: !showDrawMap })}
         >
-          {reduxFeatures.length !== 0 ? 'Modifier des tracés' : 'Rééditer un tracé'}
+          {features.length !== 0 ? 'Modifier des tracés' : 'Rééditer un tracé'}
         </Button>
-        {reduxFeatures.length !== 0 &&
+        {features.length !== 0 &&
         <p>
           <strong style={{ fontSize: '0.9em' }}><Icon type="paper-clip" /> Tracé(s) en attente d'envoi</strong>
           <Button
@@ -89,7 +89,7 @@ class ModalComment extends React.Component {
             size="small"
             onClick={() =>
               this.props.removeRequestCommentNewFeature() &&
-              this.setState({ features: [] })}
+              this.setState({ tempFeatures: [] })}
           >
             Supprimer tous les tracés
           </Button>

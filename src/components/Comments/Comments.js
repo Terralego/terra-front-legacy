@@ -61,16 +61,13 @@ class Comments extends React.Component {
           <p>Votre message ne sera visible qu'en interne.</p>
         }
         <TextArea
-          style={{ marginBottom: 12 }}
+          style={{ marginBottom: -12 }}
           model=".text"
           placeholder="Entrez votre message..."
-          errorMessages={{ required: { message: 'Veuillez écrire un message' } }}
         />
-        <div className={styles.buttons}>
-          <ModalComment />
-          <UploadAttachment />
+        <UploadAttachment />
+        <div className={styles.submitButton}>
           <Button
-            style={{ marginLeft: 10 }}
             type="primary"
             htmlType="submit"
             icon="arrow-right"

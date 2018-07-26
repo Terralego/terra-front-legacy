@@ -22,7 +22,7 @@ const UploadAttachment = props => {
         onRemove={onRemove}
         beforeUpload={beforeUpload}
       >
-        <Button>
+        <Button size="small">
           <Icon type="upload" /> Joindre un fichier
         </Button>
       </Upload>
