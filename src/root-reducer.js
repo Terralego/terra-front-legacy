@@ -2,7 +2,8 @@ import { combineReducers } from 'redux';
 import appConfig from 'modules/appConfig';
 import userrequest from 'modules/userrequest';
 import userrequestList, { userrequestPaginator } from 'modules/userrequestList';
-import userrequestComments from 'modules/userrequestComments';
+import userrequestComment from 'modules/userrequestComment';
+import userrequestCommentList from 'modules/userrequestCommentList';
 import authentication from 'modules/authentication';
 import authenticationTimer from 'modules/authenticationTimer';
 import profile from 'modules/profile';
@@ -13,7 +14,7 @@ import { createForms } from 'react-redux-form';
 export default combineReducers({
   ...createForms({
     userrequest,
-    userrequestComments,
+    userrequestComment,
     profile,
     account,
     login: {
@@ -21,6 +22,7 @@ export default combineReducers({
       password: '',
     },
   }),
+  userrequestCommentList,
   appConfig,
   userrequestList,
   authentication,

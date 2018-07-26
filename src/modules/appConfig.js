@@ -1,4 +1,5 @@
 import { CALL_API } from 'middlewares/api';
+import { defaultHeaders } from 'services/apiService';
 import { RESET_FORM } from 'modules/userrequest';
 
 export const UPDATE_VALUE = 'config/UPDATE_VALUE';
@@ -84,6 +85,6 @@ export const getSettings = () => ({
   [CALL_API]: {
     endpoint: '/settings/',
     types: [CONFIG_REQUEST, CONFIG_SUCCESS, CONFIG_FAILURE],
-    config: { method: 'GET' },
+    config: { headers: defaultHeaders },
   },
 });

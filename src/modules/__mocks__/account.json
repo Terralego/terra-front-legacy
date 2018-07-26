@@ -26,6 +26,9 @@
   "signUp": {
     "default": {
       "config": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
         "body":
           "{\"email\":{\"new_password1\":\"new_password1\",\"new_password2\":\"new_password2\"}}",
         "method": "POST"
@@ -39,7 +42,13 @@
       ]
     },
     "noargs": {
-      "config": { "body": "{}", "method": "POST" },
+      "config": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "{}",
+        "method": "POST"
+      },
       "endpoint": "/accounts/register/",
       "form": "account",
       "types": [
@@ -58,6 +67,9 @@
         "userrequest/NEW_PASSWORD_FAILURE"
       ],
       "config": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
         "method": "POST",
         "body":
           "{\"new_password1\":\"new_password1\",\"new_password2\":\"new_password2\"}"
@@ -72,6 +84,9 @@
         "userrequest/NEW_PASSWORD_FAILURE"
       ],
       "config": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
         "method": "POST",
         "body": "{}"
       },
@@ -81,6 +96,9 @@
   "changePassword": {
     "default": {
       "config": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
         "body":
           "{\"new_password1\":\"new_password1\",\"new_password2\":\"new_password2\"}",
         "method": "POST"
@@ -94,7 +112,13 @@
       ]
     },
     "noargs": {
-      "config": { "body": "{}", "method": "POST" },
+      "config": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "{}",
+        "method": "POST"
+      },
       "endpoint": "/accounts/change-password/reset/",
       "form": "account",
       "types": [

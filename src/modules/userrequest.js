@@ -1,6 +1,7 @@
 import { actions } from 'react-redux-form';
 
 import { CALL_API } from 'middlewares/api';
+import { defaultHeaders } from 'services/apiService';
 import { getFeaturesWithIncidence } from 'helpers/userrequestHelpers';
 import { DETAIL_SUCCESS } from 'modules/userrequestList';
 
@@ -150,6 +151,7 @@ export const submitData = (data, form = 'userrequest') => ({
     endpoint: `/userrequest/${data.id ? `${data.id}/` : ''}`,
     types: [SUBMIT_REQUEST, SUBMIT_SUCCESS, SUBMIT_FAILURE],
     config: {
+      headers: defaultHeaders,
       method: data.id ? 'PUT' : 'POST',
       body: JSON.stringify({
         ...data,
@@ -169,6 +171,7 @@ export const saveDraft = data => (dispatch, getState) => dispatch({
     endpoint: `/userrequest/${data.id ? `${data.id}/` : ''}`,
     types: [SAVE_DRAFT_REQUEST, SAVE_DRAFT_SUCCESS, SAVE_DRAFT_FAILURE],
     config: {
+      headers: defaultHeaders,
       method: data.id ? 'PUT' : 'POST',
       body: JSON.stringify({
         ...data,
@@ -189,6 +192,7 @@ export const getIntersections = (feature, eventDateStart, eventDateEnd) => ({
     endpoint: '/layer/reference/intersects/',
     types: [INTERSECT_REQUEST, INTERSECT_SUCCESS, INTERSECT_FAILURE],
     config: {
+      headrs: defaultHeaders,
       method: 'POST',
       body: JSON.stringify({
         callbackid: feature.properties.id,

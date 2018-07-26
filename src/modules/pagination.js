@@ -3,6 +3,7 @@ import { createSelector } from 'reselect';
 import queryString from 'query-string';
 import settings from 'front-settings';
 import { CALL_API } from 'middlewares/api';
+import { defaultHeaders } from 'services/apiService';
 import pick from 'lodash.pick';
 
 // Pages request actions
@@ -201,7 +202,7 @@ export const abortRequest = (endpoint, params) => ({
 export const fetchPage = (endpoint, params) => ({
   [CALL_API]: {
     types: [PAGE_REQUEST, PAGE_SUCCESS, PAGE_FAILURE],
-    config: { method: 'GET' },
+    config: { headers: defaultHeaders },
     endpoint,
     params,
   },

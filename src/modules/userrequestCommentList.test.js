@@ -1,13 +1,17 @@
-import userrequestComments, {
+import { SUBMIT_SUCCESS } from './userrequestComment';
+import userrequestCommentList, {
   getCommentsByUserrequest,
-  SUBMIT_SUCCESS,
-} from './userrequestComments';
+} from './userrequestCommentList';
 
-describe('userrequestComments selector', () => {
+jest.mock('front-settings', () => ({
+  BASE_URL: '',
+}));
+
+describe('userrequestCommentList selector', () => {
   it('should return an array of selected ids objects', () => {
     const state = {
-      userrequestComments: {
-        comments: {
+      userrequestCommentList: {
+        items: {
           15: {},
           20: { 6: 'a' },
         },
@@ -19,8 +23,8 @@ describe('userrequestComments selector', () => {
 
   it('should return an array ordered by date', () => {
     const state = {
-      userrequestComments: {
-        comments: {
+      userrequestCommentList: {
+        items: {
           15: {},
           20: {
             6: { content: 'a', date: '2018-02-18T16:48:09.299906+02:00' },
@@ -42,7 +46,7 @@ describe('userrequestComments selector', () => {
 describe('SUBMIT_SUCCESS action', () => {
   it('should add new comment when receive data', () => {
     const state = {
-      comments: {
+      items: {
         15: { 1: { content: 'ok', date: '01/02/18' } },
         20: { 6: { content: 'a', date: '01/02/18' }, 7: { content: 'b', date: '01/02/18' } },
       },
@@ -54,6 +58,8 @@ describe('SUBMIT_SUCCESS action', () => {
         id: 5,
         created_at: '2018-05-18T16:48:09.299906+02:00',
         updated_at: '2018-05-18T16:48:09.299949+02:00',
+        attachment_url: '/api/userrequest/21/comment/5/attachment/',
+        filename: 'myFile.txt',
         is_internal: true,
         properties: {
           comment: 'blabla',
@@ -66,13 +72,12 @@ describe('SUBMIT_SUCCESS action', () => {
           },
         },
         userrequest: 21,
-        feature: null,
+        geojson: 'geojson sample',
       },
     };
 
     const expectedState = {
-      text: '',
-      comments: {
+      items: {
         15: { 1: { content: 'ok', date: '01/02/18' } },
         20: { 6: { content: 'a', date: '01/02/18' }, 7: { content: 'b', date: '01/02/18' } },
         21: { 5: {
@@ -80,9 +85,14 @@ describe('SUBMIT_SUCCESS action', () => {
           date: '2018-05-18T16:48:09.299906+02:00',
           author: 'Alexandra Janin',
           is_internal: true,
+          attachment: {
+            url: '/api/userrequest/21/comment/5/attachment/',
+            name: 'myFile.txt',
+          },
+          geojson: 'geojson sample',
         } },
       },
     };
-    expect(userrequestComments(state, action)).toEqual(expectedState);
+    expect(userrequestCommentList(state, action)).toEqual(expectedState);
   });
 });

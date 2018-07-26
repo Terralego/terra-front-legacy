@@ -32,10 +32,8 @@ async function handleErrors (response) {
   throw error;
 }
 
-const options = {
-  headers: {
-    'Content-Type': 'application/json',
-  },
+export const defaultHeaders = {
+  'Content-Type': 'application/json',
 };
 
 export default {
@@ -45,7 +43,7 @@ export default {
   refreshToken: async token =>
     handleErrors(await fetch(`${settings.API_URL}/auth/refresh-token/`, {
       method: 'POST',
-      ...options,
+      headers: defaultHeaders,
       body: JSON.stringify({ token }),
     })),
 
@@ -57,7 +55,7 @@ export default {
   login: async (email, password) =>
     handleErrors(await fetch(`${settings.API_URL}/auth/obtain-token/`, {
       method: 'POST',
-      ...options,
+      headers: defaultHeaders,
       body: JSON.stringify({ email, password }),
     })),
 
@@ -67,7 +65,7 @@ export default {
    * @param  {object} config
    */
   request: async (endpoint, config) => {
-    const headers = { ...options.headers };
+    const headers = {};
     const token = tokenService.getToken();
 
     if (token) {
@@ -76,9 +74,11 @@ export default {
 
     return handleErrors(await fetch(`${settings.API_URL}${endpoint}`, {
       method: 'GET',
-      ...options,
-      headers,
       ...config,
+      headers: {
+        ...headers,
+        ...config.headers,
+      },
     }))
       .then(response => ({ data: response }));
   },

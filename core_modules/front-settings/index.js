@@ -1,9 +1,12 @@
+const BASE_URL = 'https://onf-staging.eu.ngrok.io';
+
 /**
  * Default settings
  */
 const defaultSettings = {
   SITE_NAME: 'Terralego',
-  API_URL: 'https://onf-staging.eu.ngrok.io/api', // TODO : change with generic API
+  BASE_URL,
+  API_URL: `${BASE_URL}/api`,
   SOURCE_VECTOR_URL: 'https://onf-staging.eu.ngrok.io/api/layer', // TODO : change with generic API
   REFRESH_TOKEN: 300000,
   PAGE_SIZE: 10,
