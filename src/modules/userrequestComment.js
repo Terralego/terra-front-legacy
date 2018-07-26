@@ -105,12 +105,13 @@ export default userrequestComment;
  * @param {string} new comment text
  */
 export const submitComment = (userrequestId, data, isInternal) => {
-  console.log(data);
-
   const body = new FormData();
   body.append('properties', JSON.stringify(data.properties));
-  body.append('geojson', JSON.stringify(data.geojson));
   body.append('is_internal', isInternal);
+
+  if (data.geojson.features.length) {
+    body.append('geojson', JSON.stringify(data.geojson));
+  }
 
   if (data.attachment) {
     body.append('attachment', data.attachment);

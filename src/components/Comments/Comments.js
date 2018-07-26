@@ -1,18 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Form as ReduxForm } from 'react-redux-form';
-import { Spin, List, Button, Modal } from 'antd';
-import moment from 'moment';
+import { Button, Modal } from 'antd';
 
 import { getUserGroup } from 'modules/authentication';
 import { submitComment } from 'modules/userrequestComment';
-import {
-  fetchUserrequestComments,
-  getCommentsByUserrequest,
-} from 'modules/userrequestCommentList';
+
+import CommentList from 'components/Comments/CommentList';
 import TextArea from 'components/Fields/TextArea';
 import Select from 'components/Fields/Select';
 import FormMap from 'components/FormMap/FormMap';
@@ -27,12 +23,6 @@ class Comments extends React.Component {
     showDrawMap: false,
   }
 
-  componentDidMount () {
-    if (!this.props.comments.length && !this.props.loading && !this.props.fetched) {
-      this.props.fetchUserrequestComments(this.props.userrequestId);
-    }
-  }
-
   handleSubmit = () => {
     const { userrequestId, newComment, userGroup } = this.props;
     // Only N2 can choose if message is private or not
@@ -42,7 +32,7 @@ class Comments extends React.Component {
   }
 
   render () {
-    const { comments, loading, form, userGroup } = this.props;
+    const { form, userGroup, userrequestId } = this.props;
     return (
       <ReduxForm model="userrequestComment">
         {userGroup === 'N2' && <Select
@@ -72,56 +62,7 @@ class Comments extends React.Component {
             Envoyer
           </Button>
         </div>
-
-        {loading
-        ? <Spin style={{ margin: '24px auto', width: '100%' }} />
-        : <List
-          style={{ marginTop: 24 }}
-          dataSource={comments}
-          renderItem={comment => (
-            <div>
-              <List.Item
-                key={comment.content}
-                className={classnames({
-                  [styles.internalItem]: comment.is_internal,
-                  [styles.listItem]: true,
-                })}
-                style={{ marginBottom: -35, paddingBottom: 60 }}
-              >
-                <List.Item.Meta
-                  title={comment.author}
-                  description={comment.content}
-                  style={{ marginTop: 10 }}
-                />
-                <div style={{ textAlign: 'right', marginTop: 10 }}>
-                  {comment.is_internal &&
-                    <span className={styles.internal}>Message interne</span>
-                  }
-                  <span style={{ display: 'block', color: 'rgba(0, 0, 0, 0.45)' }}>
-                    {moment(comment.date).format('DD/MM/YY')}
-                  </span>
-                  <span style={{ display: 'block', color: 'rgba(0, 0, 0, 0.45)', fontSize: 12 }}>
-                    {moment(comment.date).format('HH[h]mm')}
-                  </span>
-                </div>
-              </List.Item>
-              {comment.features &&
-                <Button
-                  type="default"
-                  icon="edit"
-                  size="small"
-                  onClick={() => this.setState({
-                      features: comment.features || [],
-                      activity: comment.activity || [],
-                      showDrawMap: !this.state.showDrawMap,
-                    })}
-                >
-                  Voir le tracé en pièce jointe
-                </Button>
-              }
-            </div>
-          )}
-        />}
+        <CommentList userrequestId={userrequestId} />
         <Modal
           title="Tracé"
           visible={this.state.showDrawMap}
@@ -140,17 +81,14 @@ Comments.propTypes = {
   userrequestId: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = (state, props) => ({
+const mapStateToProps = state => ({
   userGroup: getUserGroup(state),
-  comments: getCommentsByUserrequest(state, props.userrequestId),
-  loading: state.userrequestCommentList.loading,
   form: state.forms.userrequestComment.$form,
   newComment: state.userrequestComment,
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators({
-    fetchUserrequestComments,
     submitComment,
   }, dispatch);
 
