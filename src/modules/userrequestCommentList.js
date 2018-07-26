@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
 import moment from 'moment';
+import settings from 'front-settings';
 import { CALL_API } from 'middlewares/api';
 import { defaultHeaders } from 'services/apiService';
 import { SUBMIT_SUCCESS } from 'modules/userrequestComment';
@@ -28,7 +29,7 @@ const getCommentData = data => ({
   is_internal: data.is_internal,
   geojson: data.geojson,
   attachment: data.filename ? {
-    url: data.attachment_url,
+    url: `${settings.API_URL}${data.attachment_url}`,
     name: data.filename,
   } : null,
 });
