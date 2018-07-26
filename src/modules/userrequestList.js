@@ -1,5 +1,8 @@
 import { createSelector } from 'reselect';
+
 import { CALL_API } from 'middlewares/api';
+import { defaultHeaders } from 'services/apiService';
+
 import { SUBMIT_SUCCESS, SAVE_DRAFT_SUCCESS } from 'modules/userrequest';
 import { getUserGroup } from 'modules/authentication';
 import createPaginator, { getCurrentPageResults, PAGE_SUCCESS } from 'modules/pagination';
@@ -143,7 +146,9 @@ export const fetchUserrequest = id => ({
   [CALL_API]: {
     endpoint: `/userrequest/${id}/`,
     types: [DETAIL_REQUEST, DETAIL_SUCCESS, DETAIL_FAILURE],
-    config: { method: 'GET' },
+    config: {
+      headers: defaultHeaders,
+    },
   },
 });
 
@@ -157,6 +162,7 @@ export const updateState = (id, state) => ({
     endpoint: `/userrequest/${id}/`,
     types: [STATE_CHANGE_REQUEST, STATE_CHANGE_SUCCESS, STATE_CHANGE_FAILURE],
     config: {
+      headers: defaultHeaders,
       method: 'PATCH',
       body: JSON.stringify({
         state,
@@ -176,6 +182,7 @@ export const updateStateAndApprobation = (data, status, userUuid) => ({
     endpoint: `/userrequest/${data.id}/`,
     types: [STATE_CHANGE_REQUEST, STATE_CHANGE_SUCCESS, STATE_CHANGE_FAILURE],
     config: {
+      headers: defaultHeaders,
       method: 'PATCH',
       body: JSON.stringify({
         state: status,
@@ -202,6 +209,7 @@ export const updateApprobation = (data, status, userUuid) => ({
     endpoint: `/userrequest/${data.id}/`,
     types: [APPROBATIONS_CHANGE_REQUEST, APPROBATIONS_CHANGE_SUCCESS, APPROBATIONS_CHANGE_FAILURE],
     config: {
+      headers: defaultHeaders,
       method: 'PATCH',
       body: JSON.stringify({
         properties: {

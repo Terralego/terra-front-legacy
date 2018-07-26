@@ -1,4 +1,5 @@
 import { CALL_API } from 'middlewares/api';
+import { defaultHeaders } from 'services/apiService';
 
 export const SIGNUP_REQUEST = 'userrequest/SIGNUP_REQUEST';
 export const SIGNUP_SUCCESS = 'userrequest/SIGNUP_SUCCESS';
@@ -74,6 +75,7 @@ export const signUp = email => ({
     endpoint: '/accounts/register/',
     types: [SIGNUP_REQUEST, SIGNUP_SUCCESS, SIGNUP_FAILURE],
     config: {
+      headers: defaultHeaders,
       method: 'POST',
       body: JSON.stringify({
         email,
@@ -96,6 +98,7 @@ export const newPassword = (password, uidb64 = '', token = '') => ({
     endpoint: `/accounts/change-password/reset/${uidb64}/${token}/`,
     types: [NEW_PASSWORD_REQUEST, NEW_PASSWORD_SUCCESS, NEW_PASSWORD_FAILURE],
     config: {
+      headers: defaultHeaders,
       method: 'POST',
       body: JSON.stringify({
         ...password,
@@ -116,6 +119,7 @@ export const changePassword = password => ({
     endpoint: '/accounts/change-password/reset/',
     types: [CHANGE_PASSWORD_REQUEST, CHANGE_PASSWORD_SUCCESS, CHANGE_PASSWORD_FAILURE],
     config: {
+      headers: defaultHeaders,
       method: 'POST',
       body: JSON.stringify({
         ...password,
