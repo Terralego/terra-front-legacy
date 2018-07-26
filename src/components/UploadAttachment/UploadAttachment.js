@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Button, Upload, Icon } from 'antd';
 
-import { addAttachment, removeAttachment } from 'modules/userrequestComments';
+import { addAttachment, removeAttachment } from 'modules/userrequestComment';
 
 const UploadAttachment = props => {
   const onRemove = file => {
@@ -21,6 +21,7 @@ const UploadAttachment = props => {
         multiple={false}
         onRemove={onRemove}
         beforeUpload={beforeUpload}
+        fileList={props.file && [props.file]}
       >
         <Button size="small">
           <Icon type="upload" /> Joindre un fichier
@@ -31,8 +32,7 @@ const UploadAttachment = props => {
 };
 
 const mapStateToProps = state => ({
-  form: state.forms.userrequestComments.$form,
-  comment: state.userrequestComments,
+  file: state.userrequestComment.attachment,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

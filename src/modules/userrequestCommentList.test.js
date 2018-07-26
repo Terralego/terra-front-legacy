@@ -1,13 +1,16 @@
-import userrequestComments, {
-  getCommentsByUserrequest,
+import {
   SUBMIT_SUCCESS,
-} from './userrequestComments';
+} from './userrequestComment';
 
-describe('userrequestComments selector', () => {
+import userrequestCommentList, {
+  getCommentsByUserrequest,
+} from './userrequestCommentList';
+
+describe('userrequestCommentList selector', () => {
   it('should return an array of selected ids objects', () => {
     const state = {
-      userrequestComments: {
-        comments: {
+      userrequestCommentList: {
+        items: {
           15: {},
           20: { 6: 'a' },
         },
@@ -19,8 +22,8 @@ describe('userrequestComments selector', () => {
 
   it('should return an array ordered by date', () => {
     const state = {
-      userrequestComments: {
-        comments: {
+      userrequestCommentList: {
+        items: {
           15: {},
           20: {
             6: { content: 'a', date: '2018-02-18T16:48:09.299906+02:00' },
@@ -42,7 +45,7 @@ describe('userrequestComments selector', () => {
 describe('SUBMIT_SUCCESS action', () => {
   it('should add new comment when receive data', () => {
     const state = {
-      comments: {
+      items: {
         15: { 1: { content: 'ok', date: '01/02/18' } },
         20: { 6: { content: 'a', date: '01/02/18' }, 7: { content: 'b', date: '01/02/18' } },
       },
@@ -71,8 +74,7 @@ describe('SUBMIT_SUCCESS action', () => {
     };
 
     const expectedState = {
-      text: '',
-      comments: {
+      items: {
         15: { 1: { content: 'ok', date: '01/02/18' } },
         20: { 6: { content: 'a', date: '01/02/18' }, 7: { content: 'b', date: '01/02/18' } },
         21: { 5: {
@@ -83,6 +85,6 @@ describe('SUBMIT_SUCCESS action', () => {
         } },
       },
     };
-    expect(userrequestComments(state, action)).toEqual(expectedState);
+    expect(userrequestCommentList(state, action)).toEqual(expectedState);
   });
 });

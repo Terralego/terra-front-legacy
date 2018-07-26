@@ -8,14 +8,11 @@ import { Spin, List, Button, Modal } from 'antd';
 import moment from 'moment';
 
 import { getUserGroup } from 'modules/authentication';
+import { submitComment } from 'modules/userrequestComment';
 import {
   fetchUserrequestComments,
   getCommentsByUserrequest,
-  submitComment,
-  removeRequestCommentNewFeature,
-  removeAllAttachments,
-} from 'modules/userrequestComments';
-import ModalComment from 'components/Comments/ModalComment';
+} from 'modules/userrequestCommentList';
 import TextArea from 'components/Fields/TextArea';
 import Select from 'components/Fields/Select';
 import FormMap from 'components/FormMap/FormMap';
@@ -37,20 +34,17 @@ class Comments extends React.Component {
   }
 
   handleSubmit = () => {
-    const { userrequestId, comment, userGroup } = this.props;
+    const { userrequestId, newComment, userGroup } = this.props;
     // Only N2 can choose if message is private or not
     // If N1, always set internal to true
-    const internal = userGroup === 'N2' ? comment.is_internal : true;
-    this.props.submitComment(userrequestId, comment, internal);
-    // On arrête d'afficher la note de prêt à l'envoi du geojson et on supprime les pièces jointes
-    this.props.removeRequestCommentNewFeature();
-    this.props.removeAllAttachments();
+    const internal = userGroup === 'N2' ? newComment.is_internal : true;
+    this.props.submitComment(userrequestId, newComment, internal);
   }
 
   render () {
     const { comments, loading, form, userGroup } = this.props;
     return (
-      <ReduxForm model="userrequestComments">
+      <ReduxForm model="userrequestComment">
         {userGroup === 'N2' && <Select
           placeholder="Choisir un destinataire"
           model=".is_internal"
@@ -62,7 +56,7 @@ class Comments extends React.Component {
         }
         <TextArea
           style={{ marginBottom: -12 }}
-          model=".text"
+          model=".properties.comment"
           placeholder="Entrez votre message..."
         />
         <UploadAttachment />
@@ -149,17 +143,15 @@ Comments.propTypes = {
 const mapStateToProps = (state, props) => ({
   userGroup: getUserGroup(state),
   comments: getCommentsByUserrequest(state, props.userrequestId),
-  loading: state.userrequestComments.loading,
-  form: state.forms.userrequestComments.$form,
-  comment: state.userrequestComments,
+  loading: state.userrequestCommentList.loading,
+  form: state.forms.userrequestComment.$form,
+  newComment: state.userrequestComment,
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators({
     fetchUserrequestComments,
     submitComment,
-    removeRequestCommentNewFeature,
-    removeAllAttachments,
   }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Comments);
