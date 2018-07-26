@@ -1,4 +1,8 @@
 module.exports = {
+  rules: {
+    'react/require-default-props': [0],
+    'react/forbid-prop-types': [0],
+  },
   extends: 'makina',
   env: {
     browser: true,
