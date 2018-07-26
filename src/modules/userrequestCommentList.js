@@ -26,6 +26,11 @@ const getCommentData = data => ({
   date: data.created_at,
   author: getCommentAuthor(data.owner),
   is_internal: data.is_internal,
+  geojson: data.geojson,
+  attachment: {
+    url: data.attachment_url,
+    name: data.filename,
+  },
 });
 
 const parseCommentsByUserrequest = response => {
