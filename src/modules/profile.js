@@ -1,4 +1,5 @@
 import initialState from 'modules/profile-initial';
+import { defaultHeaders } from 'services/apiService';
 import { CALL_API } from 'middlewares/api';
 
 export const UPDATE_PROPERTIES = 'profile/UPDATE_PROPERTIES';
@@ -32,12 +33,6 @@ const profile = (state = initialState, action) => {
     case SUBMIT_SUCCESS:
       return {
         ...state,
-        profile: {
-          ...state.profile,
-          // [action.data.userprofile]: {
-          //   ...state.profile[action.data.userprofile],
-          // },
-        },
       };
     case SUBMIT_FAILURE:
       return {
@@ -77,7 +72,7 @@ export const submitProfile = (email, properties, uuid) => ({
     endpoint: '/accounts/user/',
     types: [SUBMIT_REQUEST, SUBMIT_SUCCESS, SUBMIT_FAILURE],
     config: {
-      headers: { 'Content-Type': 'application/json' },
+      headers: defaultHeaders,
       method: 'PUT',
       body: JSON.stringify({
         email,
