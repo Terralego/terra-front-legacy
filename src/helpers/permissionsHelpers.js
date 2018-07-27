@@ -4,10 +4,8 @@
  * @param {array} userPermissions : current user permissions
  * @param {array} requestedPermissions : the permissions we wan't to check
  */
-export const hasPermissions = (userPermissions, requestedPermissions) => {
-  const equal = requestedPermissions.filter(p1 => userPermissions.indexOf(p1) !== -1);
-  return equal.length === requestedPermissions.length;
-};
+export const hasPermissions = (userPermissions, requestedPermissions) =>
+  userPermissions.includes(...requestedPermissions);
 
 /**
  * canCommentInternal
