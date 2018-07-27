@@ -22,7 +22,11 @@ CommentItemAttachments.propTypes = {
   attachment: PropTypes.shape({
     url: PropTypes.string,
     name: PropTypes.string,
-  }).isRequired,
+  }),
+};
+
+CommentItemAttachments.defaultProps = {
+  attachment: null,
 };
 
 export default CommentItemAttachments;
