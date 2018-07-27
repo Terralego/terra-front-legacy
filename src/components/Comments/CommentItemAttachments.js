@@ -9,7 +9,7 @@ const CommentItemAttachments = ({ attachment }) => (
     <ul className={styles.attachmentList}>
       {attachment &&
       <li className={styles.attachmentListItem}>
-        <a href={attachment.url}>
+        <a href={attachment.url} className={styles.attachmentLink}>
           <Icon type="paper-clip" /> {attachment.name}
         </a>
       </li>

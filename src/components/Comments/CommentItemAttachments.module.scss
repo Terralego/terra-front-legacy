@@ -1,10 +1,45 @@
 .attachmentList {
-  margin: 10px 0 0 0;
-  padding: 3px 6px;
-  background: rgba(202, 198, 176, 0.1);
+  margin: 0;
+  padding: 0;
   border-radius: 2px;
 }
 
 .attachmentListItem {
   list-style-type: none;
+  padding: 0 12px 0 4px;
+  color: rgba(0, 0, 0, 0.65);
+  &:hover {
+    background-color: #cfe6d7;
+  }
+  &--link {
+    &:hover {
+      background-color: transparent;
+    }
+  }
 }
+
+
+.attachmentButton {
+  border: none;
+  background: none;
+  padding: 0;
+  color: rgba(0, 0, 0, 0.65);
+  cursor: pointer;
+  transition: color .2s;
+
+  &--link {
+    color: #00a655;
+    &:hover {
+      color: #1db365;
+    }
+    &:active {
+      color: #008046;
+    }
+    &:focus {
+      text-decoration: underline;
+    }
+  }
+}
+
+
+
