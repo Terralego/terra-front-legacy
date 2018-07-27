@@ -1,6 +1,12 @@
 import initialState from 'modules/profile-initial';
+import { defaultHeaders } from 'services/apiService';
+import { CALL_API } from 'middlewares/api';
 
 export const UPDATE_PROPERTIES = 'profile/UPDATE_PROPERTIES';
+
+export const SUBMIT_REQUEST = 'profile/SUBMIT_REQUEST';
+export const SUBMIT_SUCCESS = 'profile/SUBMIT_SUCCESS';
+export const SUBMIT_FAILURE = 'profile/SUBMIT_FAILURE';
 
 /**
  * REDUCER
@@ -15,6 +21,20 @@ const profile = (state = initialState, action) => {
           ...state.properties,
           ...action.properties,
         },
+      };
+
+    case SUBMIT_REQUEST:
+      return {
+        ...state,
+      };
+    case SUBMIT_SUCCESS:
+      return {
+        ...state,
+      };
+    case SUBMIT_FAILURE:
+      return {
+        ...state,
+        error: action.error,
       };
     default:
       return state;
@@ -37,4 +57,26 @@ export default profile;
 export const updateProfileProperties = properties => ({
   type: UPDATE_PROPERTIES,
   properties,
+});
+
+/**
+ * profile async action : post profile informations
+ * @param {number}
+ * @param {string}
+ */
+export const submitProfile = (email, properties, uuid) => ({
+  [CALL_API]: {
+    endpoint: '/accounts/user/',
+    types: [SUBMIT_REQUEST, SUBMIT_SUCCESS, SUBMIT_FAILURE],
+    config: {
+      headers: defaultHeaders,
+      method: 'PUT',
+      body: JSON.stringify({
+        email,
+        properties,
+        uuid,
+      }),
+    },
+    form: 'profile',
+  },
 });
