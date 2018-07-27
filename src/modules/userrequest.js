@@ -192,7 +192,7 @@ export const getIntersections = (feature, eventDateStart, eventDateEnd) => ({
     endpoint: '/layer/reference/intersects/',
     types: [INTERSECT_REQUEST, INTERSECT_SUCCESS, INTERSECT_FAILURE],
     config: {
-      headrs: defaultHeaders,
+      headers: defaultHeaders,
       method: 'POST',
       body: JSON.stringify({
         callbackid: feature.properties.id,
