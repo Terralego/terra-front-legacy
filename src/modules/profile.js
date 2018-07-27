@@ -1,12 +1,13 @@
 import initialState from 'modules/profile-initial';
 import { defaultHeaders } from 'services/apiService';
 import { CALL_API } from 'middlewares/api';
+import { SET_AUTHENTICATION } from 'modules/authentication';
 
 export const UPDATE_PROPERTIES = 'profile/UPDATE_PROPERTIES';
 
-export const SUBMIT_REQUEST = 'profile/SUBMIT_REQUEST';
-export const SUBMIT_SUCCESS = 'profile/SUBMIT_SUCCESS';
-export const SUBMIT_FAILURE = 'profile/SUBMIT_FAILURE';
+export const PROFILE_REQUEST = 'profile/PROFILE_REQUEST';
+export const PROFILE_SUCCESS = 'profile/PROFILE_SUCCESS';
+export const PROFILE_FAILURE = 'profile/PROFILE_FAILURE';
 
 /**
  * REDUCER
@@ -23,18 +24,18 @@ const profile = (state = initialState, action) => {
         },
       };
 
-    case SUBMIT_REQUEST:
+    case PROFILE_REQUEST:
       return {
         ...state,
       };
-    case SUBMIT_SUCCESS:
+    case PROFILE_SUCCESS:
       return {
         ...state,
       };
-    case SUBMIT_FAILURE:
+    case SET_AUTHENTICATION:
       return {
         ...state,
-        error: action.error,
+        properties: action.payload.user.properties,
       };
     default:
       return state;
@@ -67,7 +68,7 @@ export const updateProfileProperties = properties => ({
 export const submitProfile = (email, properties, uuid) => ({
   [CALL_API]: {
     endpoint: '/accounts/user/',
-    types: [SUBMIT_REQUEST, SUBMIT_SUCCESS, SUBMIT_FAILURE],
+    types: [PROFILE_REQUEST, PROFILE_SUCCESS, PROFILE_FAILURE],
     config: {
       headers: defaultHeaders,
       method: 'PUT',
