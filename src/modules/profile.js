@@ -35,7 +35,7 @@ const profile = (state = initialState, action) => {
     case SET_AUTHENTICATION:
       return {
         ...state,
-        properties: action.payload.user.properties,
+        properties: action.payload ? action.payload.user.properties : state.properties,
       };
     default:
       return state;
