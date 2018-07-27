@@ -150,14 +150,6 @@ export const removeRequestCommentFeature = featureId => ({
 });
 
 /**
-* userrequestComment action
-* remove all geojson properties in comments
- */
-export const removeRequestCommentNewFeature = () => ({
-  type: GEOJSON_COMMENT_NEW_FEATURE_REMOVE,
-});
-
-/**
  * userrequestComment action
  * add attachment
  * @param {object} properties: object of properties to add / update in userrequestComment object

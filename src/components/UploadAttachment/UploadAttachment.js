@@ -16,18 +16,16 @@ const UploadAttachment = props => {
   };
 
   return (
-    <div>
-      <Upload
-        multiple={false}
-        onRemove={onRemove}
-        beforeUpload={beforeUpload}
-        fileList={props.file && [props.file]}
-      >
-        <Button size="small">
-          <Icon type="upload" /> Joindre un fichier
-        </Button>
-      </Upload>
-    </div>
+    <Upload
+      multiple={false}
+      onRemove={onRemove}
+      beforeUpload={beforeUpload}
+      fileList={props.file && [props.file]}
+    >
+      <Button size="small">
+        <Icon type="upload" /> Joindre un fichier
+      </Button>
+    </Upload>
   );
 };
 
