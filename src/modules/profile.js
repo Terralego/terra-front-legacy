@@ -26,9 +26,6 @@ const profile = (state = initialState, action) => {
     case SUBMIT_REQUEST:
       return {
         ...state,
-        submitted: true,
-        sent: false,
-        error: null,
       };
     case SUBMIT_SUCCESS:
       return {
