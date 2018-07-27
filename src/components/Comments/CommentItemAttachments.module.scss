@@ -7,4 +7,24 @@
 
 .attachmentListItem {
   list-style-type: none;
+  padding: 2px 0;
 }
+
+.attachmentLink {
+  border: none;
+  background: none;
+  padding: 0;
+  color: #00a655;
+  &:hover {
+    color: #1db365;
+  }
+  &:active {
+    color: #008046;
+  }
+  &:focus {
+    text-decoration: underline;
+  }
+}
+
+
+
