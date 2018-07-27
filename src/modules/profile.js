@@ -4,9 +4,9 @@ import { CALL_API } from 'middlewares/api';
 
 export const UPDATE_PROPERTIES = 'profile/UPDATE_PROPERTIES';
 
-export const SUBMIT_REQUEST = 'profilerequest/SUBMIT_REQUEST';
-export const SUBMIT_SUCCESS = 'profilerequest/SUBMIT_SUCCESS';
-export const SUBMIT_FAILURE = 'profilerequest/SUBMIT_FAILURE';
+export const SUBMIT_REQUEST = 'profile/SUBMIT_REQUEST';
+export const SUBMIT_SUCCESS = 'profile/SUBMIT_SUCCESS';
+export const SUBMIT_FAILURE = 'profile/SUBMIT_FAILURE';
 
 /**
  * REDUCER
