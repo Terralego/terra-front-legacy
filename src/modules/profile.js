@@ -32,14 +32,13 @@ const profile = (state = initialState, action) => {
       return {
         ...state,
       };
-    case SET_AUTHENTICATION: {
+    case SET_AUTHENTICATION:
       return {
         ...state,
         properties: Object.keys(action.payload).length !== 0
           ? { ...initialState.properties, ...action.payload.user.properties }
           : initialState.properties,
       };
-    }
     default:
       return state;
   }
