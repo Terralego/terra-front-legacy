@@ -22,7 +22,7 @@ class CommentList extends React.Component {
   render () {
     const { comments, loading } = this.props;
     // Sort comments by antechronological order
-    comments.sort((a, b) => moment(b.date).valueOf() - moment(a.date).valueOf());
+    comments.sort((a, b) => (moment(b.date).isBefore(a.date) ? -1 : 1));
     return loading
       ? <Spin style={{ margin: '24px auto', width: '100%' }} />
       : <List
