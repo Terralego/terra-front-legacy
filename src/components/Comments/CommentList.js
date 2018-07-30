@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Spin, List } from 'antd';
+import moment from 'moment';
 
 import { submitComment } from 'modules/userrequestComment';
 import {
@@ -20,6 +21,8 @@ class CommentList extends React.Component {
 
   render () {
     const { comments, loading } = this.props;
+    // Sort comments by antechronological order
+    comments.sort((a, b) => moment(b.date).valueOf() - moment(a.date).valueOf());
     return loading
       ? <Spin style={{ margin: '24px auto', width: '100%' }} />
       : <List
