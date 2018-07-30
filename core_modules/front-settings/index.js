@@ -11,6 +11,8 @@ const defaultSettings = {
   REFRESH_TOKEN: 300000,
   PAGE_SIZE: 10,
   TIME_TO_STALE: 300000, // 5 min
+  SENTRY_PUBLIC_KEY: '287261d54ab14908b2233ae38336570d',
+  SENTRY_PROJECT_ID: '',
 };
 
 const prefixFiltering = scope => (acc, curr) => {

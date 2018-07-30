@@ -7,7 +7,6 @@ class ErrorBoundary extends React.Component {
   componentDidCatch () {
     // Display fallback UI
     this.setState({ hasError: true });
-    // TODO: Set up and call an error reporting service
   }
 
   render () {

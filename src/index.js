@@ -1,6 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
+import Raven from 'raven-js';
+import settings from 'front-settings';
+
 import { setAuthentication, refreshToken } from 'modules/authentication';
 import { getSettings } from 'modules/appConfig';
 
@@ -8,6 +11,11 @@ import './index.css';
 import store from './store';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
+
+Raven.config(`https://${settings.SENTRY_PUBLIC_KEY}@sentry.io/${settings.SENTRY_PROJECT_ID}`, {
+  release: '0-0-0',
+  environment: 'development-test',
+}).install();
 
 const render = Component => {
   ReactDOM.render(
