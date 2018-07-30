@@ -59,7 +59,7 @@ const authentication = (state = initialState, action) => {
         receivedAt: action.receivedAt,
       };
     case RESET_TOKEN:
-    case SET_AUTHENTICATION: {
+    case SET_AUTHENTICATION:
       return {
         ...state,
         isAuthenticated: action.isAuthenticated,
@@ -68,13 +68,12 @@ const authentication = (state = initialState, action) => {
           ...action.payload,
         },
       };
-    }
     case SET_ERROR_MESSAGE:
       return {
         ...state,
         errorMessage: action.message,
       };
-    case PROFILE_SUCCESS: {
+    case PROFILE_SUCCESS:
       return {
         ...state,
         payload: {
@@ -88,7 +87,6 @@ const authentication = (state = initialState, action) => {
           },
         },
       };
-    }
     default:
       return state;
   }
