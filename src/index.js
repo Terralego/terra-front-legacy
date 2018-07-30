@@ -12,10 +12,12 @@ import store from './store';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
-Raven.config(`https://${settings.SENTRY_PUBLIC_KEY}@sentry.io/${settings.SENTRY_PROJECT_ID}`, {
-  release: '0-0-0',
-  environment: 'development-test',
-}).install();
+if (settings.SENTRY_PUBLIC_KEY && settings.SENTRY_PROJECT_ID) {
+  Raven.config(`https://${settings.SENTRY_PUBLIC_KEY}@sentry.io/${settings.SENTRY_PROJECT_ID}`, {
+    release: settings.VERSION,
+    environment: 'development-test',
+  }).install();
+}
 
 const render = Component => {
   ReactDOM.render(

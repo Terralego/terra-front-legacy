@@ -1,3 +1,5 @@
+import packageJson from '../../package.json';
+
 const BASE_URL = 'https://onf-staging.eu.ngrok.io';
 
 /**
@@ -5,6 +7,7 @@ const BASE_URL = 'https://onf-staging.eu.ngrok.io';
  */
 const defaultSettings = {
   SITE_NAME: 'Terralego',
+  VERSION: packageJson.version,
   BASE_URL,
   API_URL: `${BASE_URL}/api`,
   SOURCE_VECTOR_URL: 'https://onf-staging.eu.ngrok.io/api/layer', // TODO : change with generic API
