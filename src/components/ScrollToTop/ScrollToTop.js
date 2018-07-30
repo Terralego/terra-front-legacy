@@ -1,5 +1,4 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
 
 /**
  * ScrollToTop automatically scroll window to top each time the document
@@ -9,10 +8,8 @@ import { withRouter } from 'react-router-dom';
  * @extends {React.Component}
  */
 class ScrollToTop extends React.Component {
-  componentDidUpdate (prevProps) {
-    if (this.props.location !== prevProps.location) {
-      window.scrollTo(0, 0);
-    }
+  componentWillMount () {
+    window.scrollTo(0, 0);
   }
 
   render () {
@@ -20,4 +17,4 @@ class ScrollToTop extends React.Component {
   }
 }
 
-export default withRouter(ScrollToTop);
+export default ScrollToTop;
