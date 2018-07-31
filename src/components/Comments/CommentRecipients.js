@@ -1,30 +1,29 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import withAuthentication from 'hoc/authentication';
 import Select from 'components/Fields/Select';
+import { canCommentInternal } from 'helpers/permissionsHelpers';
 
 const recipientsOptions = [
   { label: 'Demandeur et ONF', value: false },
   { label: 'ONF uniquement', value: true },
 ];
 
-const CommentRecipients = ({ userGroup }) => (
-  <React.Fragment>
-    {userGroup === 'N2' && <Select
-      placeholder="Choisir un destinataire"
-      model=".is_internal"
-      options={recipientsOptions}
-      errorMessages={{ required: { message: 'Veuillez choisir un destinataire' } }}
-    />}
-    {userGroup === 'N1' &&
-      <p>Votre message ne sera visible qu'en interne.</p>
-    }
-  </React.Fragment>
-);
+const CommentRecipients = ({ user }) => {
+  const internal = canCommentInternal(user.permissions, false);
 
-CommentRecipients.propTypes = {
-  userGroup: PropTypes.string.isRequired,
+  return (
+    <React.Fragment>
+      {internal ?
+        <p>Votre message ne sera visible qu'en interne.</p>
+      : <Select
+        placeholder="Choisir un destinataire"
+        model=".is_internal"
+        options={recipientsOptions}
+        errorMessages={{ required: { message: 'Veuillez choisir un destinataire' } }}
+      />}
+    </React.Fragment>
+  );
 };
 
 export default withAuthentication(CommentRecipients);
