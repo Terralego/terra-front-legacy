@@ -3,6 +3,7 @@ import { createSelector } from 'reselect';
 import { disableTimerRefreshToken, enableTimerRefreshToken } from 'modules/authenticationTimer';
 import apiService from 'services/apiService';
 import tokenService from 'services/tokenService';
+import { PROFILE_SUCCESS } from 'modules/profile';
 
 export const REQUEST_TOKEN = 'authentication/REQUEST_TOKEN';
 export const REFRESH_TOKEN = 'authentication/REFRESH_TOKEN';
@@ -71,6 +72,20 @@ const authentication = (state = initialState, action) => {
       return {
         ...state,
         errorMessage: action.message,
+      };
+    case PROFILE_SUCCESS:
+      return {
+        ...state,
+        payload: {
+          ...state.payload,
+          user: {
+            ...state.payload.user,
+            properties: {
+              ...state.payload.user.properties,
+              ...action.data.properties,
+            },
+          },
+        },
       };
     default:
       return state;

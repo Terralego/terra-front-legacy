@@ -1,7 +1,7 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { withRouter, Route, Redirect } from 'react-router-dom';
 
+import withAuthentication from 'hoc/authentication';
 import routes from 'modules/routes';
 import Layout from 'components/Layout/Layout';
 
@@ -18,19 +18,36 @@ const RouteViews = props => {
     <Route
       exact={route.exact}
       path={route.path}
-      render={() => (
-        route.protected && !props.isAuthenticated
-          ?
+      render={() => {
+        // If user try to access a protected route and is not authenticated
+        if (route.protected && !props.isAuthenticated) {
+          return (
             <Redirect
               to={{ pathname: '/login', state: { from: props.location.pathname } }}
               from={props.location.pathname}
             />
-          : <CustomRoute
+          );
+        }
+
+        // If user try to access a protected route and profile is not completed
+        if (props.isAuthenticated && typeof props.user.properties === 'object' && Object.keys(props.user.properties).length === 0
+        && props.location.pathname !== '/profile') {
+          return (
+            <Redirect
+              to={{ pathname: '/profile', state: { from: props.location.pathname } }}
+              from={props.location.pathname}
+            />
+          );
+        }
+
+        return (
+          <CustomRoute
             {...props}
             route={route}
             layout={route.layout}
           />
-      )}
+        );
+      }}
     />
   );
 
@@ -45,8 +62,4 @@ const RouteViews = props => {
   return routesViews.map(route => <RouteWithSubRoutes key={route.path} {...route} />);
 };
 
-const mapStateToProps = state => ({
-  isAuthenticated: state.authentication.isAuthenticated,
-});
-
-export default withRouter(connect(mapStateToProps, null)(RouteViews));
+export default withRouter(withAuthentication(RouteViews));
