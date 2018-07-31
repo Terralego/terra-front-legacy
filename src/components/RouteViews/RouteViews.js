@@ -1,5 +1,5 @@
 import React from 'react';
-import { withRouter, Route, Redirect } from 'react-router-dom';
+import { withRouter, Route, Redirect, Switch } from 'react-router-dom';
 
 import withAuthentication from 'hoc/authentication';
 import routes from 'modules/routes';
@@ -61,7 +61,12 @@ const RouteViews = props => {
     }
   });
 
-  return routesViews.map(route => <RouteWithSubRoutes key={route.path} {...route} />);
+  return (
+    <Switch>
+      {routesViews.map(route => (<RouteWithSubRoutes key={route.path} {...route} />))}
+      <Route component={() => <div>404 not found</div>} />
+    </Switch>
+  );
 };
 
 export default withRouter(withAuthentication(RouteViews));
