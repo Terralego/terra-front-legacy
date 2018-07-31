@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Redirect } from 'react-router-dom';
 
 import { Button, Modal, Alert } from 'antd';
 import Summary from 'components/Summary/Summary';
@@ -15,7 +15,7 @@ class FormSummary extends React.Component {
   handleAction () {
     // Reset form to initial value
     this.props.resetForm();
-    this.props.history.push('/manage-request');
+    return <Redirect to="/manage-request" />;
   }
 
   submitForm = () => {
