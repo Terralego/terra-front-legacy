@@ -14,7 +14,7 @@ class Search extends React.Component {
     return (
       <Input.Search
         addonBefore="Chercher :"
-        placeholder="Numéro de déclaration, titre de l'événement, type d'activité..."
+        placeholder="Numéro de déclaration, titre de l'événement&hellip;"
         onSearch={this.handleSearchChange}
         defaultValue={this.getDefaultValue()}
         enterButton
