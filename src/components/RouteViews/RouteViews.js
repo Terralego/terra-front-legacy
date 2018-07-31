@@ -31,7 +31,8 @@ const RouteViews = props => {
 
         // If user try to access a protected route and profile is not completed
         // Disabled comment, waiting for nahuel come back
-        // if (props.isAuthenticated && typeof props.user.properties === 'object' && Object.keys(props.user.properties).length === 0
+        // if (props.isAuthenticated && typeof props.user.properties === 'object' &&
+        // Object.keys(props.user.properties).length === 0
         // && props.location.pathname !== '/profile') {
         //   return (
         //     <Redirect
