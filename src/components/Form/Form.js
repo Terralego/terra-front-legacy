@@ -67,7 +67,7 @@ class FormApp extends React.Component {
     return (
       <div>
         <Prompt
-          when={this.props.form.touched}
+          when={this.props.form.touched && !this.props.form.submitted}
           message={location => {
             if (location.pathname.startsWith('/manage-request/detail')
             && this.props.location.pathname === '/new-request') {

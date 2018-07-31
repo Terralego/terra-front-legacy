@@ -33,7 +33,7 @@ class HeaderForm extends React.Component {
       <header className={styles.header}>
         <Row gutter={16} type="flex" justify="space-between">
           <Col span={12}>
-            <Link to={location.state ? location.state.from : '/manage-request'} onClick={this.props.resetForm}>
+            <Link to={location.state ? location.state.from : '/manage-request'}>
               <Button type="primary">
                 <Icon type="left" />
                 {FormConfig.confirmation.backButton}
