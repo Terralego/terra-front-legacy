@@ -1,6 +1,7 @@
 import React from 'react';
-import { withRouter, Route, Redirect } from 'react-router-dom';
+import { withRouter, Route, Redirect, Switch } from 'react-router-dom';
 
+import Error404 from 'components/Error404/Error404';
 import withAuthentication from 'hoc/authentication';
 import routes from 'modules/routes';
 import Layout from 'components/Layout/Layout';
@@ -61,7 +62,16 @@ const RouteViews = props => {
     }
   });
 
-  return routesViews.map(route => <RouteWithSubRoutes key={route.path} {...route} />);
+  return (
+    <Switch>
+      {routesViews.map(route => (<RouteWithSubRoutes key={route.path} {...route} />))}
+      <CustomRoute
+        {...props}
+        route={{ name: 'Error404', component: Error404 }}
+        layout=""
+      />
+    </Switch>
+  );
 };
 
 export default withRouter(withAuthentication(RouteViews));
