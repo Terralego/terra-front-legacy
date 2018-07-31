@@ -12,6 +12,8 @@ import store from './store';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
+window.APP_SETTINGS = settings;
+
 if (settings.SENTRY_PUBLIC_KEY && settings.SENTRY_PROJECT_ID) {
   Raven.config(`https://${settings.SENTRY_PUBLIC_KEY}@sentry.io/${settings.SENTRY_PROJECT_ID}`, {
     release: settings.VERSION,
