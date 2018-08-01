@@ -10,18 +10,23 @@ const recipientsOptions = [
 ];
 
 const CommentRecipients = ({ user }) => {
-  const internal = canCommentInternal(user.permissions, false);
+  const canCommentOnlyInternal = canCommentInternal(user.permissions, false);
+  const canCommentExternal = user.permissions.includes('trrequests.can_comment_requests');
+  const canCommentAll = canCommentExternal && user.permissions.includes('trrequests.can_internal_comment_requests');
 
   return (
     <React.Fragment>
-      {internal ?
+      {canCommentOnlyInternal &&
         <p>Votre message ne sera visible qu'en interne.</p>
-      : <Select
-        placeholder="Choisir un destinataire"
-        model=".is_internal"
-        options={recipientsOptions}
-        errorMessages={{ required: { message: 'Veuillez choisir un destinataire' } }}
-      />}
+      }
+      { canCommentAll &&
+        <Select
+          placeholder="Choisir un destinataire"
+          model=".is_internal"
+          options={recipientsOptions}
+          errorMessages={{ required: { message: 'Veuillez choisir un destinataire' } }}
+        />
+      }
     </React.Fragment>
   );
 };
