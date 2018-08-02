@@ -22,7 +22,7 @@ const UserrequestContact = ({ user }) => {
       <Collapse style={{ marginTop: 30 }}>
         {contacts.map(contact => (
           <Collapse.Panel
-            key={contact.phone && contact.firstname}
+            key={contact.phone + contact.firstname}
             header={`${contact.firstname} ${contact.lastname}`}
           >
             <p><strong>Numéro: </strong> {contact.phone[0]}</p>
