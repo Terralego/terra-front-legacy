@@ -2,16 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, Collapse } from 'antd';
 
-const UserrequestContact = ({ user }) => {
-  const { contacts = [] } = user.properties;
-  const { affiliation = [], name, label } = user.properties.structure;
+const UserrequestContact = ({ data }) => {
+  const { contacts = [] } = data.owner.properties;
+  const { affiliation = [], name, label } = data.owner.properties.structure;
   return (
     <Card
       style={{ marginTop: 21 }}
       title="Information sur la structure et personnes de contacts"
     >
       <p><strong>Demandeur:</strong> {contacts[0].firstname} {contacts[0].lastname}</p>
-      <p><strong>Email:</strong> {user.email}</p>
+      <p><strong>Email:</strong> {data.owner.email}</p>
       <p><strong>Structure:</strong> {name}</p>
       {affiliation.length > 0 &&
         <p>
@@ -39,27 +39,32 @@ const UserrequestContact = ({ user }) => {
 };
 
 UserrequestContact.propTypes = {
-  user: PropTypes.shape({
-    properties: PropTypes.shape({
-      structure: PropTypes.shape({
-        affiliation: PropTypes.array,
-        name: PropTypes.string,
-        label: PropTypes.string,
+  data: PropTypes.shape({
+    owner: PropTypes.shape({
+      email: PropTypes.string,
+      properties: PropTypes.shape({
+        structure: PropTypes.shape({
+          affiliation: PropTypes.array,
+          name: PropTypes.string,
+          label: PropTypes.string,
+        }),
       }),
+      contacts: PropTypes.array,
     }),
-    contacts: PropTypes.array,
   }),
 };
 
 UserrequestContact.defaultProps = {
-  user: {
-    properties: {
-      structure: {
-        affiliation: [],
-        name: '',
-        label: '',
+  data: {
+    owner: {
+      properties: {
+        structure: {
+          affiliation: [],
+          name: '',
+          label: '',
+        },
+        contacts: [],
       },
-      contacts: [],
     },
   },
 };
