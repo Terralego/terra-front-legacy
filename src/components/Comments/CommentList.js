@@ -11,6 +11,7 @@ import {
   getCommentsByUserrequest,
 } from 'modules/userrequestCommentList';
 import CommentListItem from 'components/Comments/CommentListItem';
+import styles from './CommentList.module.scss';
 
 class CommentList extends React.Component {
   componentDidMount () {
@@ -24,21 +25,21 @@ class CommentList extends React.Component {
     // Sort comments by antechronological order
     comments.sort((a, b) => (moment(b.date).isBefore(a.date) ? -1 : 1));
     let showList = (
-      <p style={{ fontSize: '0.9em', textAlign: 'center', marginTop: 40 }}>
+      <p className={styles.pShowList}>
         Aucun échange sur cette demande pour l'instant
       </p>
     );
     if (comments.length > 0) {
       showList = (
         <List
-          style={{ marginTop: 24 }}
+          className={styles.listShowList}
           dataSource={comments}
           renderItem={comment => <CommentListItem comment={comment} />}
         />
       );
     }
     return loading
-      ? <Spin style={{ margin: '24px auto', width: '100%' }} />
+      ? <Spin className={styles.loadingSpin} />
       : showList;
   }
 }
