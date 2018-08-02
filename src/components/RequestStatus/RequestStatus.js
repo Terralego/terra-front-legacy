@@ -122,7 +122,7 @@ class RequestStatus extends React.Component {
             userrequestExpiry={expiry}
           />
           <div className="statusActions">
-            <p>Votre approbation :</p>
+            <p>Votre évaluation :</p>
             <Dropdown
               overlay={(
                 <EvaluationMenu
