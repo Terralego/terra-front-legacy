@@ -1,8 +1,6 @@
 import React from 'react';
 import { Card, Collapse } from 'antd';
 
-const { Panel } = Collapse;
-
 const UserrequestContact = ({ contacts }) => (
   <Card
     style={{ marginTop: 21 }}
@@ -10,14 +8,17 @@ const UserrequestContact = ({ contacts }) => (
   >
     <Collapse style={{ marginBottom: 24 }}>
       {contacts.map(contact => (
-        <Panel header={`${contact.firstname} ${contact.lastname}`}>
-          <div key={`user-contact ${contact.phone} ${contact.firstname}`}>
-            <p>
-              <strong>{contact.firstname} {contact.lastname} : </strong> {contact.phone[0]}
-            </p>
-            {contact.email && <p><strong>Email :</strong> {contact.email}</p>}
-          </div>
-        </Panel>
+        <Collapse.Panel
+          key={contact.phone && contact.firstname}
+          header={`${contact.firstname} ${contact.lastname}`}
+        >
+          <p><strong>Numéro: </strong> {contact.phone[0]}</p>
+          {contact.phone[1] && <p><strong>Numéro secondaire:</strong> {contact.phone[1]}</p>}
+          {contact.email && <p><strong>Email:</strong> {contact.email}</p>}
+          {contact.position && <p><strong>Fonction:</strong> {contact.position}</p>}
+          {contact.zipcode && <p><strong>Code postal:</strong> {contact.zipcode}</p>}
+          {contact.city && <p><strong>Ville:</strong> {contact.city}</p>}
+        </Collapse.Panel>
         ))}
     </Collapse>
   </Card>
