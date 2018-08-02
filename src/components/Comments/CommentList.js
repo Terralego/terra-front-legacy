@@ -23,13 +23,23 @@ class CommentList extends React.Component {
     const { comments, loading } = this.props;
     // Sort comments by antechronological order
     comments.sort((a, b) => (moment(b.date).isBefore(a.date) ? -1 : 1));
+    let showList = (
+      <p style={{ fontSize: '0.9em', textAlign: 'center', marginTop: 40 }}>
+        Aucun échange sur cette demande pour l'instant
+      </p>
+    );
+    if (comments.length > 0) {
+      showList = (
+        <List
+          style={{ marginTop: 24 }}
+          dataSource={comments}
+          renderItem={comment => <CommentListItem comment={comment} />}
+        />
+      );
+    }
     return loading
       ? <Spin style={{ margin: '24px auto', width: '100%' }} />
-      : <List
-        style={{ marginTop: 24 }}
-        dataSource={comments}
-        renderItem={comment => <CommentListItem comment={comment} />}
-      />;
+      : showList;
   }
 }
 
