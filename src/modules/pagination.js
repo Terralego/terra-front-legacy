@@ -78,9 +78,14 @@ export const getCurrentPageResults = createSelector(
     getCurrentPage,
     (pagination, queryParams, items) => items,
   ],
-  (currentPage, items = []) => (
-    currentPage.ids ? Object.values(pick(items, currentPage.ids)) : []
-  ),
+  (currentPage, items = []) => {
+    if (currentPage.ids) {
+      const output = Object.values(pick(items, currentPage.ids));
+      getParams().ordering.substring(0, 1) === '-' && output.reverse();
+      return output;
+    }
+    return [];
+  },
 );
 
 /**
