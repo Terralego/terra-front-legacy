@@ -44,6 +44,7 @@ const getParams = search => {
     limit: params.limit ? parseInt(params.limit, 10) : settings.PAGE_SIZE,
     page: params.page ? parseInt(params.page, 10) : 1,
     search: params.search || '',
+    ordering: params.ordering || '-id',
   };
 };
 
@@ -99,6 +100,7 @@ export const getPaginationParams = (pagination = { queries: {} }, queryParams) =
       limit: +params.limit,
       page: +params.page,
       search: params.search,
+      ordering: params.ordering,
     },
     count,
   };
