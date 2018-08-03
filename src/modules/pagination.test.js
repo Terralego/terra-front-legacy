@@ -148,6 +148,7 @@ describe('pagination SELECTORS', () => {
             limit: 100,
             page: 1,
             search: '',
+            ordering: '-id',
           },
           count: 4,
         });
@@ -169,6 +170,7 @@ describe('pagination SELECTORS', () => {
             limit: 100,
             page: 1,
             search: '',
+            ordering: '-id',
           },
           count: 4,
         });
@@ -182,6 +184,7 @@ describe('pagination SELECTORS', () => {
             limit: 100,
             page: 1,
             search: 'test',
+            ordering: '-id',
           },
           count: 0,
         });
@@ -194,6 +197,7 @@ describe('pagination SELECTORS', () => {
             limit: 10,
             page: 1,
             search: '',
+            ordering: '-id',
           },
           count: 0,
         });
@@ -206,6 +210,7 @@ describe('pagination SELECTORS', () => {
             limit: 10,
             page: 3,
             search: '',
+            ordering: '-id',
           },
           count: 0,
         });
