@@ -2,15 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Spin, List } from 'antd';
+import { Spin } from 'antd';
 import moment from 'moment';
 
+import List from 'components/Comments/List';
 import { submitComment } from 'modules/userrequestComment';
 import {
   fetchUserrequestComments,
   getCommentsByUserrequest,
 } from 'modules/userrequestCommentList';
-import CommentListItem from 'components/Comments/CommentListItem';
 import styles from './CommentList.module.scss';
 
 class CommentList extends React.Component {
@@ -24,23 +24,9 @@ class CommentList extends React.Component {
     const { comments, loading } = this.props;
     // Sort comments by antechronological order
     comments.sort((a, b) => (moment(b.date).isBefore(a.date) ? -1 : 1));
-    let showList = (
-      <p className={styles.pShowList}>
-        Aucun échange sur cette demande pour l'instant
-      </p>
-    );
-    if (comments.length > 0) {
-      showList = (
-        <List
-          className={styles.listShowList}
-          dataSource={comments}
-          renderItem={comment => <CommentListItem comment={comment} />}
-        />
-      );
-    }
     return loading
       ? <Spin className={styles.loadingSpin} />
-      : showList;
+      : <List comments={this.props.comments} />;
   }
 }
 
