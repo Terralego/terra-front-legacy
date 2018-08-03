@@ -307,6 +307,7 @@ describe('pagination ACTIONS', () => {
           limit: 10,
           page: 1,
           search: '',
+          ordering: '-id',
         },
       }]);
     });
