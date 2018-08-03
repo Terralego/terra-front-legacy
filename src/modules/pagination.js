@@ -44,6 +44,7 @@ const getParams = search => {
     limit: params.limit ? parseInt(params.limit, 10) : settings.PAGE_SIZE,
     page: params.page ? parseInt(params.page, 10) : 1,
     search: params.search || '',
+    ordering: params.ordering || '-id',
   };
 };
 
@@ -77,9 +78,14 @@ export const getCurrentPageResults = createSelector(
     getCurrentPage,
     (pagination, queryParams, items) => items,
   ],
-  (currentPage, items = []) => (
-    currentPage.ids ? Object.values(pick(items, currentPage.ids)) : []
-  ),
+  (currentPage, items = []) => {
+    if (currentPage.ids) {
+      const output = Object.values(pick(items, currentPage.ids));
+      getParams().ordering.substring(0, 1) === '-' && output.reverse();
+      return output;
+    }
+    return [];
+  },
 );
 
 /**
@@ -99,6 +105,7 @@ export const getPaginationParams = (pagination = { queries: {} }, queryParams) =
       limit: +params.limit,
       page: +params.page,
       search: params.search,
+      ordering: params.ordering,
     },
     count,
   };
