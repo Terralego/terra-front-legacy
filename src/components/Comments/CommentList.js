@@ -2,15 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Spin, List } from 'antd';
+import { Spin } from 'antd';
 import moment from 'moment';
 
+import List from 'components/Comments/List';
 import { submitComment } from 'modules/userrequestComment';
 import {
   fetchUserrequestComments,
   getCommentsByUserrequest,
 } from 'modules/userrequestCommentList';
-import CommentListItem from 'components/Comments/CommentListItem';
+import styles from './CommentList.module.scss';
 
 class CommentList extends React.Component {
   componentDidMount () {
@@ -24,12 +25,8 @@ class CommentList extends React.Component {
     // Sort comments by antechronological order
     comments.sort((a, b) => (moment(b.date).isBefore(a.date) ? -1 : 1));
     return loading
-      ? <Spin style={{ margin: '24px auto', width: '100%' }} />
-      : <List
-        style={{ marginTop: 24 }}
-        dataSource={comments}
-        renderItem={comment => <CommentListItem comment={comment} />}
-      />;
+      ? <Spin className={styles.loadingSpin} />
+      : <List comments={this.props.comments} />;
   }
 }
 
