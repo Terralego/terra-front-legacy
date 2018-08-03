@@ -185,38 +185,12 @@ export const updateStateAndApprobation = (data, status, userUuid) => ({
       headers: defaultHeaders,
       method: 'PATCH',
       body: JSON.stringify({
-        state: status,
+        state: status.state,
         properties: {
           ...data.properties,
           approbations: {
             ...data.properties.approbations,
-            [userUuid]: status,
-          },
-        },
-      }),
-    },
-  },
-});
-
-/**
- * userrequest action : update approbation status from N1 user
- * @param {object} userrequest - data we want to change the approbation
- * @param {number} status - N1 approbation status
- * @param {string} userUuid - uuid of N1 that request approbation
- */
-export const updateApprobation = (data, status, userUuid) => ({
-  [CALL_API]: {
-    endpoint: `/userrequest/${data.id}/`,
-    types: [APPROBATIONS_CHANGE_REQUEST, APPROBATIONS_CHANGE_SUCCESS, APPROBATIONS_CHANGE_FAILURE],
-    config: {
-      headers: defaultHeaders,
-      method: 'PATCH',
-      body: JSON.stringify({
-        properties: {
-          ...data.properties,
-          approbations: {
-            ...data.properties.approbations,
-            [userUuid]: status,
+            [userUuid]: status.approbation || status.state,
           },
         },
       }),

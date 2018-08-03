@@ -5,23 +5,23 @@ import classnames from 'classnames';
 
 import Status from 'components/RequestStatus/Status';
 import { getUserGroup } from 'modules/authentication';
-import { updateStateAndApprobation, updateApprobation } from 'modules/userrequestList';
+import { updateStateAndApprobation } from 'modules/userrequestList';
 import { getReviewer } from 'helpers/userrequestHelpers';
 
 import './RequestStatus.scss';
 
 const actionsN1 = [
-  { label: 'En cours de traitement', value: 0, icon: 'pause', type: 'approbation' },
-  { label: 'En attente d\'information du demandeur', value: 1, icon: 'pause', type: 'approbation' },
-  { label: 'Approuver', selectedLabel: 'Approuvée', value: 2, icon: 'check', type: 'approbation' },
-  { label: 'Refuser', selectedLabel: 'Refusée', value: -1, icon: 'close', type: 'approbation' },
+  { label: 'En cours de traitement', icon: 'pause', approbation: 0, state: 200 },
+  { label: 'En attente d\'information du demandeur', icon: 'pause', approbation: 1, state: 200 },
+  { label: 'Approuver', selectedLabel: 'Approuvée', icon: 'check', approbation: 2 },
+  { label: 'Refuser', selectedLabel: 'Refusée', icon: 'close', approbation: -1 },
 ];
 
 const actionsN2 = [
-  { label: 'En attente', value: 200, icon: 'pause', type: 'state' },
-  { label: 'En attente d\'information du demandeur', value: 1, icon: 'pause', type: 'approbation' },
-  { label: 'Approuver', value: 300, icon: 'check', type: 'state' },
-  { label: 'Refuser', value: -1, icon: 'close', type: 'state' },
+  { label: 'En attente', icon: 'pause', state: 200 },
+  { label: 'En attente d\'information du demandeur', icon: 'pause', approbation: 1, state: 200 },
+  { label: 'Approuver', icon: 'check', state: 300 },
+  { label: 'Refuser', icon: 'close', state: -1 },
 ];
 
 /**
@@ -32,7 +32,7 @@ const actionsN2 = [
  * @return {object} object of current selected option
  */
 const getEvaluationFromValue = (options, value) => (
-  options.find(option => option.value === value)
+  options.find(option => option.state === value || option.approbation === value)
 );
 
 /**
@@ -57,7 +57,7 @@ const EvaluationMenu = ({ actions, handleClick }) => (
     {actions.map(action => (
       <Menu.Item
         className={classnames('dropdownItem', [action.icon])}
-        key={action.value}
+        key={action.approbation}
         onClick={() => handleClick(action)}
         style={{ width: '100%' }}
       >
@@ -219,12 +219,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  updateApprobationOrState: (e, userrequest, user) => {
-    if (e.type === 'state') {
-      return dispatch(updateStateAndApprobation(userrequest, e.value, user.uuid));
-    }
-    return dispatch(updateApprobation(userrequest, e.value, user.uuid));
-  },
+  updateApprobationOrState:
+    (e, userrequest, user) => dispatch(updateStateAndApprobation(userrequest, e, user.uuid)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(RequestStatus);
