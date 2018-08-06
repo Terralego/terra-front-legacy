@@ -24,7 +24,7 @@ class Comments extends React.Component {
   }
 
   render () {
-    const { form, userrequestId } = this.props;
+    const { form, userrequestId, newComment } = this.props;
 
     return (
       <ReduxForm model="userrequestComment">
@@ -41,7 +41,7 @@ class Comments extends React.Component {
             htmlType="submit"
             icon="arrow-right"
             loading={form.pending}
-            disabled={!form.valid}
+            disabled={!form.valid || !newComment.properties.comment || typeof newComment.is_internal !== 'string'}
             onClick={this.handleSubmit}
           >
             Envoyer
