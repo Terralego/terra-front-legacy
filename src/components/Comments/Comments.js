@@ -23,20 +23,27 @@ class Comments extends React.Component {
     this.props.submitComment(userrequestId, newComment, internal);
   }
 
-  submitConditions = () => {
+  isEnabled = () => {
     const { newComment, form, userGroup } = this.props;
     // The comment contain :
     const hasComment = newComment.properties.comment !== ''; // a message
     const hasAttachment = newComment.attachment !== null; // an attachment
     const hasGeojson = newComment.geojson.features.length; // a geojson
+    // Si l'utilisateur est un N2 et que internal n'est pas bien défini.
+    const internalIsNotValid = userGroup === 'N2' && typeof newComment.is_internal !== 'string';
 
-    if (form.valid && (hasComment || hasAttachment || hasGeojson)) {
-      // Si l'utilisateur est un N2 et que internal n'est pas bien défini.
-      if (userGroup === 'N2' && typeof newComment.is_internal !== 'string') {
-        return true;
-      }
+    if (!form.valid) {
       return false;
     }
+
+    if (!hasComment && !hasAttachment && !hasGeojson) {
+      return false;
+    }
+
+    if (internalIsNotValid) {
+      return false;
+    }
+
     return true;
   }
 
@@ -57,7 +64,7 @@ class Comments extends React.Component {
             htmlType="submit"
             icon="arrow-right"
             loading={form.pending}
-            disabled={this.submitConditions()}
+            disabled={!this.isEnabled()}
             onClick={this.handleSubmit}
           >
             Envoyer
