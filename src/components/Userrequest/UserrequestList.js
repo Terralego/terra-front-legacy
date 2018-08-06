@@ -173,7 +173,7 @@ class UserrequestList extends React.Component {
         )}
         <Table
           rowKey="id"
-          scroll={window.screen.width < 800 ? { x: 800 } : false}
+          scroll={{ x: 800 }}
           columns={columns}
           dataSource={this.props.items}
           rowSelection={(userGroup !== 'N1' && userGroup !== 'N2') ? rowSelection : null}
