@@ -13,7 +13,7 @@ class Search extends React.Component {
   render () {
     return (
       <Input.Search
-        addonBefore="Chercher :"
+        addonBefore={window.screen.width <= 400 ? '' : 'Chercher :'}
         placeholder="Numéro de déclaration, titre de l'événement&hellip;"
         onSearch={this.handleSearchChange}
         defaultValue={this.getDefaultValue()}
