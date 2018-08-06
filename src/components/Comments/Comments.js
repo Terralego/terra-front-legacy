@@ -23,9 +23,32 @@ class Comments extends React.Component {
     this.props.submitComment(userrequestId, newComment, internal);
   }
 
+  isEnabled = () => {
+    const { newComment, form, userGroup } = this.props;
+    // The comment contain :
+    const hasComment = newComment.properties.comment !== ''; // a message
+    const hasAttachment = newComment.attachment !== null; // an attachment
+    const hasGeojson = newComment.geojson.features.length; // a geojson
+    // Si l'utilisateur est un N2 et que internal n'est pas bien défini.
+    const internalIsNotValid = userGroup === 'N2' && typeof newComment.is_internal !== 'string';
+
+    if (!form.valid) {
+      return false;
+    }
+
+    if (!hasComment && !hasAttachment && !hasGeojson) {
+      return false;
+    }
+
+    if (internalIsNotValid) {
+      return false;
+    }
+
+    return true;
+  }
+
   render () {
     const { form, userrequestId } = this.props;
-
     return (
       <ReduxForm model="userrequestComment">
         <CommentRecipients />
@@ -41,7 +64,7 @@ class Comments extends React.Component {
             htmlType="submit"
             icon="arrow-right"
             loading={form.pending}
-            disabled={!form.valid}
+            disabled={!this.isEnabled()}
             onClick={this.handleSubmit}
           >
             Envoyer
