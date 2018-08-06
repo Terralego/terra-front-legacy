@@ -23,9 +23,25 @@ class Comments extends React.Component {
     this.props.submitComment(userrequestId, newComment, internal);
   }
 
-  render () {
-    const { form, userrequestId, newComment } = this.props;
+  submitConditions = () => {
+    const { newComment, form, userGroup } = this.props;
+    // The comment contain :
+    const hasComment = newComment.properties.comment !== ''; // a message
+    const hasAttachment = newComment.attachment !== null; // an attachment
+    const hasGeojson = newComment.geojson.features.length; // a geojson
 
+    if (form.valid && (hasComment || hasAttachment || hasGeojson)) {
+      // Si l'utilisateur est un N2 et que internal n'est pas bien défini.
+      if (userGroup === 'N2' && typeof newComment.is_internal !== 'string') {
+        return true;
+      }
+      return false;
+    }
+    return true;
+  }
+
+  render () {
+    const { form, userrequestId } = this.props;
     return (
       <ReduxForm model="userrequestComment">
         <CommentRecipients />
@@ -41,7 +57,7 @@ class Comments extends React.Component {
             htmlType="submit"
             icon="arrow-right"
             loading={form.pending}
-            disabled={!form.valid || !newComment.properties.comment || typeof newComment.is_internal !== 'string'}
+            disabled={this.submitConditions()}
             onClick={this.handleSubmit}
           >
             Envoyer
