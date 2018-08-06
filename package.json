@@ -35,7 +35,7 @@
     "react-app-rewired": "~1.5.0",
     "react-dom": "~16.4.2",
     "react-helmet": "~5.2.0",
-    "react-hot-loader": "~4.3.3",
+    "react-hot-loader": "~4.3.4",
     "react-redux": "~5.0.6",
     "react-redux-form": "~1.16.9",
     "react-router-dom": "~4.3.1",
