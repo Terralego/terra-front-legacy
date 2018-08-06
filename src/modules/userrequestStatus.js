@@ -17,6 +17,8 @@ const statusLabels = {
   NO_STATUS: { text: 'Pas de status connu', type: 'warning' },
 };
 
+const isWaitingForUser = approbations => Object.values(approbations).includes(1);
+
 /**
  * getUserrequestStatus
  *
@@ -53,6 +55,9 @@ const getUserrequestStatus = (userrequestState, approbations, user, userrequestE
       const N1approved = approbations && approbations[user.uuid];
       if (N1approved) {
         // Current N1 already approved, need N2
+        if (isWaitingForUser(approbations)) {
+          return statusLabels.WAIT_USER;
+        }
         return statusLabels.WAIT_NIV2;
       }
       return {
@@ -74,6 +79,9 @@ const getUserrequestStatus = (userrequestState, approbations, user, userrequestE
 
   // Specific labels for users
   if (userrequestState === states.SUBMITTED) {
+    if (isWaitingForUser(approbations)) {
+      return statusLabels.TO_COMPLETE;
+    }
     return statusLabels.WAITING;
   }
 

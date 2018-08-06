@@ -12,7 +12,6 @@ import './RequestStatus.scss';
 
 const actionsN1 = [
   { label: 'En cours de traitement', value: 0, icon: 'pause', type: 'approbation' },
-  { label: 'En attente d\'information du demandeur', value: 1, icon: 'pause', type: 'approbation' },
   { label: 'Approuver', selectedLabel: 'Approuvée', value: 2, icon: 'check', type: 'approbation' },
   { label: 'Refuser', selectedLabel: 'Refusée', value: -1, icon: 'close', type: 'approbation' },
 ];
