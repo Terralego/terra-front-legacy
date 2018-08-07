@@ -34,7 +34,7 @@ class UserrequestList extends React.Component {
       this.props.requestUserrequestPage(this.props.location.search);
     }
 
-    if (prevProps.draft.id !== this.props.draft.id && this.props.draft.id) {
+    if (typeof this.props.draft.id !== 'undefined' && prevProps.draft.id !== this.props.draft.id) {
       this.props.history.replace({
         pathname: `/manage-request/detail/${this.props.draft.id}`,
         state: { from: '/manage-request' },
