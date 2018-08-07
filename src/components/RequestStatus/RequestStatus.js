@@ -105,7 +105,7 @@ class RequestStatus extends React.Component {
     if (!user) {
       return null;
     }
-    const { state, reviewers, expiry } = userrequest;
+    const { reviewers } = userrequest;
     const { approbations } = userrequest.properties;
 
     // If user already give evaluation, get the id, either set 0 (= PENDING)
@@ -115,10 +115,8 @@ class RequestStatus extends React.Component {
       return (
         <Card title="Évaluation de niv 1">
           <Status
-            userrequestState={state}
-            approbations={approbations}
+            userrequest={userrequest}
             user={user}
-            userrequestExpiry={expiry}
           />
           <div className="statusActions">
             <p>Votre évaluation :</p>
@@ -201,10 +199,8 @@ class RequestStatus extends React.Component {
 
     return (
       <Status
-        userrequestState={state}
-        approbations={approbations}
+        userrequest={userrequest}
         user={user}
-        userrequestExpiry={expiry}
       />
     );
   }
