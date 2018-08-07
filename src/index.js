@@ -10,7 +10,8 @@ import { getSettings } from 'modules/appConfig';
 import './index.css';
 import store from './store';
 import App from './App';
-import registerServiceWorker from './registerServiceWorker';
+// import registerServiceWorker from './registerServiceWorker';
+import { unregister as unregisterServiceWorker } from './registerServiceWorker';
 
 window.APP_SETTINGS = settings;
 
@@ -47,4 +48,5 @@ store.getState().authentication.isAuthenticated && store.dispatch(refreshToken()
  */
 render(App);
 
-registerServiceWorker();
+// registerServiceWorker();
+unregisterServiceWorker();
