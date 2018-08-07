@@ -17,6 +17,7 @@ export const hasPermissions = (userPermissions, requestedPermissions) =>
  * @param {boolean} defaultValue : value choosen by user
  */
 export const canCommentInternal = (permissions, defaultValue = true) => {
+  // N1
   if (
     hasPermissions(permissions, ['trrequests.can_internal_comment_requests'])
     && !hasPermissions(permissions, ['trrequests.can_comment_requests'])
@@ -24,6 +25,7 @@ export const canCommentInternal = (permissions, defaultValue = true) => {
     return true;
   }
 
+  // User
   if (
     !hasPermissions(permissions, ['trrequests.can_internal_comment_requests'])
     && hasPermissions(permissions, ['trrequests.can_comment_requests'])
@@ -31,5 +33,6 @@ export const canCommentInternal = (permissions, defaultValue = true) => {
     return false;
   }
 
+  // N2
   return defaultValue;
 };
