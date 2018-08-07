@@ -1,7 +1,7 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { withRouter, Redirect } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { Table, Icon, Modal, Button, message } from 'antd';
 import queryString from 'query-string';
 
@@ -186,7 +186,6 @@ class UserrequestList extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  draft: state.userrequest,
   items: getUserrequestsArrayFilteredByUser(state, ownProps.location.search),
   loading: isCurrentPageFetching(state.pagination.userrequestList, ownProps.location.search),
   userGroup: getUserGroup(state),
