@@ -30,18 +30,18 @@ const RouteViews = props => {
           );
         }
 
-        // If user try to access a protected route and profile is not completed
-        // Disabled comment, waiting for nahuel come back
-        // if (props.isAuthenticated && typeof props.user.properties === 'object' &&
-        // Object.keys(props.user.properties).length === 0
-        // && props.location.pathname !== '/profile') {
-        //   return (
-        //     <Redirect
-        //       to={{ pathname: '/profile', state: { from: props.location.pathname } }}
-        //       from={props.location.pathname}
-        //     />
-        //   );
-        // }
+        // Redirect user if properties are empty.
+        if (props.userGroup === 'user' &&
+        props.isAuthenticated && typeof props.user.properties === 'object' &&
+        !Object.keys(props.user.properties).length
+        && props.location.pathname !== '/profile') {
+          return (
+            <Redirect
+              to={{ pathname: '/profile', state: { from: props.location.pathname } }}
+              from={props.location.pathname}
+            />
+          );
+        }
 
         return (
           <CustomRoute
