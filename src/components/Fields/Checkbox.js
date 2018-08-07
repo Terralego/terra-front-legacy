@@ -13,7 +13,7 @@ function validateStatus (fieldValue) {
 }
 
 const CustomCheckbox = props => {
-  const { errorMessages, fieldValue, label, name, ...propsField } = props;
+  const { errorMessages, fieldValue, label, name, options, ...propsField } = props;
   delete propsField.withFieldValue;
   delete propsField.required;
 
@@ -35,9 +35,18 @@ const CustomCheckbox = props => {
         : null
       }
     >
-      {propsField.options.map(option => (
-        <Checkbox key={`${props.name}_${option.value}`} style={{ display: 'block', margin: 0 }} {...option}>{option.label}</Checkbox>
+
+      <Checkbox.Group {...propsField}>
+        {options.map(option => (
+          <Checkbox
+            key={`${props.name}_${option.value}`}
+            style={{ display: 'block', margin: '10px 0' }}
+            {...option}
+          >
+            {option.label}
+          </Checkbox>
       ))}
+      </Checkbox.Group>
     </FormItem>
   );
 };
@@ -81,7 +90,9 @@ const CheckboxField = props => {
       id={props.id || props.model}
       validators={validators}
       withFieldValue
-      mapProps={messages}
+      mapProps={{
+        errorMessages: () => messages,
+      }}
       component={CustomCheckbox}
       {...props}
     />
@@ -93,13 +104,15 @@ CheckboxField.propTypes = {
   label: Proptypes.string.isRequired,
   placeholder: Proptypes.string,
   errorMessages: Proptypes.shape({
-    required: Proptypes.string,
+    x: Proptypes.string,
   }),
+  required: Proptypes.bool,
 };
 
 CheckboxField.defaultProps = {
   placeholder: '',
   errorMessages: {},
+  required: false,
 };
 
 export default CheckboxField;
