@@ -1,7 +1,7 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { withRouter, Redirect } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { Table, Icon, Modal, Button, message } from 'antd';
 import queryString from 'query-string';
 
@@ -34,7 +34,11 @@ class UserrequestList extends React.Component {
       this.props.requestUserrequestPage(this.props.location.search);
     }
 
-    if (prevProps.draft.id !== this.props.draft.id) {
+    if (typeof this.props.draft.id !== 'undefined' && prevProps.draft.id !== this.props.draft.id) {
+      this.props.history.replace({
+        pathname: `/manage-request/detail/${this.props.draft.id}`,
+        state: { from: '/manage-request' },
+      });
       this.props.resetPaginationCache('/userrequest/');
       message.destroy();
     }
@@ -121,19 +125,7 @@ class UserrequestList extends React.Component {
 
   render () {
     const { selectedRowKeys } = this.state;
-    const { draft, location, userGroup, columns, pagination } = this.props;
-
-    // If a draft newly created, redirect on its
-    if (draft.id) {
-      return (
-        <Redirect
-          to={{ pathname: `/manage-request/detail/${draft.id}`,
-          state: {
-            from: `${location.pathname}${location.search}`,
-          } }}
-        />
-      );
-    }
+    const { userGroup, columns, pagination } = this.props;
 
     const rowSelection = {
       selectedRowKeys,
@@ -194,7 +186,6 @@ class UserrequestList extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  draft: state.userrequest,
   items: getUserrequestsArrayFilteredByUser(state, ownProps.location.search),
   loading: isCurrentPageFetching(state.pagination.userrequestList, ownProps.location.search),
   userGroup: getUserGroup(state),
