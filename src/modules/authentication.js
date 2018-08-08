@@ -4,6 +4,7 @@ import { disableTimerRefreshToken, enableTimerRefreshToken } from 'modules/authe
 import apiService from 'services/apiService';
 import tokenService from 'services/tokenService';
 import { PROFILE_SUCCESS } from 'modules/profile';
+import { resetPaginationCache } from 'modules/pagination';
 
 export const REQUEST_TOKEN = 'authentication/REQUEST_TOKEN';
 export const REFRESH_TOKEN = 'authentication/REFRESH_TOKEN';
@@ -175,6 +176,7 @@ export const logout = () => dispatch => {
   dispatch(disableTimerRefreshToken());
   dispatch(actions.reset('login'));
   dispatch(actions.reset('userrequest'));
+  dispatch(resetPaginationCache('/userrequest/'));
   dispatch(resetToken());
 };
 
