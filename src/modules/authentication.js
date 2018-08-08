@@ -193,7 +193,7 @@ export const refreshToken = () => dispatch => {
   dispatch(requestToken());
   dispatch(setAuthentication());
 
-  return apiService.refreshToken(token)
+  return apiService.getFreshToken(token)
     .then(response => {
       dispatch(receiveToken());
 

@@ -38,9 +38,9 @@ export const defaultHeaders = {
 
 export default {
   /**
-   * refreshToken
+   * getFreshToken
    */
-  refreshToken: async token =>
+  getFreshToken: async token =>
     handleErrors(await fetch(`${settings.API_URL}/auth/refresh-token/`, {
       method: 'POST',
       headers: defaultHeaders,
