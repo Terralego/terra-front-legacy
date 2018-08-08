@@ -4,8 +4,10 @@ import { CALL_API } from 'middlewares/api';
 import { defaultHeaders } from 'services/apiService';
 
 import { SUBMIT_SUCCESS, SAVE_DRAFT_SUCCESS } from 'modules/userrequest';
-import { getUserGroup } from 'modules/authentication';
+import { getUserGroups } from 'modules/authentication';
 import createPaginator, { getCurrentPageResults, PAGE_SUCCESS } from 'modules/pagination';
+
+import { hasGroup } from 'helpers/permissionsHelpers';
 
 // Load userrequest detail
 export const DETAIL_REQUEST = 'userrequestList/DETAIL_REQUEST';
@@ -83,13 +85,13 @@ export default userrequestList;
 /**
  * getUserrequestsByUser selector
  * @param {object} items
- * @param {string} userGroup
  * @param {number} draftStatus
+ * @param {array} groups
  * @returns {array} array of userrequest without draft if N1 or N2
  */
-const getUserrequestsByUser = (items, userGroup, draftStatus) => {
+const getUserrequestsByUser = (items, draftStatus, groups) => {
   const userrequestArray = items.filter(item => !item.error);
-  if (userGroup === 'N1' || userGroup === 'N2') {
+  if (hasGroup(groups, 'staff')) {
     return userrequestArray.filter(userrequest => userrequest.state !== draftStatus);
   }
 
@@ -119,10 +121,10 @@ export const getUserrequestArray = createSelector(
 export const getUserrequestsArrayFilteredByUser = createSelector(
   [
     getUserrequestArray,
-    getUserGroup,
     getDraftStatus,
+    getUserGroups,
   ],
-  (items, userGroup, draftStatus) => getUserrequestsByUser(items, userGroup, draftStatus),
+  (items, draftStatus, groups) => getUserrequestsByUser(items, draftStatus, groups),
 );
 
 

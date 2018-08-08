@@ -31,7 +31,7 @@ const RouteViews = props => {
         }
 
         // Redirect user if properties are empty.
-        if (props.userGroup === 'user' &&
+        if (props.isUser &&
         props.isAuthenticated && typeof props.user.properties === 'object' &&
         !Object.keys(props.user.properties).length
         && props.location.pathname !== '/profile') {

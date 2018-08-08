@@ -101,17 +101,24 @@ export default authentication;
  */
 
 /**
- * getUserGroup selector
+ * getUserGroups selector
  * @param {object} state
  * @returns {string} current user group
  */
-export const getUserGroup = createSelector(
+export const getUserGroups = createSelector(
   state => state.authentication.payload && state.authentication.payload.user,
-  // Temporary we get first item
-  // TODO: find a way to implement authorization with multiple groups
-  user => user && user.groups[0],
+  user => user && user.groups,
 );
 
+/**
+ * getUserPermissions selector
+ * @param {object} state
+ * @returns {string} current user group
+ */
+export const getUserPermissions = createSelector(
+  state => state.authentication.payload && state.authentication.payload.user,
+  user => user && user.permissions,
+);
 
 /**
  * ACTIONS

@@ -4,9 +4,12 @@ import { Icon, Card, Dropdown, Button, Menu, List } from 'antd';
 import classnames from 'classnames';
 
 import Status from 'components/RequestStatus/Status';
-import { getUserGroup } from 'modules/authentication';
 import { updateStateAndApprobation, updateApprobation } from 'modules/userrequestList';
+
+import withAuthentication from 'hoc/authentication';
+
 import { getReviewer } from 'helpers/userrequestHelpers';
+import { hasGroup } from 'helpers/permissionsHelpers';
 
 import './RequestStatus.scss';
 
@@ -99,7 +102,7 @@ class RequestStatus extends React.Component {
   }
 
   render () {
-    const { userrequest, user } = this.props;
+    const { userrequest, user, groups } = this.props;
     const { menuVisible, loading } = this.state;
 
     if (!user) {
@@ -111,7 +114,7 @@ class RequestStatus extends React.Component {
     // If user already give evaluation, get the id, either set 0 (= PENDING)
     const selfEvaluationId = approbations[user.uuid] || 0;
     const selfEvaluation = getEvaluationFromValue([...actionsN1, ...actionsN2], selfEvaluationId);
-    if (user.group === 'N1') {
+    if (hasGroup(groups, 'N1')) {
       return (
         <Card title="Évaluation de niv 1">
           <Status
@@ -146,7 +149,7 @@ class RequestStatus extends React.Component {
       );
     }
 
-    if (user.group === 'N2') {
+    if (hasGroup(groups, 'N2')) {
       return (
         <Card title="Évaluation de niv 2">
           <div styles={{ textAlign: 'center' }}>
@@ -204,13 +207,6 @@ class RequestStatus extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  user: {
-    group: getUserGroup(state),
-    uuid: state.authentication.payload && state.authentication.payload.user.uuid,
-  },
-});
-
 const mapDispatchToProps = dispatch => ({
   updateApprobationOrState: (e, userrequest, user) => {
     if (e.type === 'state') {
@@ -220,5 +216,5 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(RequestStatus);
+export default connect(null, mapDispatchToProps)(withAuthentication(RequestStatus));
 

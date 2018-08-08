@@ -6,7 +6,9 @@ import { Spin, Row, Col, Card } from 'antd';
 
 import { fetchUserrequest } from 'modules/userrequestList';
 import { openDraft } from 'modules/userrequest';
-import { getUserGroup } from 'modules/authentication';
+
+import withAuthentication from 'hoc/authentication';
+
 import Summary from 'components/Summary/Summary';
 import RequestStatus from 'components/RequestStatus/RequestStatus';
 import Comments from 'components/Comments/Comments';
@@ -36,7 +38,7 @@ class Userrequest extends React.Component {
       // If userrequest is in draft status
       // and user group is user, redirect to editable request
       if (data.state === DRAFT_STATUS
-        && this.props.userGroup === 'user') {
+        && this.props.isUser) {
         return (
           <Form {...this.props} />
         );
@@ -62,13 +64,14 @@ class Userrequest extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  // TODO: use Reselect for increase performances
   data: state.userrequestList[ownProps.match.params.id],
   loading: state.userrequestList.loading,
-  userGroup: getUserGroup(state),
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ fetchUserrequest, openDraft }, dispatch);
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Userrequest));
+export default withRouter(withAuthentication(connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Userrequest)));
