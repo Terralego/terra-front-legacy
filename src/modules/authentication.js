@@ -1,6 +1,6 @@
 import { actions } from 'react-redux-form';
 import { createSelector } from 'reselect';
-import { disableTimerRefreshToken, enableTimerRefreshToken } from 'modules/authenticationTimer';
+// import { disableTimerRefreshToken, enableTimerRefreshToken } from 'modules/authenticationTimer';
 import apiService from 'services/apiService';
 import tokenService from 'services/tokenService';
 import { PROFILE_SUCCESS } from 'modules/profile';
@@ -173,7 +173,7 @@ export const receiveToken = payload => ({
 
 export const logout = () => dispatch => {
   dispatch(requestLogOut());
-  dispatch(disableTimerRefreshToken());
+  // dispatch(disableTimerRefreshToken());
   dispatch(actions.reset('login'));
   dispatch(actions.reset('userrequest'));
   dispatch(resetPaginationCache('/userrequest/'));
@@ -193,7 +193,7 @@ export const refreshToken = () => dispatch => {
   dispatch(requestToken());
   dispatch(setAuthentication());
 
-  return apiService.refreshToken(token)
+  return apiService.getFreshToken(token)
     .then(response => {
       dispatch(receiveToken());
 
@@ -228,7 +228,7 @@ export const loginUser = ({ email, password }) => dispatch => {
       if (response && response.token) {
         tokenService.setToken(response.token);
         dispatch(setAuthentication());
-        dispatch(enableTimerRefreshToken());
+        // dispatch(enableTimerRefreshToken());
       }
     })
     .catch(error => {
