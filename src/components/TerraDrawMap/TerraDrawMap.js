@@ -249,6 +249,7 @@ class TerraDrawMap extends Component {
       id: `${layer.name}_${this.props.sourceVectorOptions}`,
       name: layer.name,
       maxResolution: 156543.03392804097 / (2 ** (layer.minZoom - 1)),
+      minResolution: layer.minResolution,
       source: this.getVectorLayerSource(),
       zIndex: layer.zIndex ? layer.zIndex : 1,
       style: feature => getLayerStyle(layer, feature),
@@ -351,6 +352,7 @@ TerraDrawMap.propTypes = {
     vectorLayers: PropTypes.arrayOf(PropTypes.shape({
       name: PropTypes.string,
       minZoom: PropTypes.number,
+      minResolution: PropTypes.number,
       zIndex: PropTypes.number,
       style: PropTypes.shape({
         property: PropTypes.name,
