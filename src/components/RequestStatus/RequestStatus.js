@@ -153,7 +153,7 @@ class RequestStatus extends React.Component {
       return (
         <Card title="Évaluation de niv 2">
           <div styles={{ textAlign: 'center' }}>
-            <p>Status de la déclaration :</p>
+            <p>Statut de la déclaration :</p>
             <Dropdown
               overlay={(
                 <EvaluationMenu
