@@ -5,12 +5,14 @@ import { withRouter } from 'react-router-dom';
 import { Table, Icon, Modal, Button, message } from 'antd';
 import queryString from 'query-string';
 
-import { getUserGroup } from 'modules/authentication';
+import { getUserGroups } from 'modules/authentication';
 import { submitData, saveDraft } from 'modules/userrequest';
 import { requestUserrequestPage, updateState, getUserrequestsArrayFilteredByUser } from 'modules/userrequestList';
 import { getPaginationParams, isCurrentPageFetching, resetPaginationCache } from 'modules/pagination';
 
 import getColumns from 'helpers/userrequestListColumns';
+
+import withAuthentication from 'hoc/authentication';
 
 import NewUserrequestButton from 'components/Userrequest/NewUserrequestButton';
 import Pagination from 'components/Userrequest/Pagination';
@@ -125,7 +127,7 @@ class UserrequestList extends React.Component {
 
   render () {
     const { selectedRowKeys } = this.state;
-    const { userGroup, columns, pagination } = this.props;
+    const { isUser, columns, pagination } = this.props;
 
     const rowSelection = {
       selectedRowKeys,
@@ -142,7 +144,7 @@ class UserrequestList extends React.Component {
         <div className={styles.header}>
           <Search handleQueryUpdate={this.handleQueryUpdate} />
         </div>
-        {(userGroup !== 'N1' && userGroup !== 'N2') && (
+        {isUser && (
           <div className={styles.actions}>
             <Button
               className={styles.actions__button}
@@ -168,7 +170,7 @@ class UserrequestList extends React.Component {
           scroll={{ x: 800 }}
           columns={columns}
           dataSource={this.props.items}
-          rowSelection={(userGroup !== 'N1' && userGroup !== 'N2') ? rowSelection : null}
+          rowSelection={isUser ? rowSelection : null}
           loading={this.props.loading}
           onRow={record => (
             {
@@ -189,8 +191,7 @@ const mapStateToProps = (state, ownProps) => ({
   draft: state.userrequest,
   items: getUserrequestsArrayFilteredByUser(state, ownProps.location.search),
   loading: isCurrentPageFetching(state.pagination.userrequestList, ownProps.location.search),
-  userGroup: getUserGroup(state),
-  columns: getColumns(getUserGroup(state)),
+  columns: getColumns(getUserGroups(state)),
   pagination: getPaginationParams(state.pagination.userrequestList, ownProps.location.search),
 });
 
@@ -203,4 +204,7 @@ const mapDispatchToProps = dispatch =>
     updateState,
   }, dispatch);
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(UserrequestList));
+export default withRouter(withAuthentication(connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(UserrequestList)));

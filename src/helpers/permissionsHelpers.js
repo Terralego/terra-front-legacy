@@ -8,6 +8,15 @@ export const hasPermissions = (userPermissions, requestedPermissions) =>
   userPermissions.includes(...requestedPermissions);
 
 /**
+ * hasGroup returns true if requested group is checked
+ *
+ * @param {array} groups : current user groups
+ * @param {string} requestedGroup : the group we wan't to check
+ */
+export const hasGroup = (groups, requestedGroup) =>
+  groups && groups.includes(requestedGroup);
+
+/**
  * canCommentInternal
  * returns true if user must comment internal only
  * returns false if user must comment publicly only

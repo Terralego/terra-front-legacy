@@ -1,11 +1,11 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Button } from 'antd';
-import { getUserGroup } from 'modules/authentication';
+
+import withAuthentication from 'hoc/authentication';
 
 const NewUserrequestButton = props => {
-  if (props.userGroup === 'N1' || props.userGroup === 'N2') {
+  if (props.isStaff) {
     return null;
   }
 
@@ -23,8 +23,4 @@ const NewUserrequestButton = props => {
   );
 };
 
-const mapStateToProps = state => ({
-  userGroup: getUserGroup(state),
-});
-
-export default connect(mapStateToProps, null)(NewUserrequestButton);
+export default withAuthentication(NewUserrequestButton);
