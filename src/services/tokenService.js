@@ -14,7 +14,7 @@ class TokenService {
     return this.token;
   }
   isAuthenticated () {
-    return this.token !== null;
+    return !!this.token;
   }
 }
 
