@@ -29,10 +29,11 @@ class Comments extends React.Component {
     const hasComment = newComment.properties.comment !== ''; // a message
     const hasAttachment = newComment.attachment !== null; // an attachment
     const hasGeojson = newComment.geojson.features.length; // a geojson
+    const hasAtLeastOneContent = hasComment || hasAttachment || hasGeojson;
     // If user should choose recipient, a recipient is defined
     const hasRecipient = canCommentInternal(user.permissions, newComment.is_internal) !== null;
 
-    if (form.valid && (hasComment || hasAttachment || hasGeojson) && hasRecipient) {
+    if (form.valid && hasAtLeastOneContent && hasRecipient) {
       return true;
     }
 
