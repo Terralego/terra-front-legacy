@@ -116,7 +116,6 @@ class RequestStatus extends React.Component {
         <Card title="Évaluation de niv 1">
           <Status
             userrequest={userrequest}
-            user={user}
           />
           <div className="statusActions">
             <p>Votre évaluation :</p>
@@ -200,7 +199,6 @@ class RequestStatus extends React.Component {
     return (
       <Status
         userrequest={userrequest}
-        user={user}
       />
     );
   }
