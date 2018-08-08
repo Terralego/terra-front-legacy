@@ -4,7 +4,7 @@ import { Card, Collapse } from 'antd';
 
 import profileInitial from 'modules/profile-initial';
 
-import styles from 'components/UserrequestContact/UserrequestContact.module.scss';
+import styles from './UserrequestContact.module.scss';
 
 const FormatAffiliation = ({ affiliation }) => (
   <p>
@@ -32,16 +32,16 @@ const UserrequestContact = ({ data }) => {
       <ul className={styles.meta}>
         {(contacts[0].firstname || contacts[0].lastname) &&
           <li>
-            <p><strong>Demandeur:</strong> {contacts[0].firstname} {contacts[0].lastname}</p>
+            <p><strong>Demandeur :</strong> {contacts[0].firstname} {contacts[0].lastname}</p>
           </li>}
         {data.owner.email &&
-          <li><p><strong>Email:</strong> {data.owner.email}</p></li>}
+          <li><p><strong>Email :</strong> {data.owner.email}</p></li>}
         {name &&
-          <li><p><strong>Structure:</strong> {name}</p></li>}
+          <li><p><strong>Structure :</strong> {name}</p></li>}
         {affiliation.length > 0 &&
           <li><FormatAffiliation affiliation={affiliation} /></li>}
       </ul>
-      {label && <p><strong>Label(s):</strong> {label}</p>}
+      {label && <p><strong>Label(s) :</strong> {label}</p>}
       {contacts.length && contacts[0].firstname && contacts[0].lastname && contacts[0].phone &&
         <Collapse style={{ marginTop: 30 }}>
           {contacts.map(contact => (
@@ -49,12 +49,12 @@ const UserrequestContact = ({ data }) => {
               key={contact.phone + contact.firstname + contact.lastname}
               header={`${contact.firstname} ${contact.lastname}`}
             >
-              <p><strong>Numéro:</strong> {contact.phone[0]}</p>
-              {contact.phone[1] && <p><strong>Numéro secondaire:</strong> {contact.phone[1]}</p>}
-              {contact.email && <p><strong>Email:</strong> {contact.email}</p>}
-              {contact.position && <p><strong>Fonction:</strong> {contact.position}</p>}
-              {contact.zipcode && <p><strong>Code postal:</strong> {contact.zipcode}</p>}
-              {contact.city && <p><strong>Ville:</strong> {contact.city}</p>}
+              <p><strong>Numéro :</strong> {contact.phone[0]}</p>
+              {contact.phone[1] && <p><strong>Numéro secondaire :</strong> {contact.phone[1]}</p>}
+              {contact.email && <p><strong>Email :</strong> {contact.email}</p>}
+              {contact.position && <p><strong>Fonction :</strong> {contact.position}</p>}
+              {contact.zipcode && <p><strong>Code postal :</strong> {contact.zipcode}</p>}
+              {contact.city && <p><strong>Ville :</strong> {contact.city}</p>}
             </Collapse.Panel>
             ))}
         </Collapse>
