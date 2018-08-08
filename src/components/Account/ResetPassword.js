@@ -2,7 +2,7 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Form } from 'react-redux-form';
-import { Button } from 'antd';
+import { Button, message } from 'antd';
 import { Redirect } from 'react-router-dom';
 
 import { newPassword, changePassword } from 'modules/account';
@@ -10,6 +10,12 @@ import Input from 'components/Fields/Input';
 
 
 class ResetPassword extends React.Component {
+  componentDidUpdate (prevProps) {
+    if (this.props.form.submitted && this.props.form.submitted !== prevProps.form.submitted) {
+      message.success('Votre mot de passe a bien été mis à jour');
+    }
+  }
+
   handleSubmit = () => {
     const { account, uidb64, token } = this.props;
     if (uidb64 && token) {
