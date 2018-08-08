@@ -5,6 +5,7 @@ const statusLabels = {
   REFUSED: { text: 'Déclaration refusée', type: 'error' },
   CANCELED: { text: 'Déclaration annulée ', type: 'error' },
   ACCEPTED: { text: 'Déclaration acceptée', type: 'success' },
+  NO_STATUS: { text: 'Pas de status connu', type: 'warning' },
 };
 
 /**
