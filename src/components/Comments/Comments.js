@@ -6,7 +6,7 @@ import { Form as ReduxForm } from 'react-redux-form';
 import { Button } from 'antd';
 
 import withAuthentication from 'hoc/authentication';
-import { hasGroup, canCommentInternal } from 'helpers/permissionsHelpers';
+import { canCommentInternal } from 'helpers/permissionsHelpers';
 
 import { submitComment } from 'modules/userrequestComment';
 
@@ -24,27 +24,19 @@ class Comments extends React.Component {
   }
 
   isEnabled = () => {
-    const { newComment, form, groups } = this.props;
+    const { newComment, form, user } = this.props;
     // The comment contain :
     const hasComment = newComment.properties.comment !== ''; // a message
     const hasAttachment = newComment.attachment !== null; // an attachment
     const hasGeojson = newComment.geojson.features.length; // a geojson
-    // Si l'utilisateur est un N2 et que internal n'est pas bien défini.
-    const internalIsNotValid = hasGroup(groups, 'N2') && typeof newComment.is_internal !== 'string';
+    // If user should choose recipient, a recipient is defined
+    const hasRecipient = canCommentInternal(user.permissions, newComment.is_internal) !== null;
 
-    if (!form.valid) {
-      return false;
+    if (form.valid && (hasComment || hasAttachment || hasGeojson) && hasRecipient) {
+      return true;
     }
 
-    if (!hasComment && !hasAttachment && !hasGeojson) {
-      return false;
-    }
-
-    if (internalIsNotValid) {
-      return false;
-    }
-
-    return true;
+    return false;
   }
 
   render () {

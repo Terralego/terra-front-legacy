@@ -20,7 +20,7 @@ const initialState = {
   properties: {
     comment: '',
   },
-  is_internal: false,
+  is_internal: null,
 };
 
 
