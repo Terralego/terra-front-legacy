@@ -6,6 +6,18 @@ import profileInitial from 'modules/profile-initial';
 
 import styles from 'components/UserrequestContact/UserrequestContact.module.scss';
 
+const FormatAffiliation = ({ affiliation }) => (
+  <p>
+    <strong>Affiliation et partenariat(s): </strong>
+    {affiliation.map((affiliate, index) => {
+      if (index) {
+        return (`, ${affiliate}`);
+      }
+      return affiliate;
+    })}
+  </p>
+);
+
 const UserrequestContact = ({ data }) => {
   const {
     contacts = profileInitial.properties.contacts,
@@ -19,29 +31,25 @@ const UserrequestContact = ({ data }) => {
     >
       <ul className={styles.meta}>
         {(contacts[0].firstname || contacts[0].lastname) &&
-          <li><strong>Demandeur :</strong> {contacts[0].firstname} {contacts[0].lastname}</li>
-        }
-        {data.owner.email &&
-          <li><strong>Email :</strong> {data.owner.email}</li>
-        }
-        {name &&
-          <li><strong>Structure :</strong> {name}</li>
-        }
-        {affiliation.length > 0 &&
           <li>
-            <strong>Affiliation et partenariat(s):</strong>
-            {affiliation.map(affiliate => affiliate)}
+            <p><strong>Demandeur:</strong> {contacts[0].firstname} {contacts[0].lastname}</p>
           </li>}
+        {data.owner.email &&
+          <li><p><strong>Email:</strong> {data.owner.email}</p></li>}
+        {name &&
+          <li><p><strong>Structure:</strong> {name}</p></li>}
+        {affiliation.length > 0 &&
+          <li><FormatAffiliation affiliation={affiliation} /></li>}
       </ul>
-      {label && <p><strong>Label(s) :</strong> {label}</p>}
+      {label && <p><strong>Label(s):</strong> {label}</p>}
       {contacts.length && contacts[0].firstname && contacts[0].lastname && contacts[0].phone &&
         <Collapse style={{ marginTop: 30 }}>
           {contacts.map(contact => (
             <Collapse.Panel
-              key={contact.phone + contact.firstname}
+              key={contact.phone + contact.firstname + contact.lastname}
               header={`${contact.firstname} ${contact.lastname}`}
             >
-              <p><strong>Numéro: </strong> {contact.phone[0]}</p>
+              <p><strong>Numéro:</strong> {contact.phone[0]}</p>
               {contact.phone[1] && <p><strong>Numéro secondaire:</strong> {contact.phone[1]}</p>}
               {contact.email && <p><strong>Email:</strong> {contact.email}</p>}
               {contact.position && <p><strong>Fonction:</strong> {contact.position}</p>}
