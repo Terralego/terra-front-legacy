@@ -9,6 +9,7 @@ import {
 import { SET_ERROR_MESSAGE } from 'modules/authentication';
 import { CONFIG_FAILURE } from 'modules/appConfig';
 import { PROFILE_FAILURE } from 'modules/profile';
+import { CHANGE_PASSWORD_FAILURE } from 'modules/account';
 
 const initialState = null;
 
@@ -23,6 +24,7 @@ const errors = (state = initialState, action) => {
     case DETAIL_FAILURE:
     case INTERSECT_FAILURE:
     case PROFILE_FAILURE:
+    case CHANGE_PASSWORD_FAILURE:
     case CONFIG_FAILURE:
       return action.error;
     case SET_ERROR_MESSAGE:
