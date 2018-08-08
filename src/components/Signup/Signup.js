@@ -41,6 +41,7 @@ class FormLogin extends Component {
               id="signupEmail"
               label="Saisissez votre adresse email"
               errorMessages={{ required: { message: 'Veuillez saisir une adresse email' } }}
+              onPressEnter={this.handleSubmit}
             />
 
             {account.signupError

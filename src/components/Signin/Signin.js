@@ -37,6 +37,7 @@ class FormLogin extends Component {
           label="Mot de passe"
           errorMessages={{ required: { message: 'Please provide a password' } }}
           required
+          onPressEnter={this.handleSubmit}
         />
 
         <Button
