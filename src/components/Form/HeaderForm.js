@@ -2,8 +2,8 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Button, Icon, Col, Row } from 'antd';
-import { withRouter, Link } from 'react-router-dom';
+import { Button, Icon, Col, Row, Modal } from 'antd';
+import { withRouter } from 'react-router-dom';
 
 import { saveDraft, submitData, resetForm } from 'modules/userrequest';
 import FormConfig from 'components/Form/Form.config';
@@ -25,20 +25,38 @@ class HeaderForm extends React.Component {
     e.preventDefault();
   }
 
+  showConfirmationReturn = () => {
+    const { location: { state }, form, history } = this.props;
+    const pushHistory = () => history.push(state ? state.from : '/manage-request');
+    if (!form.touched && !form.submitted) {
+      pushHistory();
+    } else {
+      Modal.confirm({
+        title: `Are you sure you want to go to
+        ${state ? state.from : '/manage-request'}?`,
+        okText: 'Yes',
+        history,
+        okType: 'danger',
+        cancelText: 'No',
+        onOk () {
+          pushHistory();
+        },
+      });
+    }
+  }
+
   render () {
     const { loadingSaveDraft } = this.state;
-    const { location, form, showSubmit, showDraft } = this.props;
+    const { form, showSubmit, showDraft } = this.props;
 
     return (
       <header className={styles.header}>
         <Row gutter={16} type="flex" justify="space-between">
           <Col span={12}>
-            <Link to={location.state ? location.state.from : '/manage-request'}>
-              <Button type="primary">
-                <Icon type="left" />
-                {FormConfig.confirmation.backButton}
-              </Button>
-            </Link>
+            <Button onClick={this.showConfirmationReturn} type="primary">
+              <Icon type="left" />
+              {FormConfig.confirmation.backButton}
+            </Button>
           </Col>
           { (showDraft || showSubmit) && (
             <Col>
