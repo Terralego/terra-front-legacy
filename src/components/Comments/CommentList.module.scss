@@ -2,3 +2,31 @@
   margin: 24px auto;
   width: 100%;
 }
+
+.internalItem {
+  background: rgba(207,230,215,.45);
+}
+
+.internal {
+  color: rgba(0, 0, 0, 0.45);
+  font-weight: normal;
+  display: inline-block;
+  font-size: 12px;
+  background: white;
+  border-radius: 5px;
+  padding: 0 6px;
+  margin-bottom: 6px;
+}
+
+.commentItem {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 0 10px 0 10px;
+}
+
+.commentContent {
+  display: flex;
+  margin-bottom: 6px;
+}
+
