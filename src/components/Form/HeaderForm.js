@@ -35,7 +35,6 @@ class HeaderForm extends React.Component {
         title: `Are you sure you want to go to
         ${state ? state.from : '/manage-request'}?`,
         okText: 'Yes',
-        history,
         okType: 'danger',
         cancelText: 'No',
         onOk () {
