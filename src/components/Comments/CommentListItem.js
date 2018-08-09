@@ -21,9 +21,8 @@ const CommentListItem = ({ comment }) => (
         <List.Item.Meta
           title={comment.author}
           description={comment.content}
-          style={{ marginTop: 10 }}
         />
-        <div style={{ textAlign: 'right', marginTop: 10 }}>
+        <div style={{ textAlign: 'right' }}>
           {comment.is_internal &&
             <span className={styles.internal}>Message interne</span>
           }
