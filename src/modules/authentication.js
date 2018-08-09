@@ -12,7 +12,7 @@ export const RECEIVE_TOKEN = 'authentication/RECEIVE_TOKEN';
 export const RESET_TOKEN = 'authentication/RESET_TOKEN';
 export const SET_AUTHENTICATION = 'authentication/SET_AUTHENTICATION';
 export const REQUEST_LOG_OUT = 'authentication/REQUEST_LOG_OUT';
-export const SET_ERROR_MESSAGE = 'authentication/SET_ERROR_MESSAGE';
+export const AUTHENTICATION_FAILURE = 'authentication/AUTHENTICATION_FAILURE';
 
 /**
  * Parse JWT
@@ -33,7 +33,7 @@ const initialState = {
   isFetching: false,
   isAuthenticated: !!localStorage.getItem('token'),
   receivedAt: null,
-  errorMessage: null,
+  error: null,
   payload: {},
 };
 
@@ -69,10 +69,10 @@ const authentication = (state = initialState, action) => {
           ...action.payload,
         },
       };
-    case SET_ERROR_MESSAGE:
+    case AUTHENTICATION_FAILURE:
       return {
         ...state,
-        errorMessage: action.message,
+        error: action.error,
       };
     case PROFILE_SUCCESS:
       return {
@@ -141,10 +141,10 @@ export function requestLogOut () {
  * Action handle when fetch token failed
  * @param  {string} errorMessage
  */
-export function setErrorMessage (errorMessage) {
+export function setErrorMessage (error) {
   return {
-    type: SET_ERROR_MESSAGE,
-    errorMessage,
+    type: AUTHENTICATION_FAILURE,
+    error,
   };
 }
 
