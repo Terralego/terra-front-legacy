@@ -43,6 +43,12 @@ export const routes = [{
   icon: 'paper-clip',
   protected: true,
 }, {
+  path: '/create-profile',
+  name: 'Create a Profile',
+  component: Profile,
+  icon: 'paper-clip',
+  protected: true,
+}, {
   path: '/new-request',
   name: 'New request',
   component: Form,

@@ -37,7 +37,7 @@ const RouteViews = props => {
         && props.location.pathname !== '/profile') {
           return (
             <Redirect
-              to={{ pathname: '/profile', state: { from: props.location.pathname } }}
+              to={{ pathname: '/create-profile', state: { from: props.location.pathname } }}
               from={props.location.pathname}
             />
           );
