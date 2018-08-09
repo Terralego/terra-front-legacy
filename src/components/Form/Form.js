@@ -3,7 +3,7 @@ import { Card, Button, message, Spin } from 'antd';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Form as ReduxForm, track } from 'react-redux-form';
-import { withRouter, Prompt } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import moment from 'moment';
 
 import { fetchUserrequest } from 'modules/userrequestList';
@@ -66,16 +66,6 @@ class FormApp extends React.Component {
     }
     return (
       <div>
-        <Prompt
-          when={this.props.form.touched && !this.props.form.submitted}
-          message={location => {
-            if (location.pathname.startsWith('/manage-request/detail')
-            && this.props.location.pathname === '/new-request') {
-              return true;
-            }
-            return `Are you sure you want to go to ${location.pathname}?`;
-          }}
-        />
         <HeaderForm showDraft />
         <HeaderUserrequest {...this.props} />
         {this.props.mode ===  'edit' ?
