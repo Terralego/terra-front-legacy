@@ -6,7 +6,7 @@ import moment from 'moment';
 
 import CommentItemAttachments from 'components/Comments/CommentItemAttachments';
 
-import styles from './Comments.module.scss';
+import styles from './CommentList.module.scss';
 
 const CommentListItem = ({ comment }) => (
   <List.Item
@@ -22,7 +22,7 @@ const CommentListItem = ({ comment }) => (
           title={comment.author}
           description={comment.content}
         />
-        <div style={{ textAlign: 'right' }}>
+        <div className={styles.meta}>
           {comment.is_internal &&
             <span className={styles.internal}>Message interne</span>
           }
