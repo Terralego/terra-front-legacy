@@ -61,9 +61,9 @@ in `fr` and `en` objects.
 
 Finally, add all the properties you need to translate.
 
-#### Go to https://codesandbox.io/s/n4p235y56m for simple example.
+> Go to https://codesandbox.io/s/n4p235y56m for simple example.
 
-#### Official website : https://react.i18next.com/overview/getting-started for more informations.
+> Official website : https://react.i18next.com/overview/getting-started for more informations.
 
 ### `npm start`
 
