@@ -1,0 +1,36 @@
+const fr = {
+  profileTranslations: {
+    Nom: 'Nom',
+    'Numéro SIRET (facultatif)': 'Numéro SIRET (facultatif)',
+    Adresse: 'Adresse',
+    'Code postal': 'Code postal',
+    Ville: 'Ville',
+    'Personne(s) de contact': 'Personne(s) de contact',
+    Enregistrer: 'Enregistrer',
+    'Nom et type de structure': 'Nom et type de structure',
+    'Le nom est obligatoire': 'Le nom est obligatoire',
+    'Le type de structure est obligatoire': 'Le type de structure est obligatoire',
+    'L\'adresse est obligatoire': 'L\'adresse est obligatoire',
+    'Le code postal est obligatoire': 'Le code postal est obligatoire',
+    'La ville est obligatoire': 'La ville est obligatoire',
+    'Affiliations et partenariats': 'Affiliations et partenariats',
+    'Votre structure est-elle rattachée à une ou plusieurs fédérations ?': 'Votre structure est-elle rattachée à une ou plusieurs fédérations ?',
+    "Disposez-vous d'un label qualité ou d'une convention de partenariat avec l'ONF ?": "Disposez-vous d'un label qualité ou d'une convention de partenariat avec l'ONF ?",
+    'Nom du label': 'Nom du label',
+    'Supprimer ce contact': 'Supprimer ce contact',
+    'Ajouter une personne de contact': 'Ajouter une personne de contact',
+    'Adresse de la structure': 'Adresse de la structure',
+  },
+  profileContactTranslations: {
+    Prénom: 'Prénom',
+    'Ce champ est obligatoire': 'Ce champ est obligatoire',
+    Nom: 'Nom',
+    'Fonction dans la structure': 'Fonction dans la structure',
+    'Code postal': 'Code postal',
+    Ville: 'Ville',
+    Téléphone: 'Téléphone',
+    'Téléphone secondaire': 'Téléphone secondaire',
+  },
+};
+
+export default fr;
