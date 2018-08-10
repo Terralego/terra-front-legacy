@@ -34,7 +34,7 @@ const RouteViews = props => {
         if (props.isUser &&
         props.isAuthenticated && typeof props.user.properties === 'object' &&
         !Object.keys(props.user.properties).length
-        && props.location.pathname !== '/profile') {
+        && props.location.pathname !== '/create-profile') {
           return (
             <Redirect
               to={{ pathname: '/create-profile', state: { from: props.location.pathname } }}
