@@ -2,11 +2,12 @@
   margin: 0;
   padding: 0;
   border-radius: 2px;
+  margin-top: 6px;
 }
 
 .attachmentListItem {
   list-style-type: none;
-  padding: 0 12px 0 4px;
+  padding: 0 0 0 4px;
   color: rgba(0, 0, 0, 0.65);
   &:hover {
     background-color: #cfe6d7;
@@ -18,14 +19,16 @@
   }
 }
 
-
 .attachmentButton {
+  position: relative;
+  display: block;
+  width: 100%;
   border: none;
   background: none;
   padding: 0;
   color: rgba(0, 0, 0, 0.65);
-  cursor: pointer;
   transition: color .2s;
+  text-align: left;
 
   &--link {
     color: #00a655;
@@ -41,5 +44,27 @@
   }
 }
 
+.attachmentName {
+  padding: 0 12px 0 4px;
+  cursor: pointer;
+  border: none;
+  background: none;
+  padding: 0;
+}
 
+.attachmentRemove {
+  cursor: pointer;
+  position: absolute;
+  display: inline-block;
+  top: 0;
+  right: 4px;
+  color: rgba(0, 0, 0, 0.45);
+  line-height: 22px;
+  transform: scale(0.83333333) rotate(0deg);
+  opacity: 0;
+  transition: all .3s;
 
+  .attachmentButton:hover & {
+    opacity: 1;
+  }
+}
