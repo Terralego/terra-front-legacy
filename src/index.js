@@ -3,12 +3,10 @@ import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import Raven from 'raven-js';
 import settings from 'front-settings';
-import { I18nextProvider } from 'react-i18next';
 
 import { setAuthentication, refreshToken } from 'modules/authentication';
 import { getSettings } from 'modules/appConfig';
 
-import i18n from './i18n';
 import './index.css';
 import store from './store';
 import App from './App';
@@ -27,9 +25,7 @@ if (settings.SENTRY_PUBLIC_KEY && settings.SENTRY_PROJECT_ID) {
 const render = Component => {
   ReactDOM.render(
     <AppContainer>
-      <I18nextProvider i18n={i18n}>
-        <Component />
-      </I18nextProvider>
+      <Component />
     </AppContainer>,
     document.getElementById('root'),
   );
