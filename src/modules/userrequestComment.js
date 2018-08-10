@@ -6,7 +6,7 @@ export const SUBMIT_FAILURE = 'userrequestComment/SUBMIT_FAILURE';
 
 export const GEOJSON_COMMENT_FEATURE_ADD = 'GEOJSON_COMMENT_FEATURE_ADD';
 export const GEOJSON_COMMENT_FEATURE_REMOVE = 'GEOJSON_COMMENT_FEATURE_REMOVE';
-export const GEOJSON_COMMENT_NEW_FEATURE_REMOVE = 'GEOJSON_COMMENT_NEW_FEATURE_REMOVE';
+export const GEOJSON_COMMENT_CLEAR = 'GEOJSON_COMMENT_CLEAR';
 
 export const COMMENT_ATTACHMENT_ADD = 'COMMENT_ATTACHMENT_ADD';
 export const COMMENT_ATTACHMENT_REMOVE = 'COMMENT_ATTACHMENT_REMOVE';
@@ -63,13 +63,10 @@ const userrequestComment = (state = initialState, action) => {
             .filter(feature => feature.properties.id !== action.featureId),
         },
       };
-    case GEOJSON_COMMENT_NEW_FEATURE_REMOVE:
+    case GEOJSON_COMMENT_CLEAR:
       return {
         ...state,
-        geojson: {
-          ...state.geojson,
-          features: [],
-        },
+        geojson: initialState.geojson,
       };
     case COMMENT_ATTACHMENT_ADD:
       return {
@@ -129,10 +126,11 @@ export const submitComment = (userrequestId, data, isInternal) => {
     },
   });
 };
+
 /**
  * userrequestComment action
- * add GEOJSON RequestCommentFeature add or update an object of properties
- * @param {object} properties : object of properties to add / update in userrequestComment object
+ * add or update geojson feature
+ * @param {object} feature : object of feature to add / update in userrequestComment object
  */
 export const addRequestCommentFeature = feature => ({
   type: GEOJSON_COMMENT_FEATURE_ADD,
@@ -141,12 +139,20 @@ export const addRequestCommentFeature = feature => ({
 
 /**
 * userrequestComment action
-* add GEOJSON RequestCommentFeature add or update an object of properties
- * @param {object} properties : object of properties to remove / update in userrequestComment object
+* remove geojson feature
+ * @param {string} featureId : id of feature property to remove
  */
 export const removeRequestCommentFeature = featureId => ({
   type: GEOJSON_COMMENT_FEATURE_REMOVE,
   featureId,
+});
+
+/**
+* userrequestComment action
+* remove all geojson features
+ */
+export const clearGeojson = () => ({
+  type: GEOJSON_COMMENT_CLEAR,
 });
 
 /**
