@@ -1,0 +1,184 @@
+{
+  "SUBMIT_SUCCESS": {
+    "geojson": {
+      "type": "FeatureCollection",
+      "features": []
+    },
+    "attachment": null,
+    "properties": {
+      "comment": ""
+    },
+    "is_internal": null,
+    "error": null
+  },
+  "SUBMIT_FAILURE": {
+    "geojson": {
+      "type": "FeatureCollection",
+      "features": []
+    },
+    "attachment": null,
+    "properties": {
+      "comment": ""
+    },
+    "is_internal": null,
+    "error": {
+      "message": "error message"
+    }
+  },
+  "GEOJSON_COMMENT_FEATURE_ADD": {
+    "geojson": {
+      "type": "FeatureCollection",
+      "features": [{ "properties": { "id": "b" } }]
+    },
+    "attachment": null,
+    "properties": {
+      "comment": ""
+    },
+    "is_internal": null,
+    "error": null
+  },
+  "GEOJSON_COMMENT_FEATURE_REMOVE": {
+    "geojson": {
+      "type": "FeatureCollection",
+      "features": []
+    },
+    "attachment": null,
+    "properties": {
+      "comment": ""
+    },
+    "is_internal": null,
+    "error": null
+  },
+  "removeFeaturesMultiple": {
+    "state": {
+      "geojson": {
+        "type": "FeatureCollection",
+        "features": [
+          { "properties": { "id": "a" } },
+          { "properties": { "id": "b" } },
+          { "properties": { "id": "c" } },
+          { "properties": { "id": "d" } }
+        ]
+      },
+      "attachment": null,
+      "properties": {
+        "comment": ""
+      },
+      "is_internal": null,
+      "error": null
+    },
+    "result": {
+      "geojson": {
+        "type": "FeatureCollection",
+        "features": [
+          { "properties": { "id": "a" } },
+          { "properties": { "id": "b" } },
+          { "properties": { "id": "d" } }
+        ]
+      },
+      "attachment": null,
+      "properties": {
+        "comment": ""
+      },
+      "is_internal": null,
+      "error": null
+    }
+  },
+  "clearGeojson": {
+    "state": {
+      "geojson": {
+        "type": "FeatureCollection",
+        "features": [
+          { "properties": { "id": "a" } },
+          { "properties": { "id": "b" } },
+          { "properties": { "id": "c" } },
+          { "properties": { "id": "d" } }
+        ]
+      },
+      "attachment": null,
+      "properties": {
+        "comment": ""
+      },
+      "is_internal": null,
+      "error": null
+    },
+    "result": {
+      "geojson": {
+        "type": "FeatureCollection",
+        "features": []
+      },
+      "attachment": null,
+      "properties": {
+        "comment": ""
+      },
+      "is_internal": null,
+      "error": null
+    }
+  },
+  "COMMENT_ATTACHMENT_ADD": {
+    "geojson": {
+      "type": "FeatureCollection",
+      "features": []
+    },
+    "attachment": "a",
+    "properties": {
+      "comment": ""
+    },
+    "is_internal": null,
+    "error": null
+  },
+  "attachmentRemove": {
+    "state": {
+      "geojson": {
+        "type": "FeatureCollection",
+        "features": []
+      },
+      "attachment": "a",
+      "properties": {
+        "comment": ""
+      },
+      "is_internal": null,
+      "error": null
+    },
+    "result": {
+      "geojson": {
+        "type": "FeatureCollection",
+        "features": []
+      },
+      "attachment": null,
+      "properties": {
+        "comment": ""
+      },
+      "is_internal": null,
+      "error": null
+    }
+  },
+  "submitComment": {
+    "default": {
+      "config": {
+        "body": "",
+        "method": "POST"
+      },
+      "endpoint": "/userrequest/2/comment/",
+      "form": "userrequestComment",
+      "types": [
+        "userrequestComment/SUBMIT_REQUEST",
+        "userrequestComment/SUBMIT_SUCCESS",
+        "userrequestComment/SUBMIT_FAILURE"
+      ]
+    },
+    "noargs": {
+      "config": {
+        "body": "",
+        "method": "POST"
+      },
+      "endpoint": "/userrequest/0/comment/",
+      "form": "userrequestComment",
+      "types": [
+        "userrequestComment/SUBMIT_REQUEST",
+        "userrequestComment/SUBMIT_SUCCESS",
+        "userrequestComment/SUBMIT_FAILURE"
+      ]
+    }
+  }
+}
