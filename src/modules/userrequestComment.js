@@ -132,7 +132,7 @@ export const submitComment = (userrequestId, data, isInternal) => {
  * add or update geojson feature
  * @param {object} feature : object of feature to add / update in userrequestComment object
  */
-export const addRequestCommentFeature = feature => ({
+export const addCommentFeature = feature => ({
   type: GEOJSON_COMMENT_FEATURE_ADD,
   feature,
 });
@@ -142,7 +142,7 @@ export const addRequestCommentFeature = feature => ({
 * remove geojson feature
  * @param {string} featureId : id of feature property to remove
  */
-export const removeRequestCommentFeature = featureId => ({
+export const removeCommentFeature = featureId => ({
   type: GEOJSON_COMMENT_FEATURE_REMOVE,
   featureId,
 });
