@@ -37,14 +37,22 @@ export const submit = data => ({
 
 ### i18n Internationalisation
 
-To set translation to one component, follow theses instructions:
-+ `import { translate } from 'react-i18next';`
++ To set translation to one component, follow theses instructions:
+```javascript
+import { translate } from 'react-i18next';
+```
 
-+ Use it like HOC -> `export default translate('MyComponentTranslation')(MyComponent);`
++ Use it like HOC -> 
+```javascript
+export default translate('MyComponentTranslation')(MyComponent);
+```
 
 + execute `this.props.t('Content')` were you need to translate.
 
-+ example: `<p>Content</p>` -> `<p>{this.props.t('Content')}</p>`
++ example: 
+```javascript
+<p>Content</p> -> <p>{this.props.t('Content')}</p>
+```
 
 + Then, go to `src/locales/en.js` & `src/locales/fr.js` 
 
