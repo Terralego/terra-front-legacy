@@ -21,9 +21,7 @@ class FormMap extends Component {
   }
 
   componentDidMount () {
-    if (!this.props.editable) {
-      this.setDrawMode('pointer');
-    }
+    this.setDrawMode('pointer');
   }
 
   componentWillReceiveProps (nextProps) {
