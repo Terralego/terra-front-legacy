@@ -26,17 +26,7 @@ const errors = (state = initialState, action) => {
     case PROFILE_FAILURE:
     case CHANGE_PASSWORD_FAILURE:
     case CONFIG_FAILURE:
-      if (action.error.message === 'Unauthorized') {
-        return {
-          ...action.error,
-          message: 'Vous devez être connecté pour accéder à cette ressource.',
-        };
-      }
-      return action.error;
     case AUTHENTICATION_FAILURE:
-      if (action.error.url.includes('refresh-token')) {
-        return state;
-      }
       return action.error;
     default:
       return state;

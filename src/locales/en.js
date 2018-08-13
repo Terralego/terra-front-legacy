@@ -1,4 +1,14 @@
 const en = {
+  error: {
+    unspecific: 'Something went wrong.',
+    authentication: 'Can\'t connect with given credentials.',
+    password: 'Bad password',
+    username: 'Bad username',
+    email: 'Bad email',
+    404: 'he page was not found.',
+    401: 'You need to be authenticated to access to this resource',
+    400: 'he page was not found.',
+  },
   profileTranslations: {
     Nom: 'Name',
     'Numéro SIRET (facultatif)': 'Siret number (optional)',

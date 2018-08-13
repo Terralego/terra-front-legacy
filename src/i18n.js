@@ -38,7 +38,11 @@ i18n
 
     // have a common namespace used around the full app
     nsMode: 'default',
-    ns: ['profileTranslations', 'profileContactTranslations'],
+    ns: [
+      'error',
+      'profileTranslations',
+      'profileContactTranslations',
+    ],
     defaultNS: 'profileTranslations',
 
     keySeparator: false, // we use content as keys
