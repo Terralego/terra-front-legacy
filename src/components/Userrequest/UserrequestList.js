@@ -125,9 +125,17 @@ class UserrequestList extends React.Component {
     this.props.history.push(`/manage-request/detail/${id}`);
   }
 
+  handleTableChange = (pagination, filters, sorter) => {
+    const order = sorter.order === 'descend' ? '-' : '';
+    this.handleQueryUpdate(
+      { ordering: `${order}${sorter.field}` },
+      true,
+    );
+  }
+
   render () {
     const { selectedRowKeys } = this.state;
-    const { isUser, columns, pagination } = this.props;
+    const { isUser, columns, pagination, items } = this.props;
 
     const rowSelection = {
       selectedRowKeys,
@@ -169,7 +177,7 @@ class UserrequestList extends React.Component {
           rowKey="id"
           scroll={{ x: 800 }}
           columns={columns}
-          dataSource={this.props.items}
+          dataSource={items}
           rowSelection={isUser ? rowSelection : null}
           loading={this.props.loading}
           onRow={record => (
@@ -180,6 +188,7 @@ class UserrequestList extends React.Component {
             }
           )}
           pagination={false}
+          onChange={this.handleTableChange}
         />
         <Pagination {...pagination} handleQueryUpdate={this.handleQueryUpdate} />
       </div>
