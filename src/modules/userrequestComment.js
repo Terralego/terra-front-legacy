@@ -6,12 +6,12 @@ export const SUBMIT_FAILURE = 'userrequestComment/SUBMIT_FAILURE';
 
 export const GEOJSON_COMMENT_FEATURE_ADD = 'GEOJSON_COMMENT_FEATURE_ADD';
 export const GEOJSON_COMMENT_FEATURE_REMOVE = 'GEOJSON_COMMENT_FEATURE_REMOVE';
-export const GEOJSON_COMMENT_NEW_FEATURE_REMOVE = 'GEOJSON_COMMENT_NEW_FEATURE_REMOVE';
+export const GEOJSON_COMMENT_CLEAR = 'GEOJSON_COMMENT_CLEAR';
 
 export const COMMENT_ATTACHMENT_ADD = 'COMMENT_ATTACHMENT_ADD';
 export const COMMENT_ATTACHMENT_REMOVE = 'COMMENT_ATTACHMENT_REMOVE';
 
-const initialState = {
+export const initialState = {
   geojson: {
     type: 'FeatureCollection',
     features: [],
@@ -21,6 +21,7 @@ const initialState = {
     comment: '',
   },
   is_internal: null,
+  error: null,
 };
 
 
@@ -33,8 +34,6 @@ const userrequestComment = (state = initialState, action) => {
     case SUBMIT_REQUEST:
       return {
         ...state,
-        submitted: true,
-        sent: false,
         error: null,
       };
     case SUBMIT_SUCCESS:
@@ -49,9 +48,7 @@ const userrequestComment = (state = initialState, action) => {
         ...state,
         geojson: {
           ...state.geojson,
-          features: [
-            ...action.feature,
-          ],
+          features: action.features,
         },
       };
     case GEOJSON_COMMENT_FEATURE_REMOVE:
@@ -63,13 +60,10 @@ const userrequestComment = (state = initialState, action) => {
             .filter(feature => feature.properties.id !== action.featureId),
         },
       };
-    case GEOJSON_COMMENT_NEW_FEATURE_REMOVE:
+    case GEOJSON_COMMENT_CLEAR:
       return {
         ...state,
-        geojson: {
-          ...state.geojson,
-          features: [],
-        },
+        geojson: initialState.geojson,
       };
     case COMMENT_ATTACHMENT_ADD:
       return {
@@ -104,7 +98,7 @@ export default userrequestComment;
  * @param {number} userrequestId
  * @param {string} new comment text
  */
-export const submitComment = (userrequestId, data, isInternal) => {
+export const submitComment = (userrequestId = 0, data = initialState, isInternal = false) => {
   const body = new FormData();
   body.append('properties', JSON.stringify(data.properties));
   body.append('is_internal', isInternal);
@@ -129,24 +123,33 @@ export const submitComment = (userrequestId, data, isInternal) => {
     },
   });
 };
+
 /**
  * userrequestComment action
- * add GEOJSON RequestCommentFeature add or update an object of properties
- * @param {object} properties : object of properties to add / update in userrequestComment object
+ * add or update geojson feature
+ * @param {array} features : array of features to add / update in userrequestComment object
  */
-export const addRequestCommentFeature = feature => ({
+export const addCommentFeature = features => ({
   type: GEOJSON_COMMENT_FEATURE_ADD,
-  feature,
+  features,
 });
 
 /**
 * userrequestComment action
-* add GEOJSON RequestCommentFeature add or update an object of properties
- * @param {object} properties : object of properties to remove / update in userrequestComment object
+* remove geojson feature
+ * @param {string} featureId : id of feature property to remove
  */
-export const removeRequestCommentFeature = featureId => ({
+export const removeCommentFeature = featureId => ({
   type: GEOJSON_COMMENT_FEATURE_REMOVE,
   featureId,
+});
+
+/**
+* userrequestComment action
+* remove all geojson features
+ */
+export const clearGeojson = () => ({
+  type: GEOJSON_COMMENT_CLEAR,
 });
 
 /**
