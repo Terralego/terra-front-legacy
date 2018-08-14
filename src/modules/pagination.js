@@ -76,13 +76,18 @@ export const getCurrentPage = (pagination = { queries: {} }, queryParams) => {
 export const getCurrentPageResults = createSelector(
   [
     getCurrentPage,
+    (pagination, queryParams) => queryParams,
     (pagination, queryParams, items) => items,
   ],
-  (currentPage, items = []) => {
+  (currentPage, queryParams, items = []) => {
+    const { ordering } = queryString.parse(queryParams);
+
     if (currentPage.ids) {
-      const output = Object.values(pick(items, currentPage.ids));
-      getParams().ordering.substring(0, 1) === '-' && output.reverse();
-      return output;
+      const values = Object.values(pick(items, currentPage.ids));
+      if (!ordering || ordering.charAt(0) === '-') {
+        values.reverse();
+      }
+      return values;
     }
     return [];
   },
