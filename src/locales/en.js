@@ -1,13 +1,13 @@
 const en = {
   error: {
-    unspecific: 'Something went wrong.',
+    unspecific: 'Something went wrong. Please retry again or come back later.',
     authentication: 'Can\'t connect with given credentials.',
     password: 'Bad password',
     username: 'Bad username',
     email: 'Bad email',
-    404: 'he page was not found.',
+    404: 'The page was not found.',
     401: 'You need to be authenticated to access to this resource',
-    400: 'he page was not found.',
+    500: 'An error occured. Please retry again or come back later.',
   },
   profileTranslations: {
     Nom: 'Name',
