@@ -7,7 +7,7 @@ import queryString from 'query-string';
 
 import { getUserGroups } from 'modules/authentication';
 import { submitData, saveDraft } from 'modules/userrequest';
-import { requestUserrequestPage, updateState, getUserrequestsArrayFilteredByUser, setLoading } from 'modules/userrequestList';
+import { requestUserrequestPage, updateState, getUserrequestsArrayFilteredByUser } from 'modules/userrequestList';
 import { getPaginationParams, isCurrentPageFetching, resetPaginationCache } from 'modules/pagination';
 
 import getColumns from 'helpers/userrequestListColumns';
@@ -112,7 +112,6 @@ class UserrequestList extends React.Component {
       onOk: () => {
         selectedItems
           .forEach(item => {
-            this.props.setLoading(item.id);
             this.props.updateState(item.id, -2);
           });
         this.setState({
@@ -212,7 +211,6 @@ const mapDispatchToProps = dispatch =>
     submitData,
     saveDraft,
     updateState,
-    setLoading,
   }, dispatch);
 
 export default withRouter(withAuthentication(connect(
