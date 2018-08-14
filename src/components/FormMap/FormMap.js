@@ -32,6 +32,7 @@ class FormMap extends Component {
 
   componentWillUnmount () {
     this.setDrawMode('pointer');
+    this.props.updateConfigValue('drawMode', 'pointer');
   }
 
   setDrawMode (mode) {
