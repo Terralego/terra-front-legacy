@@ -1,4 +1,14 @@
 const fr = {
+  error: {
+    unspecific: 'Une erreur est survenue. Veuillez réessayer plus tard.',
+    authentication: 'Impossible de se connecter avec les informations d\'identification fournies.',
+    password: 'Mot de passe incorrect',
+    username: 'Identifiant incorrect',
+    email: 'Email incorrect',
+    404: 'Page non trouvée.',
+    401: 'Vous devez être connecté pour accéder à cette ressource.',
+    500: 'Une erreur est survenue. Veuillez réessayer ou revenir plus tard.',
+  },
   profileTranslations: {
     Nom: 'Nom',
     'Numéro SIRET (facultatif)': 'Numéro SIRET (facultatif)',

@@ -1,6 +1,7 @@
 import 'whatwg-fetch';
 import settings from 'front-settings';
 import tokenService from 'services/tokenService';
+import i18next from 'i18next';
 
 async function handleErrors (response) {
   const data = await response.json();
@@ -9,25 +10,26 @@ async function handleErrors (response) {
     return data;
   }
 
-  const error = {
-    message: response.statusText || 'There was an error',
-    status: response.status,
-    url: response.url,
-  };
+  let errorCode = response.status;
 
   if (data.password) {
-    error.message += `: Password : ${data.password[0]}`;
+    errorCode = 'password';
   }
   if (data.username) {
-    error.message += `: Login : ${data.username[0]}`;
+    errorCode = 'username';
   }
   if (data.email) {
-    error.message += `: Email : ${data.email[0]}`;
+    errorCode = 'email';
   }
   if (data.non_field_errors
     && data.non_field_errors.length > 0) {
-    error.message += `: ${data.non_field_errors[0]}`;
+    errorCode = 'authentication';
   }
+
+  const error = {
+    message: i18next.t([`error:${errorCode}`, 'error:unspecific']),
+    ...response,
+  };
 
   throw error;
 }

@@ -1,4 +1,14 @@
 const en = {
+  error: {
+    unspecific: 'Something went wrong. Please retry again or come back later.',
+    authentication: 'Can\'t connect with given credentials.',
+    password: 'Bad password',
+    username: 'Bad username',
+    email: 'Bad email',
+    404: 'The page was not found.',
+    401: 'You need to be authenticated to access to this resource',
+    500: 'An error occured. Please retry again or come back later.',
+  },
   profileTranslations: {
     Nom: 'Name',
     'Numéro SIRET (facultatif)': 'Siret number (optional)',
