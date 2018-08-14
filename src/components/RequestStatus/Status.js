@@ -15,6 +15,10 @@ export const Status = ({ userrequest, user }) => {
     return null;
   }
 
+  if (userrequest.loading) {
+    return 'loading...';
+  }
+
   const {
     text,
     type,

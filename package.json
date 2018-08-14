@@ -11,6 +11,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@mapbox/mapbox-gl-draw": "~1.0.9",
+    "@turf/area": "~6.0.1",
+    "@turf/flatten": "~5.1.5",
     "antd": "~3.8.0",
     "axios-mock-adapter": "~1.15.0",
     "classnames": "~2.2.6",
@@ -39,6 +42,7 @@
     "react-helmet": "~5.2.0",
     "react-hot-loader": "~4.3.4",
     "react-i18next": "~7.10.1",
+    "react-map-gl": "~3.3.4",
     "react-redux": "~5.0.6",
     "react-redux-form": "~1.16.9",
     "react-router-dom": "~4.3.1",

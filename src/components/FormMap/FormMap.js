@@ -3,8 +3,8 @@ import { Row, Col, Card } from 'antd';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
+import settings from 'front-settings';
 import { updateConfigValue } from 'modules/appConfig';
-
 import { getActivityFeatures, getDatesQueryOptions } from 'helpers/mapHelper/mapHelper';
 import FeaturesList from 'components/FormMap/FeatureList';
 import MapDrawButtons from 'components/MapDrawButtons/MapDrawButtons';
@@ -95,6 +95,7 @@ class FormMap extends Component {
         }
         <Col span={24} lg={24} style={{ height: 450 }}>
           <TerraDrawMap
+            MapboxAccessToken={settings.MAPBOX_ACCESS_TOKEN}
             features={activityFeatures}
             config={TerraDrawMapConfig}
             sourceVectorOptions={getDatesQueryOptions(activity.eventDates)}
