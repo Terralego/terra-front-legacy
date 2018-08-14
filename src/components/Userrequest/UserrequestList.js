@@ -200,8 +200,7 @@ class UserrequestList extends React.Component {
 const mapStateToProps = (state, ownProps) => ({
   draft: state.userrequest,
   items: getUserrequestsArrayFilteredByUser(state, ownProps.location.search),
-  loading: isCurrentPageFetching(state.pagination.userrequestList, ownProps.location.search)
-    || state.userrequestList.loading,
+  loading: isCurrentPageFetching(state.pagination.userrequestList, ownProps.location.search),
   columns: getColumns(getUserGroups(state)),
   pagination: getPaginationParams(state.pagination.userrequestList, ownProps.location.search),
 });
