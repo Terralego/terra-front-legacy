@@ -126,10 +126,13 @@ export const removeRequestFeature = featureId => ({
  * userrequest action
  * openDraft set already loaded userrequest in userrequest form
  */
-export const openDraft = data => ({
-  type: DETAIL_SUCCESS,
-  data,
-});
+export const openDraft = data => dispatch => {
+  dispatch(actions.setInitial('userrequest'));
+  return dispatch({
+    type: DETAIL_SUCCESS,
+    data,
+  });
+};
 
 
 /**
