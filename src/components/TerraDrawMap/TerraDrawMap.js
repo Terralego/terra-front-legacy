@@ -1,24 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import ReactMapGL from 'react-map-gl';
+import mapboxgl from 'mapbox-gl';
 import MapboxDraw from '@mapbox/mapbox-gl-draw';
-import area from '@turf/area';
-// import flatten from '@turf/flatten';
-// import intersect from '@turf/intersect';
-// import { polygon, lineString } from '@turf/helpers';
-// import booleanIntersects from '@turf/boolean-intersects';
 
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
-
-// function guid () {
-//   function s4 () {
-//     return Math.floor((1 + Math.random()) * 0x10000)
-//       .toString(16)
-//       .substring(1);
-//   }
-//   return `${s4()}${s4()}-${s4()}-${s4()}-${s4()}-${s4()}${s4()}${s4()}`;
-// }
 
 // const getLayerStyle = (layer, feature) => {
 //   const sameLayerName = feature.getProperties().layer === layer.layerName;
@@ -36,88 +22,80 @@ import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 // };
 
 class TerraDrawMap extends Component {
-  constructor (props) {
-    super(props);
-    this.state = {
-      viewport: {
-        width: 800,
-        height: 600,
-        latitude: this.props.center[1],
-        longitude: this.props.center[0],
-        zoom: this.props.zoom,
-      },
-    };
-    this.map = React.createRef();
-  }
-
   componentDidMount () {
-    const map = this.mapRef.getMap();
-    if (map) {
-      this.draw = new MapboxDraw({
-        displayControlsDefault: false,
-        controls: {
-          polygon: true,
-          trash: true,
-        },
-      });
-      map.addControl(this.draw);
-
-      map.on('draw.create', this.updateArea);
-      map.on('draw.delete', this.updateArea);
-      map.on('draw.update', this.updateArea);
-    }
-
-
-    // map.on('draw.create', createData => this.onDrawCreateOrUpdate(createData));
-    // map.on('draw.delete', deleteData => this.onDrawDelete(deleteData));
-    // map.on('draw.update', updateData => this.onDrawCreateOrUpdate(updateData));
+    this.initMap();
   }
 
-  /**
-   * Set pointer mode
-   */
-  setSelectionMode () {
-    // this.stopDraw();
-    // // this.map.addInteraction(this.modify);
-    // this.map.addInteraction(this.select);
-    // // this.map.addInteraction(this.snap);
-  }
+  onDrawUpdate = e => {
+    if (
+      e.action === 'move' ||
+      e.type === 'draw.create' ||
+      e.action === 'change_coordinates'
+    ) {
+      console.log(e);
 
-  updateArea = e => {
-    console.log('updateArea', e);
-
-    const data = this.draw.getAll();
-    const answer = document.getElementById('calculated-area');
-    if (data.features.length > 0) {
-      const areaData = area(data);
-      // restrict to area to 2 decimal points
-      const roundedArea = Math.round(areaData * 100) / 100;
-      answer.innerHTML = `<p><strong>${roundedArea}</strong></p><p>square meters</p>`;
-    } else {
-      answer.innerHTML = '';
-      if (e.type !== 'draw.delete') alert('Use the draw tools to draw a polygon!');
+      this.props.addDataDraw(e.features[0]);
+    } else if (
+      e.type === 'draw.delete'
+    ) {
+      this.props.deleteDataDraw(e.features[0].id);
     }
   }
 
-  /**
-   * Stop drawing
-   */
-  stopDraw () {
-    // if (this.draw) {
-    //   this.map.removeInteraction(this.draw);
-    // }
+  deleteFeatureById (id) {
+    this.draw.delete([id]);
+  }
+
+  initDraw () {
+    this.draw = new MapboxDraw({
+      displayControlsDefault: false,
+      controls: {
+        polygon: true,
+        trash: true,
+      },
+    });
+    this.map.addControl(this.draw);
+  }
+
+  initMap () {
+    mapboxgl.accessToken = this.props.mapboxAccessToken;
+    this.map = new mapboxgl.Map({
+      container: this.mapContainer,
+      style: 'mapbox://styles/mapbox/streets-v9',
+      center: this.props.center,
+      zoom: this.props.zoom,
+      maxBounds: this.props.maxBounds,
+    });
+
+    this.map.on('draw.create', this.onDrawUpdate);
+    this.map.on('draw.delete', this.onDrawUpdate);
+    this.map.on('draw.update', this.onDrawUpdate);
+
+    // this.map.on('mousemove', e => {
+    //   if (this.state.config) {
+    //     const layersId = this.state.config.layers
+    //       .filter(y => y.display)
+    //       .map(y => y.id);
+    //     const features = this.map.queryRenderedFeatures(e.point, {
+    //       layers: layersId,
+    //     });
+
+    //     this.props.getDataOnHover(features);
+    //   }
+    // });
+
+    this.map.on('load', () => {
+      this.initDraw();
+    });
   }
 
   render () {
     return (
-      <ReactMapGL
-        mapboxApiAccessToken={this.props.MapboxAccessToken}
-        mapStyle="mapbox://styles/mapbox/outdoors-v9"
-        {...this.state.viewport}
-        onViewportChange={viewport => this.setState({ viewport })}
-        ref={map => {
-          this.mapRef = map;
-          return map;
+      <div
+        style={{ height: '100%', width: '100%' }}
+        ref={el => {
+          this.mapContainer = el;
+          return el;
         }}
       />
     );
@@ -426,9 +404,11 @@ class TerraDrawMap extends Component {
 }
 
 TerraDrawMap.propTypes = {
-  MapboxAccessToken: PropTypes.string.isRequired,
+  mapboxAccessToken: PropTypes.string.isRequired,
   zoom: PropTypes.number,
   center: PropTypes.arrayOf(PropTypes.number),
+  addDataDraw: PropTypes.func,
+  deleteDataDraw: PropTypes.func,
   // config: PropTypes.shape({
   //   sourceVectorUrl: PropTypes.string,
   //   vectorLayers: PropTypes.arrayOf(PropTypes.shape({
@@ -457,6 +437,8 @@ TerraDrawMap.propTypes = {
 TerraDrawMap.defaultProps = {
   zoom: 11,
   center: [2.62322, 48.40813],
+  addDataDraw: e => e,
+  deleteDataDraw: e => e,
   // config: { sourceVectorUrl: '', vectorLayers: [] },
   // sourceVectorOptions: '',
   // minZoom: 11,

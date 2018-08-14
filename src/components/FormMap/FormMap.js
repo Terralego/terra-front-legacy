@@ -14,47 +14,24 @@ import { TerraDrawMapConfig, mapLegend, mapTitleLegend } from 'components/FormMa
 
 
 class FormMap extends Component {
-  constructor (props) {
-    super(props);
-    this.getGeometryOnDrawEnd = this.getGeometryOnDrawEnd.bind(this);
-    this.removeFeature = this.removeFeature.bind(this);
-  }
+  // componentDidMount () {
+  //   this.setDrawMode('pointer');
+  // }
 
-  componentDidMount () {
-    this.setDrawMode('pointer');
-  }
+  // componentWillReceiveProps (nextProps) {
+  //   if (this.props.drawMode !== nextProps.drawMode) {
+  //     this.setDrawMode(nextProps.drawMode);
+  //   }
+  // }
 
-  componentWillReceiveProps (nextProps) {
-    if (this.props.drawMode !== nextProps.drawMode) {
-      this.setDrawMode(nextProps.drawMode);
-    }
-  }
+  // componentWillUnmount () {
+  //   this.setDrawMode('pointer');
+  //   this.props.updateConfigValue('drawMode', 'pointer');
+  // }
 
-  componentWillUnmount () {
-    this.setDrawMode('pointer');
-    this.props.updateConfigValue('drawMode', 'pointer');
-  }
+  addDataDraw = data => {
+    console.log('addDataDraw');
 
-  setDrawMode (mode) {
-    switch (mode) {
-      case 'pointer':
-        this.mapContainer.setSelectionMode();
-        break;
-      case 'polygon':
-        this.mapContainer.startDrawPolygon();
-        break;
-      case 'line':
-        this.mapContainer.startDrawLine();
-        break;
-      case 'point':
-        this.mapContainer.startDrawPoint();
-        break;
-      default:
-        this.mapContainer.unsetSelectionMode();
-    }
-  }
-
-  getGeometryOnDrawEnd (data) {
     const { activity: { uid, eventDateStart, eventDateEnd } } = this.props;
     const feature = {
       ...data,
@@ -66,8 +43,13 @@ class FormMap extends Component {
     this.props.onAddFeature(feature, eventDateStart, eventDateEnd);
   }
 
-  removeFeature (id) {
-    this.mapContainer.removeFeatureById(id);
+  deleteDataDraw = e => {
+    console.log('removes', e);
+    // this.props.deleteFeature(id);
+  }
+
+  deleteFeature = id => {
+    this.mapContainer.deleteFeatureById(id);
     this.props.onRemoveFeature(id);
   }
 
@@ -95,7 +77,7 @@ class FormMap extends Component {
         }
         <Col span={24} lg={24} style={{ height: 450 }}>
           <TerraDrawMap
-            MapboxAccessToken={settings.MAPBOX_ACCESS_TOKEN}
+            mapboxAccessToken={settings.MAPBOX_ACCESS_TOKEN}
             features={activityFeatures}
             config={TerraDrawMapConfig}
             sourceVectorOptions={getDatesQueryOptions(activity.eventDates)}
@@ -107,7 +89,8 @@ class FormMap extends Component {
             ref={el => {
               this.mapContainer = el;
             }}
-            getGeometryOnDrawEnd={this.getGeometryOnDrawEnd}
+            addDataDraw={this.addDataDraw}
+            deleteDataDraw={this.deleteDataDraw}
             osmSource="https://{a-c}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png"
           />
           <MapLegend
@@ -120,7 +103,7 @@ class FormMap extends Component {
           <Card title={mapTitleLegend.title}>
             <FeaturesList
               features={activityFeatures}
-              removeFeature={this.removeFeature}
+              deleteFeature={this.deleteFeature}
               editable={editable}
               withIncidence={withIncidence}
             />
