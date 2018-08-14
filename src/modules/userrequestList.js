@@ -24,7 +24,7 @@ export const APPROBATIONS_CHANGE_REQUEST = 'userrequestList/APPROBATIONS_CHANGE_
 export const APPROBATIONS_CHANGE_SUCCESS = 'userrequestList/APPROBATIONS_CHANGE_SUCCESS';
 export const APPROBATIONS_CHANGE_FAILURE = 'userrequestList/APPROBATIONS_CHANGE_FAILURE';
 
-
+export const SET_LOADING = 'SET_LOADING';
 export const userrequestPaginator = createPaginator('/userrequest/');
 
 /**
@@ -58,6 +58,20 @@ const userrequestList = (state = {}, action) => {
         [action.data.id]: action.data,
       };
     case STATE_CHANGE_SUCCESS:
+      return {
+        ...state,
+        [action.data.id]: { ...state[action.data.id], isLoading: false },
+      };
+    case STATE_CHANGE_FAILURE:
+      return {
+        ...state,
+        [action.data.id]: { ...state[action.data.id], isLoading: false },
+      };
+    case SET_LOADING:
+      return {
+        ...state,
+        [action.id]: { ...state[action.id], isLoading: true },
+      };
     case APPROBATIONS_CHANGE_SUCCESS:
       return {
         ...state,
@@ -224,4 +238,9 @@ export const updateApprobation = (data, status, userUuid) => ({
       }),
     },
   },
+});
+
+export const setLoading = id => ({
+  type: SET_LOADING,
+  id,
 });

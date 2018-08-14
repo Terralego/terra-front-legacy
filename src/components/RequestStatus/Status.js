@@ -1,5 +1,5 @@
 import React from 'react';
-import { Alert } from 'antd';
+import { Alert, Spin } from 'antd';
 
 import getUserrequestStatus from 'modules/userrequestStatus';
 import withAuthentication from '../../hoc/authentication';
@@ -19,7 +19,11 @@ export const Status = ({ userrequest, user }) => {
     text,
     type,
   } = getUserrequestStatus(userrequest, user);
-  return <Alert message={text} type={type || 'info'} />;
+  return (
+    <Spin spinning={userrequest.isLoading === true}>
+      <Alert message={text} type={type || 'info'} />
+    </Spin>
+  );
 };
 
 export default withAuthentication(Status);

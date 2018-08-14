@@ -7,7 +7,7 @@ import queryString from 'query-string';
 
 import { getUserGroups } from 'modules/authentication';
 import { submitData, saveDraft } from 'modules/userrequest';
-import { requestUserrequestPage, updateState, getUserrequestsArrayFilteredByUser } from 'modules/userrequestList';
+import { requestUserrequestPage, updateState, getUserrequestsArrayFilteredByUser, setLoading } from 'modules/userrequestList';
 import { getPaginationParams, isCurrentPageFetching, resetPaginationCache } from 'modules/pagination';
 
 import getColumns from 'helpers/userrequestListColumns';
@@ -112,6 +112,7 @@ class UserrequestList extends React.Component {
       onOk: () => {
         selectedItems
           .forEach(item => {
+            this.props.setLoading(item.id);
             this.props.updateState(item.id, -2);
           });
         this.setState({
@@ -199,7 +200,8 @@ class UserrequestList extends React.Component {
 const mapStateToProps = (state, ownProps) => ({
   draft: state.userrequest,
   items: getUserrequestsArrayFilteredByUser(state, ownProps.location.search),
-  loading: isCurrentPageFetching(state.pagination.userrequestList, ownProps.location.search),
+  loading: isCurrentPageFetching(state.pagination.userrequestList, ownProps.location.search)
+    || state.userrequestList.loading,
   columns: getColumns(getUserGroups(state)),
   pagination: getPaginationParams(state.pagination.userrequestList, ownProps.location.search),
 });
@@ -211,6 +213,7 @@ const mapDispatchToProps = dispatch =>
     submitData,
     saveDraft,
     updateState,
+    setLoading,
   }, dispatch);
 
 export default withRouter(withAuthentication(connect(
