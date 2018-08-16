@@ -8,10 +8,10 @@ import userrequest, {
   SUBMIT_SUCCESS,
   SUBMIT_FAILURE,
   submitData,
-  addRequestFeature,
+  addOrUpdateGeojsonFeature,
   ADD_GEOJSON_FEATURE,
-  removeRequestFeature,
-  REMOVE_GEOJSON_FEATURE,
+  deleteGeojsonFeature,
+  DELETE_GEOJSON_FEATURE,
 } from './userrequest';
 
 import initialState from './userrequest-initial';
@@ -82,7 +82,7 @@ describe('userrequest async action', () => {
   });
 });
 
-describe('addRequestFeature action', () => {
+describe('addOrUpdateGeojsonFeature action', () => {
   const store = mockStore(initialState);
 
   const feature = {
@@ -105,13 +105,13 @@ describe('addRequestFeature action', () => {
   };
 
   it('should dispatch a ADD_GEOJSON_FEATURE action type', () => {
-    store.dispatch(addRequestFeature(feature));
+    store.dispatch(addOrUpdateGeojsonFeature(feature));
     const actions = store.getActions();
     expect(actions[0].type).toEqual(ADD_GEOJSON_FEATURE);
   });
 
   it('should add a feature in geojson', () => {
-    store.dispatch(addRequestFeature(feature));
+    store.dispatch(addOrUpdateGeojsonFeature(feature));
     const actions = store.getActions();
 
     expect(userrequest(initialState, actions[0]).geojson).toEqual({
@@ -121,7 +121,7 @@ describe('addRequestFeature action', () => {
   });
 });
 
-describe('removeRequestFeature action', () => {
+describe('deleteGeojsonFeature action', () => {
   const store = mockStore({
     geojson: {
       type: 'FeatureCollection',
@@ -135,14 +135,14 @@ describe('removeRequestFeature action', () => {
     },
   });
 
-  it('should dispatch a REMOVE_GEOJSON_FEATURE action type', () => {
-    store.dispatch(removeRequestFeature('b'));
+  it('should dispatch a DELETE_GEOJSON_FEATURE action type', () => {
+    store.dispatch(deleteGeojsonFeature('b'));
     const actions = store.getActions();
-    expect(actions[0].type).toEqual(REMOVE_GEOJSON_FEATURE);
+    expect(actions[0].type).toEqual(DELETE_GEOJSON_FEATURE);
   });
 
   it('should add a feature in geojson', () => {
-    store.dispatch(removeRequestFeature('b'));
+    store.dispatch(deleteGeojsonFeature('b'));
     const actions = store.getActions();
 
     expect(userrequest(store.getState(), actions[0]).geojson).toEqual({

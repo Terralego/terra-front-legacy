@@ -14,7 +14,7 @@ export const getFeaturesWithIncidence = (response, features) => {
 
   return features.map(feature => {
     let incidence = { GRIDCODE: 0 };
-    if (feature.properties.id !== response.request.callbackid) {
+    if (feature.id !== response.request.callbackid) {
       return feature;
     }
     response.results.features.forEach(intersection => {

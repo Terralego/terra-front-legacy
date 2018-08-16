@@ -4,6 +4,7 @@ import {
   getFeaturesWithIncidence,
 } from './userrequestHelpers';
 
+import mockFeatures from './__mocks__/features.json';
 import mockIntersection1 from './__mocks__/intersect_response_1.json';
 import mockIntersection2 from './__mocks__/intersect_response_2.json';
 import mockIntersection3 from './__mocks__/intersect_response_3.json';
@@ -58,36 +59,13 @@ describe('getReviewer', () => {
   });
 });
 
-const mockFeatures = [
-  {
-    type: 'Feature',
-    properties: { id: 'a' },
-  },
-  {
-    type: 'Feature',
-    properties: { id: 'b' },
-  },
-  {
-    type: 'Feature',
-    properties: { id: 'c' },
-  },
-  {
-    type: 'Feature',
-    properties: { id: 'd' },
-  },
-  {
-    type: 'Feature',
-    properties: { id: 'e' },
-  },
-];
-
 describe('getFeaturesWithIncidence', () => {
   it('should return an array of feature with incidences 1', () => {
     expect(getFeaturesWithIncidence(mockIntersection1, mockFeatures)).toEqual([
       {
         type: 'Feature',
+        id: 'a',
         properties: {
-          id: 'a',
           incidence: { GRIDCODE: 1,
             date_from: '04-01',
             date_to: '07-31' },
@@ -95,19 +73,19 @@ describe('getFeaturesWithIncidence', () => {
       },
       {
         type: 'Feature',
-        properties: { id: 'b' },
+        id: 'b',
       },
       {
         type: 'Feature',
-        properties: { id: 'c' },
+        id: 'c',
       },
       {
         type: 'Feature',
-        properties: { id: 'd' },
+        id: 'd',
       },
       {
         type: 'Feature',
-        properties: { id: 'e' },
+        id: 'e',
       },
     ]);
   });
@@ -116,12 +94,12 @@ describe('getFeaturesWithIncidence', () => {
 
       {
         type: 'Feature',
-        properties: { id: 'a' },
+        id: 'a',
       },
       {
         type: 'Feature',
+        id: 'b',
         properties: {
-          id: 'b',
           incidence: { GRIDCODE: 3,
             date_from: '04-01',
             date_to: '07-31' },
@@ -129,15 +107,15 @@ describe('getFeaturesWithIncidence', () => {
       },
       {
         type: 'Feature',
-        properties: { id: 'c' },
+        id: 'c',
       },
       {
         type: 'Feature',
-        properties: { id: 'd' },
+        id: 'd',
       },
       {
         type: 'Feature',
-        properties: { id: 'e' },
+        id: 'e',
       },
     ]);
   }); it('should return an array of feature with incidences 3', () => {
@@ -145,16 +123,16 @@ describe('getFeaturesWithIncidence', () => {
 
       {
         type: 'Feature',
-        properties: { id: 'a' },
+        id: 'a',
       },
       {
         type: 'Feature',
-        properties: { id: 'b' },
+        id: 'b',
       },
       {
         type: 'Feature',
+        id: 'c',
         properties: {
-          id: 'c',
           incidence: { GRIDCODE: 4,
             date_from: '04-01',
             date_to: '07-31' },
@@ -162,11 +140,11 @@ describe('getFeaturesWithIncidence', () => {
       },
       {
         type: 'Feature',
-        properties: { id: 'd' },
+        id: 'd',
       },
       {
         type: 'Feature',
-        properties: { id: 'e' },
+        id: 'e',
       },
     ]);
   });

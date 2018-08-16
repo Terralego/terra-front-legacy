@@ -10,7 +10,7 @@ import initialState from 'modules/userrequest-initial';
 // Modify userrequest object action types
 export const UPDATE_DATA_PROPERTIES = 'userrequest/UPDATE_DATA_PROPERTIES';
 export const ADD_GEOJSON_FEATURE = 'userrequest/ADD_GEOJSON_FEATURE';
-export const REMOVE_GEOJSON_FEATURE = 'userrequest/REMOVE_GEOJSON_FEATURE';
+export const DELETE_GEOJSON_FEATURE = 'userrequest/DELETE_GEOJSON_FEATURE';
 
 // Save draft userrequest actions types
 export const SAVE_DRAFT_REQUEST = 'userrequest/SAVE_DRAFT_REQUEST';
@@ -55,7 +55,7 @@ const userrequest = (state = initialState, action) => {
           ],
         },
       };
-    case REMOVE_GEOJSON_FEATURE:
+    case DELETE_GEOJSON_FEATURE:
       return {
         ...state,
         geojson: {
@@ -104,21 +104,21 @@ export const updateRequestProperties = properties => ({
 
 /**
  * userrequest action
- * addRequestFeature add or update an object of properties
+ * addOrUpdateGeojsonFeature add or update an object of properties
  * @param  {object} properties : object of properties to add / update in userrequest object
  */
-export const addRequestFeature = feature => ({
+export const addOrUpdateGeojsonFeature = feature => ({
   type: ADD_GEOJSON_FEATURE,
   feature,
 });
 
 /**
  * userrequest action
- * removeRequestFeature remove or update an object of properties
+ * deleteGeojsonFeature remove or update an object of properties
  * @param  {object} properties : object of properties to remove / update in userrequest object
  */
-export const removeRequestFeature = featureId => ({
-  type: REMOVE_GEOJSON_FEATURE,
+export const deleteGeojsonFeature = featureId => ({
+  type: DELETE_GEOJSON_FEATURE,
   featureId,
 });
 
@@ -198,7 +198,7 @@ export const getIntersections = (feature, eventDateStart, eventDateEnd) => ({
       headers: defaultHeaders,
       method: 'POST',
       body: JSON.stringify({
-        callbackid: feature.properties.id,
+        callbackid: feature.id,
         from: eventDateStart,
         to: eventDateEnd,
         geom: JSON.stringify(feature.geometry),

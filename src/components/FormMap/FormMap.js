@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { Row, Col, Card } from 'antd';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-
 import settings from 'front-settings';
+
+import { addOrUpdateGeojsonFeature, deleteGeojsonFeature, getIntersections } from 'modules/userrequest';
 import { updateConfigValue } from 'modules/appConfig';
 import { getActivityFeatures, getDatesQueryOptions } from 'helpers/mapHelper/mapHelper';
 import FeaturesList from 'components/FormMap/FeatureList';
@@ -14,43 +15,29 @@ import { TerraDrawMapConfig, mapLegend, mapTitleLegend } from 'components/FormMa
 
 
 class FormMap extends Component {
-  // componentDidMount () {
-  //   this.setDrawMode('pointer');
-  // }
-
-  // componentWillReceiveProps (nextProps) {
-  //   if (this.props.drawMode !== nextProps.drawMode) {
-  //     this.setDrawMode(nextProps.drawMode);
-  //   }
-  // }
-
-  // componentWillUnmount () {
-  //   this.setDrawMode('pointer');
-  //   this.props.updateConfigValue('drawMode', 'pointer');
-  // }
-
   addDataDraw = data => {
-    console.log('addDataDraw');
-
     const { activity: { uid, eventDateStart, eventDateEnd } } = this.props;
     const feature = {
       ...data,
       properties: {
         ...data.properties,
         activity: uid,
+        timestampCreatedAt: Date.now(),
+        name: data.geometry.type,
       },
     };
-    this.props.onAddFeature(feature, eventDateStart, eventDateEnd);
+
+    this.props.addOrUpdateGeojsonFeature(feature);
+    this.props.getIntersections(feature, eventDateStart, eventDateEnd);
   }
 
-  deleteDataDraw = e => {
-    console.log('removes', e);
-    // this.props.deleteFeature(id);
+  deleteDataDraw = id => {
+    this.props.deleteGeojsonFeature(id);
   }
 
   deleteFeature = id => {
     this.mapContainer.deleteFeatureById(id);
-    this.props.onRemoveFeature(id);
+    this.props.deleteGeojsonFeature(id);
   }
 
   render () {
@@ -114,15 +101,20 @@ class FormMap extends Component {
   }
 }
 
-const StateToProps = (state, ownProps) => ({
+const mapStateToProps = (state, ownProps) => ({
   drawMode: state.appConfig.drawMode,
   features: ownProps.features || state.userrequest.geojson.features,
 });
 
-const DispatchToProps = dispatch =>
+const mapDispatchToProps = dispatch =>
   bindActionCreators(
-    { updateConfigValue },
+    {
+      updateConfigValue,
+      addOrUpdateGeojsonFeature,
+      deleteGeojsonFeature,
+      getIntersections,
+    },
     dispatch,
   );
 
-export default connect(StateToProps, DispatchToProps)(FormMap);
+export default connect(mapStateToProps, mapDispatchToProps)(FormMap);
