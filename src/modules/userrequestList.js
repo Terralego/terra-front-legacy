@@ -24,7 +24,6 @@ export const APPROBATIONS_CHANGE_REQUEST = 'userrequestList/APPROBATIONS_CHANGE_
 export const APPROBATIONS_CHANGE_SUCCESS = 'userrequestList/APPROBATIONS_CHANGE_SUCCESS';
 export const APPROBATIONS_CHANGE_FAILURE = 'userrequestList/APPROBATIONS_CHANGE_FAILURE';
 
-
 export const userrequestPaginator = createPaginator('/userrequest/');
 
 /**
@@ -58,6 +57,23 @@ const userrequestList = (state = {}, action) => {
         [action.data.id]: action.data,
       };
     case STATE_CHANGE_SUCCESS:
+      return {
+        ...state,
+        [action.data.id]: action.data,
+      };
+    case STATE_CHANGE_FAILURE:
+      return {
+        ...state,
+        [action.data.id]: action.data,
+      };
+    case STATE_CHANGE_REQUEST:
+      return {
+        ...state,
+        [action.endpoint.split('/').reverse()[1]]: {
+          ...state[action.endpoint.split('/').reverse()[1]],
+          isLoading: true,
+        },
+      };
     case APPROBATIONS_CHANGE_SUCCESS:
       return {
         ...state,
