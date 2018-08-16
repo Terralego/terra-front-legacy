@@ -77,15 +77,13 @@ class TerraDrawMap extends Component {
           </React.Fragment>
         ))}
 
-        {!this.props.editable &&
-          <GeoJSONLayer
-            data={{
-              type: 'FeatureCollection',
-              features: this.props.features,
-            }}
-            {...this.props.config.geojsonPaint}
-          />
-        }
+        <GeoJSONLayer
+          data={{
+            type: 'FeatureCollection',
+            features: this.props.features,
+          }}
+          {...this.props.config.geojsonPaint}
+        />
 
         {this.props.editable &&
           <DrawControl {...drawProps} />
