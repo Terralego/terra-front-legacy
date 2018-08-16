@@ -6,32 +6,6 @@ import DrawControl from 'react-mapbox-gl-draw';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 
-const getFeatureType = type => {
-  switch (type) {
-    case 'Polygon':
-      return 'fill';
-    case 'Point':
-      return 'circle';
-    case 'Line':
-      return 'line';
-    default:
-      return 'symbol';
-  }
-};
-
-const getFeaturePaint = type => {
-  switch (type) {
-    case 'Polygon':
-      return { 'fill-color': '#000000' };
-    case 'Point':
-      return { 'circle-color': '#000000' };
-    case 'Line':
-      return { 'line-color': '#000000' };
-    default:
-      return {};
-  }
-};
-
 class TerraDrawMap extends Component {
   shouldComponentUpdate () {
     return false;
@@ -103,14 +77,19 @@ class TerraDrawMap extends Component {
           </React.Fragment>
         ))}
 
-        <GeoJSONLayer
-          data={{
-            type: 'FeatureCollection',
-            features: this.props.features,
-          }}
-          {...this.props.config.geojsonPaint}
-        />
-        {this.props.editable && <DrawControl {...drawProps} />}
+        {!this.props.editable &&
+          <GeoJSONLayer
+            data={{
+              type: 'FeatureCollection',
+              features: this.props.features,
+            }}
+            {...this.props.config.geojsonPaint}
+          />
+        }
+
+        {this.props.editable &&
+          <DrawControl {...drawProps} />
+        }
       </Map>
     );
   }
