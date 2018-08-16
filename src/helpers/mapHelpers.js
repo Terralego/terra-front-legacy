@@ -70,6 +70,17 @@ export const getDateForQueryString = (date, defaultValue) => (
   moment(date).isValid() ? moment(date).format('YYYY-MM-DD') : defaultValue.format('YYYY-MM-DD')
 );
 
+export const getFeatureWithProperties = (feature, activityId) => ({
+  ...feature,
+  properties: {
+    ...feature.properties,
+    id: feature.id,
+    activity: activityId,
+    timestampCreatedAt: Date.now(),
+    name: feature.geometry.type,
+  },
+});
+
 /**
  * getDatesQueryOptions
  * Return a query string with from to activity dates

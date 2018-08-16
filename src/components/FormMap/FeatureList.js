@@ -1,6 +1,6 @@
 import React from 'react';
 import { Alert, Icon } from 'antd';
-import { getFeatureType } from 'helpers/mapHelper/mapHelper';
+import { getFeatureType } from 'helpers/mapHelpers';
 
 const getMessage = (i, type) => `${getFeatureType(type)} ${i}`;
 
