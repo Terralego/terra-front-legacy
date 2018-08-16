@@ -78,11 +78,28 @@ class TerraDrawMap extends Component {
         ))}
 
         <GeoJSONLayer
-          data={{
-            type: 'FeatureCollection',
-            features: this.props.features,
+          data={{ type: 'FeatureCollection', features: this.props.features }}
+          fillPaint={this.props.config.geojsonPaint.fillPaint}
+          linePaint={this.props.config.geojsonPaint.linePaint}
+          layerOptions={{
+            filter: ['==', '$type', 'Polygon'],
           }}
-          {...this.props.config.geojsonPaint}
+        />
+
+        <GeoJSONLayer
+          data={{ type: 'FeatureCollection', features: this.props.features }}
+          circlePaint={this.props.config.geojsonPaint.circlePaint}
+          layerOptions={{
+            filter: ['==', '$type', 'Point'],
+          }}
+        />
+
+        <GeoJSONLayer
+          data={{ type: 'FeatureCollection', features: this.props.features }}
+          linePaint={this.props.config.geojsonPaint.linePaint}
+          layerOptions={{
+            filter: ['==', '$type', 'LineString'],
+          }}
         />
 
         {this.props.editable &&
