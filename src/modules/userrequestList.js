@@ -56,14 +56,6 @@ const userrequestList = (state = {}, action) => {
         ...state,
         [action.data.id]: action.data,
       };
-    case STATE_CHANGE_REQUEST:
-      return {
-        ...state,
-        [action.endpoint.split('/')[0]]: {
-          loading: true,
-          ...state[action.endpoint.split('/')[0]],
-        },
-      };
     case STATE_CHANGE_SUCCESS:
       return {
         ...state,
