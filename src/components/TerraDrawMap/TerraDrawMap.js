@@ -82,59 +82,36 @@ class TerraDrawMap extends Component {
   }
 }
 
-// TerraDrawMap.propTypes = {
-//   mapboxAccessToken: PropTypes.string.isRequired,
-//   zoom: PropTypes.number,
-//   center: PropTypes.arrayOf(PropTypes.number),
-//   addDataDraw: PropTypes.func,
-//   deleteDataDraw: PropTypes.func,
-//   config: PropTypes.shape({
-//     source: {
-//       url: PropTypes.string,
-//     },
-//     vectorLayers: PropTypes.arrayOf(PropTypes.shape({
-//       name: PropTypes.string,
-//       minZoom: PropTypes.number,
-//       minResolution: PropTypes.number,
-//       zIndex: PropTypes.number,
-//       style: PropTypes.shape({
-//         property: PropTypes.name,
-//         draw: PropTypes.func,
-//       }),
-//       type: PropTypes.string,
-//       layerName: PropTypes.string,
-//     })),
-//   }),
-//   // sourceVectorOptions: PropTypes.string,
-//   // minZoom: PropTypes.number,
-//   // maxZoom: PropTypes.number,
-//   // maxBounds: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)),
-//   // osmSource: PropTypes.string,
-//   // getGeometryOnDrawEnd: PropTypes.func,
-//   // getDataOnClick: PropTypes.func,
-//   // getDataOnHover: PropTypes.func,
-// };
+TerraDrawMap.propTypes = {
+  mapboxAccessToken: PropTypes.string.isRequired,
+  zoom: PropTypes.number,
+  center: PropTypes.arrayOf(PropTypes.number),
+  addDataDraw: PropTypes.func,
+  deleteDataDraw: PropTypes.func,
+  config: PropTypes.shape({
+    sources: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.string,
+      options: PropTypes.shape({
+        type: PropTypes.string,
+        tiles: PropTypes.arrayOf(PropTypes.string),
+      }),
+      layers: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.string,
+        type: PropTypes.string,
+        paint: PropTypes.any,
+      })),
+    })),
+  }),
+};
 
-// TerraDrawMap.defaultProps = {
-//   zoom: 11,
-//   center: [2.62322, 48.40813],
-//   addDataDraw: e => e,
-//   deleteDataDraw: e => e,
-//   config: {
-//     source: {
-//       url: '',
-//       type: 'raster',
-//     },
-//     vectorLayers: [],
-//   },
-//   // sourceVectorOptions: '',
-//   // minZoom: 11,
-//   // maxZoom: 20,
-//   // maxBounds: [[2.2917527636, 48.1867854393], [3.1004132613, 48.6260818006]],
-//   // osmSource: 'https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-//   // getGeometryOnDrawEnd: e => e,
-//   // getDataOnClick: e => e,
-//   // getDataOnHover: e => e,
-// };
+TerraDrawMap.defaultProps = {
+  zoom: 11,
+  center: [2.62322, 48.40813],
+  addDataDraw: e => e,
+  deleteDataDraw: e => e,
+  config: {
+    sources: [],
+  },
+};
 
 export default TerraDrawMap;
