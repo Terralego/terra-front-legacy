@@ -126,11 +126,14 @@ describe('deleteGeojsonFeature action', () => {
     geojson: {
       type: 'FeatureCollection',
       features: [{
-        properties: { id: 'a', name: 'Polygon' },
+        id: 'a',
+        properties: { name: 'Polygon' },
       }, {
-        properties: { id: 'b', name: 'Polygon' },
+        id: 'b',
+        properties: { name: 'Polygon' },
       }, {
-        properties: { id: 'c', name: 'Polygon' },
+        id: 'c',
+        properties: { name: 'Polygon' },
       }],
     },
   });
@@ -148,9 +151,11 @@ describe('deleteGeojsonFeature action', () => {
     expect(userrequest(store.getState(), actions[0]).geojson).toEqual({
       type: 'FeatureCollection',
       features: [{
-        properties: { id: 'a', name: 'Polygon' },
+        id: 'a',
+        properties: { name: 'Polygon' },
       }, {
-        properties: { id: 'c', name: 'Polygon' },
+        id: 'c',
+        properties: { name: 'Polygon' },
       }],
     });
   });

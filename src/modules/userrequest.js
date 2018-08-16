@@ -30,6 +30,7 @@ export const INTERSECT_FAILURE = 'userrequest/INTERSECT_FAILURE';
 // Reset form after submit success
 export const RESET_FORM = 'userrequest/RESET_FORM';
 
+
 /**
  * REDUCER
  * --------------------------------------------------------- *
@@ -50,7 +51,9 @@ const userrequest = (state = initialState, action) => {
         geojson: {
           ...state.geojson,
           features: [
-            ...state.geojson.features,
+            ...state.geojson.features.filter(feature => (
+              feature.id !== action.feature.id
+            )),
             action.feature,
           ],
         },
@@ -60,8 +63,9 @@ const userrequest = (state = initialState, action) => {
         ...state,
         geojson: {
           ...state.geojson,
-          features: state.geojson.features
-            .filter(feature => feature.properties.id !== action.featureId),
+          features: state.geojson.features.filter(feature => (
+            feature.id !== action.featureId
+          )),
         },
       };
     case SAVE_DRAFT_SUCCESS:
