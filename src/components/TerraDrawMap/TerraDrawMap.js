@@ -25,6 +25,14 @@ class TerraDrawMap extends Component {
     }
   }
 
+  onDrawRender = () => {
+    if (this.drawControl && this.props.editable) {
+      this.props.features.forEach(feature => {
+        this.drawControl.draw.add(feature);
+      });
+    }
+  }
+
   deleteFeatureById (id) {
     this.drawControl.draw.delete([id]);
   }
@@ -56,7 +64,10 @@ class TerraDrawMap extends Component {
       onDrawUpdate: this.onDrawChange,
       onDrawCreate: this.onDrawChange,
       onDrawDelete: this.onDrawChange,
-      ref: drawControl => { this.drawControl = drawControl; },
+      ref: drawControl => {
+        this.drawControl = drawControl;
+        this.onDrawRender();
+      },
     };
 
     return (
@@ -77,30 +88,34 @@ class TerraDrawMap extends Component {
           </React.Fragment>
         ))}
 
-        <GeoJSONLayer
-          data={{ type: 'FeatureCollection', features: this.props.features }}
-          fillPaint={this.props.config.geojsonPaint.fillPaint}
-          linePaint={this.props.config.geojsonPaint.linePaint}
-          layerOptions={{
-            filter: ['==', '$type', 'Polygon'],
-          }}
-        />
+        {!this.props.editable &&
+          <React.Fragment>
+            <GeoJSONLayer
+              data={{ type: 'FeatureCollection', features: this.props.features }}
+              fillPaint={this.props.config.geojsonPaint.fillPaint}
+              linePaint={this.props.config.geojsonPaint.linePaint}
+              layerOptions={{
+                filter: ['==', '$type', 'Polygon'],
+              }}
+            />
 
-        <GeoJSONLayer
-          data={{ type: 'FeatureCollection', features: this.props.features }}
-          circlePaint={this.props.config.geojsonPaint.circlePaint}
-          layerOptions={{
-            filter: ['==', '$type', 'Point'],
-          }}
-        />
+            <GeoJSONLayer
+              data={{ type: 'FeatureCollection', features: this.props.features }}
+              circlePaint={this.props.config.geojsonPaint.circlePaint}
+              layerOptions={{
+                filter: ['==', '$type', 'Point'],
+              }}
+            />
 
-        <GeoJSONLayer
-          data={{ type: 'FeatureCollection', features: this.props.features }}
-          linePaint={this.props.config.geojsonPaint.linePaint}
-          layerOptions={{
-            filter: ['==', '$type', 'LineString'],
-          }}
-        />
+            <GeoJSONLayer
+              data={{ type: 'FeatureCollection', features: this.props.features }}
+              linePaint={this.props.config.geojsonPaint.linePaint}
+              layerOptions={{
+                filter: ['==', '$type', 'LineString'],
+              }}
+            />
+          </React.Fragment>
+        }
 
         {this.props.editable &&
           <DrawControl {...drawProps} />
