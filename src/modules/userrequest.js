@@ -52,7 +52,7 @@ const userrequest = (state = initialState, action) => {
           ...state.geojson,
           features: [
             ...state.geojson.features.filter(feature => (
-              feature.id !== action.feature.id
+              feature.properties.id !== action.feature.id
             )),
             action.feature,
           ],
