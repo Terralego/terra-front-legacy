@@ -5,6 +5,7 @@ import Raven from 'raven-js';
 import settings from 'front-settings';
 
 import { setAuthentication, refreshToken } from 'modules/authentication';
+import { enableTimerRefreshToken } from 'modules/authenticationTimer';
 import { getSettings } from 'modules/appConfig';
 
 import './index.css';
@@ -41,7 +42,10 @@ store.dispatch(getSettings());
 // init the store with the localStorage / sessionStorage data
 store.dispatch(setAuthentication());
 // enabling refresh token if user already authenticated
-store.getState().authentication.isAuthenticated && store.dispatch(refreshToken());
+if (store.getState().authentication.isAuthenticated) {
+  store.dispatch(refreshToken());
+  store.dispatch(enableTimerRefreshToken());
+}
 
 /**
  * Initial rendering
