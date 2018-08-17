@@ -27,8 +27,9 @@ class TerraDrawMap extends Component {
 
   onDrawRender = () => {
     if (this.drawControl && this.props.editable) {
-      this.props.features.forEach(feature => {
-        this.drawControl.draw.add(feature);
+      this.drawControl.draw.set({
+        type: 'FeatureCollection',
+        features: this.props.features,
       });
     }
   }
