@@ -4,8 +4,7 @@ export const SUBMIT_REQUEST = 'userrequestComment/SUBMIT_REQUEST';
 export const SUBMIT_SUCCESS = 'userrequestComment/SUBMIT_SUCCESS';
 export const SUBMIT_FAILURE = 'userrequestComment/SUBMIT_FAILURE';
 
-export const GEOJSON_COMMENT_FEATURE_ADD = 'GEOJSON_COMMENT_FEATURE_ADD';
-export const GEOJSON_COMMENT_FEATURE_REMOVE = 'GEOJSON_COMMENT_FEATURE_REMOVE';
+export const GEOJSON_COMMENT_FEATURE_UPDATE = 'GEOJSON_COMMENT_FEATURE_UPDATE';
 export const GEOJSON_COMMENT_CLEAR = 'GEOJSON_COMMENT_CLEAR';
 
 export const COMMENT_ATTACHMENT_ADD = 'COMMENT_ATTACHMENT_ADD';
@@ -43,21 +42,12 @@ const userrequestComment = (state = initialState, action) => {
         ...state,
         error: action.error,
       };
-    case GEOJSON_COMMENT_FEATURE_ADD:
+    case GEOJSON_COMMENT_FEATURE_UPDATE:
       return {
         ...state,
         geojson: {
           ...state.geojson,
           features: action.features,
-        },
-      };
-    case GEOJSON_COMMENT_FEATURE_REMOVE:
-      return {
-        ...state,
-        geojson: {
-          ...state.geojson,
-          features: state.geojson.features
-            .filter(feature => feature.properties.id !== action.featureId),
         },
       };
     case GEOJSON_COMMENT_CLEAR:
@@ -129,19 +119,9 @@ export const submitComment = (userrequestId = 0, data = initialState, isInternal
  * add or update geojson feature
  * @param {array} features : array of features to add / update in userrequestComment object
  */
-export const addCommentFeature = features => ({
-  type: GEOJSON_COMMENT_FEATURE_ADD,
+export const updateCommentFeature = features => ({
+  type: GEOJSON_COMMENT_FEATURE_UPDATE,
   features,
-});
-
-/**
-* userrequestComment action
-* remove geojson feature
- * @param {string} featureId : id of feature property to remove
- */
-export const removeCommentFeature = featureId => ({
-  type: GEOJSON_COMMENT_FEATURE_REMOVE,
-  featureId,
 });
 
 /**

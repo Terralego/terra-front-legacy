@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import settings from 'front-settings';
 
 import { updateConfigValue } from 'modules/appConfig';
+import { getIntersections } from 'modules/userrequest';
 import { getFeatureWithProperties, getActivityFeatures } from 'helpers/mapHelpers';
 import FeaturesList from 'components/FormMap/FeatureList';
 import TerraDrawMap from 'components/TerraDrawMap/TerraDrawMap';
@@ -116,11 +117,14 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ updateConfigValue }, dispatch);
+  bindActionCreators({
+    updateConfigValue,
+    getIntersections,
+  }, dispatch);
 
 FormMap.propTypes = {
-  updateFeatures: PropTypes.func.isRequired,
-  deleteFeaturesById: PropTypes.func.isRequired,
+  updateFeatures: PropTypes.func,
+  deleteFeaturesById: PropTypes.func,
   withIncidence: PropTypes.bool,
   editable: PropTypes.bool,
   activity: PropTypes.shape({
@@ -140,6 +144,8 @@ FormMap.propTypes = {
 };
 
 FormMap.defaultProps = {
+  updateFeatures: () => {},
+  deleteFeaturesById: () => {},
   features: [],
   activity: {
     type: '',
