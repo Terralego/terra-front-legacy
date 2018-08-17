@@ -17,11 +17,11 @@ class TerraDrawMap extends Component {
       e.type === 'draw.create' ||
       e.action === 'change_coordinates'
     ) {
-      this.props.addDataDraw(e.features[0]);
+      this.props.onUpdateDataDraw(e.features);
     } else if (
       e.type === 'draw.delete'
     ) {
-      this.props.deleteDataDraw(e.features[0].id);
+      this.props.onDeleteDataDraw(e.features);
     }
   }
 
@@ -65,6 +65,7 @@ class TerraDrawMap extends Component {
       onDrawUpdate: this.onDrawChange,
       onDrawCreate: this.onDrawChange,
       onDrawDelete: this.onDrawChange,
+      onDrawSelectionChange: this.props.onSelectionChange,
       ref: drawControl => {
         this.drawControl = drawControl;
         this.onDrawRender();
@@ -130,8 +131,8 @@ TerraDrawMap.propTypes = {
   mapboxAccessToken: PropTypes.string.isRequired,
   zoom: PropTypes.number,
   center: PropTypes.arrayOf(PropTypes.number),
-  addDataDraw: PropTypes.func,
-  deleteDataDraw: PropTypes.func,
+  onUpdateDataDraw: PropTypes.func,
+  onDeleteDataDraw: PropTypes.func,
   config: PropTypes.shape({
     sources: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.string,
@@ -154,8 +155,8 @@ TerraDrawMap.propTypes = {
 TerraDrawMap.defaultProps = {
   zoom: 11,
   center: [2.62322, 48.40813],
-  addDataDraw: e => e,
-  deleteDataDraw: e => e,
+  onUpdateDataDraw: e => e,
+  onDeleteDataDraw: e => e,
   config: {
     sources: [],
     geojsonPaint: {},

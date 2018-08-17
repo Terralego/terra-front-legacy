@@ -10,7 +10,7 @@ import initialState from 'modules/userrequest-initial';
 // Modify userrequest object action types
 export const UPDATE_DATA_PROPERTIES = 'userrequest/UPDATE_DATA_PROPERTIES';
 export const ADD_GEOJSON_FEATURE = 'userrequest/ADD_GEOJSON_FEATURE';
-export const DELETE_GEOJSON_FEATURE = 'userrequest/DELETE_GEOJSON_FEATURE';
+export const DELETE_GEOJSON_FEATURES = 'userrequest/DELETE_GEOJSON_FEATURES';
 
 // Save draft userrequest actions types
 export const SAVE_DRAFT_REQUEST = 'userrequest/SAVE_DRAFT_REQUEST';
@@ -52,19 +52,19 @@ const userrequest = (state = initialState, action) => {
           ...state.geojson,
           features: [
             ...state.geojson.features.filter(feature => (
-              feature.properties.id !== action.feature.id
+              feature.properties.id !== action.feature.properties.id
             )),
             action.feature,
           ],
         },
       };
-    case DELETE_GEOJSON_FEATURE:
+    case DELETE_GEOJSON_FEATURES:
       return {
         ...state,
         geojson: {
           ...state.geojson,
           features: state.geojson.features.filter(feature => (
-            feature.id !== action.featureId
+            action.featuresId.indexOf(feature.properties.id) === -1
           )),
         },
       };
@@ -108,22 +108,22 @@ export const updateRequestProperties = properties => ({
 
 /**
  * userrequest action
- * addOrUpdateGeojsonFeature add or update an object of properties
+ * updateFeatures add or update an object of properties
  * @param  {object} properties : object of properties to add / update in userrequest object
  */
-export const addOrUpdateGeojsonFeature = feature => ({
+export const updateFeatures = feature => ({
   type: ADD_GEOJSON_FEATURE,
   feature,
 });
 
 /**
  * userrequest action
- * deleteGeojsonFeature remove or update an object of properties
- * @param  {object} properties : object of properties to remove / update in userrequest object
+ * deleteFeaturesById delete given features
+ * @param  {array} features : array of features id (string) to delete from geojson
  */
-export const deleteGeojsonFeature = featureId => ({
-  type: DELETE_GEOJSON_FEATURE,
-  featureId,
+export const deleteFeaturesById = featuresId => ({
+  type: DELETE_GEOJSON_FEATURES,
+  featuresId,
 });
 
 /**

@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Row, Col, Card } from 'antd';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import settings from 'front-settings';
 
 import { updateConfigValue } from 'modules/appConfig';
-import { getActivityFeatures } from 'helpers/mapHelpers';
+import { getFeatureWithProperties, getActivityFeatures } from 'helpers/mapHelpers';
 import FeaturesList from 'components/FormMap/FeatureList';
 import TerraDrawMap from 'components/TerraDrawMap/TerraDrawMap';
 import MapLegend from 'components/MapLegend/MapLegend';
@@ -13,9 +14,53 @@ import { TerraDrawMapConfig, mapLegend, mapTitleLegend } from 'components/FormMa
 
 
 class FormMap extends Component {
-  deleteFeature = id => {
+  state = {
+    selectedFeaturesId: [],
+  };
+
+  onSelectionChange = e => {
+    this.setState({ selectedFeaturesId: e.features.map(feature => feature.id) });
+  }
+
+  /**
+   * handleUpdateDataDraw add or update features
+   * - get all needed properties (dates, activity id, timestamp, etc).
+   * - call intersection request to get incidence
+   * @param {array} features
+   *
+   * @memberof FormMap
+   */
+  handleUpdateDataDraw = features => {
+    features.forEach(feature => {
+      const { activity: { uid, eventDateStart, eventDateEnd } } = this.props;
+      const featureWithProperties = getFeatureWithProperties(feature, uid);
+      this.props.updateFeatures(featureWithProperties);
+      this.props.getIntersections(featureWithProperties, eventDateStart, eventDateEnd);
+    });
+  }
+
+  /**
+   * handleDeleteDataDraw:
+   * - delete feature from TerraDrawMap
+   * - call props function onDeleteDataDraw
+   * - Filter selectedFeaturesId from state to remove deleted features
+   * @param {array} features
+   *
+   * @memberof FormMap
+   */
+  handleDeleteDataDraw = features => {
+    this.props.deleteFeaturesById(features.map(feature => feature.id));
+    this.setState({
+      selectedFeaturesId: [],
+    });
+  }
+
+  deleteDrawData = id => {
+    this.props.deleteFeaturesById([id]);
     this.mapContainer.deleteFeatureById(id);
-    this.props.onDeleteDataDraw(id);
+    this.setState({
+      selectedFeaturesId: [],
+    });
   }
 
   render () {
@@ -37,8 +82,9 @@ class FormMap extends Component {
             ref={el => {
               this.mapContainer = el;
             }}
-            addDataDraw={this.props.onAddDataDraw}
-            deleteDataDraw={this.onDeleteDataDraw}
+            onUpdateDataDraw={this.handleUpdateDataDraw}
+            onDeleteDataDraw={this.handleDeleteDataDraw}
+            onSelectionChange={this.onSelectionChange}
             osmSource="https://{a-c}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png"
             editable={editable}
           />
@@ -52,7 +98,8 @@ class FormMap extends Component {
           <Card title={mapTitleLegend.title}>
             <FeaturesList
               features={activityFeatures}
-              deleteFeature={this.deleteFeature}
+              selectedFeaturesId={this.state.selectedFeaturesId}
+              deleteFeatureById={this.deleteDrawData}
               editable={editable}
               withIncidence={withIncidence}
             />
@@ -70,5 +117,39 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ updateConfigValue }, dispatch);
+
+FormMap.propTypes = {
+  updateFeatures: PropTypes.func.isRequired,
+  deleteFeaturesById: PropTypes.func.isRequired,
+  withIncidence: PropTypes.bool,
+  editable: PropTypes.bool,
+  activity: PropTypes.shape({
+    type: PropTypes.string,
+    eventDates: PropTypes.array,
+    uid: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    participantCount: PropTypes.string,
+    publicCount: PropTypes.string,
+  }),
+  features: PropTypes.arrayOf(PropTypes.shape({
+    properties: PropTypes.shape({
+      id: PropTypes.string,
+      name: PropTypes.string,
+    }),
+    geometry: PropTypes.object,
+  })),
+};
+
+FormMap.defaultProps = {
+  features: [],
+  activity: {
+    type: '',
+    eventDates: Array(1),
+    uid: 0,
+    participantCount: '1',
+    publicCount: '0',
+  },
+  withIncidence: false,
+  editable: false,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(FormMap);
