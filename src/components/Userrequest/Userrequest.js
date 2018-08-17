@@ -14,6 +14,8 @@ import RequestStatus from 'components/RequestStatus/RequestStatus';
 import Comments from 'components/Comments/Comments';
 import Form from 'components/Form/Form';
 
+import styles from './Userrequest.module.scss';
+
 const DRAFT_STATUS = 100;
 
 class Userrequest extends React.Component {
@@ -45,16 +47,16 @@ class Userrequest extends React.Component {
       }
     }
     return (
-      <Row gutter={24} style={{ paddingBottom: 24 }}>
-        <Col span={24} lg={14}>
+      <Row gutter={24} className={styles.userrequest}>
+        <Col span={24} lg={14} className={styles.userrequest_summary}>
           {data ?
             <Summary data={data} />
           : <Spin style={{ margin: '30px auto', width: '100%' }} />}
         </Col>
 
-        <Col span={24} lg={10}>
+        <Col span={24} lg={10} className={styles.userrequest_comments}>
           {data && <RequestStatus userrequest={data} />}
-          <Card title="Échanges" style={{ marginTop: 24 }}>
+          <Card title="Échanges">
             <Comments userrequestId={this.props.match.params.id} />
           </Card>
         </Col>

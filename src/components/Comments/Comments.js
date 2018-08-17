@@ -44,24 +44,26 @@ class Comments extends React.Component {
     const { form, userrequestId } = this.props;
     return (
       <ReduxForm model="userrequestComment">
-        <CommentRecipients />
-        <TextArea
-          style={{ marginBottom: -12 }}
-          model=".properties.comment"
-          placeholder="Entrez votre message..."
-        />
-        <UploadAttachment />
-        <div className={styles.submitButton}>
-          <Button
-            type="primary"
-            htmlType="submit"
-            icon="arrow-right"
-            loading={form.pending}
-            disabled={!this.isEnabled()}
-            onClick={this.handleSubmit}
-          >
-            Envoyer
-          </Button>
+        <div className={styles.commentForm}>
+          <CommentRecipients />
+          <TextArea
+            style={{ marginBottom: -12 }}
+            model=".properties.comment"
+            placeholder="Entrez votre message..."
+          />
+          <UploadAttachment />
+          <div className={styles.commentForm_submit}>
+            <Button
+              type="primary"
+              htmlType="submit"
+              icon="arrow-right"
+              loading={form.pending}
+              disabled={!this.isEnabled()}
+              onClick={this.handleSubmit}
+            >
+              Envoyer
+            </Button>
+          </div>
         </div>
         <CommentList userrequestId={userrequestId} />
       </ReduxForm>
