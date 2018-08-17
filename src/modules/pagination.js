@@ -80,13 +80,9 @@ export const getCurrentPageResults = createSelector(
     (pagination, queryParams, items) => items,
   ],
   (currentPage, queryParams, items = []) => {
-    const { ordering } = queryString.parse(queryParams);
-
     if (currentPage.ids) {
       const values = Object.values(pick(items, currentPage.ids));
-      if (!ordering || ordering.charAt(0) === '-') {
-        values.reverse();
-      }
+      values.sort((a, b) => a.index - b.index);
       return values;
     }
     return [];
@@ -175,16 +171,18 @@ const currentPageReducer = (state = 1, action = {}) => {
   }
 };
 
+const arrayToObjectAddingIndexProp = array =>
+  array.reduce((acc, item, index) => ({
+    ...acc,
+    [item.id]: { ...item, index },
+  }), {});
+
 const itemsReducer = (state = {}, action = {}) => {
-  const newItems = {};
   switch (action.type) {
     case PAGE_SUCCESS:
-      action.data.results.forEach(item => {
-        newItems[item.id] = item;
-      });
       return {
         ...state,
-        ...newItems,
+        ...arrayToObjectAddingIndexProp(action.data.results),
       };
     case RESET:
       return {};

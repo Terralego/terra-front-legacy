@@ -128,7 +128,7 @@ class UserrequestList extends React.Component {
   handleTableChange = (pagination, filters, sorter) => {
     const order = sorter.order === 'descend' ? '-' : '';
     this.handleQueryUpdate(
-      { ordering: `${order}${sorter.field}` },
+      { ordering: `${order}${sorter.field.replace('.', '__')}` },
       true,
     );
   }
