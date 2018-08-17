@@ -2,102 +2,33 @@ import React, { Component } from 'react';
 import { Row, Col, Card } from 'antd';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import settings from 'front-settings';
 
 import { updateConfigValue } from 'modules/appConfig';
-
-import { getActivityFeatures, getDatesQueryOptions } from 'helpers/mapHelper/mapHelper';
+import { getActivityFeatures } from 'helpers/mapHelpers';
 import FeaturesList from 'components/FormMap/FeatureList';
-import MapDrawButtons from 'components/MapDrawButtons/MapDrawButtons';
 import TerraDrawMap from 'components/TerraDrawMap/TerraDrawMap';
 import MapLegend from 'components/MapLegend/MapLegend';
 import { TerraDrawMapConfig, mapLegend, mapTitleLegend } from 'components/FormMap/FormMap.config';
 
 
 class FormMap extends Component {
-  constructor (props) {
-    super(props);
-    this.getGeometryOnDrawEnd = this.getGeometryOnDrawEnd.bind(this);
-    this.removeFeature = this.removeFeature.bind(this);
-  }
-
-  componentDidMount () {
-    this.setDrawMode('pointer');
-  }
-
-  componentWillReceiveProps (nextProps) {
-    if (this.props.drawMode !== nextProps.drawMode) {
-      this.setDrawMode(nextProps.drawMode);
-    }
-  }
-
-  componentWillUnmount () {
-    this.setDrawMode('pointer');
-    this.props.updateConfigValue('drawMode', 'pointer');
-  }
-
-  setDrawMode (mode) {
-    switch (mode) {
-      case 'pointer':
-        this.mapContainer.setSelectionMode();
-        break;
-      case 'polygon':
-        this.mapContainer.startDrawPolygon();
-        break;
-      case 'line':
-        this.mapContainer.startDrawLine();
-        break;
-      case 'point':
-        this.mapContainer.startDrawPoint();
-        break;
-      default:
-        this.mapContainer.unsetSelectionMode();
-    }
-  }
-
-  getGeometryOnDrawEnd (data) {
-    const { activity: { uid, eventDateStart, eventDateEnd } } = this.props;
-    const feature = {
-      ...data,
-      properties: {
-        ...data.properties,
-        activity: uid,
-      },
-    };
-    this.props.onAddFeature(feature, eventDateStart, eventDateEnd);
-  }
-
-  removeFeature (id) {
-    this.mapContainer.removeFeatureById(id);
-    this.props.onRemoveFeature(id);
+  deleteFeature = id => {
+    this.mapContainer.deleteFeatureById(id);
+    this.props.onDeleteDataDraw(id);
   }
 
   render () {
-    const { features, drawMode, editable, activity, withIncidence } = this.props;
+    const { features, editable, activity, withIncidence } = this.props;
     const activityFeatures = getActivityFeatures(features, activity.uid);
 
     return (
       <Row gutter={24} style={{ paddingBottom: 24 }}>
-        {editable &&
-          <MapDrawButtons
-            mode={drawMode}
-            selectedColor="#578f2b"
-            color="#bfbfbf"
-            style={{ marginBottom: 16 }}
-            showLabel
-            labels={{
-              pointer: 'Sélection',
-              polygon: 'Dessiner une zone',
-              line: 'Tracer un trait',
-              point: 'Définir un point',
-            }}
-            handleChange={mode => this.props.updateConfigValue('drawMode', mode)}
-          />
-        }
         <Col span={24} lg={24} style={{ height: 450 }}>
           <TerraDrawMap
+            mapboxAccessToken={settings.MAPBOX_ACCESS_TOKEN}
             features={activityFeatures}
             config={TerraDrawMapConfig}
-            sourceVectorOptions={getDatesQueryOptions(activity.eventDates)}
             minZoom={11}
             maxZoom={17}
             zoom={13}
@@ -106,8 +37,10 @@ class FormMap extends Component {
             ref={el => {
               this.mapContainer = el;
             }}
-            getGeometryOnDrawEnd={this.getGeometryOnDrawEnd}
+            addDataDraw={this.props.onAddDataDraw}
+            deleteDataDraw={this.onDeleteDataDraw}
             osmSource="https://{a-c}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png"
+            editable={editable}
           />
           <MapLegend
             title={mapTitleLegend.titleLegend}
@@ -119,7 +52,7 @@ class FormMap extends Component {
           <Card title={mapTitleLegend.title}>
             <FeaturesList
               features={activityFeatures}
-              removeFeature={this.removeFeature}
+              deleteFeature={this.deleteFeature}
               editable={editable}
               withIncidence={withIncidence}
             />
@@ -130,15 +63,12 @@ class FormMap extends Component {
   }
 }
 
-const StateToProps = (state, ownProps) => ({
+const mapStateToProps = (state, ownProps) => ({
   drawMode: state.appConfig.drawMode,
   features: ownProps.features || state.userrequest.geojson.features,
 });
 
-const DispatchToProps = dispatch =>
-  bindActionCreators(
-    { updateConfigValue },
-    dispatch,
-  );
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ updateConfigValue }, dispatch);
 
-export default connect(StateToProps, DispatchToProps)(FormMap);
+export default connect(mapStateToProps, mapDispatchToProps)(FormMap);

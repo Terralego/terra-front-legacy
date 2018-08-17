@@ -10,7 +10,7 @@ import initialState from 'modules/userrequest-initial';
 // Modify userrequest object action types
 export const UPDATE_DATA_PROPERTIES = 'userrequest/UPDATE_DATA_PROPERTIES';
 export const ADD_GEOJSON_FEATURE = 'userrequest/ADD_GEOJSON_FEATURE';
-export const REMOVE_GEOJSON_FEATURE = 'userrequest/REMOVE_GEOJSON_FEATURE';
+export const DELETE_GEOJSON_FEATURE = 'userrequest/DELETE_GEOJSON_FEATURE';
 
 // Save draft userrequest actions types
 export const SAVE_DRAFT_REQUEST = 'userrequest/SAVE_DRAFT_REQUEST';
@@ -29,6 +29,7 @@ export const INTERSECT_FAILURE = 'userrequest/INTERSECT_FAILURE';
 
 // Reset form after submit success
 export const RESET_FORM = 'userrequest/RESET_FORM';
+
 
 /**
  * REDUCER
@@ -50,18 +51,21 @@ const userrequest = (state = initialState, action) => {
         geojson: {
           ...state.geojson,
           features: [
-            ...state.geojson.features,
+            ...state.geojson.features.filter(feature => (
+              feature.id !== action.feature.id
+            )),
             action.feature,
           ],
         },
       };
-    case REMOVE_GEOJSON_FEATURE:
+    case DELETE_GEOJSON_FEATURE:
       return {
         ...state,
         geojson: {
           ...state.geojson,
-          features: state.geojson.features
-            .filter(feature => feature.properties.id !== action.featureId),
+          features: state.geojson.features.filter(feature => (
+            feature.id !== action.featureId
+          )),
         },
       };
     case SAVE_DRAFT_SUCCESS:
@@ -104,21 +108,21 @@ export const updateRequestProperties = properties => ({
 
 /**
  * userrequest action
- * addRequestFeature add or update an object of properties
+ * addOrUpdateGeojsonFeature add or update an object of properties
  * @param  {object} properties : object of properties to add / update in userrequest object
  */
-export const addRequestFeature = feature => ({
+export const addOrUpdateGeojsonFeature = feature => ({
   type: ADD_GEOJSON_FEATURE,
   feature,
 });
 
 /**
  * userrequest action
- * removeRequestFeature remove or update an object of properties
+ * deleteGeojsonFeature remove or update an object of properties
  * @param  {object} properties : object of properties to remove / update in userrequest object
  */
-export const removeRequestFeature = featureId => ({
-  type: REMOVE_GEOJSON_FEATURE,
+export const deleteGeojsonFeature = featureId => ({
+  type: DELETE_GEOJSON_FEATURE,
   featureId,
 });
 
@@ -198,7 +202,7 @@ export const getIntersections = (feature, eventDateStart, eventDateEnd) => ({
       headers: defaultHeaders,
       method: 'POST',
       body: JSON.stringify({
-        callbackid: feature.properties.id,
+        callbackid: feature.id,
         from: eventDateStart,
         to: eventDateEnd,
         geom: JSON.stringify(feature.geometry),

@@ -1,391 +1,151 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import ol from 'openlayers';
-import 'openlayers/dist/ol.css';
+import ReactMapboxGl, { Source, Layer, GeoJSONLayer } from 'react-mapbox-gl';
+import DrawControl from 'react-mapbox-gl-draw';
 
-function guid () {
-  function s4 () {
-    return Math.floor((1 + Math.random()) * 0x10000)
-      .toString(16)
-      .substring(1);
-  }
-  return `${s4()}${s4()}-${s4()}-${s4()}-${s4()}-${s4()}${s4()}${s4()}`;
-}
-
-const getLayerStyle = (layer, feature) => {
-  const sameLayerName = feature.getProperties().layer === layer.layerName;
-  const layerStyle = layer.style.draw(feature.get(layer.style.property));
-  if (layer.type === 'line' && sameLayerName) {
-    return new ol.style.Style({
-      stroke: new ol.style.Stroke(layerStyle),
-    });
-  } else if (layer.type === 'polygon' && sameLayerName) {
-    return new ol.style.Style({
-      fill: new ol.style.Fill(layerStyle),
-    });
-  }
-  return null;
-};
+import 'mapbox-gl/dist/mapbox-gl.css';
+import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 
 class TerraDrawMap extends Component {
-  componentDidMount () {
-    /**
-     * TODO: Doc
-     */
-    const sourceLayer = new ol.layer.Tile({
-      source: new ol.source.OSM({
-        url: this.props.osmSource,
-      }),
-    });
-
-    /**
-     * TODO: Doc
-     */
-    this.sourceDraw = new ol.source.Vector({ wrapX: false });
-    if (this.props.features.length) {
-      this.sourceDraw
-        .addFeatures((new ol.format.GeoJSON({
-          dataProjection: 'EPSG:4326',
-          featureProjection: 'EPSG:3857',
-        })).readFeatures({
-          type: 'FeatureCollection',
-          features: this.props.features,
-        }));
-    }
-
-    /**
-     * TODO: Doc
-     */
-    this.vectorDraw = new ol.layer.Vector({
-      source: this.sourceDraw,
-      zIndex: 100,
-      style (feature) {
-        if (feature.getGeometry().getType() === 'Point') {
-          return new ol.style.Style({
-            image: new ol.style.Circle({
-              radius: 5,
-              fill: new ol.style.Fill({
-                color: 'rgba(0,132,255,0.25)',
-              }),
-              stroke: new ol.style.Stroke({
-                color: '#0084ff',
-                width: 1.8,
-              }),
-            }),
-          });
-        }
-        return new ol.style.Style({
-          fill: new ol.style.Fill({
-            color: 'rgba(0,132,255,0.25)',
-          }),
-          stroke: new ol.style.Stroke({
-            color: '#0084ff',
-            width: 1.8,
-          }),
-        });
-      },
-    });
-
-    const vectorLayers = this.initVectorTilesLayer();
-
-    /**
-     * TODO: Doc
-     */
-    const view = new ol.View({
-      center: ol.proj.fromLonLat(this.props.center),
-      zoom: this.props.zoom,
-      minZoom: this.props.minZoom,
-      maxZoom: this.props.maxZoom,
-      extent: [
-        ol.proj.fromLonLat(this.props.maxBounds[0]),
-        ol.proj.fromLonLat(this.props.maxBounds[1]),
-      ]
-        .toString()
-        .split(','),
-    });
-
-    /**
-     * TODO: Doc
-     */
-    this.map = new ol.Map({
-      controls: ol.control
-        .defaults({
-          attributionOptions: {
-            collapsible: false,
-          },
-        })
-        .extend([]),
-      target: this.mapContainer,
-      layers: [sourceLayer, this.vectorDraw, ...vectorLayers],
-      view,
-    });
-
-    // this.modify = new ol.interaction.Modify({ source: this.sourceDraw });
-    this.select = new ol.interaction.Select({ source: this.sourceDraw });
-    // this.snap = new ol.interaction.Snap({ source: this.sourceDraw });
-
-    if (this.props.getDataOnHover) {
-      this.map.on('pointermove', this.onHover, this);
-    }
-
-    if (this.props.getDataOnClick) {
-      this.map.on('click', this.onClick, this);
-    }
-
-    /**
-     * TODO: Doc
-     */
-    this.sourceDraw.on('addfeature', event => {
-      if (this.props.getGeometryOnDrawEnd && !event.feature.id) {
-        const id = guid();
-        this.props.getGeometryOnDrawEnd({
-          type: 'Feature',
-          geometry: {
-            type: event.feature.getGeometry().getType(),
-            coordinates: event.feature.getGeometry().transform('EPSG:3857', 'EPSG:4326').getCoordinates(),
-          },
-          properties: {
-            id,
-            name: event.feature.getGeometry().getType(),
-            timestampCreatedAt: Date.now(),
-          },
-        });
-        event.feature.getGeometry().transform('EPSG:4326', 'EPSG:3857');
-        event.feature.setId(id);
-      }
-    });
+  shouldComponentUpdate () {
+    return false;
   }
 
-  componentDidUpdate (prevProps) {
-    if (this.props.sourceVectorOptions !== prevProps.sourceVectorOptions) {
-      // Get existing layers if any
-      const layers = this.map && this.map.getLayers().getArray();
-
-      this.props.config.vectorLayers.forEach(vectorLayer => {
-        layers.forEach(layer => {
-          if (layer.get('name') === vectorLayer.name) {
-            layer.setSource(this.getVectorLayerSource());
-          }
-        });
-      });
+  onDrawChange = e => {
+    if (
+      e.action === 'move' ||
+      e.type === 'draw.create' ||
+      e.action === 'change_coordinates'
+    ) {
+      this.props.addDataDraw(e.features[0]);
+    } else if (
+      e.type === 'draw.delete'
+    ) {
+      this.props.deleteDataDraw(e.features[0].id);
     }
   }
 
-  componentWillUnmount () {
-    /**
-     * Unbind event to avoid leaks
-     */
-    this.map.un('pointermove', this.onHover, this);
-    this.map.un('click', this.onClick, this);
-  }
-
-  /**
-   * Hook for mouse move events
-   *
-   * @param {Event} event
-   * @memberof TerraDrawMap
-   */
-  onHover (event) {
-    // TODO: Mouse move events should be limited by throttling
-    const features = this.getOwnFeaturesAtPixel(event.pixel);
-    if (features) {
-      this.props.getDataOnHover(features[0].getProperties());
-    }
-  }
-
-  /**
-   * Hook for mouse click events
-   *
-   * @param {Event} event
-   * @memberof TerraDrawMap
-   */
-  onClick (event) {
-    const features = this.getOwnFeaturesAtPixel(event.pixel);
-    if (features) {
-      this.props.getDataOnClick(features[0].getProperties());
-    }
-  }
-
-  /**
-   * Get own (from props.config.vectorLayers) features that intersect a pixel
-   * on the viewport
-   *
-   * @param {ol.Pixel} pixel
-   * @returns
-   * @memberof TerraDrawMap
-   */
-  getOwnFeaturesAtPixel (pixel) {
-    return this.map.getFeaturesAtPixel(pixel, { layerFilter: this.isLayerInConfig.bind(this) });
-  }
-
-  /**
-   * TODO: Doc
-   */
-  setSelectionMode () {
-    this.stopDraw();
-    // this.map.addInteraction(this.modify);
-    this.map.addInteraction(this.select);
-    // this.map.addInteraction(this.snap);
-  }
-
-  /**
-   * TODO: Doc
-   */
-  getVectorLayerSource () {
-    return new ol.source.VectorTile({
-      format: new ol.format.MVT(),
-      url: `${this.props.config.sourceVectorUrl}${this.props.sourceVectorOptions}`,
-      renderMode: 'hybrid',
-    });
-  }
-
-  /**
-   * TODO: Doc
-   */
-  initVectorTilesLayer () {
-    const vectorLayers = [];
-
-    const getVectorLayer = layer => new ol.layer.VectorTile({
-      id: `${layer.name}_${this.props.sourceVectorOptions}`,
-      name: layer.name,
-      maxResolution: 156543.03392804097 / (2 ** (layer.minZoom - 1)),
-      minResolution: layer.minResolution,
-      source: this.getVectorLayerSource(),
-      zIndex: layer.zIndex ? layer.zIndex : 1,
-      style: feature => getLayerStyle(layer, feature),
-    });
-
-    this.props.config.vectorLayers.forEach(data => {
-      const vectorLayer = getVectorLayer(data);
-      vectorLayers.push(vectorLayer);
-    });
-
-    return vectorLayers;
-  }
-
-  /**
-   * Filter to be used by OL getFeaturesAtPixel method
-   *
-   * @param {object} layerCandidate
-   * @returns true if layerCandidate is in props.config.vectorLayers
-   * @memberof TerraDrawMap
-   */
-  isLayerInConfig (layerCandidate) {
-    const layerCandidateName = layerCandidate.get('name');
-    return !!this.props.config.vectorLayers.find(layer => layer.name === layerCandidateName);
-  }
-
-  unsetSelectionMode () {
-    this.map.removeInteraction(this.select);
-    // this.map.removeInteraction(this.modify);
-    // this.map.removeInteraction(this.snap);
-  }
-
-  stopDraw () {
-    if (this.draw) {
-      this.map.removeInteraction(this.draw);
-    }
-  }
-
-  startDrawPolygon () {
-    this.stopDraw();
-    this.unsetSelectionMode();
-
-    this.draw = new ol.interaction.Draw({
-      source: this.sourceDraw,
-      type: 'Polygon',
-    });
-
-    this.map.addInteraction(this.draw);
-  }
-
-  startDrawLine () {
-    this.stopDraw();
-    this.unsetSelectionMode();
-
-    this.draw = new ol.interaction.Draw({
-      source: this.sourceDraw,
-      type: 'LineString',
-    });
-
-    this.map.addInteraction(this.draw);
-  }
-
-  startDrawPoint () {
-    this.stopDraw();
-    this.unsetSelectionMode();
-
-    this.draw = new ol.interaction.Draw({
-      source: this.sourceDraw,
-      type: 'Point',
-    });
-
-    this.map.addInteraction(this.draw);
-  }
-
-  /**
-   * TODO: Doc
-   */
-  removeFeatureById (id) {
-    this.sourceDraw.forEachFeature(feature => {
-      if (feature.getId() === id) {
-        this.sourceDraw.removeFeature(feature);
-      }
-    });
+  deleteFeatureById (id) {
+    this.drawControl.draw.delete([id]);
   }
 
   render () {
+    const Map = ReactMapboxGl({
+      accessToken: this.props.mapboxAccessToken,
+    });
+
+    const mapProps = {
+      style: 'mapbox://styles/mapbox/streets-v9',
+      containerStyle: {
+        height: '100%',
+        width: '100%',
+      },
+      center: this.props.center,
+      zoom: [this.props.zoom],
+      maxBounds: this.props.maxBounds,
+    };
+
+    const drawProps = {
+      displayControlsDefault: false,
+      controls: {
+        polygon: true,
+        line_string: true,
+        point: true,
+        trash: true,
+      },
+      onDrawUpdate: this.onDrawChange,
+      onDrawCreate: this.onDrawChange,
+      onDrawDelete: this.onDrawChange,
+      ref: drawControl => { this.drawControl = drawControl; },
+    };
+
     return (
-      <div
-        style={{ height: '100%', width: '100%' }}
-        ref={el => {
-          this.mapContainer = el;
-        }}
-      />
+      <Map {...mapProps}>
+        {this.props.config.sources.map(source => (
+          <React.Fragment key={source.id}>
+            <Source id={source.id} tileJsonSource={source.options} />
+            {source.layers.map(layer => (
+              <Layer
+                key={layer.id}
+                type={layer.type}
+                sourceId={source.id}
+                sourceLayer={layer.id}
+                id={layer.id}
+                paint={layer.paint}
+              />
+            ))}
+          </React.Fragment>
+        ))}
+
+        <GeoJSONLayer
+          data={{ type: 'FeatureCollection', features: this.props.features }}
+          fillPaint={this.props.config.geojsonPaint.fillPaint}
+          linePaint={this.props.config.geojsonPaint.linePaint}
+          layerOptions={{
+            filter: ['==', '$type', 'Polygon'],
+          }}
+        />
+
+        <GeoJSONLayer
+          data={{ type: 'FeatureCollection', features: this.props.features }}
+          circlePaint={this.props.config.geojsonPaint.circlePaint}
+          layerOptions={{
+            filter: ['==', '$type', 'Point'],
+          }}
+        />
+
+        <GeoJSONLayer
+          data={{ type: 'FeatureCollection', features: this.props.features }}
+          linePaint={this.props.config.geojsonPaint.linePaint}
+          layerOptions={{
+            filter: ['==', '$type', 'LineString'],
+          }}
+        />
+
+        {this.props.editable &&
+          <DrawControl {...drawProps} />
+        }
+      </Map>
     );
   }
 }
 
 TerraDrawMap.propTypes = {
-  config: PropTypes.shape({
-    sourceVectorUrl: PropTypes.string,
-    vectorLayers: PropTypes.arrayOf(PropTypes.shape({
-      name: PropTypes.string,
-      minZoom: PropTypes.number,
-      minResolution: PropTypes.number,
-      zIndex: PropTypes.number,
-      style: PropTypes.shape({
-        property: PropTypes.name,
-        draw: PropTypes.func,
-      }),
-      type: PropTypes.string,
-      layerName: PropTypes.string,
-    })),
-  }),
-  sourceVectorOptions: PropTypes.string,
-  minZoom: PropTypes.number,
-  maxZoom: PropTypes.number,
+  mapboxAccessToken: PropTypes.string.isRequired,
   zoom: PropTypes.number,
   center: PropTypes.arrayOf(PropTypes.number),
-  maxBounds: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)),
-  osmSource: PropTypes.string,
-  getGeometryOnDrawEnd: PropTypes.func,
-  getDataOnClick: PropTypes.func,
-  getDataOnHover: PropTypes.func,
+  addDataDraw: PropTypes.func,
+  deleteDataDraw: PropTypes.func,
+  config: PropTypes.shape({
+    sources: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.string,
+      options: PropTypes.shape({
+        type: PropTypes.string,
+        tiles: PropTypes.arrayOf(PropTypes.string),
+      }),
+      layers: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.string,
+        type: PropTypes.string,
+        paint: PropTypes.any,
+      })),
+    })),
+    geojsonPaint: PropTypes.object,
+  }),
+  editable: PropTypes.bool,
+  features: PropTypes.array,
 };
 
 TerraDrawMap.defaultProps = {
-  config: { sourceVectorUrl: '', vectorLayers: [] },
-  sourceVectorOptions: '',
-  minZoom: 11,
-  maxZoom: 20,
   zoom: 11,
   center: [2.62322, 48.40813],
-  maxBounds: [[2.2917527636, 48.1867854393], [3.1004132613, 48.6260818006]],
-  osmSource: 'https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-  getGeometryOnDrawEnd: e => e,
-  getDataOnClick: e => e,
-  getDataOnHover: e => e,
+  addDataDraw: e => e,
+  deleteDataDraw: e => e,
+  config: {
+    sources: [],
+    geojsonPaint: {},
+  },
+  editable: true,
+  features: [],
 };
 
 export default TerraDrawMap;

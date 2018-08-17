@@ -1,24 +1,22 @@
 [
-  [
-    {
-      "type": "Feature",
-      "properties": {"id": "a"}
-    },
-    {
-      "type": "Feature",
-      "properties": {"id": "b"}
-    }
-  ],
   {
     "type": "Feature",
-    "properties": { "id": "c"}
+    "id": "a"
   },
   {
     "type": "Feature",
-    "properties": {"id": "d"}
+    "id": "b"
   },
   {
     "type": "Feature",
-    "properties": { "id": "e" }
+    "id": "c"
+  },
+  {
+    "type": "Feature",
+    "id": "d"
+  },
+  {
+    "type": "Feature",
+    "id": "e"
   }
 ]
