@@ -1,0 +1,28 @@
+
+.userrequest {
+  padding-bottom: 24px;
+  &_comments {
+    :global(.ant-alert) {
+      margin-bottom: 24px;
+    }
+    :global(.ant-card) {
+      margin-bottom: 24px;
+    }
+  }
+}
+
+@media print {
+  .userrequest {
+    :global(.ant-card) {
+      break-inside: avoid-page;
+    }
+    &_summary {
+      width: 100%;
+    }
+    &_comments {
+      display: flex;
+      width: 100%;
+      flex-direction: column-reverse;
+    }
+  }
+}

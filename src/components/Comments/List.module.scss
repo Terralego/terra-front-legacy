@@ -6,4 +6,7 @@
 
 .listShowList {
   margin-top: 24px;
+  @media print {
+    margin: 0;
+  }
 }

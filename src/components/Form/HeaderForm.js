@@ -25,6 +25,10 @@ class HeaderForm extends React.Component {
     e.preventDefault();
   }
 
+  print = () => {
+    window && window.print();
+  }
+
   showConfirmationReturn = () => {
     const { location: { state }, form, history } = this.props;
     const pushHistory = () => history.push(state ? state.from : '/manage-request');
@@ -57,7 +61,7 @@ class HeaderForm extends React.Component {
               {FormConfig.confirmation.backButton}
             </Button>
           </Col>
-          { (showDraft || showSubmit) && (
+          { (showDraft || showSubmit) ? (
             <Col>
               {showDraft &&
                 <Button
@@ -82,6 +86,15 @@ class HeaderForm extends React.Component {
                 </Button>
               }
             </Col>
+          ) : (
+            <Button
+              type="primary-dark"
+              onClick={this.print}
+              icon="printer"
+              style={{ marginLeft: 12 }}
+            >
+              {FormConfig.confirmation.printButton}
+            </Button>
           )}
         </Row>
       </header>

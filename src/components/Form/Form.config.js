@@ -15,6 +15,7 @@ const FormConfig = {
     draftButton: 'Save as draft',
     previewButton: 'Preview your request',
     editButton: 'Edit my request',
+    printButton: 'Print this request',
     submitButton: 'Send my request',
     errorText: 'Error message',
     modal: {

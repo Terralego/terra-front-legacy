@@ -1,4 +1,10 @@
-.submitButton {
-  text-align: right;
-  margin-top: 12px;
+.commentForm {
+  &_submit {
+    text-align: right;
+    margin-top: 12px;
+  }
+  @media print {
+    display: none;
+  }
 }
+
