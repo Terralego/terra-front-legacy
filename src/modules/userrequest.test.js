@@ -8,10 +8,10 @@ import userrequest, {
   SUBMIT_SUCCESS,
   SUBMIT_FAILURE,
   submitData,
-  addOrUpdateGeojsonFeature,
+  updateFeatures,
   ADD_GEOJSON_FEATURE,
-  deleteGeojsonFeature,
-  DELETE_GEOJSON_FEATURE,
+  deleteFeaturesById,
+  DELETE_GEOJSON_FEATURES,
 } from './userrequest';
 
 import initialState from './userrequest-initial';
@@ -82,7 +82,7 @@ describe('userrequest async action', () => {
   });
 });
 
-describe('addOrUpdateGeojsonFeature action', () => {
+describe('updateFeatures action', () => {
   const store = mockStore(initialState);
 
   const feature = {
@@ -105,13 +105,13 @@ describe('addOrUpdateGeojsonFeature action', () => {
   };
 
   it('should dispatch a ADD_GEOJSON_FEATURE action type', () => {
-    store.dispatch(addOrUpdateGeojsonFeature(feature));
+    store.dispatch(updateFeatures(feature));
     const actions = store.getActions();
     expect(actions[0].type).toEqual(ADD_GEOJSON_FEATURE);
   });
 
   it('should add a feature in geojson', () => {
-    store.dispatch(addOrUpdateGeojsonFeature(feature));
+    store.dispatch(updateFeatures(feature));
     const actions = store.getActions();
 
     expect(userrequest(initialState, actions[0]).geojson).toEqual({
@@ -121,41 +121,40 @@ describe('addOrUpdateGeojsonFeature action', () => {
   });
 });
 
-describe('deleteGeojsonFeature action', () => {
-  const store = mockStore({
+describe('deleteFeaturesById action', () => {
+  const geojsonState = {
     geojson: {
       type: 'FeatureCollection',
       features: [{
-        id: 'a',
-        properties: { name: 'Polygon' },
+        properties: { id: 'a', name: 'Polygon' },
       }, {
-        id: 'b',
-        properties: { name: 'Polygon' },
+        properties: { id: 'b', name: 'Polygon' },
       }, {
-        id: 'c',
-        properties: { name: 'Polygon' },
+        properties: { id: 'c', name: 'Polygon' },
       }],
     },
+  };
+  const store = mockStore(geojsonState);
+
+  it('should dispatch a DELETE_GEOJSON_FEATURES action type', () => {
+    const featuresToDelete = ['b'];
+    store.dispatch(deleteFeaturesById(featuresToDelete));
+    const actions = store.getActions();
+    expect(actions[0].type).toEqual(DELETE_GEOJSON_FEATURES);
   });
 
-  it('should dispatch a DELETE_GEOJSON_FEATURE action type', () => {
-    store.dispatch(deleteGeojsonFeature('b'));
+  it('should have removed feature after DELETE_GEOJSON_FEATURES action', () => {
+    const featuresToDelete = ['b'];
+    store.dispatch(deleteFeaturesById(featuresToDelete));
     const actions = store.getActions();
-    expect(actions[0].type).toEqual(DELETE_GEOJSON_FEATURE);
-  });
+    const state = userrequest(geojsonState, actions[0]);
 
-  it('should add a feature in geojson', () => {
-    store.dispatch(deleteGeojsonFeature('b'));
-    const actions = store.getActions();
-
-    expect(userrequest(store.getState(), actions[0]).geojson).toEqual({
+    expect(state.geojson).toEqual({
       type: 'FeatureCollection',
       features: [{
-        id: 'a',
-        properties: { name: 'Polygon' },
+        properties: { id: 'a', name: 'Polygon' },
       }, {
-        id: 'c',
-        properties: { name: 'Polygon' },
+        properties: { id: 'c', name: 'Polygon' },
       }],
     });
   });
