@@ -1,10 +1,27 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import bbox from '@turf/bbox';
+import { polygon, lineString, point, featureCollection } from '@turf/helpers';
 import ReactMapboxGl, { Source, Layer, GeoJSONLayer } from 'react-mapbox-gl';
 import DrawControl from 'react-mapbox-gl-draw';
 
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
+
+/**
+ * getFeatureCollection returns an array of feature for turf
+ * @param {array} features : array of features
+ * @returns featureCollection
+ */
+const getFeatureCollection = features => featureCollection(features.map(feature => {
+  if (feature.geometry.type === 'LineString') {
+    return lineString(feature.geometry.coordinates);
+  }
+  if (feature.geometry.type === 'Point') {
+    return point(feature.geometry.coordinates);
+  }
+  return polygon(feature.geometry.coordinates);
+}));
 
 class TerraDrawMap extends Component {
   shouldComponentUpdate () {
@@ -43,6 +60,9 @@ class TerraDrawMap extends Component {
       accessToken: this.props.mapboxAccessToken,
     });
 
+    const features = getFeatureCollection(this.props.features);
+    const bounds = bbox(features);
+
     const mapProps = {
       style: 'mapbox://styles/mapbox/streets-v9',
       containerStyle: {
@@ -52,6 +72,7 @@ class TerraDrawMap extends Component {
       center: this.props.center,
       zoom: [this.props.zoom],
       maxBounds: this.props.maxBounds,
+      fitBounds: bounds,
     };
 
     const drawProps = {
