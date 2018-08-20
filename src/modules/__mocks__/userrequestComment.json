@@ -9,7 +9,8 @@
       "comment": ""
     },
     "is_internal": null,
-    "error": null
+    "error": null,
+    "intersections": null
   },
   "SUBMIT_FAILURE": {
     "geojson": {
@@ -23,7 +24,8 @@
     "is_internal": null,
     "error": {
       "message": "error message"
-    }
+    },
+    "intersections": null
   },
   "GEOJSON_COMMENT_FEATURE_ADD": {
     "geojson": {
@@ -35,7 +37,8 @@
       "comment": ""
     },
     "is_internal": null,
-    "error": null
+    "error": null,
+    "intersections": null
   },
   "GEOJSON_COMMENT_FEATURE_REMOVE": {
     "geojson": {
@@ -47,7 +50,8 @@
       "comment": ""
     },
     "is_internal": null,
-    "error": null
+    "error": null,
+    "intersections": null
   },
   "removeFeaturesMultiple": {
     "state": {
@@ -65,7 +69,8 @@
         "comment": ""
       },
       "is_internal": null,
-      "error": null
+      "error": null,
+      "intersections": null
     },
     "result": {
       "geojson": {
@@ -81,7 +86,8 @@
         "comment": ""
       },
       "is_internal": null,
-      "error": null
+      "error": null,
+      "intersections": null
     }
   },
   "clearGeojson": {
@@ -100,7 +106,8 @@
         "comment": ""
       },
       "is_internal": null,
-      "error": null
+      "error": null,
+      "intersections": null
     },
     "result": {
       "geojson": {
@@ -112,7 +119,8 @@
         "comment": ""
       },
       "is_internal": null,
-      "error": null
+      "error": null,
+      "intersections": null
     }
   },
   "COMMENT_ATTACHMENT_ADD": {
@@ -125,7 +133,8 @@
       "comment": ""
     },
     "is_internal": null,
-    "error": null
+    "error": null,
+    "intersections": null
   },
   "attachmentRemove": {
     "state": {
@@ -138,7 +147,8 @@
         "comment": ""
       },
       "is_internal": null,
-      "error": null
+      "error": null,
+      "intersections": null
     },
     "result": {
       "geojson": {
@@ -150,7 +160,8 @@
         "comment": ""
       },
       "is_internal": null,
-      "error": null
+      "error": null,
+      "intersections": null
     }
   },
   "submitComment": {
