@@ -41,27 +41,6 @@ describe('userrequestComment reducer', () => {
     expect(reducer(undefined, ACTION)).toEqual(result);
   });
 
-  it('with GEOJSON_COMMENT_FEATURE_ADD action', () => {
-    const ACTION = {
-      type: userrequestComment.GEOJSON_COMMENT_FEATURE_ADD,
-      features: [{ properties: { id: 'b' } }],
-    };
-    const result = mocks.GEOJSON_COMMENT_FEATURE_ADD;
-
-    expect(reducer(undefined, ACTION)).toEqual(result);
-  });
-
-  it('with GEOJSON_COMMENT_FEATURE_REMOVE action', () => {
-    const ACTION = {
-      type: userrequestComment.GEOJSON_COMMENT_FEATURE_REMOVE,
-      featureId: 'b',
-    };
-    const addFeaturesResult = mocks.GEOJSON_COMMENT_FEATURE_ADD;
-    const result = mocks.GEOJSON_COMMENT_FEATURE_REMOVE;
-
-    expect(reducer(addFeaturesResult, ACTION)).toEqual(result);
-  });
-
   it('with GEOJSON_COMMENT_CLEAR action', () => {
     const ACTION = {
       type: userrequestComment.GEOJSON_COMMENT_CLEAR,
