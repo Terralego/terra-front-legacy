@@ -83,6 +83,7 @@ class TerraDrawMap extends Component {
 
     const drawProps = {
       displayControlsDefault: false,
+      styles: this.props.config.drawStyles,
       controls: {
         polygon: true,
         line_string: true,
@@ -161,6 +162,7 @@ TerraDrawMap.propTypes = {
   onUpdateDataDraw: PropTypes.func,
   onDeleteDataDraw: PropTypes.func,
   config: PropTypes.shape({
+    drawStyles: PropTypes.array,
     sources: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.string,
       options: PropTypes.shape({
@@ -185,6 +187,7 @@ TerraDrawMap.defaultProps = {
   onUpdateDataDraw: e => e,
   onDeleteDataDraw: e => e,
   config: {
+    drawStyles: [],
     sources: [],
     geojsonPaint: {},
   },
