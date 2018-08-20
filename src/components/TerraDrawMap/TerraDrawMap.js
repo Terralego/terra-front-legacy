@@ -60,9 +60,6 @@ class TerraDrawMap extends Component {
       accessToken: this.props.mapboxAccessToken,
     });
 
-    const features = getFeatureCollection(this.props.features);
-    const bounds = bbox(features);
-
     const mapProps = {
       style: 'mapbox://styles/mapbox/streets-v9',
       containerStyle: {
@@ -72,8 +69,14 @@ class TerraDrawMap extends Component {
       center: this.props.center,
       zoom: [this.props.zoom],
       maxBounds: this.props.maxBounds,
-      fitBounds: bounds,
     };
+
+    // If map contains features, center on it
+    if (this.props.features.length) {
+      const features = getFeatureCollection(this.props.features);
+      const bounds = bbox(features);
+      mapProps.fitBounds = bounds;
+    }
 
     const drawProps = {
       displayControlsDefault: false,
