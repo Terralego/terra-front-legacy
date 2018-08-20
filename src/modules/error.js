@@ -2,6 +2,7 @@ import {
   SAVE_DRAFT_FAILURE,
   SUBMIT_FAILURE,
   INTERSECT_FAILURE,
+  READ_FAILURE,
 } from 'modules/userrequest';
 import {
   DETAIL_FAILURE,
@@ -26,6 +27,7 @@ const errors = (state = initialState, action) => {
     case PROFILE_FAILURE:
     case CHANGE_PASSWORD_FAILURE:
     case CONFIG_FAILURE:
+    case READ_FAILURE:
     case AUTHENTICATION_FAILURE:
       return action.error;
     default:

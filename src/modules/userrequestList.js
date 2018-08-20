@@ -3,10 +3,9 @@ import { createSelector } from 'reselect';
 import { CALL_API } from 'middlewares/api';
 import { defaultHeaders } from 'services/apiService';
 
-import { SUBMIT_SUCCESS, SAVE_DRAFT_SUCCESS } from 'modules/userrequest';
+import { SUBMIT_SUCCESS, SAVE_DRAFT_SUCCESS, READ_SUCCESS, READ_REQUEST } from 'modules/userrequest';
 import { getUserGroups } from 'modules/authentication';
 import createPaginator, { getCurrentPageResults, PAGE_SUCCESS } from 'modules/pagination';
-
 import { hasGroup } from 'helpers/permissionsHelpers';
 
 // Load userrequest detail
@@ -84,6 +83,15 @@ const userrequestList = (state = {}, action) => {
         ...state,
         [getItemIdFromUrl(action.error.url)]: {
           error: action.error,
+        },
+      };
+    case READ_SUCCESS:
+    case READ_REQUEST:
+      return {
+        ...state,
+        [action.endpoint.split('/').reverse()[1]]: {
+          ...state[action.endpoint.split('/').reverse()[1]],
+          has_new_comments: false,
         },
       };
     default:
