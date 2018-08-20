@@ -42,12 +42,11 @@ const userrequest = (state = initialState, action) => {
         ...state,
         [action.key]: action.value,
       };
-    // TODO: uncomment when API is ready
-    // case CONFIG_SUCCESS:
-    //   return {
-    //     ...state,
-    //     ...action.data,
-    //   };
+    case CONFIG_SUCCESS:
+      return {
+        ...state,
+        ...action.data,
+      };
     case RESET_FORM:
       return {
         ...state,
