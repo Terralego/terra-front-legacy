@@ -8,7 +8,7 @@
  * @return {Array} the feature with this incidence
  */
 export const getFeaturesWithIncidence = (response, features) => {
-  if (!response.results || response.results.length < 1) {
+  if (!response || !response.results || response.results.length < 1) {
     return features;
   }
 

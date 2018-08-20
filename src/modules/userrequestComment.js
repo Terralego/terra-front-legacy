@@ -1,4 +1,5 @@
 import { CALL_API } from 'middlewares/api';
+import { defaultHeaders } from 'services/apiService';
 
 export const SUBMIT_REQUEST = 'userrequestComment/SUBMIT_REQUEST';
 export const SUBMIT_SUCCESS = 'userrequestComment/SUBMIT_SUCCESS';
@@ -9,6 +10,11 @@ export const GEOJSON_COMMENT_CLEAR = 'GEOJSON_COMMENT_CLEAR';
 
 export const COMMENT_ATTACHMENT_ADD = 'COMMENT_ATTACHMENT_ADD';
 export const COMMENT_ATTACHMENT_REMOVE = 'COMMENT_ATTACHMENT_REMOVE';
+
+// Get feature intersection actions types
+export const INTERSECT_REQUEST = 'userrequestComment/INTERSECT_REQUEST';
+export const INTERSECT_SUCCESS = 'userrequestComment/INTERSECT_SUCCESS';
+export const INTERSECT_FAILURE = 'userrequestComment/INTERSECT_FAILURE';
 
 export const initialState = {
   geojson: {
@@ -21,6 +27,7 @@ export const initialState = {
   },
   is_internal: null,
   error: null,
+  intersections: null,
 };
 
 
@@ -54,6 +61,7 @@ const userrequestComment = (state = initialState, action) => {
       return {
         ...state,
         geojson: initialState.geojson,
+        intersections: null,
       };
     case COMMENT_ATTACHMENT_ADD:
       return {
@@ -64,6 +72,11 @@ const userrequestComment = (state = initialState, action) => {
       return {
         ...state,
         attachment: null,
+      };
+    case INTERSECT_SUCCESS:
+      return {
+        ...state,
+        intersections: action.data,
       };
     default:
       return state;
@@ -150,4 +163,27 @@ export const addAttachment = attachment => ({
 export const removeAttachment = attachmentUid => ({
   type: COMMENT_ATTACHMENT_REMOVE,
   attachmentUid,
+});
+
+/**
+ * Post feature object
+ * @param  {object} feature : feature sent to the server
+ * @param  {date} eventDateStart : Event start date
+ * @param  {date} eventDateEnd : Event end date
+ */
+export const getIntersections = (feature, eventDateStart, eventDateEnd) => ({
+  [CALL_API]: {
+    endpoint: '/layer/reference/intersects/',
+    types: [INTERSECT_REQUEST, INTERSECT_SUCCESS, INTERSECT_FAILURE],
+    config: {
+      headers: defaultHeaders,
+      method: 'POST',
+      body: JSON.stringify({
+        callbackid: feature.id,
+        from: eventDateStart,
+        to: eventDateEnd,
+        geom: JSON.stringify(feature.geometry),
+      }),
+    },
+  },
 });

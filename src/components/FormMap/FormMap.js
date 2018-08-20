@@ -33,10 +33,9 @@ class FormMap extends Component {
    */
   handleUpdateDataDraw = features => {
     features.forEach(feature => {
-      const { activity: { uid, eventDateStart, eventDateEnd } } = this.props;
+      const { activity: { uid } } = this.props;
       const featureWithProperties = getFeatureWithProperties(feature, uid);
       this.props.updateFeatures(featureWithProperties);
-      this.props.getIntersections(featureWithProperties, eventDateStart, eventDateEnd);
     });
   }
 
@@ -148,11 +147,7 @@ FormMap.defaultProps = {
   deleteFeaturesById: () => {},
   features: [],
   activity: {
-    type: '',
-    eventDates: Array(1),
     uid: 0,
-    participantCount: '1',
-    publicCount: '0',
   },
   withIncidence: false,
   editable: false,

@@ -60,6 +60,10 @@ describe('getReviewer', () => {
 });
 
 describe('getFeaturesWithIncidence', () => {
+  it('should return features array if no incidence provide', () => {
+    expect(getFeaturesWithIncidence(null, mockFeatures)).toEqual(mockFeatures);
+  });
+
   it('should return an array of feature with incidences 1', () => {
     expect(getFeaturesWithIncidence(mockIntersection1, mockFeatures)).toEqual([
       {

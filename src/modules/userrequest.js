@@ -82,7 +82,6 @@ const userrequest = (state = initialState, action) => {
           features: getFeaturesWithIncidence(action.data, state.geojson.features),
         },
       };
-
     default:
       return state;
   }
