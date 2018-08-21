@@ -8,8 +8,6 @@ import DrawControl from 'react-mapbox-gl-draw';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 
-import styles from './TerraDrawMap.module.scss';
-
 /**
  * getFeatureCollection returns an array of feature for turf
  * @param {array} features : array of features
@@ -71,7 +69,6 @@ class TerraDrawMap extends Component {
       center: this.props.center,
       zoom: [this.props.zoom],
       maxBounds: this.props.maxBounds,
-      className: styles.map,
     };
 
     // If map contains features, center on it
