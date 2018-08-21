@@ -2,9 +2,8 @@ import { actions } from 'react-redux-form';
 
 import { CALL_API } from 'middlewares/api';
 import { defaultHeaders } from 'services/apiService';
-import { getFeaturesWithIncidence } from 'helpers/userrequestHelpers';
+import { getFeaturesWithIncidence, getUserrequestWithFeatureId } from 'helpers/userrequestHelpers';
 import { DETAIL_SUCCESS } from 'modules/userrequestList';
-
 import initialState from 'modules/userrequest-initial';
 
 // Modify userrequest object action types
@@ -70,7 +69,7 @@ const userrequest = (state = initialState, action) => {
       };
     case SAVE_DRAFT_SUCCESS:
     case DETAIL_SUCCESS:
-      return action.data;
+      return getUserrequestWithFeatureId(action.data);
     case SUBMIT_SUCCESS:
     case RESET_FORM:
       return initialState;

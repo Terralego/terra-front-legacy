@@ -8,6 +8,7 @@ import { getUserGroups } from 'modules/authentication';
 import createPaginator, { getCurrentPageResults, PAGE_SUCCESS } from 'modules/pagination';
 
 import { hasGroup } from 'helpers/permissionsHelpers';
+import { getUserrequestWithFeatureId } from 'helpers/userrequestHelpers';
 
 // Load userrequest detail
 export const DETAIL_REQUEST = 'userrequestList/DETAIL_REQUEST';
@@ -54,7 +55,7 @@ const userrequestList = (state = {}, action) => {
     case SAVE_DRAFT_SUCCESS:
       return {
         ...state,
-        [action.data.id]: action.data,
+        [action.data.id]: getUserrequestWithFeatureId(action.data),
       };
     case STATE_CHANGE_SUCCESS:
       return {
