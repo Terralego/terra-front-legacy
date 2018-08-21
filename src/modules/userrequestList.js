@@ -3,10 +3,9 @@ import { createSelector } from 'reselect';
 import { CALL_API } from 'middlewares/api';
 import { defaultHeaders } from 'services/apiService';
 
-import { SUBMIT_SUCCESS, SAVE_DRAFT_SUCCESS } from 'modules/userrequest';
+import { SUBMIT_SUCCESS, SAVE_DRAFT_SUCCESS, READ_SUCCESS } from 'modules/userrequest';
 import { getUserGroups } from 'modules/authentication';
 import createPaginator, { getCurrentPageResults, PAGE_SUCCESS } from 'modules/pagination';
-
 import { hasGroup } from 'helpers/permissionsHelpers';
 
 // Load userrequest detail
@@ -51,6 +50,7 @@ const userrequestList = (state = {}, action) => {
       };
     case DETAIL_SUCCESS:
     case SUBMIT_SUCCESS:
+    case READ_SUCCESS:
     case SAVE_DRAFT_SUCCESS:
       return {
         ...state,

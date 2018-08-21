@@ -30,6 +30,10 @@ export const INTERSECT_FAILURE = 'userrequest/INTERSECT_FAILURE';
 // Reset form after submit success
 export const RESET_FORM = 'userrequest/RESET_FORM';
 
+// Check if user request is readed
+export const READ_REQUEST = 'userrequest/READ_REQUEST';
+export const READ_SUCCESS = 'userrequest/READ_SUCCESS';
+export const READ_FAILURE = 'userrequest/READ_FAILURE';
 
 /**
  * REDUCER
@@ -206,6 +210,17 @@ export const getIntersections = (feature, eventDateStart, eventDateEnd) => ({
         to: eventDateEnd,
         geom: JSON.stringify(feature.geometry),
       }),
+    },
+  },
+});
+
+export const readUserrequest = id => ({
+  [CALL_API]: {
+    endpoint: `/userrequest/${id}/read`,
+    types: [READ_REQUEST, READ_SUCCESS, READ_FAILURE],
+    config: {
+      method: 'GET',
+      headers: defaultHeaders,
     },
   },
 });

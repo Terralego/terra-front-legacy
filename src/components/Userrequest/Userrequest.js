@@ -5,7 +5,7 @@ import { Redirect, withRouter } from 'react-router-dom';
 import { Spin, Row, Col, Card } from 'antd';
 
 import { fetchUserrequest } from 'modules/userrequestList';
-import { openDraft } from 'modules/userrequest';
+import { openDraft, readUserrequest } from 'modules/userrequest';
 
 import withAuthentication from 'hoc/authentication';
 
@@ -20,6 +20,8 @@ const DRAFT_STATUS = 100;
 
 class Userrequest extends React.Component {
   componentDidMount () {
+    if (this.props.data) this.props.readUserrequest(this.props.data.id);
+    else this.props.readUserrequest(this.props.match.params.id);
     if (this.props.data && this.props.data.state === DRAFT_STATUS) {
       this.props.openDraft(this.props.data);
     }
@@ -71,7 +73,7 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ fetchUserrequest, openDraft }, dispatch);
+  bindActionCreators({ fetchUserrequest, openDraft, readUserrequest }, dispatch);
 
 export default withRouter(withAuthentication(connect(
   mapStateToProps,
