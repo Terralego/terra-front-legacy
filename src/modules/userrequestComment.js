@@ -73,6 +73,12 @@ const userrequestComment = (state = initialState, action) => {
         ...state,
         attachment: null,
       };
+    // case INTERSECT_REQUEST: {
+    //   return {
+    //     ...state,
+    //     intersections: null,
+    //   };
+    // }
     case INTERSECT_SUCCESS:
       return {
         ...state,

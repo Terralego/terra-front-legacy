@@ -106,3 +106,25 @@ export const getDatesQueryOptions = dates => {
 };
 
 export default getFeatureType;
+
+/**
+ * getDataWithFeatureId add feature id at root object
+ *
+ * @param {object} data
+ * @returns {object} data with data.geojson[x].feature.id
+ */
+export const getDataWithFeatureId = data => {
+  if (!data.geojson) {
+    return data;
+  }
+  return {
+    ...data,
+    geojson: {
+      ...data.geojson,
+      features: data.geojson ? data.geojson.features.map(feature => ({
+        ...feature,
+        id: feature.properties.id,
+      })) : {},
+    },
+  };
+};

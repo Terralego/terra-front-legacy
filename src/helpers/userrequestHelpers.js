@@ -31,7 +31,6 @@ export const getFeaturesWithIncidence = (response, features) => {
       properties: {
         ...feature.properties,
         incidence,
-
       },
     };
   });

@@ -4,6 +4,7 @@ import settings from 'front-settings';
 import { CALL_API } from 'middlewares/api';
 import { defaultHeaders } from 'services/apiService';
 import { SUBMIT_SUCCESS } from 'modules/userrequestComment';
+import { getDataWithFeatureId } from 'helpers/mapHelpers';
 
 export const ALL_REQUEST = 'userrequestCommentList/ALL_REQUEST';
 export const ALL_SUCCESS = 'userrequestCommentList/ALL_SUCCESS';
@@ -41,7 +42,7 @@ const parseCommentsByUserrequest = response => {
   const comments = {};
   const userrequestId = response.results[0].userrequest;
   response.results.forEach(userrequest => {
-    comments[userrequest.id] = getCommentData(userrequest);
+    comments[userrequest.id] = getDataWithFeatureId(getCommentData(userrequest));
   });
 
   return { [userrequestId]: comments };
