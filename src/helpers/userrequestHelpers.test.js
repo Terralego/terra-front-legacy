@@ -2,7 +2,6 @@ import {
   getReviewersByUuid,
   getReviewer,
   getFeaturesWithIncidence,
-  getUserrequestWithFeatureId,
 } from './userrequestHelpers';
 
 import mockFeatures from './__mocks__/features.json';
@@ -155,45 +154,3 @@ describe('getFeaturesWithIncidence', () => {
   });
 });
 
-describe('getUserrequestWithFeatureId', () => {
-  const userrequestWithFeature = {
-    geojson: {
-      features: [
-        {
-          type: 'Feature',
-          properties: {
-            id: 'a',
-          },
-          geometry: {},
-        },
-      ],
-    },
-  };
-
-  const userrequestWithoutFeature = {
-    geojson: {
-      features: [],
-    },
-  };
-  it('should return same data if no features provide', () => {
-    expect(getUserrequestWithFeatureId(userrequestWithoutFeature))
-      .toEqual(userrequestWithoutFeature);
-  });
-
-  it('should return features with id', () => {
-    expect(getUserrequestWithFeatureId(userrequestWithFeature)).toEqual({
-      geojson: {
-        features: [
-          {
-            type: 'Feature',
-            id: 'a',
-            properties: {
-              id: 'a',
-            },
-            geometry: {},
-          },
-        ],
-      },
-    });
-  });
-});

@@ -2,7 +2,8 @@ import { actions } from 'react-redux-form';
 
 import { CALL_API } from 'middlewares/api';
 import { defaultHeaders } from 'services/apiService';
-import { getFeaturesWithIncidence, getUserrequestWithFeatureId } from 'helpers/userrequestHelpers';
+import { getFeaturesWithIncidence } from 'helpers/userrequestHelpers';
+import { getDataWithFeatureId } from 'helpers/mapHelpers';
 import { DETAIL_SUCCESS } from 'modules/userrequestList';
 import initialState from 'modules/userrequest-initial';
 
@@ -69,7 +70,7 @@ const userrequest = (state = initialState, action) => {
       };
     case SAVE_DRAFT_SUCCESS:
     case DETAIL_SUCCESS:
-      return getUserrequestWithFeatureId(action.data);
+      return getDataWithFeatureId(action.data);
     case SUBMIT_SUCCESS:
     case RESET_FORM:
       return initialState;

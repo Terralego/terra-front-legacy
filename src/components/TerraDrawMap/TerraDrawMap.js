@@ -30,6 +30,10 @@ class TerraDrawMap extends Component {
     return false;
   }
 
+  componentWillUnmount () {
+    this.resetDrawMap();
+  }
+
   onDrawChange = e => {
     if (
       e.action === 'move' ||
@@ -46,6 +50,15 @@ class TerraDrawMap extends Component {
 
   onDrawRender = () => {
     if (this.drawControl && this.props.editable) {
+      this.drawControl.draw.set({
+        type: 'FeatureCollection',
+        features: this.props.features,
+      });
+    }
+  }
+
+  resetDrawMap () {
+    if (this.drawControl) {
       this.drawControl.draw.set({
         type: 'FeatureCollection',
         features: this.props.features,

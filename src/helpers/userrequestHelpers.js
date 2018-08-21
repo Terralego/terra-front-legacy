@@ -31,7 +31,6 @@ export const getFeaturesWithIncidence = (response, features) => {
       properties: {
         ...feature.properties,
         incidence,
-
       },
     };
   });
@@ -61,14 +60,3 @@ export const getReviewersByUuid = reviewers => {
  * @returns {object} reviewer object with corresponding uuid
  */
 export const getReviewer = (reviewers, uuid) => getReviewersByUuid(reviewers)[uuid] || {};
-
-export const getUserrequestWithFeatureId = userrequest => ({
-  ...userrequest,
-  geojson: {
-    ...userrequest.geojson,
-    features: userrequest.geojson.features.map(feature => ({
-      ...feature,
-      id: feature.properties.id,
-    })),
-  },
-});
