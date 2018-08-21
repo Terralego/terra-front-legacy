@@ -6,6 +6,7 @@ import { Spin, Row, Col, Card } from 'antd';
 
 import { fetchUserrequest } from 'modules/userrequestList';
 import { openDraft, readUserrequest } from 'modules/userrequest';
+import { resetPaginationCache } from 'modules/pagination';
 
 import withAuthentication from 'hoc/authentication';
 
@@ -22,6 +23,7 @@ class Userrequest extends React.Component {
   componentDidMount () {
     if (this.props.data) this.props.readUserrequest(this.props.data.id);
     else this.props.readUserrequest(this.props.match.params.id);
+    this.props.resetPaginationCache('/userrequest/');
     if (this.props.data && this.props.data.state === DRAFT_STATUS) {
       this.props.openDraft(this.props.data);
     }
@@ -73,7 +75,12 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ fetchUserrequest, openDraft, readUserrequest }, dispatch);
+  bindActionCreators({
+    fetchUserrequest,
+    openDraft,
+    readUserrequest,
+    resetPaginationCache,
+  }, dispatch);
 
 export default withRouter(withAuthentication(connect(
   mapStateToProps,

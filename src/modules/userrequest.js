@@ -216,7 +216,7 @@ export const getIntersections = (feature, eventDateStart, eventDateEnd) => ({
 
 export const readUserrequest = id => ({
   [CALL_API]: {
-    endpoint: `/userrequest/${id}/read`,
+    endpoint: `/userrequest/${id}/read/`,
     types: [READ_REQUEST, READ_SUCCESS, READ_FAILURE],
     config: {
       method: 'GET',
