@@ -26,6 +26,12 @@ const getFeatureCollection = features => featureCollection(features.map(feature 
   return polygon(feature.geometry.coordinates);
 }));
 
+const handleClick = (map, e) => {
+  const featureBbox = [[e.point.x - 5, e.point.y - 5], [e.point.x + 5, e.point.y + 5]];
+  const features = map.queryRenderedFeatures(featureBbox, { layers: ['hors_chemins'] });
+  console.log(features);
+};
+
 class TerraDrawMap extends Component {
   shouldComponentUpdate () {
     return false;
@@ -100,6 +106,7 @@ class TerraDrawMap extends Component {
       center: this.props.center,
       zoom: [this.props.zoom],
       maxBounds: this.props.maxBounds,
+      onClick: handleClick,
     };
 
     // If map contains features, center on it
@@ -142,6 +149,7 @@ class TerraDrawMap extends Component {
                   sourceLayer={layer.id}
                   id={layer.id}
                   paint={layer.paint}
+                  filter={layer.filter}
                 />
             ))}
             </React.Fragment>
