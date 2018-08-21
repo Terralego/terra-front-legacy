@@ -176,7 +176,8 @@ describe('getUserrequestWithFeatureId', () => {
     },
   };
   it('should return same data if no features provide', () => {
-    expect(getUserrequestWithFeatureId(userrequestWithoutFeature)).toEqual(userrequestWithoutFeature);
+    expect(getUserrequestWithFeatureId(userrequestWithoutFeature))
+      .toEqual(userrequestWithoutFeature);
   });
 
   it('should return features with id', () => {
