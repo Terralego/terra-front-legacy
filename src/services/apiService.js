@@ -28,7 +28,8 @@ async function handleErrors (response) {
 
   const error = {
     message: i18next.t([`error:${errorCode}`, 'error:unspecific']),
-    ...response,
+    status: response.status,
+    url: response.url,
   };
 
   throw error;

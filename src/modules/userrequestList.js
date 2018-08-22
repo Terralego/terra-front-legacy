@@ -32,9 +32,7 @@ export const userrequestPaginator = createPaginator('/userrequest/');
  * @param  {string} url: url of detail userrequest
  * @return {string} item id
  */
-function getItemIdFromUrl (url) {
-  return url.split('/').reverse()[1];
-}
+const getItemIdFromUrl = (url = '') => url.split('/').reverse()[1];
 
 /**
  * userrequestList reducer
