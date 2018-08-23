@@ -17,14 +17,12 @@ import Form from 'components/Form/Form';
 
 import styles from './Userrequest.module.scss';
 
-const DRAFT_STATUS = 100;
-
 class Userrequest extends React.Component {
   componentDidMount () {
     if (this.props.data) this.props.readUserrequest(this.props.data.id);
     else this.props.readUserrequest(this.props.match.params.id);
     this.props.resetPaginationCache('/userrequest/');
-    if (this.props.data && this.props.data.state === DRAFT_STATUS) {
+    if (this.props.data && this.props.data.state === this.props.draftStatus) {
       this.props.openDraft(this.props.data);
     }
     if (!this.props.data && !this.props.loading) {
@@ -43,8 +41,7 @@ class Userrequest extends React.Component {
       }
       // If userrequest is in draft status
       // and user group is user, redirect to editable request
-      if (data.state === DRAFT_STATUS
-        && this.props.isUser) {
+      if (data.state === this.props.draftStatus && this.props.isUser) {
         return (
           <Form {...this.props} />
         );
@@ -72,6 +69,7 @@ class Userrequest extends React.Component {
 const mapStateToProps = (state, ownProps) => ({
   data: state.userrequestList[ownProps.match.params.id],
   loading: state.userrequestList.loading,
+  draftStatus: state.appConfig.states.DRAFT,
 });
 
 const mapDispatchToProps = dispatch =>
