@@ -41,6 +41,11 @@ const en = {
     Téléphone: 'Phone number',
     'Téléphone secondaire': 'Secondary phone',
   },
+  headerTranslations: {
+    'Your form isn\'t saved yet. If you go back you will lost all data. Are you sure?': 'Your form isn\'t saved yet. If you go back you will lost all data. Are you sure?',
+    Yes: 'Yes',
+    No: 'No',
+  },
 };
 
 export default en;

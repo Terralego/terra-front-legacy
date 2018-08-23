@@ -42,6 +42,7 @@ i18n
       'error',
       'profileTranslations',
       'profileContactTranslations',
+      'headerTranslations',
     ],
     defaultNS: 'profileTranslations',
 
