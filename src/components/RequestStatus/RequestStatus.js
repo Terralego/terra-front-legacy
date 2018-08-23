@@ -20,7 +20,7 @@ const actionsN1 = [
 ];
 
 const actionsN2 = [
-  { label: 'En attente', value: 200, icon: 'pause', type: 'state' },
+  { label: 'En cours de traitement', value: 200, icon: 'pause', type: 'state' },
   { label: 'En attente d\'information du demandeur', value: 1, icon: 'pause', type: 'approbation' },
   { label: 'Approuver', value: 300, icon: 'check', type: 'state' },
   { label: 'Refuser', value: -1, icon: 'close', type: 'state' },
