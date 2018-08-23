@@ -16,8 +16,9 @@ import FormSummary from 'components/Form/FormSummary';
 
 import styles from './Form.module.scss';
 
-const isNewDraft = (prevProps, props) => !prevProps.data && !props.data && props.id;
-const isExistingDraft = (prevProps, props) => props.id && prevProps.data && props.data
+const isDraft = props => props.state === props.draftStatus;
+const isNew = (prevProps, props) => !prevProps.data && !props.data && props.id;
+const isExisting = (prevProps, props) => props.id && prevProps.data && props.data
   && prevProps.data.updated_at !== props.data.updated_at && prevProps.data.updated_at;
 const isDraftLoading = props => props.location.pathname !== '/new-request' && !props.data.updated_at;
 
@@ -37,7 +38,8 @@ const HeaderUserrequest = props => (
 
 class FormApp extends React.Component {
   componentDidUpdate (prevProps) {
-    if (isNewDraft(prevProps, this.props) || isExistingDraft(prevProps, this.props)) {
+    if (isDraft(this.props)
+    && (isNew(prevProps, this.props) || isExisting(prevProps, this.props))) {
       message.success('Votre déclaration a bien été sauvegardée !');
       this.props.history.push(`/manage-request/detail/${this.props.id}`);
     }
@@ -94,6 +96,7 @@ const mapStateToProps = state => ({
   id: state.userrequest.id,
   mode: state.appConfig.formMode,
   form: state.forms.userrequest.$form,
+  draftStatus: state.appConfig.states.DRAFT,
 });
 
 const mapDispatchToProps = dispatch =>

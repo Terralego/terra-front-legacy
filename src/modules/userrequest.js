@@ -76,6 +76,10 @@ const userrequest = (state = initialState, action) => {
     case DETAIL_SUCCESS:
       return getDataWithFeatureId(action.data);
     case SUBMIT_SUCCESS:
+      return {
+        ...state,
+        expiry: action.data.expiry,
+      };
     case RESET_FORM:
       return initialState;
     case INTERSECT_SUCCESS:
