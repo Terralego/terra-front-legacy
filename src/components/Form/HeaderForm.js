@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Button, Icon, Col, Row, Modal } from 'antd';
 import { withRouter } from 'react-router-dom';
+import { translate } from 'react-i18next';
 
 import { saveDraft, submitData, resetForm } from 'modules/userrequest';
 import FormConfig from 'components/Form/Form.config';
@@ -30,17 +31,16 @@ class HeaderForm extends React.Component {
   }
 
   showConfirmationReturn = () => {
-    const { location: { state }, form, history } = this.props;
+    const { location: { state }, form, history, t } = this.props;
     const pushHistory = () => history.push(state ? state.from : '/manage-request');
     if (!form.touched && !form.submitted) {
       pushHistory();
     } else {
       Modal.confirm({
-        title: `Are you sure you want to go to
-        ${state ? state.from : '/manage-request'}?`,
-        okText: 'Yes',
+        title: t('Your form isn\'t saved yet. If you go back you will lost all data. Are you sure?'),
+        okText: t('Yes'),
         okType: 'danger',
-        cancelText: 'No',
+        cancelText: t('No'),
         onOk () {
           pushHistory();
         },
@@ -118,4 +118,4 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ saveDraft, submitData, resetForm }, dispatch);
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(HeaderForm));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(translate('headerTranslations')(HeaderForm)));
