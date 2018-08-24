@@ -110,6 +110,11 @@ class TerraDrawMap extends Component {
       },
     };
 
+    const filter = {
+      all: ['!=', '', ''],
+      hasIncidence: ['==', 'GRIDCODE', '0'] || ['==', 'GRIDCODE', '1'] || ['==', 'GRIDCODE', '2'],
+      hasRoutes: ['!=', 'geom', '1255'],
+    };
     return (
       <Map {...mapProps}>
         {this.props.config.sources.map(source => (
@@ -123,8 +128,11 @@ class TerraDrawMap extends Component {
                 sourceLayer={layer.id}
                 id={layer.id}
                 paint={layer.paint}
+                filter={filter.hasRoutes}
+                // filter={['!=', 'GRIDCODE', 2]}
+                // filter={['all', ['==', 'GRIDCODE', 1] || ['==', 'GRIDCODE', 2]]}
               />
-            ))}
+           ))}
           </React.Fragment>
         ))}
 
