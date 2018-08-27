@@ -1,19 +1,19 @@
 import React from 'react';
-import { Checkbox } from 'antd';
+import { Switch } from 'antd';
 import styles from './TerraDrawMapFilters.module.scss';
 
 const TerraDrawMapFilters = ({ source, setFilter }) => (
-  <div className={styles.filters}>
-    {source.showFilter && source.layers.map(layer => (
-      <Checkbox
+  source.showFilter && source.layers.map(layer => (
+    <div className={styles.filter}>
+      <Switch
         key={`${layer.id}_filter`}
         onChange={setFilter(layer.id)}
         defaultChecked
-      >
-        {layer.name}
-      </Checkbox>
-    ))}
-  </div>
+        size="small"
+      />
+      <span className={styles.filterLabel}>{layer.name}</span>
+    </div>
+  ))
 );
 
 export default TerraDrawMapFilters;
