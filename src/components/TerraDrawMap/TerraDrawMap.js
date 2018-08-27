@@ -146,7 +146,7 @@ class TerraDrawMap extends Component {
                   key={layer.id}
                   type={layer.type}
                   sourceId={source.id}
-                  sourceLayer={layer.id}
+                  sourceLayer={layer.sourceLayer}
                   id={layer.id}
                   paint={layer.paint}
                   filter={layer.filter}
