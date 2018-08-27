@@ -72,7 +72,7 @@ class FormMap extends Component {
             mapboxAccessToken={settings.MAPBOX_ACCESS_TOKEN}
             features={activityFeatures}
             config={TerraDrawMapConfig}
-            minZoom={11}
+            minZoom={8}
             maxZoom={16}
             zoom={13}
             center={[2.62322, 48.40813]}

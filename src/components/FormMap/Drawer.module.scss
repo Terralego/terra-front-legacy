@@ -1,28 +1,37 @@
-.mapLegend {
+.mapLegendContainer {
   height: 100%;
-  width: 300px;
+  width: 250px;
   position: absolute;
-  bottom: 0px;
+  background-color: white;
+  top: 0px;
   right: -350px;
-  z-index: 0;
-  transition-duration: 0.3s;
+  z-index: 1;
+  transition-duration: 0.5s
 }
 
 .insertion {
-  z-index: 1;
-  height: 100%;
-  width: 300px;
   position: absolute;
-  bottom: 0px;
+  top: 0px;
   right: 12px;
+  transition-duration: 0.5s;
+}
+
+.mapLegend {
+  height: 90%;
 }
 
 .buttonLegend {
   position: absolute;
-  bottom: 12px;
-  right: 12px;
+  border: none;
+  border-radius: 0px;
+  transition-duration: 0s;
+  height: 10%;
+  right: 363px;
+  bottom: 0px;
 }
 
 .buttonLegendInsertion {
-  right: 312px;
+  width: 100%;
+  right: 0px;
+  transition-duration: 0s;
 }

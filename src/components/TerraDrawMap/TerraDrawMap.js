@@ -93,7 +93,7 @@ class TerraDrawMap extends Component {
     const mapProps = {
       style: 'mapbox://styles/mapbox/streets-v9',
       containerStyle: {
-        height: '90%',
+        height: '100%',
         width: '100%',
       },
       center: this.props.center,

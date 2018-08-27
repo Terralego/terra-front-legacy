@@ -19,13 +19,13 @@ class Drawer extends React.Component {
 
   render () {
     return (
-      <div>
-        <div
-          className={classnames({
-            [styles.mapLegend]: true,
-            [styles.insertion]: this.state.visible,
-          })}
-        >
+      <div
+        className={classnames({
+          [styles.mapLegendContainer]: true,
+          [styles.insertion]: this.state.visible,
+        })}
+      >
+        <div className={styles.mapLegend}>
           <MapLegend
             title={mapTitleLegend.titleLegend}
             legend={mapLegend}
@@ -41,7 +41,7 @@ class Drawer extends React.Component {
           })}
           onClick={this.drawerToggle}
         >
-          {this.state.visible ? <Icon type="double-right" /> : <Icon type="double-left" />}
+          {this.state.visible ? <span>Collapse sidebar <Icon type="double-right" /></span> : <Icon type="double-left" />}
         </Button>
       </div>
     );
