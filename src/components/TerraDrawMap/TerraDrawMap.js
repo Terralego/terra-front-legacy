@@ -68,6 +68,7 @@ class TerraDrawMap extends Component {
   mapDidLoad = map => {
     this.map = map;
     this.map.addControl(new MapboxGL.FullscreenControl(), 'top-left');
+    this.map.addControl(new MapboxGL.ScaleControl(), 'bottom-left');
   }
 
   deleteFeatureById (id) {
