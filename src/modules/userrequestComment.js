@@ -1,5 +1,6 @@
 import { CALL_API } from 'middlewares/api';
 import { defaultHeaders } from 'services/apiService';
+import { getFeaturesWithIncidence } from 'helpers/userrequestHelpers';
 
 export const SUBMIT_REQUEST = 'userrequestComment/SUBMIT_REQUEST';
 export const SUBMIT_SUCCESS = 'userrequestComment/SUBMIT_SUCCESS';
@@ -16,6 +17,8 @@ export const INTERSECT_REQUEST = 'userrequestComment/INTERSECT_REQUEST';
 export const INTERSECT_SUCCESS = 'userrequestComment/INTERSECT_SUCCESS';
 export const INTERSECT_FAILURE = 'userrequestComment/INTERSECT_FAILURE';
 
+export const UPDATE_TEMP_FEATURES = 'userrequestComment/UPDATE_TEMP_FEATURES';
+
 export const initialState = {
   geojson: {
     type: 'FeatureCollection',
@@ -28,6 +31,7 @@ export const initialState = {
   is_internal: null,
   error: null,
   intersections: null,
+  tempFeatures: [],
 };
 
 
@@ -83,7 +87,14 @@ const userrequestComment = (state = initialState, action) => {
       return {
         ...state,
         intersections: action.data,
+        tempFeatures: getFeaturesWithIncidence(action.data, state.tempFeatures),
       };
+    case UPDATE_TEMP_FEATURES: {
+      return {
+        ...state,
+        tempFeatures: action.features,
+      };
+    }
     default:
       return state;
   }
@@ -169,6 +180,16 @@ export const addAttachment = attachment => ({
 export const removeAttachment = attachmentUid => ({
   type: COMMENT_ATTACHMENT_REMOVE,
   attachmentUid,
+});
+
+/**
+ * userrequestComment action
+ * update temporal features when drawing
+ * @param {array} features: array of features
+ */
+export const updateTempFeatures = features => ({
+  type: UPDATE_TEMP_FEATURES,
+  features,
 });
 
 /**
