@@ -4,9 +4,12 @@ import bbox from '@turf/bbox';
 import { polygon, lineString, point, featureCollection } from '@turf/helpers';
 import ReactMapboxGl, { Source, Layer, GeoJSONLayer } from 'react-mapbox-gl';
 import DrawControl from 'react-mapbox-gl-draw';
+import MapboxGL from 'mapbox-gl';
 
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
+import Drawer from 'components/FormMap/Drawer';
+import './TerraDrawMap.scss';
 
 /**
  * getFeatureCollection returns an array of feature for turf
@@ -55,6 +58,23 @@ class TerraDrawMap extends Component {
     }
   }
 
+  setFilter = filter => () => {
+    if (this.map && this.map.getLayer(filter).visibility === 'visible') {
+      return this.map.setLayoutProperty(filter, 'visibility', 'none');
+    }
+    return this.map.setLayoutProperty(filter, 'visibility', 'visible');
+  }
+
+  mapDidLoad = map => {
+    this.map = map;
+    this.map.addControl(new MapboxGL.FullscreenControl(), 'top-left');
+    this.map.addControl(new MapboxGL.ScaleControl(), 'bottom-left');
+  }
+
+  deleteFeatureById (id) {
+    this.drawControl.draw.delete([id]);
+  }
+
   resetDrawMap () {
     if (this.drawControl) {
       this.drawControl.draw.set({
@@ -64,13 +84,11 @@ class TerraDrawMap extends Component {
     }
   }
 
-  deleteFeatureById (id) {
-    this.drawControl.draw.delete([id]);
-  }
-
   render () {
     const Map = ReactMapboxGl({
       accessToken: this.props.mapboxAccessToken,
+      maxZoom: this.props.maxZoom,
+      minZoom: this.props.minZoom,
     });
 
     const mapProps = {
@@ -111,56 +129,59 @@ class TerraDrawMap extends Component {
     };
 
     return (
-      <Map {...mapProps}>
-        {this.props.config.sources.map(source => (
-          <React.Fragment key={source.id}>
-            <Source id={source.id} tileJsonSource={source.options} />
-            {source.layers.map(layer => (
-              <Layer
-                key={layer.id}
-                type={layer.type}
-                sourceId={source.id}
-                sourceLayer={layer.id}
-                id={layer.id}
-                paint={layer.paint}
-              />
+      <React.Fragment>
+        <Map {...mapProps} onStyleLoad={this.mapDidLoad}>
+          {this.props.config.sources.map(source => (
+            <React.Fragment key={source.id}>
+              <Source id={source.id} tileJsonSource={source.options} />
+              {source.layers.map(layer => (
+                <Layer
+                  key={layer.id}
+                  type={layer.type}
+                  sourceId={source.id}
+                  sourceLayer={layer.id}
+                  id={layer.id}
+                  paint={layer.paint}
+                />
             ))}
-          </React.Fragment>
-        ))}
+            </React.Fragment>
+          ))}
 
-        {!this.props.editable &&
-          <React.Fragment>
-            <GeoJSONLayer
-              data={{ type: 'FeatureCollection', features: this.props.features }}
-              fillPaint={this.props.config.geojsonPaint.fillPaint}
-              linePaint={this.props.config.geojsonPaint.linePaint}
-              layerOptions={{
-                filter: ['==', '$type', 'Polygon'],
-              }}
-            />
+          {!this.props.editable &&
+            <React.Fragment>
+              <GeoJSONLayer
+                data={{ type: 'FeatureCollection', features: this.props.features }}
+                fillPaint={this.props.config.geojsonPaint.fillPaint}
+                linePaint={this.props.config.geojsonPaint.linePaint}
+                layerOptions={{
+                  filter: ['==', '$type', 'Polygon'],
+                }}
+              />
 
-            <GeoJSONLayer
-              data={{ type: 'FeatureCollection', features: this.props.features }}
-              circlePaint={this.props.config.geojsonPaint.circlePaint}
-              layerOptions={{
-                filter: ['==', '$type', 'Point'],
-              }}
-            />
+              <GeoJSONLayer
+                data={{ type: 'FeatureCollection', features: this.props.features }}
+                circlePaint={this.props.config.geojsonPaint.circlePaint}
+                layerOptions={{
+                  filter: ['==', '$type', 'Point'],
+                }}
+              />
 
-            <GeoJSONLayer
-              data={{ type: 'FeatureCollection', features: this.props.features }}
-              linePaint={this.props.config.geojsonPaint.linePaint}
-              layerOptions={{
-                filter: ['==', '$type', 'LineString'],
-              }}
-            />
-          </React.Fragment>
-        }
+              <GeoJSONLayer
+                data={{ type: 'FeatureCollection', features: this.props.features }}
+                linePaint={this.props.config.geojsonPaint.linePaint}
+                layerOptions={{
+                  filter: ['==', '$type', 'LineString'],
+                }}
+              />
+            </React.Fragment>
+          }
 
-        {this.props.editable &&
-          <DrawControl {...drawProps} />
-        }
-      </Map>
+          {this.props.editable &&
+            <DrawControl {...drawProps} />
+          }
+        </Map>
+        <Drawer config={this.props.config} setFilter={this.setFilter} />
+      </React.Fragment>
     );
   }
 }
