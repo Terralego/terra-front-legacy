@@ -10,9 +10,7 @@ import { getIntersections } from 'modules/userrequest';
 import { getFeatureWithProperties, getActivityFeatures } from 'helpers/mapHelpers';
 import FeaturesList from 'components/FormMap/FeatureList';
 import TerraDrawMap from 'components/TerraDrawMap/TerraDrawMap';
-import MapLegend from 'components/MapLegend/MapLegend';
-import { TerraDrawMapConfig, mapLegend, mapTitleLegend } from 'components/FormMap/FormMap.config';
-
+import { TerraDrawMapConfig, mapTitleLegend } from 'components/FormMap/FormMap.config';
 
 class FormMap extends Component {
   state = {
@@ -69,13 +67,13 @@ class FormMap extends Component {
 
     return (
       <Row gutter={24} style={{ paddingBottom: 24 }}>
-        <Col span={24} lg={24} style={{ height: 450 }}>
+        <Col span={24} lg={24} style={{ height: 450, overflow: 'hidden' }}>
           <TerraDrawMap
             mapboxAccessToken={settings.MAPBOX_ACCESS_TOKEN}
             features={activityFeatures}
             config={TerraDrawMapConfig}
             minZoom={11}
-            maxZoom={17}
+            maxZoom={16}
             zoom={13}
             center={[2.62322, 48.40813]}
             maxBounds={[[2.2917527636, 48.1867854393], [3.1004132613, 48.6260818006]]}
@@ -87,11 +85,6 @@ class FormMap extends Component {
             onSelectionChange={this.onSelectionChange}
             osmSource="https://{a-c}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png"
             editable={editable}
-          />
-          <MapLegend
-            title={mapTitleLegend.titleLegend}
-            legend={mapLegend}
-            style={{ width: 300, position: 'absolute', bottom: 12, right: 18, zIndex: 1 }}
           />
         </Col>
         <Col span={24} lg={24}>

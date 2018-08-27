@@ -1,0 +1,28 @@
+.mapLegend {
+  height: 100%;
+  width: 300px;
+  position: absolute;
+  bottom: 0px;
+  right: -350px;
+  z-index: 0;
+  transition-duration: 0.3s;
+}
+
+.insertion {
+  z-index: 1;
+  height: 100%;
+  width: 300px;
+  position: absolute;
+  bottom: 0px;
+  right: 12px;
+}
+
+.buttonLegend {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+}
+
+.buttonLegendInsertion {
+  right: 312px;
+}

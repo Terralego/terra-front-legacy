@@ -1,0 +1,12 @@
+.filters {
+  background-color: white;
+  border-radius: 0px 0px 0px 2px;
+  padding: 3px;
+  display: flex;
+  flex-direction: column;
+}
+
+.filters > label {
+  margin-left: 5px !important;
+  margin-bottom: 5px;
+}
