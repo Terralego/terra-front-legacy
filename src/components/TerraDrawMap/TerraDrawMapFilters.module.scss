@@ -2,11 +2,23 @@
   background-color: white;
   border-radius: 0px 0px 0px 2px;
   padding: .25em 1em;
+  display: flex;
+  align-items: center;
 }
 
 .filterLabel {
   margin-left: 5px;
-  margin-bottom: 5px;
   font-size: 12px;
   color: rgba(0, 0, 0, 0.45);
+}
+
+.filterIcon {
+  width: 2em;
+  height: 2em;
+}
+
+.filterStyle {
+  width: 18px;
+  height: 1px;
+  display: inline-block;
 }

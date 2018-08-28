@@ -4,14 +4,21 @@ import styles from './TerraDrawMapFilters.module.scss';
 
 const TerraDrawMapFilters = ({ source, setFilter }) => (
   source.showFilter && source.layers.map(layer => (
-    <div className={styles.filter}>
+    <div className={styles.filter} key={`${layer.id}_filter`}>
       <Switch
-        key={`${layer.id}_filter`}
         onChange={setFilter(layer.id)}
         defaultChecked={layer.layout.visibility === 'visible'}
         size="small"
       />
-      <span className={styles.filterLabel}>{layer.name}</span>
+      {layer.legendStyle &&
+        <span style={layer.legendStyle || {}} className={styles.filterStyle} />
+      }
+      <span className={styles.filterLabel}>
+        {layer.icon &&
+          <img src={layer.icon} alt={layer.iconAlt} className={styles.filterIcon} />
+        }
+        {layer.name}
+      </span>
     </div>
   ))
 );
