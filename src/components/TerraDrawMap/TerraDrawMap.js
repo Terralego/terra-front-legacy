@@ -74,11 +74,10 @@ class TerraDrawMap extends Component {
     }
   }
 
-  setFilter = layerId => () => {
-    if (this.map && this.map.getLayer(layerId).visibility === 'visible') {
-      return this.map.setLayoutProperty(layerId, 'visibility', 'none');
+  setLayerVisibility = (layerId, value) => {
+    if (this.map) {
+      this.map.setLayoutProperty(layerId, 'visibility', value);
     }
-    return this.map.setLayoutProperty(layerId, 'visibility', 'visible');
   }
 
   mapDidLoad = map => {
@@ -207,7 +206,7 @@ class TerraDrawMap extends Component {
             <TerraDrawMapFilters
               key={`${source.id}_filters`}
               source={source}
-              setFilter={this.setFilter}
+              setLayerVisibility={this.setLayerVisibility}
               filters={this.props.filters}
             />
           ))}
