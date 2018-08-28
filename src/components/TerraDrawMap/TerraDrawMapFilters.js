@@ -50,13 +50,13 @@ class TerraDrawMapFilters extends React.Component {
           key={`${layer.id}_filter`}
           onClick={() => this.toggleFilter(layer.id)}
         >
-          {layer.legendStyle &&
-            <span style={layer.legendStyle || {}} className={styles.filterStyle} />
-              }
           <span className={styles.filterLabel}>
             {layer.icon &&
-              <img src={layer.icon} alt={layer.iconAlt} className={styles.filterIcon} />
-                }
+            <img src={layer.icon} alt={layer.iconAlt} className={styles.filterIcon} />
+          }
+            {layer.legendStyle &&
+            <span style={layer.legendStyle || {}} className={styles.filterStyle} />
+          }
             {layer.name}
           </span>
           <Switch

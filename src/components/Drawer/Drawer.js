@@ -20,6 +20,7 @@ class Drawer extends React.Component {
         className={classnames({
           [styles.drawer]: true,
           [styles['drawer--expanded']]: this.state.visible,
+          [`drawer__${this.props.id}--expanded`]: this.state.visible,
         })}
         id={this.props.id}
       >

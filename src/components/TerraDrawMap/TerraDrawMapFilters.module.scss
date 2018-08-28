@@ -18,6 +18,8 @@
 
 .filterLabel {
   flex: 1;
+  display: flex;
+  align-items: center;
   font-size: 12px;
   color: rgba(0, 0, 0, 0.45);
 }
@@ -25,11 +27,12 @@
 .filterIcon {
   width: 2em;
   height: 2em;
-  margin: 0 .5em;
+  margin-right: .5em;
 }
 
 .filterStyle {
   width: 18px;
   height: 1px;
   display: inline-block;
+  margin-right: 8px;
 }
