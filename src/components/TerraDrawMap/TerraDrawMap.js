@@ -26,6 +26,19 @@ const getFeatureCollection = features => featureCollection(features.map(feature 
   return polygon(feature.geometry.coordinates);
 }));
 
+/**
+ * To help development, this function logs clicked features data
+ * from vector source layers
+ * it needs to be called on map onClick props
+ * @param {object} map: map object
+ * @param {Event} e: click event
+ */
+// const handleClick = (map, e) => {
+//   const featureBbox = [[e.point.x - 5, e.point.y - 5], [e.point.x + 5, e.point.y + 5]];
+//   const features = map.queryRenderedFeatures(featureBbox, { layers: ['hors_chemins'] });
+//   console.log(features);
+// };
+
 class TerraDrawMap extends Component {
   shouldComponentUpdate () {
     return false;
@@ -139,9 +152,10 @@ class TerraDrawMap extends Component {
                   key={layer.id}
                   type={layer.type}
                   sourceId={source.id}
-                  sourceLayer={layer.id}
+                  sourceLayer={layer.sourceLayer}
                   id={layer.id}
                   paint={layer.paint}
+                  filter={layer.filter}
                 />
             ))}
             </React.Fragment>

@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 import settings from 'front-settings';
 
 import { updateConfigValue } from 'modules/appConfig';
-import { getIntersections } from 'modules/userrequest';
 import { getFeatureWithProperties, getActivityFeatures } from 'helpers/mapHelpers';
 import FeaturesList from 'components/FormMap/FeatureList';
 import TerraDrawMap from 'components/TerraDrawMap/TerraDrawMap';
@@ -111,7 +110,6 @@ const mapStateToProps = (state, ownProps) => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators({
     updateConfigValue,
-    getIntersections,
   }, dispatch);
 
 FormMap.propTypes = {
