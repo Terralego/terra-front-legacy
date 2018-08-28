@@ -156,6 +156,7 @@ class TerraDrawMap extends Component {
                   id={layer.id}
                   paint={layer.paint}
                   filter={layer.filter}
+                  layout={layer.layout}
                 />
             ))}
             </React.Fragment>
