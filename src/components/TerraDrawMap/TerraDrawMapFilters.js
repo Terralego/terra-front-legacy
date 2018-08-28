@@ -8,7 +8,7 @@ const TerraDrawMapFilters = ({ source, setFilter }) => (
       <Switch
         key={`${layer.id}_filter`}
         onChange={setFilter(layer.id)}
-        defaultChecked
+        defaultChecked={layer.layout.visibility === 'visible'}
         size="small"
       />
       <span className={styles.filterLabel}>{layer.name}</span>
