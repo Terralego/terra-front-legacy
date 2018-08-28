@@ -72,7 +72,7 @@ class FormMap extends Component {
             features={activityFeatures}
             config={TerraDrawMapConfig}
             minZoom={8}
-            maxZoom={16}
+            maxZoom={21}
             zoom={13}
             center={[2.62322, 48.40813]}
             maxBounds={[[2.2917527636, 48.1867854393], [3.1004132613, 48.6260818006]]}
