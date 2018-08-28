@@ -1,0 +1,33 @@
+.drawer {
+  position: absolute;
+  z-index: 1;
+  width: 250px;
+  height: 100%;
+  background-color: white;
+  top: 0px;
+  right: 0px;
+  transform: translateX(185px);
+  transition: transform .2s;
+
+  &--expanded {
+    transform: translateX(0px);
+  }
+}
+
+.collapseButton {
+  position: absolute;
+  border: none;
+  border-radius: 0px;
+  height: 10%;
+  left: -44px;
+  right: 0px;
+  bottom: 0px;
+}
+
+.collapseIcon {
+  transform: rotate(180deg);
+  transition: transform .2s;
+  .collapseButton--visible & {
+    transform: rotate(0deg);
+  }
+}

@@ -66,7 +66,7 @@ class FormMap extends Component {
 
     return (
       <Row gutter={24} style={{ paddingBottom: 24 }}>
-        <Col span={24} lg={24} style={{ height: 450, overflow: 'hidden' }}>
+        <Col span={24} lg={24} style={{ height: 450, overflow: 'hidden', position: 'relative' }}>
           <TerraDrawMap
             mapboxAccessToken={settings.MAPBOX_ACCESS_TOKEN}
             features={activityFeatures}
