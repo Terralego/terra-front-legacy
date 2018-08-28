@@ -23,7 +23,7 @@ class FormLogin extends Component {
     const { form } = this.props;
 
     return (
-      <ReduxForm model="login">
+      <ReduxForm model="login" onSubmit={this.handleSubmit}>
         <h2>Se connecter</h2>
         <Input
           model=".email"
@@ -37,14 +37,13 @@ class FormLogin extends Component {
           label="Mot de passe"
           errorMessages={{ required: { message: 'Please provide a password' } }}
           required
-          onPressEnter={this.handleSubmit}
         />
 
         <Button
           type="primary"
+          htmlType="submit"
           icon="arrow-right"
           className={styles.button}
-          onClick={this.handleSubmit}
           loading={form.pending}
         >
           Me connecter

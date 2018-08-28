@@ -34,14 +34,13 @@ class FormLogin extends Component {
         }
 
         {!account.emailSent &&
-          <ReduxForm model="account">
+          <ReduxForm model="account" onSubmit={this.handleSubmit}>
             <p>Vous n'avez pas encore de compte ?</p>
             <Input
               model=".email"
               id="signupEmail"
               label="Saisissez votre adresse email"
               errorMessages={{ required: { message: 'Veuillez saisir une adresse email' } }}
-              onPressEnter={this.handleSubmit}
             />
 
             {account.signupError
@@ -49,10 +48,10 @@ class FormLogin extends Component {
             }
             <Button
               type="primary"
+              htmlType="submit"
               icon="arrow-right"
               className={styles.button}
               loading={form.pending}
-              onClick={this.handleSubmit}
             >
               Créer un compte
             </Button>
