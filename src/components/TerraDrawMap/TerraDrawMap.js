@@ -8,8 +8,11 @@ import MapboxGL from 'mapbox-gl';
 
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
-import Drawer from 'components/FormMap/Drawer';
-import './TerraDrawMap.scss';
+import Drawer from 'components/Drawer/Drawer';
+import 'components/TerraDrawMap/TerraDrawMap.scss';
+import TerraDrawMapFilters from 'components/TerraDrawMap/TerraDrawMapFilters';
+import MapLegend from 'components/MapLegend/MapLegend';
+import { mapLegend, mapTitleLegend } from 'components/FormMap/FormMap.config';
 
 /**
  * getFeatureCollection returns an array of feature for turf
@@ -71,11 +74,10 @@ class TerraDrawMap extends Component {
     }
   }
 
-  setFilter = filter => () => {
-    if (this.map && this.map.getLayer(filter).visibility === 'visible') {
-      return this.map.setLayoutProperty(filter, 'visibility', 'none');
+  setLayerVisibility = (layerId, value) => {
+    if (this.map) {
+      this.map.setLayoutProperty(layerId, 'visibility', value);
     }
-    return this.map.setLayoutProperty(filter, 'visibility', 'visible');
   }
 
   mapDidLoad = map => {
@@ -142,7 +144,7 @@ class TerraDrawMap extends Component {
     };
 
     return (
-      <React.Fragment>
+      <div style={{ width: '100%', height: '100%', position: 'relative', overflow: 'hidden' }}>
         <Map {...mapProps} onStyleLoad={this.mapDidLoad}>
           {this.props.config.sources.map(source => (
             <React.Fragment key={source.id}>
@@ -156,6 +158,7 @@ class TerraDrawMap extends Component {
                   id={layer.id}
                   paint={layer.paint}
                   filter={layer.filter}
+                  layout={layer.layout}
                 />
             ))}
             </React.Fragment>
@@ -194,8 +197,21 @@ class TerraDrawMap extends Component {
             <DrawControl {...drawProps} />
           }
         </Map>
-        <Drawer config={this.props.config} setFilter={this.setFilter} />
-      </React.Fragment>
+        <Drawer id="map-drawer">
+          <MapLegend
+            title={mapTitleLegend.titleLegend}
+            legend={mapLegend}
+          />
+          {this.props.config.sources.map(source => (
+            <TerraDrawMapFilters
+              key={`${source.id}_filters`}
+              source={source}
+              setLayerVisibility={this.setLayerVisibility}
+              filters={this.props.filters}
+            />
+          ))}
+        </Drawer>
+      </div>
     );
   }
 }

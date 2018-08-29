@@ -28,6 +28,7 @@ const initialState = {
   // Form default states
   formMode: 'edit',
   drawMode: 'pointer',
+  mapFilters: [],
   REMIND_DELTA_DAYS: 6,
 };
 

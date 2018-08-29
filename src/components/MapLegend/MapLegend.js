@@ -1,15 +1,16 @@
 import React from 'react';
 
-import styles from './MapLegend.module.scss';
+import './MapLegend.scss';
 
 const MapLegend = ({ title, legend, style }) => (
-  <div className={styles.legend} style={style}>
-    <p className={styles.title}>{title || 'Legend'}</p>
-    <ul className={styles.legendList}>
+  <div className="legend" style={style}>
+    <p className="legend__title">{title || 'Legend'}</p>
+    <ul className="legend__list">
       {legend.map(item => (
-        <li key={item.label} className={styles.legendItem}>
-          <span className={styles.legendColor} style={{ background: item.color }} />
-          <span className={styles.legendText}>{item.label}</span>
+        <li key={`${item.label}_${item.minLabel}`} className="legend__item">
+          <span className="legend__color" style={{ background: item.color }} />
+          <span className="legend__label--min">{item.minLabel}</span>
+          <span className="legend__label">{item.label}</span>
         </li>
       ))}
     </ul>
