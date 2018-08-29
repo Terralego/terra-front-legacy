@@ -1,7 +1,8 @@
 import React from 'react';
 import { Row, Col } from 'antd';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Redirect, withRouter } from 'react-router-dom';
+import withAuthentication from 'hoc/authentication';
 
 import Signin from 'components/Signin/Signin';
 import Signup from 'components/Signup/Signup';
@@ -32,4 +33,4 @@ const mapStateToProps = state => ({
   form: state.forms.login.$form,
 });
 
-export default connect(mapStateToProps, null)(Login);
+export default connect(mapStateToProps, null)(withRouter(withAuthentication(Login)));

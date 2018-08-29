@@ -6,72 +6,73 @@ import withAuthentication from 'hoc/authentication';
 import routes from 'modules/routes';
 import Layout from 'components/Layout/Layout';
 
-const CustomRoute = ({ route, layout, ...props }) => (
-  <Layout {...layout} routes={route.routes}>
-    <route.component {...props} routes={route.routes} />
-  </Layout>
-);
-
-const RouteViews = props => {
-  // wrap <Route> and use this everywhere instead, then when
-  // sub routes are added to any route it'll work
-  const RouteWithSubRoutes = route => (
-    <Route
-      exact={route.exact}
-      path={route.path}
-      render={() => {
-        // If user try to access a protected route and is not authenticated
-        if (route.protected && !props.isAuthenticated) {
-          return (
-            <Redirect
-              to={{ pathname: '/login', state: { from: props.location.pathname } }}
-              from={props.location.pathname}
-            />
-          );
-        }
-
-        // Redirect user if properties are empty.
-        if (props.isUser &&
-        props.isAuthenticated && typeof props.user.properties === 'object' &&
-        !Object.keys(props.user.properties).length
-        && props.location.pathname !== '/create-profile') {
-          return (
-            <Redirect
-              to={{ pathname: '/create-profile', state: { from: props.location.pathname } }}
-              from={props.location.pathname}
-            />
-          );
-        }
-
-        return (
-          <CustomRoute
-            {...props}
-            route={route}
-            layout={route.layout}
-          />
-        );
-      }}
-    />
-  );
-
-  // Concatenate all routes for child views
-  const routesViews = [...routes];
-  routes.forEach(route => {
-    if (route.routes) {
-      routesViews.push(...route.routes);
+class RouteViews extends React.Component {
+  shouldComponentUpdate (prevProps) {
+    if (this.props.isAuthenticated !== prevProps.isAuthenticated
+    || this.props.location.pathname !== prevProps.location.pathname) {
+      return true;
     }
-  });
 
-  return (
-    <Switch>
-      {routesViews.map(route => (<RouteWithSubRoutes key={route.path} {...route} />))}
-      <CustomRoute
-        {...props}
-        route={{ name: 'Error404', component: Error404 }}
-        layout=""
+    return false;
+  }
+
+  render () {
+    // wrap <Route> and use this everywhere instead, then when
+    // sub routes are added to any route it'll work
+    const RouteWithSubRoutes = route => (
+      <Route
+        exact={route.exact}
+        path={route.path}
+        render={() => {
+          // If user try to access a protected route and is not authenticated
+          if (route.protected && !this.props.isAuthenticated) {
+            return (
+              <Redirect
+                to={{ pathname: '/login', state: { from: this.props.location.pathname } }}
+                from={this.props.location.pathname}
+              />
+            );
+          }
+
+          // Redirect user if properties are empty.
+          if (this.props.isUser &&
+          this.props.isAuthenticated && typeof this.props.user.properties === 'object' &&
+          !Object.keys(this.props.user.properties).length
+          && this.props.location.pathname !== '/create-profile') {
+            return (
+              <Redirect
+                to={{ pathname: '/create-profile', state: { from: this.props.location.pathname } }}
+                from={this.props.location.pathname}
+              />
+            );
+          }
+
+          return (
+            <Layout {...route.layout}>
+              <route.component />
+            </Layout>
+          );
+        }}
       />
-    </Switch>
-  );
-};
+    );
+
+    // Concatenate all routes for child views
+    const routesViews = [...routes];
+    routes.forEach(route => {
+      if (route.routes) {
+        routesViews.push(...route.routes);
+      }
+    });
+
+    return (
+      <Switch>
+        {routesViews.map(route => (<RouteWithSubRoutes key={route.path} {...route} />))}
+        <Layout>
+          <Error404 />
+        </Layout>
+      </Switch>
+    );
+  }
+}
 
 export default withRouter(withAuthentication(RouteViews));
