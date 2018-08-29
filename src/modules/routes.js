@@ -7,6 +7,8 @@ import Userrequest from 'components/Userrequest/Userrequest';
 import Login from 'components/Login/Login';
 import CreateAccount from 'components/Account/CreateAccount';
 import Account from 'components/Account/Account';
+import Credit from 'components/Credit/Credit';
+import LegalNotice from 'components/LegalNotice/LegalNotice';
 
 export const routes = [{
   path: '/',
@@ -81,6 +83,16 @@ export const routes = [{
   path: '/login',
   name: 'Login',
   component: Login,
+  icon: 'form',
+}, {
+  path: '/credits',
+  name: 'Credits',
+  component: Credit,
+  icon: 'form',
+}, {
+  path: '/mentions-legales',
+  name: 'Mentions légales',
+  component: LegalNotice,
   icon: 'form',
 }];
 
