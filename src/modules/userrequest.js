@@ -8,11 +8,12 @@ import { DETAIL_SUCCESS } from 'modules/userrequestList';
 import initialState from 'modules/userrequest-initial';
 
 // This mocks should be replace when callAPI is ready;
-import routingResponse from './__mocks__/userrequestRoutingResponse';
+import routingResponse from './__mocks__/userrequestRoutingResponse.json';
 
 // Modify userrequest object action types
 export const UPDATE_DATA_PROPERTIES = 'userrequest/UPDATE_DATA_PROPERTIES';
 export const ADD_GEOJSON_FEATURE = 'userrequest/ADD_GEOJSON_FEATURE';
+export const ADD_LINESTRING_FEATURE = 'ADD_LINESTRING_FEATURE';
 export const DELETE_GEOJSON_FEATURES = 'userrequest/DELETE_GEOJSON_FEATURES';
 
 // Save draft userrequest actions types
@@ -60,6 +61,19 @@ const userrequest = (state = initialState, action) => {
     case ADD_GEOJSON_FEATURE:
       return {
         ...state,
+        geojson: {
+          ...state.geojson,
+          features: [
+            ...state.geojson.features.filter(feature => (
+              feature.properties.id !== action.feature.properties.id
+            )),
+            action.feature,
+          ],
+        },
+      };
+    case ADD_LINESTRING_FEATURE:
+      return {
+        ...state,
         tempGeojson: {
           ...state.tempGeojson,
           features: [
@@ -98,14 +112,14 @@ const userrequest = (state = initialState, action) => {
       };
     case RESET_FORM:
       return initialState;
-    // case INTERSECT_SUCCESS:
-    //   return {
-    //     ...state,
-    //     geojson: {
-    //       ...state.geojson,
-    //       features: getFeaturesWithIncidence(action.data, state.geojson.features),
-    //     },
-    //   };
+    case INTERSECT_SUCCESS:
+      return {
+        ...state,
+        geojson: {
+          ...state.geojson,
+          features: getFeaturesWithIncidence(action.data, state.geojson.features),
+        },
+      };
     case ROUTING_SUCCESS:
       return {
         ...state,
@@ -113,7 +127,13 @@ const userrequest = (state = initialState, action) => {
           ...state.geojson,
           features: [
             ...state.geojson.features,
-            ...action.data.features,
+            ...action.data.features.map(feature => ({
+              ...feature,
+              properties: {
+                ...feature.properties,
+                routeInProgress: false,
+              },
+            })),
           ],
         },
       };
@@ -149,6 +169,17 @@ export const updateFeatures = feature => ({
   type: ADD_GEOJSON_FEATURE,
   feature,
 });
+
+// /**
+//  * userrequest action
+//  * updateFeatures add or update an object of properties
+//  * @param {object} properties : object of lineString properties
+//  * to add / update in userrequest object
+//  */
+// export const updateLineStringFeatures = feature => ({
+//   type: ADD_LINESTRING_FEATURE,
+//   feature,
+// });
 
 /**
  * userrequest action
@@ -262,7 +293,7 @@ export const getIntersections = (feature, eventDateStart, eventDateEnd) => ({
 //   },
 // });
 
-export const getRouting = features => dispatch => {
+export const getRouting = () => dispatch => {
   dispatch({
     type: ROUTING_REQUEST,
   });

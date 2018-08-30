@@ -196,16 +196,22 @@ class TerraDrawMap extends Component {
                 data={{ type: 'FeatureCollection', features: this.props.features }}
                 linePaint={this.props.config.geojsonPaint.linePaint}
                 layerOptions={{
-                  filter: ['==', '$type', 'LineString'],
+                  filter: ['all',
+                    ['==', '$type', 'LineString'],
+                    ['has', 'routeInProgress'],
+                  ],
                 }}
               />
 
               {/* Routing features */}
               <GeoJSONLayer
-                data={{ type: 'FeatureCollection', features: this.props.altFeatures }}
+                data={{ type: 'FeatureCollection', features: this.props.features }}
                 linePaint={this.props.config.geojsonPaint.linePaint}
                 layerOptions={{
-                  filter: ['==', '$type', 'LineString'],
+                  filter: ['all',
+                    ['==', '$type', 'LineString'],
+                    ['!has', 'routeInProgress'],
+                  ],
                 }}
               />
             </React.Fragment>
@@ -262,7 +268,6 @@ TerraDrawMap.propTypes = {
   }),
   editable: PropTypes.bool,
   features: PropTypes.array,
-  altFeatures: PropTypes.array,
 };
 
 TerraDrawMap.defaultProps = {
@@ -277,7 +282,6 @@ TerraDrawMap.defaultProps = {
   },
   editable: true,
   features: [],
-  altFeatures: [],
 };
 
 export default TerraDrawMap;
