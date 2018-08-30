@@ -1,0 +1,33 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "id": "cbd5efb863114c9971148bd6d24ddc31",
+            "type": "Feature",
+            "properties": {
+                "id": "cbd5efb863114c9971148bd6d24ddc31",
+                "activity": 0,
+                "timestampCreatedAt": 1535555162601,
+                "name": "LineString",
+                "incidence": {
+                    "GRIDCODE": 2,
+                    "date_from": "08-01",
+                    "date_to": "09-30"
+                }
+            },
+            "geometry": {
+                "coordinates": [
+                    [
+                        2.5994158848163806,
+                        48.41464703732453
+                    ],
+                    [
+                        2.6039649113033647,
+                        48.41379249763321
+                    ]
+                ],
+                "type": "LineString"
+            }
+        }
+    ]
+}

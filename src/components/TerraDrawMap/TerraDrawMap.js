@@ -37,11 +37,6 @@ const getFeatureCollection = features => featureCollection(features.map(feature 
  * @param {object} map: map object
  * @param {Event} e: click event
  */
-// const handleClick = (map, e) => {
-//   const featureBbox = [[e.point.x - 5, e.point.y - 5], [e.point.x + 5, e.point.y + 5]];
-//   const features = map.queryRenderedFeatures(featureBbox, { layers: ['hors_chemins'] });
-//   console.log(features);
-// };
 
 class TerraDrawMap extends Component {
   constructor (props) {
@@ -177,6 +172,7 @@ class TerraDrawMap extends Component {
             </React.Fragment>
           ))}
 
+          {/* Draw features */}
           {!this.props.editable &&
             <React.Fragment>
               <GeoJSONLayer
@@ -198,6 +194,15 @@ class TerraDrawMap extends Component {
 
               <GeoJSONLayer
                 data={{ type: 'FeatureCollection', features: this.props.features }}
+                linePaint={this.props.config.geojsonPaint.linePaint}
+                layerOptions={{
+                  filter: ['==', '$type', 'LineString'],
+                }}
+              />
+
+              {/* Routing features */}
+              <GeoJSONLayer
+                data={{ type: 'FeatureCollection', features: this.props.altFeatures }}
                 linePaint={this.props.config.geojsonPaint.linePaint}
                 layerOptions={{
                   filter: ['==', '$type', 'LineString'],
@@ -257,6 +262,7 @@ TerraDrawMap.propTypes = {
   }),
   editable: PropTypes.bool,
   features: PropTypes.array,
+  altFeatures: PropTypes.array,
 };
 
 TerraDrawMap.defaultProps = {
@@ -271,6 +277,7 @@ TerraDrawMap.defaultProps = {
   },
   editable: true,
   features: [],
+  altFeatures: [],
 };
 
 export default TerraDrawMap;

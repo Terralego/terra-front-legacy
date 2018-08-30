@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import settings from 'front-settings';
 
+import { getRouting } from 'modules/userrequest';
 import { updateConfigValue } from 'modules/appConfig';
 import { getFeatureWithProperties, getActivityFeatures } from 'helpers/mapHelpers';
 import FeaturesList from 'components/FormMap/FeatureList';
@@ -29,11 +30,16 @@ class FormMap extends Component {
    * @memberof FormMap
    */
   handleUpdateDataDraw = features => {
-    features.forEach(feature => {
-      const { activity: { uid } } = this.props;
-      const featureWithProperties = getFeatureWithProperties(feature, uid);
-      this.props.updateFeatures(featureWithProperties);
-    });
+    if (features) {
+      features.forEach(feature => {
+        const { activity: { uid } } = this.props;
+        const featureWithProperties = getFeatureWithProperties(feature, uid);
+        console.log(featureWithProperties)
+        this.props.updateFeatures(featureWithProperties);
+        this.props.getRouting(featureWithProperties);
+      });
+
+    }
   }
 
   /**
@@ -61,8 +67,14 @@ class FormMap extends Component {
   }
 
   render () {
-    const { features, editable, activity, withIncidence } = this.props;
+    const { features, tempFeatures, editable, activity, withIncidence } = this.props;
     const activityFeatures = getActivityFeatures(features, activity.uid);
+    const activityAltFeatures = getActivityFeatures(tempFeatures, activity.uid);
+
+    console.log('activityFeatures', activityFeatures);
+    console.log('activityAltFeatures', activityAltFeatures);
+
+    this.props.tempFeatures.length && this.handleUpdateDataDraw();
 
     return (
       <Row gutter={24} style={{ paddingBottom: 24 }}>
@@ -70,6 +82,7 @@ class FormMap extends Component {
           <TerraDrawMap
             mapboxAccessToken={settings.MAPBOX_ACCESS_TOKEN}
             features={activityFeatures}
+            altFeatures={activityAltFeatures}
             config={TerraDrawMapConfig}
             minZoom={8}
             maxZoom={21}
@@ -105,11 +118,13 @@ class FormMap extends Component {
 const mapStateToProps = (state, ownProps) => ({
   drawMode: state.appConfig.drawMode,
   features: ownProps.features || state.userrequest.geojson.features,
+  tempFeatures: state.userrequest.tempGeojson.features,
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators({
     updateConfigValue,
+    getRouting,
   }, dispatch);
 
 FormMap.propTypes = {
