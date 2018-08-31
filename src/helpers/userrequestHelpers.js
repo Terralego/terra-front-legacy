@@ -52,6 +52,11 @@ export const getReviewersByUuid = reviewers => {
   return reviewersObj;
 };
 
+/**
+ * removeRouteInProgressDatas
+ *
+ * @param {object} data
+ */
 export const removeRouteInProgressDatas = data => ({
   ...data,
   geojson: {
@@ -70,3 +75,76 @@ export const removeRouteInProgressDatas = data => ({
  * @returns {object} reviewer object with corresponding uuid
  */
 export const getReviewer = (reviewers, uuid) => getReviewersByUuid(reviewers)[uuid] || {};
+
+/**
+ * Return a feature by id
+ *
+ * @param {array} features
+ * @param {string} id
+ */
+export const getFeatureById = (features, id) =>
+  (features.find(feature => feature.properties.id === id));
+
+/**
+ * Get origin draw feature properties and reference it's id
+ *
+ * @param {array} features
+ * @param {string} featureId - id of origin draw feature
+ * @param {object} routedFeature - response of routing request (expect a LineString)
+ * @returns feature object of routed feature (with origin feature properties)
+ */
+export const getRoutedFeatureProperties = (features, featureId, routedFeature) => {
+  // Get origin draw properties
+  const { properties } = getFeatureById(features, featureId);
+  return {
+    ...properties,
+    // Set routing id (to avoid duplicate id with origin draw)
+    id: routedFeature.id,
+    // Reference to origin draw id
+    relatedFeatureId: properties.id,
+    routeInProgress: false,
+  };
+};
+
+/**
+ * Return routedFeatures with matching properties
+ *
+ * @param {array} stateFeatures - default state features
+ * @param {string} featureId - id of origin draw feature (callbackid of routing response)
+ * @param {object} routedFeature - feature in response of routing request (expect a LineString)
+ */
+export const getRoutedFeatures = (stateFeatures, featureId, routedFeature) => {
+  const clearStateFeatures = stateFeatures.filter(feature =>
+    feature.properties.id !== routedFeature.id);
+  return ([
+    ...clearStateFeatures.map(feature => {
+      if (feature.properties.id === featureId) {
+        return {
+          ...feature,
+          properties: {
+            ...feature.properties,
+            relatedFeatureId: routedFeature.id,
+          },
+        };
+      }
+
+      return feature;
+    }),
+    {
+      ...routedFeature,
+      properties: getRoutedFeatureProperties(clearStateFeatures, featureId, routedFeature),
+    },
+  ]);
+};
+
+/**
+ * Return features list without requested delete id
+ *
+ * @param {array} features - array of features
+ * @param {array} featuresId - array of feature ids to delete
+ * @returns array of features
+ */
+export const deleteFeatureWithRoute = (features, featuresId) => (features.filter(feature =>
+  featuresId.indexOf(feature.properties.id) === -1
+  && featuresId.indexOf(feature.properties.relatedFeatureId) === -1)
+);

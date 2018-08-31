@@ -2,13 +2,14 @@ import { actions } from 'react-redux-form';
 
 import { CALL_API } from 'middlewares/api';
 import { defaultHeaders } from 'services/apiService';
-import { getFeaturesWithIncidence, removeRouteInProgressDatas } from 'helpers/userrequestHelpers';
+import { getFeaturesWithIncidence, removeRouteInProgressDatas, getRoutedFeatures, deleteFeatureWithRoute } from 'helpers/userrequestHelpers';
 import { getDataWithFeatureId } from 'helpers/mapHelpers';
 import { DETAIL_SUCCESS } from 'modules/userrequestList';
 import initialState from 'modules/userrequest-initial';
 
 // This mocks should be replace when callAPI is ready;
 import routingResponse from './__mocks__/userrequestRoutingResponse.json';
+import getMockResponseWithCallbackId from './__mocks__/userrequestMock';
 
 // Modify userrequest object action types
 export const UPDATE_DATA_PROPERTIES = 'userrequest/UPDATE_DATA_PROPERTIES';
@@ -89,9 +90,7 @@ const userrequest = (state = initialState, action) => {
         ...state,
         geojson: {
           ...state.geojson,
-          features: state.geojson.features.filter(feature => (
-            action.featuresId.indexOf(feature.properties.id) === -1
-          )),
+          features: deleteFeatureWithRoute(state.geojson.features, action.featuresId),
         },
       };
     case SAVE_DRAFT_REQUEST:
@@ -125,16 +124,11 @@ const userrequest = (state = initialState, action) => {
         ...state,
         geojson: {
           ...state.geojson,
-          features: [
-            ...state.geojson.features,
-            ...action.data.features.map(feature => ({
-              ...feature,
-              properties: {
-                ...feature.properties,
-                routeInProgress: false,
-              },
-            })),
-          ],
+          features: getRoutedFeatures(
+            state.geojson.features,
+            action.data.request.callbackid,
+            action.data.results.features[0],
+          ),
         },
       };
     default:
@@ -169,17 +163,6 @@ export const updateFeatures = feature => ({
   type: ADD_GEOJSON_FEATURE,
   feature,
 });
-
-// /**
-//  * userrequest action
-//  * updateFeatures add or update an object of properties
-//  * @param {object} properties : object of lineString properties
-//  * to add / update in userrequest object
-//  */
-// export const updateLineStringFeatures = feature => ({
-//   type: ADD_LINESTRING_FEATURE,
-//   feature,
-// });
 
 /**
  * userrequest action
@@ -280,7 +263,7 @@ export const getIntersections = (feature, eventDateStart, eventDateEnd) => ({
  * Post feature object
  * @param  {object} feature : feature sent to the server
  */
-// export const getRouting = features => ({
+// export const getRouting = feature => ({
 //   [CALL_API]: {
 //     endpoint: `/api/layer/(group_du_layer|pk)/route/`,
 //     types: [ROUTING_REQUEST, ROUTING_SUCCESS, ROUTING_FAILURE],
@@ -293,15 +276,17 @@ export const getIntersections = (feature, eventDateStart, eventDateEnd) => ({
 //   },
 // });
 
-export const getRouting = () => dispatch => {
+export const getRouting = feature => dispatch => {
   dispatch({
     type: ROUTING_REQUEST,
   });
 
+  const data = getMockResponseWithCallbackId(routingResponse, feature.id);
+
   setTimeout(() => {
     dispatch({
       type: ROUTING_SUCCESS,
-      data: routingResponse,
+      data,
     }, 2000);
   });
 };

@@ -8,6 +8,7 @@ import settings from 'front-settings';
 import { getRouting } from 'modules/userrequest';
 import { updateConfigValue } from 'modules/appConfig';
 import { getFeatureWithProperties, getActivityFeatures } from 'helpers/mapHelpers';
+import { getFeatureById } from 'helpers/userrequestHelpers';
 import FeaturesList from 'components/FormMap/FeatureList';
 import TerraDrawMap from 'components/TerraDrawMap/TerraDrawMap';
 import { TerraDrawMapConfig, mapTitleLegend } from 'components/FormMap/FormMap.config';
@@ -40,21 +41,38 @@ class FormMap extends Component {
   }
 
   /**
-   * handleDeleteDataDraw:
+   * Handle on delete feature(s) on map
    * - delete feature from TerraDrawMap
    * - call props function onDeleteDataDraw
    * - Filter selectedFeaturesId from state to remove deleted features
-   * @param {array} features
+   * @param {array} features array of features deleted by TerraDrawMap
    *
    * @memberof FormMap
    */
   handleDeleteDataDraw = features => {
-    this.props.deleteFeaturesById(features.map(feature => feature.id));
+    const featuresId = [];
+    let relatedFeature;
+    features.forEach(feature => {
+      if (feature.properties.relatedFeatureId) {
+        relatedFeature = getFeatureById(this.props.features, feature.properties.relatedFeatureId);
+      }
+      featuresId.push(feature.id);
+    });
+    this.props.deleteFeaturesById(featuresId);
+    if (relatedFeature) {
+      this.mapContainer.deleteFeatureById(relatedFeature.properties.id);
+    }
     this.setState({
       selectedFeaturesId: [],
     });
   }
 
+  /**
+   * Handle on click on feature list item
+   * @param {string} featureId
+   *
+   * @memberof FormMap
+   */
   deleteDrawData = id => {
     this.props.deleteFeaturesById([id]);
     this.mapContainer.deleteFeatureById(id);

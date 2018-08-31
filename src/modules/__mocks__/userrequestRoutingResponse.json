@@ -1,33 +1,29 @@
 {
-    "type": "FeatureCollection",
-    "features": [
-        {
-            "id": "cbd5efb863114c9971148bd6d24ddc31",
-            "type": "Feature",
-            "properties": {
+    "request": {
+        "callbackid": "cbd5efb863114c9971148bd6d24ddc31",
+        "geom": "{ \"type\": \"LineString\", \"coordinates\": [ [ 2.662296295166016, 48.397501043357011 ], [ 2.667961120605469, 48.397444055281824 ] ] }"
+    },
+    "results": {
+        "type": "FeatureCollection",
+        "features": [
+            {
                 "id": "cbd5efb863114c9971148bd6d24ddc31",
-                "activity": 0,
-                "timestampCreatedAt": 1535555162601,
-                "name": "LineString",
-                "incidence": {
-                    "GRIDCODE": 2,
-                    "date_from": "08-01",
-                    "date_to": "09-30"
-                }
-            },
-            "geometry": {
-                "coordinates": [
-                    [
-                        2.5994158848163806,
-                        48.41464703732453
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "coordinates": [
+                        [
+                            2.5994158848163806,
+                            48.41464703732453
+                        ],
+                        [
+                            2.6039649113033647,
+                            48.41379249763321
+                        ]
                     ],
-                    [
-                        2.6039649113033647,
-                        48.41379249763321
-                    ]
-                ],
-                "type": "LineString"
+                    "type": "LineString"
+                }
             }
-        }
-    ]
+        ]
+    }
 }
