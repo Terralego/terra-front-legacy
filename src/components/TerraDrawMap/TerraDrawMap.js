@@ -58,6 +58,10 @@ class TerraDrawMap extends Component {
     };
   }
 
+  componentDidUpdate () {
+    this.resetDrawMap();
+  }
+
   componentWillUnmount () {
     this.resetDrawMap();
   }
@@ -103,9 +107,12 @@ class TerraDrawMap extends Component {
 
   resetDrawMap () {
     if (this.drawControl) {
+      const editableFeatures = this.props.features.filter(feature =>
+        feature.geometry.type !== 'LineString' || feature.properties.routeInProgress);
+      // this.drawControl.draw.deleteAll();
       this.drawControl.draw.set({
         type: 'FeatureCollection',
-        features: this.props.features,
+        features: editableFeatures,
       });
     }
   }
@@ -196,28 +203,26 @@ class TerraDrawMap extends Component {
                 data={{ type: 'FeatureCollection', features: this.props.features }}
                 linePaint={this.props.config.geojsonPaint.linePaint}
                 layerOptions={{
-                  filter: ['all',
-                    ['==', '$type', 'LineString'],
-                    ['has', 'routeInProgress'],
-                  ],
-                }}
-              />
-
-              {/* Routing features */}
-              <GeoJSONLayer
-                data={{ type: 'FeatureCollection', features: this.props.features }}
-                linePaint={this.props.config.geojsonPaint.linePaint}
-                layerOptions={{
-                  filter: ['all',
-                    ['==', '$type', 'LineString'],
-                    ['!has', 'routeInProgress'],
-                  ],
-                  paint: {
-                    'line-color': '#C0392B',
-                  },
+                  filter: ['==', '$type', 'LineString'],
                 }}
               />
             </React.Fragment>
+          }
+
+
+          {/* Routing features */}
+          {this.props.editable &&
+            <GeoJSONLayer
+              data={{ type: 'FeatureCollection', features: this.props.features }}
+              linePaint={this.props.config.geojsonPaint.routedLinePaint}
+              layerOptions={{
+                filter: [
+                  'all',
+                  ['==', '$type', 'LineString'],
+                  ['==', 'routeInProgress', false],
+                ],
+              }}
+            />
           }
 
           {this.props.editable &&
