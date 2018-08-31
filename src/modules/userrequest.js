@@ -2,7 +2,7 @@ import { actions } from 'react-redux-form';
 
 import { CALL_API } from 'middlewares/api';
 import { defaultHeaders } from 'services/apiService';
-import { getFeaturesWithIncidence } from 'helpers/userrequestHelpers';
+import { getFeaturesWithIncidence, removeRouteInProgressDatas } from 'helpers/userrequestHelpers';
 import { getDataWithFeatureId } from 'helpers/mapHelpers';
 import { DETAIL_SUCCESS } from 'modules/userrequestList';
 import initialState from 'modules/userrequest-initial';
@@ -226,7 +226,7 @@ export const submitData = (data, form = 'userrequest') => ({
       headers: defaultHeaders,
       method: data.id ? 'PUT' : 'POST',
       body: JSON.stringify({
-        ...data,
+        ...removeRouteInProgressDatas(data),
         state: 200, // SUBMITTED
       }),
     },

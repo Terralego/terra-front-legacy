@@ -212,6 +212,9 @@ class TerraDrawMap extends Component {
                     ['==', '$type', 'LineString'],
                     ['!has', 'routeInProgress'],
                   ],
+                  paint: {
+                    'line-color': '#C0392B',
+                  },
                 }}
               />
             </React.Fragment>

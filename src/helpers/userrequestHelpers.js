@@ -52,6 +52,16 @@ export const getReviewersByUuid = reviewers => {
   return reviewersObj;
 };
 
+export const removeRouteInProgressDatas = data => ({
+  ...data,
+  geojson: {
+    ...data.geojson,
+    features: [
+      ...data.geojson.features.filter(feature => !feature.properties.routeInProgress),
+    ],
+  },
+});
+
 /**
  * Return reviewer object, given an array of reviewers and uuid
  *
