@@ -8,6 +8,7 @@ import MapboxGL from 'mapbox-gl';
 
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
+
 import Drawer from 'components/Drawer/Drawer';
 import 'components/TerraDrawMap/TerraDrawMap.scss';
 import TerraDrawMapFilters from 'components/TerraDrawMap/TerraDrawMapFilters';
@@ -43,8 +44,13 @@ const getFeatureCollection = features => featureCollection(features.map(feature 
 // };
 
 class TerraDrawMap extends Component {
-  shouldComponentUpdate () {
-    return false;
+  constructor (props) {
+    super(props);
+    this.Map = ReactMapboxGl({
+      accessToken: this.props.mapboxAccessToken,
+      maxZoom: this.props.maxZoom,
+      minZoom: this.props.minZoom,
+    });
   }
 
   componentWillUnmount () {
@@ -100,12 +106,6 @@ class TerraDrawMap extends Component {
   }
 
   render () {
-    const Map = ReactMapboxGl({
-      accessToken: this.props.mapboxAccessToken,
-      maxZoom: this.props.maxZoom,
-      minZoom: this.props.minZoom,
-    });
-
     const mapProps = {
       style: 'mapbox://styles/mapbox/streets-v9',
       containerStyle: {
@@ -142,6 +142,8 @@ class TerraDrawMap extends Component {
         this.onDrawRender();
       },
     };
+
+    const { Map } = this;
 
     return (
       <div style={{ width: '100%', height: '100%', position: 'relative', overflow: 'hidden' }}>
