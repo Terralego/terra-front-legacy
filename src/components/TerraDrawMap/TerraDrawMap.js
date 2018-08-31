@@ -51,6 +51,12 @@ class TerraDrawMap extends Component {
       maxZoom: this.props.maxZoom,
       minZoom: this.props.minZoom,
     });
+
+    // if there's already features, fit bounds of these
+    if (this.props.features.length) {
+      const features = getFeatureCollection(this.props.features);
+      this.bounds = bbox(features);
+    }
   }
 
   componentWillUnmount () {
@@ -115,13 +121,11 @@ class TerraDrawMap extends Component {
       center: this.props.center,
       zoom: [this.props.zoom],
       maxBounds: this.props.maxBounds,
+      fitBoundsOptions: { padding: 30, maxZoom: 14 },
     };
 
-    // If map contains features, center on it
-    if (this.props.features.length) {
-      const features = getFeatureCollection(this.props.features);
-      const bounds = bbox(features);
-      mapProps.fitBounds = bounds;
+    if (this.bounds) {
+      mapProps.fitBounds = this.bounds;
     }
 
     const drawProps = {
