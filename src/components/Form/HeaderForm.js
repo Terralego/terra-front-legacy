@@ -12,16 +12,11 @@ import FormConfig from 'components/Form/Form.config';
 import styles from './HeaderForm.module.scss';
 
 class HeaderForm extends React.Component {
-  state = {
-    loadingSaveDraft: false,
-  }
-
   submitForm = () => {
     this.props.submitData(this.props.userrequest);
   }
 
   saveDraft (e) {
-    this.setState({ loadingSaveDraft: true });
     this.props.saveDraft(this.props.userrequest);
     e.preventDefault();
   }
@@ -49,8 +44,7 @@ class HeaderForm extends React.Component {
   }
 
   render () {
-    const { loadingSaveDraft } = this.state;
-    const { form, showSubmit, showDraft } = this.props;
+    const { form, showSubmit, showDraft, userrequest: { isSaving } } = this.props;
 
     return (
       <header className={styles.header}>
@@ -68,7 +62,7 @@ class HeaderForm extends React.Component {
                   type="primary-dark"
                   htmlType="button"
                   onClick={e => this.saveDraft(e)}
-                  loading={loadingSaveDraft}
+                  loading={isSaving}
                   icon="save"
                 >
                   {FormConfig.confirmation.draftButton}
