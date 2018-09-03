@@ -72,9 +72,17 @@ const userrequest = (state = initialState, action) => {
           )),
         },
       };
+    case SAVE_DRAFT_REQUEST:
+      return {
+        ...state,
+        isSaving: true,
+      };
     case SAVE_DRAFT_SUCCESS:
     case DETAIL_SUCCESS:
-      return getDataWithFeatureId(action.data);
+      return {
+        isSaving: false,
+        ...getDataWithFeatureId(action.data),
+      };
     case SUBMIT_SUCCESS:
       return {
         ...state,
