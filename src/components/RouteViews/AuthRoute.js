@@ -4,36 +4,33 @@ import { Redirect } from 'react-router-dom';
 export const AuthRoute = ({
   children,
   isUser,
-  user: { properties } = {},
+  user = {},
   protected: isProtected,
   isAuthenticated,
   location: { pathname },
 }) => {
-  if (isProtected && !isAuthenticated) {
+  const shouldRedirectToLogin = isProtected && !isAuthenticated;
+
+  if (shouldRedirectToLogin) {
     return (
       <Redirect
-        to={{ pathname: '/login',
-          state: {
-            from: pathname,
-          } }}
+        to={{ pathname: '/login', state: { from: pathname } }}
         from={pathname}
       />
     );
   }
 
   // Redirect user if properties are empty.
-  if (isUser && isAuthenticated &&
-      typeof properties === 'object' &&
-      !Object.keys(properties).length &&
-      pathname !== '/create-profile') {
+  const shouldRedirectToProfile = isUser
+    && isAuthenticated
+    && typeof user.properties === 'object'
+    && !Object.keys(user.properties).length
+    && pathname !== '/create-profile';
+
+  if (shouldRedirectToProfile) {
     return (
       <Redirect
-        to={{
-          pathname: '/create-profile',
-          state: {
-            from: pathname,
-          },
-        }}
+        to={{ pathname: '/create-profile', state: { from: pathname } }}
         from={pathname}
       />
     );
