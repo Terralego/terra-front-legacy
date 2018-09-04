@@ -2,13 +2,17 @@ import { actions } from 'react-redux-form';
 
 import { CALL_API } from 'middlewares/api';
 import { defaultHeaders } from 'services/apiService';
-import { getFeaturesWithIncidence, removeRouteInProgressDatas, getRoutedFeatures, deleteFeatureWithRoute } from 'helpers/userrequestHelpers';
+import {
+  getFeaturesWithIncidence,
+  removeRouteInProgressDatas,
+  getRoutedFeatures,
+  deleteFeatureWithRoute,
+} from 'helpers/userrequestHelpers';
 import { getDataWithFeatureId } from 'helpers/mapHelpers';
 import { DETAIL_SUCCESS } from 'modules/userrequestList';
 import initialState from 'modules/userrequest-initial';
 
 // This mocks should be replace when callAPI is ready;
-import routingResponse from './__mocks__/userrequestRoutingResponse.json';
 import getMockResponseWithCallbackId from './__mocks__/userrequestMock';
 
 // Modify userrequest object action types
@@ -281,7 +285,7 @@ export const getRouting = feature => dispatch => {
     type: ROUTING_REQUEST,
   });
 
-  const data = getMockResponseWithCallbackId(routingResponse, feature.id);
+  const data = getMockResponseWithCallbackId(feature.id, feature.geometry.coordinates);
 
   setTimeout(() => {
     dispatch({

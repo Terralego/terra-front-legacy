@@ -5,7 +5,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import settings from 'front-settings';
 
-import { getRouting } from 'modules/userrequest';
 import { updateConfigValue } from 'modules/appConfig';
 import { getFeatureWithProperties, getActivityFeatures } from 'helpers/mapHelpers';
 import { getFeatureById } from 'helpers/userrequestHelpers';
@@ -31,13 +30,11 @@ class FormMap extends Component {
    * @memberof FormMap
    */
   handleUpdateDataDraw = features => {
-    if (features) {
-      features.forEach(feature => {
-        const { activity: { uid } } = this.props;
-        const featureWithProperties = getFeatureWithProperties(feature, uid);
-        this.props.updateFeatures(featureWithProperties);
-      });
-    }
+    features.forEach(feature => {
+      const { activity: { uid } } = this.props;
+      const featureWithProperties = getFeatureWithProperties(feature, uid);
+      this.props.updateFeatures(featureWithProperties);
+    });
   }
 
   /**
@@ -132,7 +129,6 @@ const mapStateToProps = (state, ownProps) => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators({
     updateConfigValue,
-    getRouting,
   }, dispatch);
 
 FormMap.propTypes = {

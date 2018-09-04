@@ -114,10 +114,9 @@ export const getRoutedFeatureProperties = (features, featureId, routedFeature) =
  * @param {object} routedFeature - feature in response of routing request (expect a LineString)
  */
 export const getRoutedFeatures = (stateFeatures, featureId, routedFeature) => {
-  const clearStateFeatures = stateFeatures.filter(feature =>
-    feature.properties.id !== routedFeature.id);
-  return ([
-    ...clearStateFeatures.map(feature => {
+  const getRoutedFeature = getRoutedFeatureProperties(stateFeatures, featureId, routedFeature);
+  const newStateFeatures = [
+    ...stateFeatures.map(feature => {
       if (feature.properties.id === featureId) {
         return {
           ...feature,
@@ -132,11 +131,16 @@ export const getRoutedFeatures = (stateFeatures, featureId, routedFeature) => {
     }),
     {
       ...routedFeature,
-      properties: getRoutedFeatureProperties(clearStateFeatures, featureId, routedFeature),
+      properties: getRoutedFeature,
     },
+  ];
+
+  return ([
+    ...newStateFeatures.filter(p =>
+      p.properties.relatedFeatureId !== getRoutedFeature.relatedFeatureId),
+    newStateFeatures.slice(-1)[0],
   ]);
 };
-
 /**
  * Return features list without requested delete id
  *
