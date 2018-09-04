@@ -14,7 +14,7 @@ export const RouteViews = ({ isAuthenticated, location }) => (
       <Route
         key={route.path}
         {...route}
-        exact={route.exact && (!route.routes || !route.routes.length)}
+        exact={route.exact && !(route.routes && route.routes.length)}
         component={props => (
           <AuthRoute
             {...route}
@@ -22,14 +22,15 @@ export const RouteViews = ({ isAuthenticated, location }) => (
             location={location}
           >
             <Layout {...route.layout}>
-              { route.routes
-              ? <SubRoutes {...{ ...props, ...route }} />
-              : <route.component />}
+              {route.routes
+                ? <SubRoutes {...props} {...route} />
+                : <route.component />}
             </Layout>
           </AuthRoute>
         )}
       />
     ))}
+
     <Layout>
       <Error404 />
     </Layout>
