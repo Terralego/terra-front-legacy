@@ -43,7 +43,10 @@ class Comments extends React.Component {
   render () {
     const { form, userrequestId } = this.props;
     return (
-      <ReduxForm model="userrequestComment">
+      <ReduxForm
+        model="userrequestComment"
+        onSubmit={this.handleSubmit}
+      >
         <div className={styles.commentForm}>
           <CommentRecipients />
           <TextArea
@@ -59,7 +62,6 @@ class Comments extends React.Component {
               icon="arrow-right"
               loading={form.pending}
               disabled={!this.isEnabled()}
-              onClick={this.handleSubmit}
             >
               Envoyer
             </Button>
