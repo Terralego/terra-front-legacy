@@ -203,7 +203,10 @@ class TerraDrawMap extends Component {
             <DrawControl {...drawProps} />
           }
         </Map>
-        <Drawer id="map-drawer">
+        <Drawer
+          id="map-drawer"
+          visible
+        >
           <MapLegend
             title={mapTitleLegend.titleLegend}
             legend={mapLegend}

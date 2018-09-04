@@ -6,8 +6,24 @@ import { Button, Icon } from 'antd';
 import styles from 'components/Drawer/Drawer.module.scss';
 
 class Drawer extends React.Component {
-  state = {
+  static propTypes = {
+    id: PropTypes.string.isRequired,
+    visible: PropTypes.bool,
+  };
+
+  static defaultProps = {
     visible: false,
+  };
+
+  state = {
+    visible: this.props.visible,
+  };
+
+  componentDidUpdate ({ visible: prevVisible }) {
+    const { visible } = this.props;
+    if (visible !== prevVisible) {
+      this.setState({ visible });
+    }
   }
 
   drawerToggle = () => {
@@ -15,12 +31,14 @@ class Drawer extends React.Component {
   }
 
   render () {
+    const { visible } = this.state;
+
     return (
       <div
         className={classnames({
           [styles.drawer]: true,
-          [styles['drawer--expanded']]: this.state.visible,
-          [`drawer__${this.props.id}--expanded`]: this.state.visible,
+          [styles['drawer--expanded']]: visible,
+          [`drawer__${this.props.id}--expanded`]: visible,
         })}
         id={this.props.id}
       >
@@ -28,21 +46,18 @@ class Drawer extends React.Component {
         <Button
           className={classnames({
             [styles.collapseButton]: true,
-            [styles['collapseButton--visible']]: this.state.visible,
+            [styles['collapseButton--visible']]: visible,
           })}
           onClick={this.drawerToggle}
           aria-controls={this.props.id}
-          aria-expanded={this.state.visible}
+          aria-expanded={visible}
         >
+          {visible && 'Replier le panneau'}
           <Icon className={styles.collapseIcon} type="double-right" />
         </Button>
       </div>
     );
   }
 }
-
-Drawer.propTypes = {
-  id: PropTypes.string.isRequired,
-};
 
 export default Drawer;
