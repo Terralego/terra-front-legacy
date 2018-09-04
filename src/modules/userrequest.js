@@ -18,7 +18,6 @@ import getMockResponseWithCallbackId from './__mocks__/userrequestMock';
 // Modify userrequest object action types
 export const UPDATE_DATA_PROPERTIES = 'userrequest/UPDATE_DATA_PROPERTIES';
 export const ADD_GEOJSON_FEATURE = 'userrequest/ADD_GEOJSON_FEATURE';
-export const ADD_LINESTRING_FEATURE = 'ADD_LINESTRING_FEATURE';
 export const DELETE_GEOJSON_FEATURES = 'userrequest/DELETE_GEOJSON_FEATURES';
 
 // Save draft userrequest actions types
@@ -70,19 +69,6 @@ const userrequest = (state = initialState, action) => {
           ...state.geojson,
           features: [
             ...state.geojson.features.filter(feature => (
-              feature.properties.id !== action.feature.properties.id
-            )),
-            action.feature,
-          ],
-        },
-      };
-    case ADD_LINESTRING_FEATURE:
-      return {
-        ...state,
-        tempGeojson: {
-          ...state.tempGeojson,
-          features: [
-            ...state.tempGeojson.features.filter(feature => (
               feature.properties.id !== action.feature.properties.id
             )),
             action.feature,
