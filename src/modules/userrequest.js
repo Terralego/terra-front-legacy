@@ -260,7 +260,7 @@ export const getIntersections = (feature, eventDateStart, eventDateEnd) => ({
 //     config: {
 //       method: 'POST',
 //       body: JSON.stringify({
-//         points: features,
+//         geom: feature,
 //       }),
 //     },
 //   },

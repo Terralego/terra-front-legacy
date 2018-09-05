@@ -182,7 +182,7 @@ export const submitComment = (userrequestId = 0, data = initialState, isInternal
 //     config: {
 //       method: 'POST',
 //       body: JSON.stringify({
-//         points: features,
+//         geom: feature,
 //       }),
 //     },
 //   },
