@@ -8,13 +8,15 @@ import Layout from 'components/Layout/Layout';
 import SubRoutes from './SubRoutes';
 import AuthRoute from './AuthRoute';
 
+const hasSubRoutes = route => route.routes && route.routes.length;
+
 export const RouteViews = ({ isAuthenticated, location }) => (
   <Switch>
     {routes.map(route => (
       <Route
         key={route.path}
         {...route}
-        exact={route.exact && (!route.routes || !route.routes.length)}
+        exact={route.exact && !hasSubRoutes(route)}
         component={props => (
           <AuthRoute
             {...route}
@@ -22,14 +24,15 @@ export const RouteViews = ({ isAuthenticated, location }) => (
             location={location}
           >
             <Layout {...route.layout}>
-              { route.routes
-              ? <SubRoutes {...{ ...props, ...route }} />
-              : <route.component />}
+              {hasSubRoutes(route)
+                ? <SubRoutes {...props} {...route} />
+                : <route.component />}
             </Layout>
           </AuthRoute>
         )}
       />
     ))}
+
     <Layout>
       <Error404 />
     </Layout>
