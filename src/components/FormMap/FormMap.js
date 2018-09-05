@@ -47,21 +47,18 @@ class FormMap extends Component {
    * @memberof FormMap
    */
   handleDeleteDataDraw = features => {
-    const featuresId = [];
-    let relatedFeature;
-    features.forEach(feature => {
-      if (feature.properties.relatedFeatureId) {
-        relatedFeature = getFeatureById(this.props.features, feature.properties.relatedFeatureId);
-      }
-      featuresId.push(feature.id);
-    });
+    const { relatedFeature, featuresId } = features.reduce((acc, feature) => ({
+      relatedFeature: feature.properties.relatedFeatureId
+        ? getFeatureById(this.props.features, feature.properties.relatedFeatureId)
+        : acc.relatedFeatures,
+      featuresId: [...acc.featuresId, feature.id],
+    }), { relatedFeature: null, featuresId: [] });
+
     this.props.deleteFeaturesById(featuresId);
     if (relatedFeature) {
       this.mapContainer.deleteFeatureById(relatedFeature.properties.id);
     }
-    this.setState({
-      selectedFeaturesId: [],
-    });
+    this.setState({ selectedFeaturesId: [] });
   }
 
   /**

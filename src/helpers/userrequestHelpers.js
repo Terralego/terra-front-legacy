@@ -114,30 +114,35 @@ export const getRoutedFeatureProperties = (features, featureId, routedFeature) =
  * @param {object} routedFeature - feature in response of routing request (expect a LineString)
  */
 export const getRoutedFeatures = (stateFeatures, featureId, routedFeature) => {
-  const getRoutedFeature = getRoutedFeatureProperties(stateFeatures, featureId, routedFeature);
-  const newStateFeatures = [
-    ...stateFeatures.map(feature => {
-      if (feature.properties.id === featureId) {
-        return {
-          ...feature,
-          properties: {
-            ...feature.properties,
-            relatedFeatureId: routedFeature.id,
-          },
-        };
-      }
+  const routedFeatureWithProperties =
+    getRoutedFeatureProperties(stateFeatures, featureId, routedFeature);
 
-      return feature;
-    }),
+  const setRelatedFeatureId = feature => {
+    if (feature.properties.id === featureId) {
+      return {
+        ...feature,
+        properties: {
+          ...feature.properties,
+          relatedFeatureId: routedFeatureWithProperties.id,
+        },
+      };
+    }
+
+    return feature;
+  };
+  const newStateFeatures = [
+    ...stateFeatures.map(setRelatedFeatureId),
     {
       ...routedFeature,
-      properties: getRoutedFeature,
+      properties: routedFeatureWithProperties,
     },
   ];
 
+  const hasNoRoutedFeature = p =>
+    p.properties.relatedFeatureId !== routedFeatureWithProperties.relatedFeatureId;
+
   return ([
-    ...newStateFeatures.filter(p =>
-      p.properties.relatedFeatureId !== getRoutedFeature.relatedFeatureId),
+    ...newStateFeatures.filter(hasNoRoutedFeature),
     newStateFeatures.slice(-1)[0],
   ]);
 };
