@@ -1,6 +1,8 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 
+import withAuthentication from 'hoc/authentication';
+
 export const AuthRoute = ({
   children,
   isUser,
@@ -39,4 +41,4 @@ export const AuthRoute = ({
   return children;
 };
 
-export default AuthRoute;
+export default withAuthentication(AuthRoute);

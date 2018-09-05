@@ -36,7 +36,7 @@ const profile = (state = initialState, action) => {
       return {
         ...state,
         properties: Object.keys(action.payload).length !== 0
-          ? { ...initialState.properties, ...action.payload.user.properties }
+          ? state.properties
           : initialState.properties,
       };
     default:
