@@ -218,8 +218,8 @@ export const getIntersections = (feature, eventDateStart, eventDateEnd) => ({
       method: 'POST',
       body: JSON.stringify({
         callbackid: feature.id,
-        from: eventDateStart,
-        to: eventDateEnd,
+        from: eventDateStart && eventDateStart.format('YYYY-MM-DD'),
+        to: eventDateEnd && eventDateEnd.format('YYYY-MM-DD'),
         geom: JSON.stringify(feature.geometry),
       }),
     },
