@@ -168,7 +168,7 @@ class UserrequestList extends React.Component {
               onClick={this.handleCancel}
               disabled={!hasSelected}
             >
-              <Icon type="minus-circle-o" className={styles.actions__iconCancel} />
+              <Icon type="stop" />
               Annuler {selectedRowKeys.length} {selectedRowKeys.length > 1 ? 'déclarations sélectionnées' : 'déclaration sélectionnée'}
             </Button>
           </div>
