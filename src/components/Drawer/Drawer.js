@@ -15,23 +15,8 @@ class Drawer extends React.Component {
     visible: false,
   };
 
-  state = {
-    visible: this.props.visible,
-  };
-
-  componentDidUpdate ({ visible: prevVisible }) {
-    const { visible } = this.props;
-    if (visible !== prevVisible) {
-      this.setState({ visible });
-    }
-  }
-
-  drawerToggle = () => {
-    this.setState({ visible: !this.state.visible });
-  }
-
   render () {
-    const { visible } = this.state;
+    const { visible } = this.props;
 
     return (
       <div
@@ -48,7 +33,7 @@ class Drawer extends React.Component {
             [styles.collapseButton]: true,
             [styles['collapseButton--visible']]: visible,
           })}
-          onClick={this.drawerToggle}
+          onClick={this.props.handleVisibilityToggle}
           aria-controls={this.props.id}
           aria-expanded={visible}
         >
