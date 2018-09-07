@@ -22,6 +22,10 @@
   height: 45px;
   left: 0px;
   bottom: 0px;
+
+  &--visible {
+    width: 100%;
+  }
 }
 
 .collapseIcon {

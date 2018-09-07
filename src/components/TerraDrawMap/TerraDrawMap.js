@@ -57,6 +57,10 @@ class TerraDrawMap extends Component {
       const features = getFeatureCollection(this.props.features);
       this.bounds = bbox(features);
     }
+
+    this.state = {
+      drawerVisibility: true,
+    };
   }
 
   componentWillUnmount () {
@@ -110,6 +114,9 @@ class TerraDrawMap extends Component {
       });
     }
   }
+
+  toggleDrawerVisibility = () =>
+    this.setState({ drawerVisibility: !this.state.drawerVisibility });
 
   render () {
     const mapProps = {
@@ -203,7 +210,11 @@ class TerraDrawMap extends Component {
             <DrawControl {...drawProps} />
           }
         </Map>
-        <Drawer id="map-drawer">
+        <Drawer
+          id="map-drawer"
+          visible={this.state.drawerVisibility}
+          handleVisibilityToggle={this.toggleDrawerVisibility}
+        >
           <MapLegend
             title={mapTitleLegend.titleLegend}
             legend={mapLegend}
