@@ -5,59 +5,40 @@ import { Button, Icon } from 'antd';
 
 import styles from 'components/Drawer/Drawer.module.scss';
 
-class Drawer extends React.Component {
-  static propTypes = {
-    id: PropTypes.string.isRequired,
-    visible: PropTypes.bool,
-  };
-
-  static defaultProps = {
-    visible: false,
-  };
-
-  state = {
-    visible: this.props.visible,
-  };
-
-  componentDidUpdate ({ visible: prevVisible }) {
-    const { visible } = this.props;
-    if (visible !== prevVisible) {
-      this.setState({ visible });
-    }
-  }
-
-  drawerToggle = () => {
-    this.setState({ visible: !this.state.visible });
-  }
-
-  render () {
-    const { visible } = this.state;
-
-    return (
-      <div
+const Drawer = ({ visible, id, children, handleVisibilityToggle }) => (
+  <div
+    className={classnames({
+      [styles.drawer]: true,
+      [styles['drawer--expanded']]: visible,
+      [`drawer__${id}--expanded`]: visible,
+    })}
+    id={id}
+  >
+    {children}
+    {handleVisibilityToggle &&
+      <Button
         className={classnames({
-          [styles.drawer]: true,
-          [styles['drawer--expanded']]: visible,
-          [`drawer__${this.props.id}--expanded`]: visible,
+          [styles.collapseButton]: true,
+          [styles['collapseButton--visible']]: visible,
         })}
-        id={this.props.id}
+        onClick={handleVisibilityToggle}
+        aria-controls={id}
+        aria-expanded={visible}
       >
-        {this.props.children}
-        <Button
-          className={classnames({
-            [styles.collapseButton]: true,
-            [styles['collapseButton--visible']]: visible,
-          })}
-          onClick={this.drawerToggle}
-          aria-controls={this.props.id}
-          aria-expanded={visible}
-        >
-          {visible && 'Replier le panneau'}
-          <Icon className={styles.collapseIcon} type="double-right" />
-        </Button>
-      </div>
-    );
-  }
-}
+        {visible && 'Replier le panneau'}
+        <Icon className={styles.collapseIcon} type="double-right" />
+      </Button>}
+  </div>
+);
+
+Drawer.propTypes = {
+  id: PropTypes.string.isRequired,
+  visible: PropTypes.bool,
+  handleVisibilityToggle: PropTypes.func,
+};
+
+Drawer.defaultProps = {
+  visible: true,
+};
 
 export default Drawer;
