@@ -38,7 +38,7 @@ Drawer.propTypes = {
 };
 
 Drawer.defaultProps = {
-  visible: false,
+  visible: true,
 };
 
 export default Drawer;
