@@ -76,7 +76,13 @@ class FormMap extends Component {
   }
 
   render () {
-    const { features, editable, activity, withIncidence } = this.props;
+    const {
+      features,
+      editable, activity,
+      withIncidence,
+      activityFilters,
+      FiltersValue,
+    } = this.props;
     const activityFeatures = getActivityFeatures(features, activity.uid);
     const featureList = activityFeatures.filter(feature => !feature.properties.routeInProgress);
 
@@ -88,6 +94,8 @@ class FormMap extends Component {
             features={activityFeatures}
             config={TerraDrawMapConfig}
             minZoom={8}
+            FiltersValue={FiltersValue}
+            activityFilters={activityFilters}
             maxZoom={21}
             zoom={13}
             center={[2.62322, 48.40813]}
