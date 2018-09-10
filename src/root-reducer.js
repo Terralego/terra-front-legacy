@@ -11,7 +11,7 @@ import error from 'modules/error';
 import account from 'modules/account';
 import { createForms } from 'react-redux-form';
 
-export default combineReducers({
+export const reducers = {
   ...createForms({
     userrequest,
     userrequestComment,
@@ -31,4 +31,6 @@ export default combineReducers({
   pagination: combineReducers({
     userrequestList: userrequestPaginator.reducer,
   }),
-});
+};
+
+export default combineReducers(reducers);
