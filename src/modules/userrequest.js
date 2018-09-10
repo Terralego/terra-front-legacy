@@ -266,21 +266,6 @@ export const getRouting = feature => ({
   },
 });
 
-// export const getRouting = feature => dispatch => {
-//   dispatch({
-//     type: ROUTING_REQUEST,
-//   });
-
-//   const data = getMockResponseWithCallbackId(feature.id, feature.geometry.coordinates);
-
-//   setTimeout(() => {
-//     dispatch({
-//       type: ROUTING_SUCCESS,
-//       data,
-//     }, 2000);
-//   });
-// };
-
 export const readUserrequest = id => ({
   [CALL_API]: {
     endpoint: `/userrequest/${id}/read/`,

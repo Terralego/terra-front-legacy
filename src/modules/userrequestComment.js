@@ -188,21 +188,6 @@ export const getRouting = feature => ({
   },
 });
 
-// export const getRouting = feature => dispatch => {
-//   dispatch({
-//     type: ROUTING_REQUEST,
-//   });
-
-//   const data = getMockResponseWithCallbackId(feature.id, feature.geometry.coordinates);
-
-//   setTimeout(() => {
-//     dispatch({
-//       type: ROUTING_SUCCESS,
-//       data,
-//     }, 2000);
-//   });
-// };
-
 /**
  * userrequest action
  * deleteFeaturesById delete given features
