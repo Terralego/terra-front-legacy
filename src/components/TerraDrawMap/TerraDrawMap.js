@@ -41,15 +41,14 @@ const getFeatureCollection = features => featureCollection(features.map(feature 
 class TerraDrawMap extends Component {
   constructor (props) {
     super(props);
-    this.Map = ReactMapboxGl({
-      accessToken: this.props.mapboxAccessToken,
-      maxZoom: this.props.maxZoom,
-      minZoom: this.props.minZoom,
-    });
+
+    const { mapboxAccessToken: accessToken, maxZoom, minZoom } = props;
+
+    this.Map = ReactMapboxGl({ accessToken, maxZoom, minZoom });
 
     // if there's already features, fit bounds of these
-    if (this.props.features.length) {
-      const features = getFeatureCollection(this.props.features);
+    if (props.features.length) {
+      const features = getFeatureCollection(props.features);
       this.bounds = bbox(features);
     }
 
