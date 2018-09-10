@@ -100,7 +100,7 @@ class TerraDrawMap extends Component {
 
     sources.forEach(source => {
       source.layers.forEach(layer => {
-        if (layer.id !== FiltersValue.OFF_PATHS && layer.id !== FiltersValue.PATHS) {
+        if (!Object.values(FiltersValue).includes(layer.id)) {
           this.setLayerVisibility(layer.id, 'none');
         }
       });
@@ -172,7 +172,9 @@ class TerraDrawMap extends Component {
     };
 
     const { Map } = this;
-    this.setDefaultFilters(this.props.activityFilters);
+    if (this.props.editable) {
+      this.setDefaultFilters(this.props.activityFilters);
+    }
 
     return (
       <div style={{ width: '100%', height: '100%', position: 'relative', overflow: 'hidden' }}>
@@ -270,6 +272,7 @@ class TerraDrawMap extends Component {
 
 TerraDrawMap.propTypes = {
   mapboxAccessToken: PropTypes.string.isRequired,
+  FiltersValue: PropTypes.objectOf(PropTypes.string),
   zoom: PropTypes.number,
   center: PropTypes.arrayOf(PropTypes.number),
   onUpdateDataDraw: PropTypes.func,
@@ -295,6 +298,10 @@ TerraDrawMap.propTypes = {
 };
 
 TerraDrawMap.defaultProps = {
+  FiltersValue: {
+    OFF_PATHS: 'hors_chemins',
+    PATHS: 'chemins',
+  },
   zoom: 11,
   center: [2.62322, 48.40813],
   onUpdateDataDraw: e => e,
