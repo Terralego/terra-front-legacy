@@ -40,13 +40,20 @@ describe('userrequest reducer', () => {
   });
 });
 
+const data = {
+  geojson: {
+    features: [],
+  },
+  state: 200,
+};
+
 describe('userrequest async action', () => {
   it('should SUBMIT_REQUEST, then if success SUBMIT_SUCCESS', () => {
     const store = mockStore(initialState);
 
-    FetchMock.post('*', { id: 'Hello' });
+    FetchMock.post('*', data);
 
-    return store.dispatch(submitData('Hello'))
+    return store.dispatch(submitData(data))
       .then(() => {
         const actions = store.getActions();
         expect(actions).toContainEqual({
@@ -55,7 +62,7 @@ describe('userrequest async action', () => {
         });
         expect(actions).toContainEqual({
           type: SUBMIT_SUCCESS,
-          data: { id: 'Hello' },
+          data,
           endpoint: '/userrequest/',
         });
       });
@@ -66,7 +73,7 @@ describe('userrequest async action', () => {
 
     FetchMock.post('*', 400, { overwriteRoutes: true });
 
-    return store.dispatch(submitData('Bonjour', null))
+    return store.dispatch(submitData(data, null))
       .then(() => {
         const actions = store.getActions();
         expect(actions).toEqual([

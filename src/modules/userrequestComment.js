@@ -1,6 +1,12 @@
 import { CALL_API } from 'middlewares/api';
 import { defaultHeaders } from 'services/apiService';
-import { getFeaturesWithIncidence } from 'helpers/userrequestHelpers';
+import {
+  getFeaturesWithIncidence,
+  removeRouteInProgressDatas,
+  getRoutedFeatures,
+  deleteFeatureWithRoute,
+  guid,
+} from 'helpers/userrequestHelpers';
 
 export const SUBMIT_REQUEST = 'userrequestComment/SUBMIT_REQUEST';
 export const SUBMIT_SUCCESS = 'userrequestComment/SUBMIT_SUCCESS';
@@ -17,7 +23,12 @@ export const INTERSECT_REQUEST = 'userrequestComment/INTERSECT_REQUEST';
 export const INTERSECT_SUCCESS = 'userrequestComment/INTERSECT_SUCCESS';
 export const INTERSECT_FAILURE = 'userrequestComment/INTERSECT_FAILURE';
 
+export const ROUTING_REQUEST = 'userrequestComment/ROUTING_REQUEST';
+export const ROUTING_SUCCESS = 'userrequestComment/ROUTING_SUCCESS';
+export const ROUTING_FAILURE = 'userrequestComment/ROUTING_FAILURE';
+
 export const UPDATE_TEMP_FEATURES = 'userrequestComment/UPDATE_TEMP_FEATURES';
+export const DELETE_GEOJSON_TEMPFEATURES = 'userrequestComment/DELETE_GEOJSON_TEMPFEATURES';
 
 export const initialState = {
   geojson: {
@@ -89,12 +100,25 @@ const userrequestComment = (state = initialState, action) => {
         intersections: action.data,
         tempFeatures: getFeaturesWithIncidence(action.data, state.tempFeatures),
       };
-    case UPDATE_TEMP_FEATURES: {
+    case UPDATE_TEMP_FEATURES:
       return {
         ...state,
         tempFeatures: action.features,
       };
-    }
+    case DELETE_GEOJSON_TEMPFEATURES:
+      return {
+        ...state,
+        tempFeatures: deleteFeatureWithRoute(state.tempFeatures, action.featuresId),
+      };
+    case ROUTING_SUCCESS:
+      return {
+        ...state,
+        tempFeatures: getRoutedFeatures(
+          state.tempFeatures,
+          action.data.request.callbackid,
+          { geometry: JSON.parse(action.data.geom), type: 'Feature', id: guid() },
+        ),
+      };
     default:
       return state;
   }
@@ -119,16 +143,17 @@ export default userrequestComment;
  * @param {string} new comment text
  */
 export const submitComment = (userrequestId = 0, data = initialState, isInternal = false) => {
+  const sendData = removeRouteInProgressDatas(data);
   const body = new FormData();
-  body.append('properties', JSON.stringify(data.properties));
+  body.append('properties', JSON.stringify(sendData.properties));
   body.append('is_internal', isInternal);
 
-  if (data.geojson.features.length) {
-    body.append('geojson', JSON.stringify(data.geojson));
+  if (sendData.geojson.features.length) {
+    body.append('geojson', JSON.stringify(sendData.geojson));
   }
 
-  if (data.attachment) {
-    body.append('attachment', data.attachment);
+  if (sendData.attachment) {
+    body.append('attachment', sendData.attachment);
   }
 
   return ({
@@ -143,6 +168,35 @@ export const submitComment = (userrequestId = 0, data = initialState, isInternal
     },
   });
 };
+
+/**
+ * Post feature object
+ * @param  {object} feature : feature sent to the server
+ */
+export const getRouting = feature => ({
+  [CALL_API]: {
+    endpoint: '/layer/1/route/',
+    types: [ROUTING_REQUEST, ROUTING_SUCCESS, ROUTING_FAILURE],
+    config: {
+      headers: defaultHeaders,
+      method: 'POST',
+      body: JSON.stringify({
+        callbackid: feature.id,
+        geom: JSON.stringify(feature.geometry),
+      }),
+    },
+  },
+});
+
+/**
+ * userrequest action
+ * deleteFeaturesById delete given features
+ * @param  {array} features : array of features id (string) to delete from geojson
+ */
+export const deleteCommentFeaturesById = featuresId => ({
+  type: DELETE_GEOJSON_TEMPFEATURES,
+  featuresId,
+});
 
 /**
  * userrequestComment action

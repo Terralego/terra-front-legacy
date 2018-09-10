@@ -7,6 +7,7 @@ import settings from 'front-settings';
 
 import { updateConfigValue } from 'modules/appConfig';
 import { getFeatureWithProperties, getActivityFeatures } from 'helpers/mapHelpers';
+import { getFeatureById } from 'helpers/userrequestHelpers';
 import FeaturesList from 'components/FormMap/FeatureList';
 import TerraDrawMap from 'components/TerraDrawMap/TerraDrawMap';
 import { TerraDrawMapConfig, mapTitleLegend } from 'components/FormMap/FormMap.config';
@@ -37,21 +38,35 @@ class FormMap extends Component {
   }
 
   /**
-   * handleDeleteDataDraw:
+   * Handle on delete feature(s) on map
    * - delete feature from TerraDrawMap
    * - call props function onDeleteDataDraw
    * - Filter selectedFeaturesId from state to remove deleted features
-   * @param {array} features
+   * @param {array} features array of features deleted by TerraDrawMap
    *
    * @memberof FormMap
    */
   handleDeleteDataDraw = features => {
-    this.props.deleteFeaturesById(features.map(feature => feature.id));
-    this.setState({
-      selectedFeaturesId: [],
-    });
+    const { relatedFeature, featuresId } = features.reduce((acc, feature) => ({
+      relatedFeature: feature.properties.relatedFeatureId
+        ? getFeatureById(this.props.features, feature.properties.relatedFeatureId)
+        : acc.relatedFeatures,
+      featuresId: [...acc.featuresId, feature.id],
+    }), { relatedFeature: null, featuresId: [] });
+
+    this.props.deleteFeaturesById(featuresId);
+    if (relatedFeature) {
+      this.mapContainer.deleteFeatureById(relatedFeature.properties.id);
+    }
+    this.setState({ selectedFeaturesId: [] });
   }
 
+  /**
+   * Handle on click on feature list item
+   * @param {string} featureId
+   *
+   * @memberof FormMap
+   */
   deleteDrawData = id => {
     this.props.deleteFeaturesById([id]);
     this.mapContainer.deleteFeatureById(id);
@@ -63,6 +78,7 @@ class FormMap extends Component {
   render () {
     const { features, editable, activity, withIncidence } = this.props;
     const activityFeatures = getActivityFeatures(features, activity.uid);
+    const featureList = activityFeatures.filter(feature => !feature.properties.routeInProgress);
 
     return (
       <Row gutter={24} style={{ paddingBottom: 24 }}>
@@ -89,7 +105,7 @@ class FormMap extends Component {
         <Col span={24} lg={24}>
           <Card title={mapTitleLegend.title}>
             <FeaturesList
-              features={activityFeatures}
+              features={featureList}
               selectedFeaturesId={this.state.selectedFeaturesId}
               deleteFeatureById={this.deleteDrawData}
               editable={editable}

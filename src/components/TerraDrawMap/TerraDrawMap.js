@@ -37,11 +37,6 @@ const getFeatureCollection = features => featureCollection(features.map(feature 
  * @param {object} map: map object
  * @param {Event} e: click event
  */
-// const handleClick = (map, e) => {
-//   const featureBbox = [[e.point.x - 5, e.point.y - 5], [e.point.x + 5, e.point.y + 5]];
-//   const features = map.queryRenderedFeatures(featureBbox, { layers: ['hors_chemins'] });
-//   console.log(features);
-// };
 
 class TerraDrawMap extends Component {
   constructor (props) {
@@ -61,6 +56,10 @@ class TerraDrawMap extends Component {
     this.state = {
       drawerVisibility: true,
     };
+  }
+
+  componentDidUpdate () {
+    this.resetDrawMap();
   }
 
   componentWillUnmount () {
@@ -108,9 +107,12 @@ class TerraDrawMap extends Component {
 
   resetDrawMap () {
     if (this.drawControl) {
+      const editableFeatures = this.props.features.filter(feature =>
+        feature.geometry.type !== 'LineString' || feature.properties.routeInProgress);
+      // this.drawControl.draw.deleteAll();
       this.drawControl.draw.set({
         type: 'FeatureCollection',
-        features: this.props.features,
+        features: editableFeatures,
       });
     }
   }
@@ -177,6 +179,7 @@ class TerraDrawMap extends Component {
             </React.Fragment>
           ))}
 
+          {/* Draw features */}
           {!this.props.editable &&
             <React.Fragment>
               <GeoJSONLayer
@@ -204,6 +207,22 @@ class TerraDrawMap extends Component {
                 }}
               />
             </React.Fragment>
+          }
+
+
+          {/* Routing features */}
+          {this.props.editable &&
+            <GeoJSONLayer
+              data={{ type: 'FeatureCollection', features: this.props.features }}
+              linePaint={this.props.config.geojsonPaint.routedLinePaint}
+              layerOptions={{
+                filter: [
+                  'all',
+                  ['==', '$type', 'LineString'],
+                  ['==', 'routeInProgress', false],
+                ],
+              }}
+            />
           }
 
           {this.props.editable &&

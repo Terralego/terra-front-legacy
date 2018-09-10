@@ -2,7 +2,13 @@ import { actions } from 'react-redux-form';
 
 import { CALL_API } from 'middlewares/api';
 import { defaultHeaders } from 'services/apiService';
-import { getFeaturesWithIncidence } from 'helpers/userrequestHelpers';
+import {
+  getFeaturesWithIncidence,
+  removeRouteInProgressDatas,
+  getRoutedFeatures,
+  deleteFeatureWithRoute,
+  guid,
+} from 'helpers/userrequestHelpers';
 import { getDataWithFeatureId } from 'helpers/mapHelpers';
 import { DETAIL_SUCCESS } from 'modules/userrequestList';
 import initialState from 'modules/userrequest-initial';
@@ -34,6 +40,11 @@ export const RESET_FORM = 'userrequest/RESET_FORM';
 export const READ_REQUEST = 'userrequest/READ_REQUEST';
 export const READ_SUCCESS = 'userrequest/READ_SUCCESS';
 export const READ_FAILURE = 'userrequest/READ_FAILURE';
+
+// Get routes actions types
+export const ROUTING_REQUEST = 'userrequest/ROUTING_REQUEST';
+export const ROUTING_SUCCESS = 'userrequest/ROUTING_SUCCESS';
+export const ROUTING_FAILURE = 'userrequest/ROUTING_FAILURE';
 
 /**
  * REDUCER
@@ -67,9 +78,7 @@ const userrequest = (state = initialState, action) => {
         ...state,
         geojson: {
           ...state.geojson,
-          features: state.geojson.features.filter(feature => (
-            action.featuresId.indexOf(feature.properties.id) === -1
-          )),
+          features: deleteFeatureWithRoute(state.geojson.features, action.featuresId),
         },
       };
     case SAVE_DRAFT_REQUEST:
@@ -96,6 +105,18 @@ const userrequest = (state = initialState, action) => {
         geojson: {
           ...state.geojson,
           features: getFeaturesWithIncidence(action.data, state.geojson.features),
+        },
+      };
+    case ROUTING_SUCCESS:
+      return {
+        ...state,
+        geojson: {
+          ...state.geojson,
+          features: getRoutedFeatures(
+            state.geojson.features,
+            action.data.request.callbackid,
+            { geometry: JSON.parse(action.data.geom), type: 'Feature', id: guid() },
+          ),
         },
       };
     default:
@@ -176,7 +197,7 @@ export const submitData = (data, form = 'userrequest') => ({
       headers: defaultHeaders,
       method: data.id ? 'PUT' : 'POST',
       body: JSON.stringify({
-        ...data,
+        ...removeRouteInProgressDatas(data),
         state: 200, // SUBMITTED
       }),
     },
@@ -218,8 +239,27 @@ export const getIntersections = (feature, eventDateStart, eventDateEnd) => ({
       method: 'POST',
       body: JSON.stringify({
         callbackid: feature.id,
-        from: eventDateStart && eventDateStart.format('YYYY-MM-DD'),
-        to: eventDateEnd && eventDateEnd.format('YYYY-MM-DD'),
+        from: eventDateStart,
+        to: eventDateEnd,
+        geom: JSON.stringify(feature.geometry),
+      }),
+    },
+  },
+});
+
+/**
+ * Post feature object
+ * @param  {object} feature : feature sent to the server
+ */
+export const getRouting = feature => ({
+  [CALL_API]: {
+    endpoint: '/layer/1/route/',
+    types: [ROUTING_REQUEST, ROUTING_SUCCESS, ROUTING_FAILURE],
+    config: {
+      headers: defaultHeaders,
+      method: 'POST',
+      body: JSON.stringify({
+        callbackid: feature.id,
         geom: JSON.stringify(feature.geometry),
       }),
     },

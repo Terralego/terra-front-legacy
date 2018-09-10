@@ -3,6 +3,7 @@ import {
   SUBMIT_FAILURE,
   INTERSECT_FAILURE,
   READ_FAILURE,
+  ROUTING_FAILURE,
 } from 'modules/userrequest';
 import {
   DETAIL_FAILURE,
@@ -29,6 +30,7 @@ const errors = (state = initialState, action) => {
     case CONFIG_FAILURE:
     case READ_FAILURE:
     case AUTHENTICATION_FAILURE:
+    case ROUTING_FAILURE:
       return action.error;
     default:
       return state;
