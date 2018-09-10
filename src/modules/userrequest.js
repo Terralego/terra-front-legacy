@@ -7,6 +7,7 @@ import {
   removeRouteInProgressDatas,
   getRoutedFeatures,
   deleteFeatureWithRoute,
+  guid,
 } from 'helpers/userrequestHelpers';
 import { getDataWithFeatureId } from 'helpers/mapHelpers';
 import { DETAIL_SUCCESS } from 'modules/userrequestList';
@@ -114,7 +115,7 @@ const userrequest = (state = initialState, action) => {
           features: getRoutedFeatures(
             state.geojson.features,
             action.data.request.callbackid,
-            { geometry: JSON.parse(action.data.geom), type: 'Feature' },
+            { geometry: JSON.parse(action.data.geom), type: 'Feature', id: guid() },
           ),
         },
       };

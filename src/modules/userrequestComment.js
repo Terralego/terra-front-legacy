@@ -5,6 +5,7 @@ import {
   removeRouteInProgressDatas,
   getRoutedFeatures,
   deleteFeatureWithRoute,
+  guid,
 } from 'helpers/userrequestHelpers';
 
 export const SUBMIT_REQUEST = 'userrequestComment/SUBMIT_REQUEST';
@@ -115,7 +116,7 @@ const userrequestComment = (state = initialState, action) => {
         tempFeatures: getRoutedFeatures(
           state.tempFeatures,
           action.data.request.callbackid,
-          { geometry: JSON.parse(action.data.geom), type: 'Feature' },
+          { geometry: JSON.parse(action.data.geom), type: 'Feature', id: guid() },
         ),
       };
     default:
