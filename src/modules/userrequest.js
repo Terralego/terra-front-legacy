@@ -12,9 +12,6 @@ import { getDataWithFeatureId } from 'helpers/mapHelpers';
 import { DETAIL_SUCCESS } from 'modules/userrequestList';
 import initialState from 'modules/userrequest-initial';
 
-// This mocks should be replace when callAPI is ready;
-import getMockResponseWithCallbackId from './__mocks__/userrequestMock';
-
 // Modify userrequest object action types
 export const UPDATE_DATA_PROPERTIES = 'userrequest/UPDATE_DATA_PROPERTIES';
 export const ADD_GEOJSON_FEATURE = 'userrequest/ADD_GEOJSON_FEATURE';
@@ -44,9 +41,9 @@ export const READ_SUCCESS = 'userrequest/READ_SUCCESS';
 export const READ_FAILURE = 'userrequest/READ_FAILURE';
 
 // Get routes actions types
-export const ROUTING_REQUEST = 'ROUTING_REQUEST';
-export const ROUTING_SUCCESS = 'ROUTING_SUCCESS';
-export const ROUTING_FAILURE = 'ROUTING_FAILURE';
+export const ROUTING_REQUEST = 'userrequest/ROUTING_REQUEST';
+export const ROUTING_SUCCESS = 'userrequest/ROUTING_SUCCESS';
+export const ROUTING_FAILURE = 'userrequest/ROUTING_FAILURE';
 
 /**
  * REDUCER
@@ -117,7 +114,7 @@ const userrequest = (state = initialState, action) => {
           features: getRoutedFeatures(
             state.geojson.features,
             action.data.request.callbackid,
-            action.data.results.features[0],
+            { geometry: JSON.parse(action.data.geom), type: 'Feature' },
           ),
         },
       };
@@ -241,8 +238,8 @@ export const getIntersections = (feature, eventDateStart, eventDateEnd) => ({
       method: 'POST',
       body: JSON.stringify({
         callbackid: feature.id,
-        from: eventDateStart && eventDateStart.format('YYYY-MM-DD'),
-        to: eventDateEnd && eventDateEnd.format('YYYY-MM-DD'),
+        from: eventDateStart,
+        to: eventDateEnd,
         geom: JSON.stringify(feature.geometry),
       }),
     },
@@ -253,33 +250,35 @@ export const getIntersections = (feature, eventDateStart, eventDateEnd) => ({
  * Post feature object
  * @param  {object} feature : feature sent to the server
  */
-// export const getRouting = feature => ({
-//   [CALL_API]: {
-//     endpoint: `/api/layer/(group_du_layer|pk)/route/`,
-//     types: [ROUTING_REQUEST, ROUTING_SUCCESS, ROUTING_FAILURE],
-//     config: {
-//       method: 'POST',
-//       body: JSON.stringify({
-//         geom: feature,
-//       }),
-//     },
-//   },
-// });
+export const getRouting = feature => ({
+  [CALL_API]: {
+    endpoint: '/layer/1/route/',
+    types: [ROUTING_REQUEST, ROUTING_SUCCESS, ROUTING_FAILURE],
+    config: {
+      headers: defaultHeaders,
+      method: 'POST',
+      body: JSON.stringify({
+        callbackid: feature.id,
+        geom: JSON.stringify(feature.geometry),
+      }),
+    },
+  },
+});
 
-export const getRouting = feature => dispatch => {
-  dispatch({
-    type: ROUTING_REQUEST,
-  });
+// export const getRouting = feature => dispatch => {
+//   dispatch({
+//     type: ROUTING_REQUEST,
+//   });
 
-  const data = getMockResponseWithCallbackId(feature.id, feature.geometry.coordinates);
+//   const data = getMockResponseWithCallbackId(feature.id, feature.geometry.coordinates);
 
-  setTimeout(() => {
-    dispatch({
-      type: ROUTING_SUCCESS,
-      data,
-    }, 2000);
-  });
-};
+//   setTimeout(() => {
+//     dispatch({
+//       type: ROUTING_SUCCESS,
+//       data,
+//     }, 2000);
+//   });
+// };
 
 export const readUserrequest = id => ({
   [CALL_API]: {
