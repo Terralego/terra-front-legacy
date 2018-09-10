@@ -30,14 +30,6 @@ const getFeatureCollection = features => featureCollection(features.map(feature 
   return polygon(feature.geometry.coordinates);
 }));
 
-/**
- * To help development, this function logs clicked features data
- * from vector source layers
- * it needs to be called on map onClick props
- * @param {object} map: map object
- * @param {Event} e: click event
- */
-
 class TerraDrawMap extends Component {
   constructor (props) {
     super(props);
