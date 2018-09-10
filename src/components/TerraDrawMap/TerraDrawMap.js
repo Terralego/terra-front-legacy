@@ -171,14 +171,22 @@ class TerraDrawMap extends Component {
     };
 
     const { Map } = this;
-    if (this.props.editable) {
-      this.setDefaultFilters(this.props.activityFilters);
+    const {
+      activityFilters,
+      config,
+      editable,
+      features,
+      filters,
+    } = this.props;
+
+    if (editable) {
+      this.setDefaultFilters(activityFilters);
     }
 
     return (
       <div style={{ width: '100%', height: '100%', position: 'relative', overflow: 'hidden' }}>
         <Map {...mapProps} onStyleLoad={this.mapDidLoad}>
-          {this.props.config.sources.map(source => (
+          {config.sources.map(source => (
             <React.Fragment key={source.id}>
               <Source id={source.id} tileJsonSource={source.options} />
               {source.layers.map(layer => (
@@ -197,28 +205,28 @@ class TerraDrawMap extends Component {
           ))}
 
           {/* Draw features */}
-          {!this.props.editable &&
+          {!editable &&
             <React.Fragment>
               <GeoJSONLayer
-                data={{ type: 'FeatureCollection', features: this.props.features }}
-                fillPaint={this.props.config.geojsonPaint.fillPaint}
-                linePaint={this.props.config.geojsonPaint.linePaint}
+                data={{ type: 'FeatureCollection', features }}
+                fillPaint={config.geojsonPaint.fillPaint}
+                linePaint={config.geojsonPaint.linePaint}
                 layerOptions={{
                   filter: ['==', '$type', 'Polygon'],
                 }}
               />
 
               <GeoJSONLayer
-                data={{ type: 'FeatureCollection', features: this.props.features }}
-                circlePaint={this.props.config.geojsonPaint.circlePaint}
+                data={{ type: 'FeatureCollection', features }}
+                circlePaint={config.geojsonPaint.circlePaint}
                 layerOptions={{
                   filter: ['==', '$type', 'Point'],
                 }}
               />
 
               <GeoJSONLayer
-                data={{ type: 'FeatureCollection', features: this.props.features }}
-                linePaint={this.props.config.geojsonPaint.linePaint}
+                data={{ type: 'FeatureCollection', features }}
+                linePaint={config.geojsonPaint.linePaint}
                 layerOptions={{
                   filter: ['==', '$type', 'LineString'],
                 }}
@@ -228,10 +236,10 @@ class TerraDrawMap extends Component {
 
 
           {/* Routing features */}
-          {this.props.editable &&
+          {editable &&
             <GeoJSONLayer
-              data={{ type: 'FeatureCollection', features: this.props.features }}
-              linePaint={this.props.config.geojsonPaint.routedLinePaint}
+              data={{ type: 'FeatureCollection', features }}
+              linePaint={config.geojsonPaint.routedLinePaint}
               layerOptions={{
                 filter: [
                   'all',
@@ -242,7 +250,7 @@ class TerraDrawMap extends Component {
             />
           }
 
-          {this.props.editable &&
+          {editable &&
             <DrawControl {...drawProps} />
           }
         </Map>
@@ -255,12 +263,12 @@ class TerraDrawMap extends Component {
             title={mapTitleLegend.titleLegend}
             legend={mapLegend}
           />
-          {this.props.config.sources.map(source => (
+          {config.sources.map(source => (
             <TerraDrawMapFilters
               key={`${source.id}_filters`}
               source={source}
               setLayerVisibility={this.setLayerVisibility}
-              filters={this.props.filters}
+              filters={filters}
             />
           ))}
         </Drawer>
