@@ -95,6 +95,21 @@ class TerraDrawMap extends Component {
     }
   }
 
+  setDefaultFilters (filters = []) {
+    const { config: { sources }, FiltersValue } = this.props;
+
+    sources.forEach(source => {
+      source.layers.forEach(layer => {
+        if (layer.id !== FiltersValue.OFF_PATHS && layer.id !== FiltersValue.PATHS) {
+          this.setLayerVisibility(layer.id, 'none');
+        }
+      });
+    });
+    filters.forEach(filter => {
+      this.setLayerVisibility(filter, 'visible');
+    });
+  }
+
   mapDidLoad = map => {
     this.map = map;
     this.map.addControl(new MapboxGL.FullscreenControl(), 'top-left');
@@ -157,6 +172,7 @@ class TerraDrawMap extends Component {
     };
 
     const { Map } = this;
+    this.setDefaultFilters(this.props.activityFilters);
 
     return (
       <div style={{ width: '100%', height: '100%', position: 'relative', overflow: 'hidden' }}>
