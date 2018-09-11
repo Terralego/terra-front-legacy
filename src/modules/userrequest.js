@@ -95,8 +95,14 @@ const userrequest = (state = initialState, action) => {
       };
     case DETAIL_SUCCESS:
       return {
+        ...state,
         isSaving: false,
         ...getDataWithFeatureId(action.data),
+      };
+    case SAVE_DRAFT_FAILURE:
+      return {
+        ...state,
+        isSaving: false,
       };
     case SUBMIT_SUCCESS:
       return {
@@ -215,7 +221,7 @@ export const submitData = (data, form = 'userrequest') => ({
  * userrequest action : save userrequest as draft
  * @param {string} data
  */
-export const saveDraft = data => (dispatch, getState) => dispatch({
+export const saveDraft = (data, form = 'userrequest') => (dispatch, getState) => dispatch({
   [CALL_API]: {
     endpoint: `/userrequest/${data.id ? `${data.id}/` : ''}`,
     types: [SAVE_DRAFT_REQUEST, SAVE_DRAFT_SUCCESS, SAVE_DRAFT_FAILURE],
@@ -227,6 +233,7 @@ export const saveDraft = data => (dispatch, getState) => dispatch({
         state: getState().appConfig.states.DRAFT,
       }),
     },
+    form,
   },
 });
 
