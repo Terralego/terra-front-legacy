@@ -181,6 +181,10 @@ class TerraDrawMap extends Component {
       this.setDefaultFilters(activityFilters);
     }
 
+    const layerFilterPolygon = { filter: ['==', '$type', 'Polygon'] };
+    const layerFilterPoint = { filter: ['==', '$type', 'Point'] };
+    const layerFilterLineString = { filter: ['==', '$type', 'LineString'] };
+
     return (
       <div style={{ width: '100%', height: '100%', position: 'relative', overflow: 'hidden' }}>
         <Map {...mapProps} onStyleLoad={this.mapDidLoad}>
@@ -209,25 +213,19 @@ class TerraDrawMap extends Component {
                 data={{ type: 'FeatureCollection', features }}
                 fillPaint={geojsonPaint.fillPaint}
                 linePaint={geojsonPaint.linePaint}
-                layerOptions={{
-                  filter: ['==', '$type', 'Polygon'],
-                }}
+                layerOptions={layerFilterPolygon}
               />
 
               <GeoJSONLayer
                 data={{ type: 'FeatureCollection', features }}
                 circlePaint={geojsonPaint.circlePaint}
-                layerOptions={{
-                  filter: ['==', '$type', 'Point'],
-                }}
+                layerOptions={layerFilterPoint}
               />
 
               <GeoJSONLayer
                 data={{ type: 'FeatureCollection', features }}
                 linePaint={geojsonPaint.linePaint}
-                layerOptions={{
-                  filter: ['==', '$type', 'LineString'],
-                }}
+                layerOptions={layerFilterLineString}
               />
             </React.Fragment>
           }
@@ -241,7 +239,7 @@ class TerraDrawMap extends Component {
               layerOptions={{
                 filter: [
                   'all',
-                  ['==', '$type', 'LineString'],
+                  layerFilterLineString.filter,
                   ['==', 'routeInProgress', false],
                 ],
               }}
@@ -252,6 +250,7 @@ class TerraDrawMap extends Component {
             <DrawControl {...drawProps} />
           }
         </Map>
+
         <Drawer
           id="map-drawer"
           visible={this.state.drawerVisibility}
@@ -263,13 +262,14 @@ class TerraDrawMap extends Component {
           />
           {sources.map(source => (
             <TerraDrawMapFilters
-              key={`${source.id}_filters`}
+              key={source.id}
               source={source}
               setLayerVisibility={this.setLayerVisibility}
               filters={filters}
             />
           ))}
         </Drawer>
+
       </div>
     );
   }
