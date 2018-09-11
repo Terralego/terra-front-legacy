@@ -127,6 +127,14 @@ class TerraDrawMap extends Component {
     this.setState({ drawerVisibility: !this.state.drawerVisibility });
 
   render () {
+    const {
+      activityFilters,
+      config,
+      editable,
+      features,
+      filters,
+    } = this.props;
+
     const mapProps = {
       style: 'mapbox://styles/mapbox/streets-v9',
       containerStyle: {
@@ -163,13 +171,6 @@ class TerraDrawMap extends Component {
     };
 
     const { Map } = this;
-    const {
-      activityFilters,
-      config,
-      editable,
-      features,
-      filters,
-    } = this.props;
 
     if (editable) {
       this.setDefaultFilters(activityFilters);
