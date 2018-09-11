@@ -87,6 +87,12 @@ const userrequest = (state = initialState, action) => {
         isSaving: true,
       };
     case SAVE_DRAFT_SUCCESS:
+      return {
+        ...state,
+        redirection: `/manage-request/detail/${action.data.id}`,
+        isSaving: false,
+        ...getDataWithFeatureId(action.data),
+      };
     case DETAIL_SUCCESS:
       return {
         isSaving: false,

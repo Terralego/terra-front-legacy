@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Button, Icon, Col, Row, Modal } from 'antd';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Redirect } from 'react-router-dom';
 import { translate } from 'react-i18next';
 
 import { saveDraft, submitData, resetForm } from 'modules/userrequest';
@@ -44,7 +44,19 @@ class HeaderForm extends React.Component {
   }
 
   render () {
-    const { form, showSubmit, showDraft, userrequest: { isSaving } } = this.props;
+    const {
+      form,
+      showSubmit,
+      showDraft,
+      match: { params: { id: pathId } },
+      userrequest: { isSaving, id, redirection },
+    } = this.props;
+
+    const shouldRedirect = redirection && pathId !== id;
+
+    if (shouldRedirect) {
+      return <Redirect to={redirection} />;
+    }
 
     return (
       <header className={styles.header}>
