@@ -36,15 +36,19 @@ export function getActivityFeatures (features, activityId) {
  * @param {array} dates array of dates objects
  * @returns {array} array of dates
  */
-export const getAllDates = dates => (
-  dates
+export const getAllDates = dates =>
+  // TODO
+  // Old way to calcul dates
+  // These conditions belows must be delete after the next reset of activities
+  // Keep `...acc, curr.model.startTime, curr.model.endTime`
+  (dates
     .reduce((acc, curr) => ([
       ...acc,
-      curr.startDate,
-      curr.endDate,
+      curr.model ? curr.model.startTime : curr.startDate,
+      curr.model ? curr.model.endTime : curr.endDate,
     ]), [])
     .filter(date => moment(date).isValid())
-);
+  );
 
 /**
  * getActivityExtent
