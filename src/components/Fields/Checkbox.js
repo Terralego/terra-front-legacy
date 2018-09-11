@@ -12,8 +12,28 @@ function validateStatus (fieldValue) {
   return '';
 }
 
+function defaultRenderItem (option, props) {
+  return (
+    <Checkbox
+      key={`${props.name}_${option.value}`}
+      style={{ display: 'block', margin: '10px 0' }}
+      {...option}
+    >
+      {option.label}
+    </Checkbox>
+  );
+}
+
 const CustomCheckbox = props => {
-  const { errorMessages, fieldValue, label, name, options, ...propsField } = props;
+  const {
+    errorMessages,
+    fieldValue,
+    label,
+    name,
+    options,
+    renderItem = defaultRenderItem,
+    ...propsField
+  } = props;
   delete propsField.withFieldValue;
   delete propsField.required;
 
@@ -37,15 +57,7 @@ const CustomCheckbox = props => {
     >
 
       <Checkbox.Group {...propsField}>
-        {options.map(option => (
-          <Checkbox
-            key={`${props.name}_${option.value}`}
-            style={{ display: 'block', margin: '10px 0' }}
-            {...option}
-          >
-            {option.label}
-          </Checkbox>
-      ))}
+        {options.map(item => renderItem(item, props))}
       </Checkbox.Group>
     </FormItem>
   );
