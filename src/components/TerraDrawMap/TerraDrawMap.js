@@ -128,8 +128,13 @@ class TerraDrawMap extends Component {
 
   render () {
     const {
+      center,
+      zoom,
+      maxBounds,
+      onSelectionChange,
+
       activityFilters,
-      config,
+      config: { drawStyles, sources, geojsonPaint },
       editable,
       features,
       filters,
@@ -141,9 +146,9 @@ class TerraDrawMap extends Component {
         height: '100%',
         width: '100%',
       },
-      center: this.props.center,
-      zoom: [this.props.zoom],
-      maxBounds: this.props.maxBounds,
+      center,
+      maxBounds,
+      zoom: [zoom],
       fitBoundsOptions: { padding: 30, maxZoom: 14 },
     };
 
@@ -153,7 +158,7 @@ class TerraDrawMap extends Component {
 
     const drawProps = {
       displayControlsDefault: false,
-      styles: this.props.config.drawStyles,
+      styles: drawStyles,
       controls: {
         polygon: true,
         line_string: true,
@@ -163,7 +168,7 @@ class TerraDrawMap extends Component {
       onDrawUpdate: this.onDrawChange,
       onDrawCreate: this.onDrawChange,
       onDrawDelete: this.onDrawChange,
-      onDrawSelectionChange: this.props.onSelectionChange,
+      onDrawSelectionChange: onSelectionChange,
       ref: drawControl => {
         this.drawControl = drawControl;
         this.onDrawRender();
@@ -179,7 +184,7 @@ class TerraDrawMap extends Component {
     return (
       <div style={{ width: '100%', height: '100%', position: 'relative', overflow: 'hidden' }}>
         <Map {...mapProps} onStyleLoad={this.mapDidLoad}>
-          {config.sources.map(source => (
+          {sources.map(source => (
             <React.Fragment key={source.id}>
               <Source id={source.id} tileJsonSource={source.options} />
               {source.layers.map(layer => (
@@ -202,8 +207,8 @@ class TerraDrawMap extends Component {
             <React.Fragment>
               <GeoJSONLayer
                 data={{ type: 'FeatureCollection', features }}
-                fillPaint={config.geojsonPaint.fillPaint}
-                linePaint={config.geojsonPaint.linePaint}
+                fillPaint={geojsonPaint.fillPaint}
+                linePaint={geojsonPaint.linePaint}
                 layerOptions={{
                   filter: ['==', '$type', 'Polygon'],
                 }}
@@ -211,7 +216,7 @@ class TerraDrawMap extends Component {
 
               <GeoJSONLayer
                 data={{ type: 'FeatureCollection', features }}
-                circlePaint={config.geojsonPaint.circlePaint}
+                circlePaint={geojsonPaint.circlePaint}
                 layerOptions={{
                   filter: ['==', '$type', 'Point'],
                 }}
@@ -219,7 +224,7 @@ class TerraDrawMap extends Component {
 
               <GeoJSONLayer
                 data={{ type: 'FeatureCollection', features }}
-                linePaint={config.geojsonPaint.linePaint}
+                linePaint={geojsonPaint.linePaint}
                 layerOptions={{
                   filter: ['==', '$type', 'LineString'],
                 }}
@@ -232,7 +237,7 @@ class TerraDrawMap extends Component {
           {editable &&
             <GeoJSONLayer
               data={{ type: 'FeatureCollection', features }}
-              linePaint={config.geojsonPaint.routedLinePaint}
+              linePaint={geojsonPaint.routedLinePaint}
               layerOptions={{
                 filter: [
                   'all',
@@ -256,7 +261,7 @@ class TerraDrawMap extends Component {
             title={mapTitleLegend.titleLegend}
             legend={mapLegend}
           />
-          {config.sources.map(source => (
+          {sources.map(source => (
             <TerraDrawMapFilters
               key={`${source.id}_filters`}
               source={source}
