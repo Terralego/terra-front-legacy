@@ -30,6 +30,25 @@ const getFeatureCollection = features => featureCollection(features.map(feature 
   return polygon(feature.geometry.coordinates);
 }));
 
+const MapSources = ({ sources }) =>
+  sources.map(source => (
+    <React.Fragment key={source.id}>
+      <Source id={source.id} tileJsonSource={source.options} />
+      {source.layers.map(layer => (
+        <Layer
+          key={layer.id}
+          type={layer.type}
+          sourceId={source.id}
+          sourceLayer={layer.sourceLayer}
+          id={layer.id}
+          paint={layer.paint}
+          filter={layer.filter}
+          layout={layer.layout}
+        />
+    ))}
+    </React.Fragment>
+  ));
+
 class TerraDrawMap extends Component {
   constructor (props) {
     super(props);
@@ -188,23 +207,8 @@ class TerraDrawMap extends Component {
     return (
       <div style={{ width: '100%', height: '100%', position: 'relative', overflow: 'hidden' }}>
         <Map {...mapProps} onStyleLoad={this.mapDidLoad}>
-          {sources.map(source => (
-            <React.Fragment key={source.id}>
-              <Source id={source.id} tileJsonSource={source.options} />
-              {source.layers.map(layer => (
-                <Layer
-                  key={layer.id}
-                  type={layer.type}
-                  sourceId={source.id}
-                  sourceLayer={layer.sourceLayer}
-                  id={layer.id}
-                  paint={layer.paint}
-                  filter={layer.filter}
-                  layout={layer.layout}
-                />
-            ))}
-            </React.Fragment>
-          ))}
+
+          <MapSources sources={sources} />
 
           {/* Draw features */}
           {!editable &&
