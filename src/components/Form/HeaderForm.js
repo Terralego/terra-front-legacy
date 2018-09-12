@@ -28,7 +28,7 @@ class HeaderForm extends React.Component {
   showConfirmationReturn = () => {
     const { location: { state }, form, history, t } = this.props;
     const pushHistory = () => history.push(state ? state.from : '/manage-request');
-    if (!form.touched && !form.submitted) {
+    if (!form.touched || form.submitted) {
       pushHistory();
     } else {
       Modal.confirm({
