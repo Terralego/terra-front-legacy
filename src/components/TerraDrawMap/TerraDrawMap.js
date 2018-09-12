@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import bbox from '@turf/bbox';
 import { polygon, lineString, point, featureCollection } from '@turf/helpers';
-import ReactMapboxGl, { Source, Layer, GeoJSONLayer } from 'react-mapbox-gl';
+import ReactMapboxGl from 'react-mapbox-gl';
 import DrawControl from 'react-mapbox-gl-draw';
 import MapboxGL from 'mapbox-gl';
 
@@ -15,6 +15,9 @@ import styles from 'components/TerraDrawMap/TerraDrawMap.module.scss';
 import TerraDrawMapFilters from 'components/TerraDrawMap/TerraDrawMapFilters';
 import MapLegend from 'components/MapLegend/MapLegend';
 import { mapLegend, mapTitleLegend } from 'components/FormMap/FormMap.config';
+
+import MapSources from 'components/TerraDrawMap/MapSources';
+import DrawLayers from 'components/TerraDrawMap/DrawLayers';
 
 /**
  * getFeatureCollection returns an array of feature for turf
@@ -30,25 +33,6 @@ const getFeatureCollection = features => featureCollection(features.map(feature 
   }
   return polygon(feature.geometry.coordinates);
 }));
-
-const MapSources = ({ sources }) =>
-  sources.map(source => (
-    <React.Fragment key={source.id}>
-      <Source id={source.id} tileJsonSource={source.options} />
-      {source.layers.map(layer => (
-        <Layer
-          key={layer.id}
-          type={layer.type}
-          sourceId={source.id}
-          sourceLayer={layer.sourceLayer}
-          id={layer.id}
-          paint={layer.paint}
-          filter={layer.filter}
-          layout={layer.layout}
-        />
-    ))}
-    </React.Fragment>
-  ));
 
 class TerraDrawMap extends Component {
   constructor (props) {
@@ -201,55 +185,17 @@ class TerraDrawMap extends Component {
       this.setDefaultFilters(activityFilters);
     }
 
-    const layerFilterPolygon = { filter: ['==', '$type', 'Polygon'] };
-    const layerFilterPoint = { filter: ['==', '$type', 'Point'] };
-    const layerFilterLineString = { filter: ['==', '$type', 'LineString'] };
-
     return (
       <div className={styles.map}>
         <Map {...mapProps} onStyleLoad={this.mapDidLoad}>
 
           <MapSources sources={sources} />
 
-          {/* Draw features */}
-          {!editable &&
-            <React.Fragment>
-              <GeoJSONLayer
-                data={{ type: 'FeatureCollection', features }}
-                fillPaint={geojsonPaint.fillPaint}
-                linePaint={geojsonPaint.linePaint}
-                layerOptions={layerFilterPolygon}
-              />
-
-              <GeoJSONLayer
-                data={{ type: 'FeatureCollection', features }}
-                circlePaint={geojsonPaint.circlePaint}
-                layerOptions={layerFilterPoint}
-              />
-
-              <GeoJSONLayer
-                data={{ type: 'FeatureCollection', features }}
-                linePaint={geojsonPaint.linePaint}
-                layerOptions={layerFilterLineString}
-              />
-            </React.Fragment>
-          }
-
-
-          {/* Routing features */}
-          {editable &&
-            <GeoJSONLayer
-              data={{ type: 'FeatureCollection', features }}
-              linePaint={geojsonPaint.routedLinePaint}
-              layerOptions={{
-                filter: [
-                  'all',
-                  layerFilterLineString.filter,
-                  ['==', 'routeInProgress', false],
-                ],
-              }}
-            />
-          }
+          <DrawLayers
+            editable={editable}
+            data={{ type: 'FeatureCollection', features }}
+            geojsonPaint={geojsonPaint}
+          />
 
           {editable &&
             <DrawControl {...drawProps} />
