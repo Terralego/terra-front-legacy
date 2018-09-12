@@ -2,18 +2,19 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import bbox from '@turf/bbox';
 import { polygon, lineString, point, featureCollection } from '@turf/helpers';
-import ReactMapboxGl, { Source, Layer, GeoJSONLayer } from 'react-mapbox-gl';
+import ReactMapboxGl from 'react-mapbox-gl';
 import DrawControl from 'react-mapbox-gl-draw';
 import MapboxGL from 'mapbox-gl';
 
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 
-import Drawer from 'components/Drawer/Drawer';
 import 'components/TerraDrawMap/TerraDrawMap.scss';
-import TerraDrawMapFilters from 'components/TerraDrawMap/TerraDrawMapFilters';
-import MapLegend from 'components/MapLegend/MapLegend';
-import { mapLegend, mapTitleLegend } from 'components/FormMap/FormMap.config';
+import styles from 'components/TerraDrawMap/TerraDrawMap.module.scss';
+
+import MapSources from 'components/TerraDrawMap/MapSources';
+import DrawLayers from 'components/TerraDrawMap/DrawLayers';
+import MapDrawer from 'components/TerraDrawMap/MapDrawer';
 
 /**
  * getFeatureCollection returns an array of feature for turf
@@ -30,32 +31,19 @@ const getFeatureCollection = features => featureCollection(features.map(feature 
   return polygon(feature.geometry.coordinates);
 }));
 
-/**
- * To help development, this function logs clicked features data
- * from vector source layers
- * it needs to be called on map onClick props
- * @param {object} map: map object
- * @param {Event} e: click event
- */
-
 class TerraDrawMap extends Component {
   constructor (props) {
     super(props);
-    this.Map = ReactMapboxGl({
-      accessToken: this.props.mapboxAccessToken,
-      maxZoom: this.props.maxZoom,
-      minZoom: this.props.minZoom,
-    });
+
+    const { mapboxAccessToken: accessToken, maxZoom, minZoom } = props;
+
+    this.Map = ReactMapboxGl({ accessToken, maxZoom, minZoom });
 
     // if there's already features, fit bounds of these
-    if (this.props.features.length) {
-      const features = getFeatureCollection(this.props.features);
-      this.bounds = bbox(features);
+    this.customMapProps = {};
+    if (props.features.length) {
+      this.customMapProps.fitBounds = bbox(getFeatureCollection(props.features));
     }
-
-    this.state = {
-      drawerVisibility: true,
-    };
   }
 
   componentDidUpdate () {
@@ -132,139 +120,70 @@ class TerraDrawMap extends Component {
     }
   }
 
-  toggleDrawerVisibility = () =>
-    this.setState({ drawerVisibility: !this.state.drawerVisibility });
-
   render () {
-    const mapProps = {
-      style: 'mapbox://styles/mapbox/streets-v9',
-      containerStyle: {
-        height: '100%',
-        width: '100%',
-      },
-      center: this.props.center,
-      zoom: [this.props.zoom],
-      maxBounds: this.props.maxBounds,
-      fitBoundsOptions: { padding: 30, maxZoom: 14 },
-    };
+    const {
+      mapboxStyle,
+      center,
+      zoom,
+      maxBounds,
+      onSelectionChange,
+      activityFilters,
+      config: { drawStyles, sources, geojsonPaint },
+      editable,
+      features,
+      filters,
+    } = this.props;
 
-    if (this.bounds) {
-      mapProps.fitBounds = this.bounds;
-    }
-
-    const drawProps = {
-      displayControlsDefault: false,
-      styles: this.props.config.drawStyles,
-      controls: {
-        polygon: true,
-        line_string: true,
-        point: true,
-        trash: true,
-      },
-      onDrawUpdate: this.onDrawChange,
-      onDrawCreate: this.onDrawChange,
-      onDrawDelete: this.onDrawChange,
-      onDrawSelectionChange: this.props.onSelectionChange,
-      ref: drawControl => {
-        this.drawControl = drawControl;
-        this.onDrawRender();
-      },
-    };
-
+    // Map component is created in constructor
     const { Map } = this;
-    if (this.props.editable) {
-      this.setDefaultFilters(this.props.activityFilters);
+
+    if (editable) {
+      this.setDefaultFilters(activityFilters);
     }
 
     return (
-      <div style={{ width: '100%', height: '100%', position: 'relative', overflow: 'hidden' }}>
-        <Map {...mapProps} onStyleLoad={this.mapDidLoad}>
-          {this.props.config.sources.map(source => (
-            <React.Fragment key={source.id}>
-              <Source id={source.id} tileJsonSource={source.options} />
-              {source.layers.map(layer => (
-                <Layer
-                  key={layer.id}
-                  type={layer.type}
-                  sourceId={source.id}
-                  sourceLayer={layer.sourceLayer}
-                  id={layer.id}
-                  paint={layer.paint}
-                  filter={layer.filter}
-                  layout={layer.layout}
-                />
-            ))}
-            </React.Fragment>
-          ))}
+      <div className={styles.map}>
+        <Map
+          style={mapboxStyle}
+          containerStyle={{ height: '100%', width: '100%' }}
+          fitBoundsOptions={{ padding: 30, maxZoom: 14 }}
+          onStyleLoad={this.mapDidLoad}
+          center={center}
+          maxBounds={maxBounds}
+          zoom={[zoom]}
+          {...this.customMapProps}
+        >
 
-          {/* Draw features */}
-          {!this.props.editable &&
-            <React.Fragment>
-              <GeoJSONLayer
-                data={{ type: 'FeatureCollection', features: this.props.features }}
-                fillPaint={this.props.config.geojsonPaint.fillPaint}
-                linePaint={this.props.config.geojsonPaint.linePaint}
-                layerOptions={{
-                  filter: ['==', '$type', 'Polygon'],
-                }}
-              />
+          <MapSources sources={sources} />
 
-              <GeoJSONLayer
-                data={{ type: 'FeatureCollection', features: this.props.features }}
-                circlePaint={this.props.config.geojsonPaint.circlePaint}
-                layerOptions={{
-                  filter: ['==', '$type', 'Point'],
-                }}
-              />
+          <DrawLayers
+            editable={editable}
+            data={{ type: 'FeatureCollection', features }}
+            geojsonPaint={geojsonPaint}
+          />
 
-              <GeoJSONLayer
-                data={{ type: 'FeatureCollection', features: this.props.features }}
-                linePaint={this.props.config.geojsonPaint.linePaint}
-                layerOptions={{
-                  filter: ['==', '$type', 'LineString'],
-                }}
-              />
-            </React.Fragment>
-          }
-
-
-          {/* Routing features */}
-          {this.props.editable &&
-            <GeoJSONLayer
-              data={{ type: 'FeatureCollection', features: this.props.features }}
-              linePaint={this.props.config.geojsonPaint.routedLinePaint}
-              layerOptions={{
-                filter: [
-                  'all',
-                  ['==', '$type', 'LineString'],
-                  ['==', 'routeInProgress', false],
-                ],
+          {editable &&
+            <DrawControl
+              displayControlsDefault={false}
+              styles={drawStyles}
+              onDrawUpdate={this.onDrawChange}
+              onDrawCreate={this.onDrawChange}
+              onDrawDelete={this.onDrawChange}
+              onDrawSelectionChange={onSelectionChange}
+              controls={{ polygon: true, line_string: true, point: true, trash: true }}
+              ref={ref => {
+                this.drawControl = ref;
+                this.onDrawRender();
               }}
             />
           }
-
-          {this.props.editable &&
-            <DrawControl {...drawProps} />
-          }
         </Map>
-        <Drawer
-          id="map-drawer"
-          visible={this.state.drawerVisibility}
-          handleVisibilityToggle={this.toggleDrawerVisibility}
-        >
-          <MapLegend
-            title={mapTitleLegend.titleLegend}
-            legend={mapLegend}
-          />
-          {this.props.config.sources.map(source => (
-            <TerraDrawMapFilters
-              key={`${source.id}_filters`}
-              source={source}
-              setLayerVisibility={this.setLayerVisibility}
-              filters={this.props.filters}
-            />
-          ))}
-        </Drawer>
+
+        <MapDrawer
+          sources={sources}
+          filters={filters}
+          setLayerVisibility={this.setLayerVisibility}
+        />
       </div>
     );
   }
@@ -272,6 +191,10 @@ class TerraDrawMap extends Component {
 
 TerraDrawMap.propTypes = {
   mapboxAccessToken: PropTypes.string.isRequired,
+  mapboxStyle: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object,
+  ]),
   FiltersValue: PropTypes.objectOf(PropTypes.string),
   zoom: PropTypes.number,
   center: PropTypes.arrayOf(PropTypes.number),
@@ -298,6 +221,7 @@ TerraDrawMap.propTypes = {
 };
 
 TerraDrawMap.defaultProps = {
+  mapboxStyle: 'mapbox://styles/mapbox/streets-v9',
   FiltersValue: {
     OFF_PATHS: 'hors_chemins',
     PATHS: 'chemins',
