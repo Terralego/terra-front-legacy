@@ -134,25 +134,7 @@ class TerraDrawMap extends Component {
       filters,
     } = this.props;
 
-    const drawProps = {
-      displayControlsDefault: false,
-      styles: drawStyles,
-      controls: {
-        polygon: true,
-        line_string: true,
-        point: true,
-        trash: true,
-      },
-      onDrawUpdate: this.onDrawChange,
-      onDrawCreate: this.onDrawChange,
-      onDrawDelete: this.onDrawChange,
-      onDrawSelectionChange: onSelectionChange,
-      ref: drawControl => {
-        this.drawControl = drawControl;
-        this.onDrawRender();
-      },
-    };
-
+    // Map component is created in constructor
     const { Map } = this;
 
     if (editable) {
@@ -181,7 +163,19 @@ class TerraDrawMap extends Component {
           />
 
           {editable &&
-            <DrawControl {...drawProps} />
+            <DrawControl
+              displayControlsDefault={false}
+              styles={drawStyles}
+              onDrawUpdate={this.onDrawChange}
+              onDrawCreate={this.onDrawChange}
+              onDrawDelete={this.onDrawChange}
+              onDrawSelectionChange={onSelectionChange}
+              controls={{ polygon: true, line_string: true, point: true, trash: true }}
+              ref={ref => {
+                this.drawControl = ref;
+                this.onDrawRender();
+              }}
+            />
           }
         </Map>
 
