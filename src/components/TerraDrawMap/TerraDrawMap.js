@@ -122,11 +122,11 @@ class TerraDrawMap extends Component {
 
   render () {
     const {
+      mapboxStyle,
       center,
       zoom,
       maxBounds,
       onSelectionChange,
-
       activityFilters,
       config: { drawStyles, sources, geojsonPaint },
       editable,
@@ -144,7 +144,7 @@ class TerraDrawMap extends Component {
     return (
       <div className={styles.map}>
         <Map
-          style="mapbox://styles/mapbox/streets-v9" // eslint-disable-line react/style-prop-object
+          style={mapboxStyle}
           containerStyle={{ height: '100%', width: '100%' }}
           fitBoundsOptions={{ padding: 30, maxZoom: 14 }}
           onStyleLoad={this.mapDidLoad}
@@ -191,6 +191,10 @@ class TerraDrawMap extends Component {
 
 TerraDrawMap.propTypes = {
   mapboxAccessToken: PropTypes.string.isRequired,
+  mapboxStyle: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object,
+  ]),
   FiltersValue: PropTypes.objectOf(PropTypes.string),
   zoom: PropTypes.number,
   center: PropTypes.arrayOf(PropTypes.number),
@@ -217,6 +221,7 @@ TerraDrawMap.propTypes = {
 };
 
 TerraDrawMap.defaultProps = {
+  mapboxStyle: 'mapbox://styles/mapbox/streets-v9',
   FiltersValue: {
     OFF_PATHS: 'hors_chemins',
     PATHS: 'chemins',
