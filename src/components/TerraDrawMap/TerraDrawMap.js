@@ -11,6 +11,7 @@ import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 
 import Drawer from 'components/Drawer/Drawer';
 import 'components/TerraDrawMap/TerraDrawMap.scss';
+import styles from 'components/TerraDrawMap/TerraDrawMap.module.scss';
 import TerraDrawMapFilters from 'components/TerraDrawMap/TerraDrawMapFilters';
 import MapLegend from 'components/MapLegend/MapLegend';
 import { mapLegend, mapTitleLegend } from 'components/FormMap/FormMap.config';
@@ -205,7 +206,7 @@ class TerraDrawMap extends Component {
     const layerFilterLineString = { filter: ['==', '$type', 'LineString'] };
 
     return (
-      <div style={{ width: '100%', height: '100%', position: 'relative', overflow: 'hidden' }}>
+      <div className={styles.map}>
         <Map {...mapProps} onStyleLoad={this.mapDidLoad}>
 
           <MapSources sources={sources} />
