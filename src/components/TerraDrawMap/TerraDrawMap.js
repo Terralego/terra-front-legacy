@@ -9,15 +9,12 @@ import MapboxGL from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 
-import Drawer from 'components/Drawer/Drawer';
 import 'components/TerraDrawMap/TerraDrawMap.scss';
 import styles from 'components/TerraDrawMap/TerraDrawMap.module.scss';
-import TerraDrawMapFilters from 'components/TerraDrawMap/TerraDrawMapFilters';
-import MapLegend from 'components/MapLegend/MapLegend';
-import { mapLegend, mapTitleLegend } from 'components/FormMap/FormMap.config';
 
 import MapSources from 'components/TerraDrawMap/MapSources';
 import DrawLayers from 'components/TerraDrawMap/DrawLayers';
+import MapDrawer from 'components/TerraDrawMap/MapDrawer';
 
 /**
  * getFeatureCollection returns an array of feature for turf
@@ -47,10 +44,6 @@ class TerraDrawMap extends Component {
       const features = getFeatureCollection(props.features);
       this.bounds = bbox(features);
     }
-
-    this.state = {
-      drawerVisibility: true,
-    };
   }
 
   componentDidUpdate () {
@@ -127,9 +120,6 @@ class TerraDrawMap extends Component {
     }
   }
 
-  toggleDrawerVisibility = () =>
-    this.setState({ drawerVisibility: !this.state.drawerVisibility });
-
   render () {
     const {
       center,
@@ -202,25 +192,11 @@ class TerraDrawMap extends Component {
           }
         </Map>
 
-        <Drawer
-          id="map-drawer"
-          visible={this.state.drawerVisibility}
-          handleVisibilityToggle={this.toggleDrawerVisibility}
-        >
-          <MapLegend
-            title={mapTitleLegend.titleLegend}
-            legend={mapLegend}
-          />
-          {sources.map(source => (
-            <TerraDrawMapFilters
-              key={source.id}
-              source={source}
-              setLayerVisibility={this.setLayerVisibility}
-              filters={filters}
-            />
-          ))}
-        </Drawer>
-
+        <MapDrawer
+          sources={sources}
+          filters={filters}
+          setLayerVisibility={this.setLayerVisibility}
+        />
       </div>
     );
   }
