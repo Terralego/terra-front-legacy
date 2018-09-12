@@ -53,6 +53,7 @@
     "redux-thunk": "~2.3.0",
     "reselect": "~3.0.1",
     "sass-loader": "~7.1.0",
+    "stats-webpack-plugin": "~0.7.0",
     "whatwg-fetch": "~2.0.4"
   },
   "scripts": {
@@ -63,7 +64,8 @@
     "build:force": "REACT_APP_FORCE_BUILD=true npm run build",
     "test": "react-app-rewired test --env=jsdom",
     "lint": "eslint .",
-    "version": "git changelog -t $npm_package_version && git add CHANGELOG.md"
+    "version": "git changelog -t $npm_package_version && git add CHANGELOG.md",
+    "stats": "npm run build && npx webpack-bundle-analyzer build/stats.json build"
   },
   "jest": {
     "setupTestFrameworkScriptFile": "<rootDir>/src/setupTests.js"

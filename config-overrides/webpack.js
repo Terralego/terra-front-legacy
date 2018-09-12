@@ -14,6 +14,7 @@ const rewireLess   = require('react-app-rewire-less');
 const rewireCssModules = require('react-app-rewire-css-modules');
 const rewireImport = require('react-app-rewire-import');
 const rewireRHL    = require('react-app-rewire-hot-loader');
+const StatsPlugin  = require('stats-webpack-plugin');
 
 const rewireModulesIncludes = (config, env, paths) => {
   const crawl = obj => {
@@ -28,6 +29,23 @@ const rewireModulesIncludes = (config, env, paths) => {
 
   crawl(config.module.rules);
 
+  return config;
+};
+
+const generateProfile = (config, env) => {
+  if (env === 'production') {
+    config.profile = true;
+
+    // It should already exist, but initialize it if it does not already exist.
+    config.plugins = config.plugins || [];
+
+    const statsOptions = {
+      chunkModules: true,
+      exclude: [/node_modules[\\/]react/],
+    };
+
+    config.plugins.push(new StatsPlugin('stats.json', statsOptions));
+  }
   return config;
 };
 
@@ -80,6 +98,11 @@ module.exports = function overrideWebpack (config, env) {
    * https://webpack.js.org/configuration/module/#rule-include
    */
   config = rewireModulesIncludes(config, env, settings.modulesPaths);
+
+  /**
+   * Generate stats report
+   */
+  config = generateProfile(config, env);
 
   /**
    * Whether to resolve symlinks to their symlinked location.
