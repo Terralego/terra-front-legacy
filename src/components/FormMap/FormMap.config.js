@@ -1,6 +1,6 @@
 import settings from 'front-settings';
 
-export const TerraDrawMapConfig = {
+export const terraDrawMapConfig = {
   sourceVectorUrl: `${settings.SOURCE_VECTOR_URL}/reference/tiles/{z}/{x}/{y}/`,
   vectorLayers: [],
 };
@@ -16,5 +16,5 @@ export const mapTitleLegend = {
 };
 
 export default {
-  TerraDrawMapConfig,
+  terraDrawMapConfig,
 };

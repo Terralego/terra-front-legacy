@@ -10,7 +10,7 @@ import { getFeatureWithProperties, getActivityFeatures } from 'helpers/mapHelper
 import { getFeatureById } from 'helpers/userrequestHelpers';
 import FeaturesList from 'components/FormMap/FeatureList';
 import TerraDrawMap from 'components/TerraDrawMap/TerraDrawMap';
-import { TerraDrawMapConfig, mapTitleLegend } from 'components/FormMap/FormMap.config';
+import { terraDrawMapConfig, mapTitleLegend } from 'components/FormMap/FormMap.config';
 
 class FormMap extends Component {
   state = {
@@ -92,7 +92,7 @@ class FormMap extends Component {
           <TerraDrawMap
             mapboxAccessToken={settings.MAPBOX_ACCESS_TOKEN}
             features={activityFeatures}
-            config={TerraDrawMapConfig}
+            config={terraDrawMapConfig}
             minZoom={8}
             FiltersValue={FiltersValue}
             activityFilters={activityFilters}
