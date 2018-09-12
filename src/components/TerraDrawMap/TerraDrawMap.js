@@ -40,9 +40,9 @@ class TerraDrawMap extends Component {
     this.Map = ReactMapboxGl({ accessToken, maxZoom, minZoom });
 
     // if there's already features, fit bounds of these
+    this.customMapProps = {};
     if (props.features.length) {
-      const features = getFeatureCollection(props.features);
-      this.bounds = bbox(features);
+      this.customMapProps.fitBounds = bbox(getFeatureCollection(props.features));
     }
   }
 
@@ -134,22 +134,6 @@ class TerraDrawMap extends Component {
       filters,
     } = this.props;
 
-    const mapProps = {
-      style: 'mapbox://styles/mapbox/streets-v9',
-      containerStyle: {
-        height: '100%',
-        width: '100%',
-      },
-      center,
-      maxBounds,
-      zoom: [zoom],
-      fitBoundsOptions: { padding: 30, maxZoom: 14 },
-    };
-
-    if (this.bounds) {
-      mapProps.fitBounds = this.bounds;
-    }
-
     const drawProps = {
       displayControlsDefault: false,
       styles: drawStyles,
@@ -177,7 +161,16 @@ class TerraDrawMap extends Component {
 
     return (
       <div className={styles.map}>
-        <Map {...mapProps} onStyleLoad={this.mapDidLoad}>
+        <Map
+          style="mapbox://styles/mapbox/streets-v9" // eslint-disable-line react/style-prop-object
+          containerStyle={{ height: '100%', width: '100%' }}
+          fitBoundsOptions={{ padding: 30, maxZoom: 14 }}
+          onStyleLoad={this.mapDidLoad}
+          center={center}
+          maxBounds={maxBounds}
+          zoom={[zoom]}
+          {...this.customMapProps}
+        >
 
           <MapSources sources={sources} />
 
