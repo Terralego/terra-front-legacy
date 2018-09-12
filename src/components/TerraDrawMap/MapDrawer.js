@@ -6,13 +6,9 @@ import { mapLegend, mapTitleLegend } from 'components/FormMap/FormMap.config';
 import TerraDrawMapFilters from 'components/TerraDrawMap/TerraDrawMapFilters';
 
 class MapDrawer extends React.Component {
-  constructor () {
-    super();
-
-    this.state = {
-      expanded: true,
-    };
-  }
+  state = {
+    expanded: true,
+  };
 
   toggleDrawer = () =>
     this.setState({ expanded: !this.state.expanded });
