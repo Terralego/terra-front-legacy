@@ -45,6 +45,7 @@ class TerraDrawMap extends Component {
       this.customMapProps.fitBounds = bbox(getFeatureCollection(props.features));
     }
     this.state = {
+      // https://github.com/alex3165/react-mapbox-gl#why-are-zoom-bearing-and-pitch-arrays-
       zoom: [props.zoom],
       center: props.center,
     };
