@@ -67,18 +67,15 @@ export const routes = [{
   icon: 'form',
   exact: true,
   protected: true,
-  routes: [
-    {
-      path: '/manage-request/detail/:id',
-      name: 'Manage request detail',
-      component: Userrequest,
-      protected: true,
-      layout: {
-        hideHeader: true,
-        hideFooter: true,
-      },
-    },
-  ],
+}, {
+  path: '/manage-request/detail/:id',
+  name: 'Manage request detail',
+  component: Userrequest,
+  protected: true,
+  layout: {
+    hideHeader: true,
+    hideFooter: true,
+  },
 }, {
   path: '/login',
   name: 'Login',
