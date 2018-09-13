@@ -1,13 +1,15 @@
 import initialState from 'modules/profile-initial';
 import { defaultHeaders } from 'services/apiService';
 import { CALL_API } from 'middlewares/api';
-import { SET_AUTHENTICATION } from 'modules/authentication';
+import { actions } from 'react-redux-form';
 
 export const UPDATE_PROPERTIES = 'profile/UPDATE_PROPERTIES';
 
 export const PROFILE_REQUEST = 'profile/PROFILE_REQUEST';
 export const PROFILE_SUCCESS = 'profile/PROFILE_SUCCESS';
 export const PROFILE_FAILURE = 'profile/PROFILE_FAILURE';
+
+export const FILL_PROFILE_FROM_USER = 'FILL_PROFILE_FROM_USER';
 
 /**
  * REDUCER
@@ -32,12 +34,10 @@ const profile = (state = initialState, action) => {
       return {
         ...state,
       };
-    case SET_AUTHENTICATION:
+    case FILL_PROFILE_FROM_USER:
       return {
         ...state,
-        properties: Object.keys(action.payload).length !== 0
-          ? state.properties
-          : initialState.properties,
+        properties: action.properties,
       };
     default:
       return state;
@@ -61,6 +61,18 @@ export const updateProfileProperties = properties => ({
   type: UPDATE_PROPERTIES,
   properties,
 });
+
+/**
+ * profile action
+ * get profile properties
+ */
+export const fillProfileFromUser = () => (dispatch, getState) => {
+  dispatch(actions.reset('profile'));
+  dispatch({
+    type: FILL_PROFILE_FROM_USER,
+    properties: getState().authentication.payload.user.properties,
+  });
+};
 
 /**
  * profile async action : post profile informations
