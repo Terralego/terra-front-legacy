@@ -44,6 +44,10 @@ class TerraDrawMap extends Component {
     if (props.features.length) {
       this.customMapProps.fitBounds = bbox(getFeatureCollection(props.features));
     }
+    this.state = {
+      zoom: [props.zoom],
+      center: props.center,
+    };
   }
 
   componentDidUpdate () {
@@ -123,8 +127,6 @@ class TerraDrawMap extends Component {
   render () {
     const {
       mapboxStyle,
-      center,
-      zoom,
       maxBounds,
       onSelectionChange,
       activityFilters,
@@ -137,6 +139,8 @@ class TerraDrawMap extends Component {
     // Map component is created in constructor
     const { Map } = this;
 
+    const { zoom, center } = this.state;
+
     if (editable) {
       this.setDefaultFilters(activityFilters);
     }
@@ -148,9 +152,11 @@ class TerraDrawMap extends Component {
           containerStyle={{ height: '100%', width: '100%' }}
           fitBoundsOptions={{ padding: 30, maxZoom: 14 }}
           onStyleLoad={this.mapDidLoad}
+          // Center prop need a fixed ref to disable it's render.
           center={center}
           maxBounds={maxBounds}
-          zoom={[zoom]}
+          // Zoom prop need a fixed ref to disable it's render.
+          zoom={zoom}
           {...this.customMapProps}
         >
 
