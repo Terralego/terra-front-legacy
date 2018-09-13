@@ -5,7 +5,7 @@ import { Redirect, withRouter } from 'react-router-dom';
 import { Spin, Row, Col, Card } from 'antd';
 
 import { fetchUserrequest } from 'modules/userrequestList';
-import { openDraft, readUserrequest } from 'modules/userrequest';
+import { openDraft, readUserrequest, resetForm } from 'modules/userrequest';
 import { resetPaginationCache } from 'modules/pagination';
 
 import withAuthentication from 'hoc/authentication';
@@ -28,6 +28,10 @@ class Userrequest extends React.Component {
     if (!this.props.data && !this.props.loading) {
       this.props.fetchUserrequest(this.props.match.params.id);
     }
+  }
+
+  componentWillUnmount () {
+    this.props.resetForm();
   }
 
   render () {
@@ -78,6 +82,7 @@ const mapDispatchToProps = dispatch =>
     openDraft,
     readUserrequest,
     resetPaginationCache,
+    resetForm,
   }, dispatch);
 
 export default withRouter(withAuthentication(connect(
