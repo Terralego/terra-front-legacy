@@ -1,0 +1,11 @@
+.summaryDates {
+  display: flex;
+  align-items: center;
+  padding-right: 12px;
+  &__counter {
+    margin-right: 24px;
+  }
+  &__button {
+    margin-left: auto;
+  }
+}
