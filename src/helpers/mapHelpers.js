@@ -40,12 +40,12 @@ export const getAllDates = dates =>
   // TODO
   // Old way to calcul dates
   // These conditions belows must be delete after the next reset of activities
-  // Keep `...acc, curr.model.startTime, curr.model.endTime`
+  // Keep `...acc, curr.dates[0].startDate, curr.dates[curr.dates.length - 1].endDate`
   (dates
     .reduce((acc, curr) => ([
       ...acc,
-      curr.model ? curr.model.startTime : curr.startDate,
-      curr.model ? curr.model.endTime : curr.endDate,
+      curr.dates ? curr.dates[0].startDate : curr.startDate,
+      curr.dates ? curr.dates[curr.dates.length - 1].endDate : curr.endDate,
     ]), [])
     .filter(date => moment(date).isValid())
   );
