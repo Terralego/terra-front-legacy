@@ -116,6 +116,7 @@ export const getRoutedFeaturesProperties = (features, featureId, routedFeatures)
       id,
       properties: {
         ...properties,
+        ...feature.properties,
         // Set routing id (to avoid duplicate id with origin draw)
         id,
         // Reference to origin draw id
@@ -137,13 +138,17 @@ export const getRoutedFeatures = (stateFeatures, featureId, routedFeatures) => {
   const routedFeaturesWithProperties =
     getRoutedFeaturesProperties(stateFeatures, featureId, routedFeatures);
 
-  const setRelatedFeatureId = (feature, index) => {
+  const filterStateFeatures = stateFeatures.filter(feature =>
+    feature.properties.relatedFeatureId !==
+    routedFeaturesWithProperties[0].properties.relatedFeatureId);
+
+  const setRelatedFeatureId = feature => {
     if (feature.properties.id === featureId) {
       return {
         ...feature,
         properties: {
           ...feature.properties,
-          relatedFeatureId: routedFeaturesWithProperties[index].properties.id,
+          relatedFeatureId: routedFeaturesWithProperties[0].id,
         },
       };
     }
@@ -151,18 +156,10 @@ export const getRoutedFeatures = (stateFeatures, featureId, routedFeatures) => {
     return feature;
   };
 
-  const newStateFeatures = [
-    ...stateFeatures.map(setRelatedFeatureId),
+  return [
+    ...filterStateFeatures.map(setRelatedFeatureId),
     ...routedFeaturesWithProperties,
   ];
-
-  const hasNoRoutedFeature = p =>
-    p.properties.relatedFeatureId !== routedFeaturesWithProperties.relatedFeatureId;
-
-  return ([
-    ...newStateFeatures.filter(hasNoRoutedFeature),
-    newStateFeatures.slice(-1)[0],
-  ]);
 };
 /**
  * Return features list without requested delete id

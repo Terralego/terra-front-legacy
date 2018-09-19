@@ -73,7 +73,7 @@ class TerraDrawMap extends Component {
     }
   }
 
-  onDrawRender = () => {
+  onDrawRender () {
     if (this.drawControl && this.props.editable) {
       this.drawControl.draw.set({
         type: 'FeatureCollection',
@@ -177,10 +177,10 @@ class TerraDrawMap extends Component {
               onDrawCreate={this.onDrawChange}
               onDrawDelete={this.onDrawChange}
               onDrawSelectionChange={onSelectionChange}
+              onDrawRender={this.onDrawRender()}
               controls={{ polygon: true, line_string: true, point: true, trash: true }}
               ref={ref => {
                 this.drawControl = ref;
-                this.onDrawRender();
               }}
             />
           }

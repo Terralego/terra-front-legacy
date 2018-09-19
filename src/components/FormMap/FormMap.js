@@ -113,6 +113,7 @@ class FormMap extends Component {
         <Col span={24} lg={24}>
           <Card title={mapTitleLegend.title}>
             <FeaturesList
+              filters={activityFilters}
               features={featureList}
               selectedFeaturesId={this.state.selectedFeaturesId}
               deleteFeatureById={this.deleteDrawData}
