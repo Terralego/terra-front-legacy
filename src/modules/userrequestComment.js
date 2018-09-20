@@ -1,6 +1,5 @@
 import { CALL_API } from 'middlewares/api';
 import { defaultHeaders } from 'services/apiService';
-import guid from 'helpers/guidHelpers';
 import {
   getFeaturesWithIncidence,
   removeRouteInProgressDatas,
@@ -116,7 +115,7 @@ const userrequestComment = (state = initialState, action) => {
         tempFeatures: getRoutedFeatures(
           state.tempFeatures,
           action.data.request.callbackid,
-          { geometry: JSON.parse(action.data.geom), type: 'Feature', id: guid() },
+          action.data.geom.features,
         ),
       };
     default:
