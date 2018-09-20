@@ -1,3 +1,5 @@
+import guid from 'helpers/guidHelpers';
+
 /**
  * Creation of an initial gricode equal to zero, while mapping through the features
  * collection this gridcode will be increased each time we meet a more restrictive gridcode.
@@ -93,17 +95,25 @@ export const getFeatureById = (features, id) =>
  * @param {object} routedFeature - response of routing request (expect a LineString)
  * @returns feature object of routed feature (with origin feature properties)
  */
-export const getRoutedFeatureProperties = (features, featureId, routedFeature) => {
+export const getRoutedFeaturesProperties = (features, featureId, routedFeatures) => {
   // Get origin draw properties
   const { properties } = getFeatureById(features, featureId);
-  return {
-    ...properties,
-    // Set routing id (to avoid duplicate id with origin draw)
-    id: routedFeature.id,
-    // Reference to origin draw id
-    relatedFeatureId: properties.id,
-    routeInProgress: false,
-  };
+  return routedFeatures.map(feature => {
+    const id = guid();
+    return {
+      ...feature,
+      id,
+      properties: {
+        ...properties,
+        ...feature.properties,
+        // Set routing id (to avoid duplicate id with origin draw)
+        id,
+        // Reference to origin draw id
+        relatedFeatureId: properties.id,
+        routeInProgress: false,
+      },
+    };
+  });
 };
 
 /**
@@ -113,9 +123,13 @@ export const getRoutedFeatureProperties = (features, featureId, routedFeature) =
  * @param {string} featureId - id of origin draw feature (callbackid of routing response)
  * @param {object} routedFeature - feature in response of routing request (expect a LineString)
  */
-export const getRoutedFeatures = (stateFeatures, featureId, routedFeature) => {
-  const routedFeatureWithProperties =
-    getRoutedFeatureProperties(stateFeatures, featureId, routedFeature);
+export const getRoutedFeatures = (stateFeatures, featureId, routedFeatures) => {
+  const routedFeaturesWithProperties =
+    getRoutedFeaturesProperties(stateFeatures, featureId, routedFeatures);
+
+  const filterStateFeatures = stateFeatures.filter(feature =>
+    feature.properties.relatedFeatureId !==
+    routedFeaturesWithProperties[0].properties.relatedFeatureId);
 
   const setRelatedFeatureId = feature => {
     if (feature.properties.id === featureId) {
@@ -123,28 +137,18 @@ export const getRoutedFeatures = (stateFeatures, featureId, routedFeature) => {
         ...feature,
         properties: {
           ...feature.properties,
-          relatedFeatureId: routedFeatureWithProperties.id,
+          relatedFeatureId: routedFeaturesWithProperties[0].id,
         },
       };
     }
 
     return feature;
   };
-  const newStateFeatures = [
-    ...stateFeatures.map(setRelatedFeatureId),
-    {
-      ...routedFeature,
-      properties: routedFeatureWithProperties,
-    },
+
+  return [
+    ...filterStateFeatures.map(setRelatedFeatureId),
+    ...routedFeaturesWithProperties,
   ];
-
-  const hasNoRoutedFeature = p =>
-    p.properties.relatedFeatureId !== routedFeatureWithProperties.relatedFeatureId;
-
-  return ([
-    ...newStateFeatures.filter(hasNoRoutedFeature),
-    newStateFeatures.slice(-1)[0],
-  ]);
 };
 /**
  * Return features list without requested delete id
@@ -157,16 +161,3 @@ export const deleteFeatureWithRoute = (features, featuresId) => (features.filter
   featuresId.indexOf(feature.properties.id) === -1
   && featuresId.indexOf(feature.properties.relatedFeatureId) === -1)
 );
-
-/**
- * Generate new feature Id
- * @returns new feature ID
- */
-export function guid () {
-  function s4 () {
-    return Math.floor((1 + Math.random()) * 0x10000)
-      .toString(16)
-      .substring(1);
-  }
-  return `${s4()}${s4()}-${s4()}-${s4()}-${s4()}-${s4()}${s4()}${s4()}`;
-}

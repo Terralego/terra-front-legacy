@@ -1,11 +1,11 @@
 import { CALL_API } from 'middlewares/api';
 import { defaultHeaders } from 'services/apiService';
+import guid from 'helpers/guidHelpers';
 import {
   getFeaturesWithIncidence,
   removeRouteInProgressDatas,
   getRoutedFeatures,
   deleteFeatureWithRoute,
-  guid,
 } from 'helpers/userrequestHelpers';
 
 export const SUBMIT_REQUEST = 'userrequestComment/SUBMIT_REQUEST';
