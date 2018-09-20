@@ -1,3 +1,5 @@
+import guid from 'helpers/guidHelpers';
+
 /**
  * Creation of an initial gricode equal to zero, while mapping through the features
  * collection this gridcode will be increased each time we meet a more restrictive gridcode.
@@ -51,19 +53,6 @@ export const getReviewersByUuid = reviewers => {
 
   return reviewersObj;
 };
-
-/**
- * Generate new feature Id
- * @returns new feature ID
- */
-export function guid () {
-  function s4 () {
-    return Math.floor((1 + Math.random()) * 0x10000)
-      .toString(16)
-      .substring(1);
-  }
-  return `${s4()}${s4()}-${s4()}-${s4()}-${s4()}-${s4()}${s4()}${s4()}`;
-}
 
 /**
  * removeRouteInProgressDatas
