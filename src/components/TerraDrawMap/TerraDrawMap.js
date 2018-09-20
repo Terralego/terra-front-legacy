@@ -51,10 +51,6 @@ class TerraDrawMap extends Component {
     };
   }
 
-  componentDidUpdate () {
-    this.resetDrawMap();
-  }
-
   componentWillUnmount () {
     this.resetDrawMap();
   }
@@ -70,15 +66,6 @@ class TerraDrawMap extends Component {
       e.type === 'draw.delete'
     ) {
       this.props.onDeleteDataDraw(e.features);
-    }
-  }
-
-  onDrawRender () {
-    if (this.drawControl && this.props.editable) {
-      this.drawControl.draw.set({
-        type: 'FeatureCollection',
-        features: this.props.features,
-      });
     }
   }
 
@@ -177,7 +164,6 @@ class TerraDrawMap extends Component {
               onDrawCreate={this.onDrawChange}
               onDrawDelete={this.onDrawChange}
               onDrawSelectionChange={onSelectionChange}
-              onDrawRender={this.onDrawRender()}
               controls={{ polygon: true, line_string: true, point: true, trash: true }}
               ref={ref => {
                 this.drawControl = ref;
