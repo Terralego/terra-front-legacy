@@ -74,6 +74,7 @@ class UserrequestList extends React.Component {
    * @param {object} query : couple(s) of key / value parameter(s)
    */
   handleQueryUpdate = (query, reset) => {
+    const { history, location: { search } } = this.props;
     const params = { ...query };
     if (reset) {
       this.props.resetPaginationCache('/userrequest/');
@@ -81,15 +82,15 @@ class UserrequestList extends React.Component {
     }
 
     const mergedLocations = {
-      ...queryString.parse(this.props.location.search),
+      ...queryString.parse(search),
       ...params,
     };
 
-    return this.props.history.push(`/manage-request/?${
-      queryString.stringify({
-        ...removeEmptyObjectKeys(mergedLocations),
-      })
-    }`);
+    const stringifyParams = queryString.stringify({
+      ...removeEmptyObjectKeys(mergedLocations),
+    });
+
+    return history.push(`/manage-request/?${stringifyParams}`);
   }
 
   handleCopy = () => {
