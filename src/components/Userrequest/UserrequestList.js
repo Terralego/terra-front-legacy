@@ -132,11 +132,19 @@ class UserrequestList extends React.Component {
   }
 
   handleTableChange = (pagination, filters, sorter) => {
-    const order = sorter.order === 'descend' ? '-' : '';
-    this.handleQueryUpdate(
-      { ordering: `${order}${sorter.field.replace('.', '__')}` },
-      true,
-    );
+    let query = {};
+    const ObjectKeysFilters = Object.keys(filters);
+    if (ObjectKeysFilters.length) {
+      query = ObjectKeysFilters.reduce((acc, current) => ({
+        ...acc,
+        [`${current}__in`]: filters[current].join(','),
+      }), {});
+    }
+    if (Object.keys(sorter).length) {
+      const order = sorter.order === 'descend' ? '-' : '';
+      query.ordering = `${order}${sorter.field.replace('.', '__')}`;
+    }
+    this.handleQueryUpdate(query, true);
   }
 
   render () {
