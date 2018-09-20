@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom';
 import { Table, Icon, Modal, Button, message } from 'antd';
 import queryString from 'query-string';
 
+import removeEmptyObjectKeys from 'helpers/utils/removeEmptyObjectKeys';
 import { getUserGroups } from 'modules/authentication';
 import { submitData, saveDraft } from 'modules/userrequest';
 import { requestUserrequestPage, updateState, getUserrequestsArrayFilteredByUser } from 'modules/userrequestList';
@@ -78,10 +79,15 @@ class UserrequestList extends React.Component {
       this.props.resetPaginationCache('/userrequest/');
       params.page = 1;
     }
+
+    const mergedLocations = {
+      ...queryString.parse(this.props.location.search),
+      ...params,
+    };
+
     return this.props.history.push(`/manage-request/?${
       queryString.stringify({
-        ...queryString.parse(this.props.location.search),
-        ...params,
+        ...removeEmptyObjectKeys(mergedLocations),
       })
     }`);
   }
