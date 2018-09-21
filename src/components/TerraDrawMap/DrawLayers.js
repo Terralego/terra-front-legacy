@@ -41,5 +41,19 @@ export default ({ data, geojsonPaint, editable }) => (
         }}
       />
     }
+    {editable &&
+      <GeoJSONLayer
+        data={data}
+        linePaint={geojsonPaint.routedLinePaintForbidden}
+        layerOptions={{
+          filter: [
+            'all',
+            ['==', '$type', 'LineString'],
+            ['==', 'routeInProgress', false],
+            ['!=', 'AUT_CYC', 1], // Remplacer AUT_CYC par le filtre attendu et remplacer 1 par la valeur attendue
+          ],
+        }}
+      />
+    }
   </React.Fragment>
 );
