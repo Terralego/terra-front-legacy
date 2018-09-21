@@ -154,6 +154,7 @@ class TerraDrawMap extends Component {
             editable={editable}
             data={{ type: 'FeatureCollection', features }}
             geojsonPaint={geojsonPaint}
+            filters={activityFilters}
           />
 
           {editable &&
@@ -189,6 +190,7 @@ TerraDrawMap.propTypes = {
     PropTypes.object,
   ]),
   FiltersValue: PropTypes.objectOf(PropTypes.string),
+  activityFilters: PropTypes.array,
   zoom: PropTypes.number,
   center: PropTypes.arrayOf(PropTypes.number),
   onUpdateDataDraw: PropTypes.func,
@@ -219,6 +221,7 @@ TerraDrawMap.defaultProps = {
     OFF_PATHS: 'hors_chemins',
     PATHS: 'chemins',
   },
+  activityFilters: [],
   zoom: 11,
   center: [2.62322, 48.40813],
   onUpdateDataDraw: e => e,
