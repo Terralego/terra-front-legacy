@@ -2,7 +2,7 @@ import React from 'react';
 import { GeoJSONLayer } from 'react-mapbox-gl';
 
 export default ({ data, geojsonPaint, editable, filters }) => {
-  const authorisations = filters[0].replace('chemins_', '');
+  const authorisations = `${filters[0]}`.replace('chemins_', '');
   return (
     <React.Fragment>
       {/* Draw features */}
