@@ -13,6 +13,7 @@ import { updateConfigValue } from 'modules/appConfig';
 import HeaderForm from 'components/Form/HeaderForm';
 import FormConfig from 'components/Form/Form.config';
 import FormSummary from 'components/Form/FormSummary';
+import SubmitFailed from 'components/Form/SubmitFailed';
 
 import styles from './Form.module.scss';
 
@@ -49,6 +50,19 @@ class FormApp extends React.Component {
     this.props.resetForm();
   }
 
+  getFormErrors () {
+    const { form: { properties } } = this.props;
+
+    return Array.from(Object.values(properties))
+      .map(property => {
+        const form = property.$form || property;
+        const { model, valid } = form;
+
+        return (!model || valid) ? null : model;
+      })
+      .filter(a => a);
+  }
+
   previewForm = () => {
     this.props.updateConfigValue('formMode', 'preview');
   }
@@ -66,6 +80,10 @@ class FormApp extends React.Component {
         </React.Fragment>
       );
     }
+
+    const { form: { $form: { submitFailed } } } = this.props;
+    const errors = this.getFormErrors();
+
     return (
       <div>
         <HeaderForm showDraft />
@@ -80,6 +98,10 @@ class FormApp extends React.Component {
                 <step.component />
               </Card>
             ))}
+            {submitFailed &&
+            <SubmitFailed
+              errors={errors}
+            />}
             <div style={{ margin: '24px 0', textAlign: 'right' }}>
               <Button size="large" type="primary" htmlType="submit">{FormConfig.confirmation.previewButton}</Button>
             </div>
@@ -95,7 +117,7 @@ class FormApp extends React.Component {
 const mapStateToProps = state => ({
   id: state.userrequest.id,
   mode: state.appConfig.formMode,
-  form: state.forms.userrequest.$form,
+  form: state.forms.userrequest,
   draftStatus: state.appConfig.states.DRAFT,
 });
 
