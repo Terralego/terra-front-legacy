@@ -6,7 +6,8 @@ import { withRouter } from 'react-router-dom';
 import { Table, Icon, Modal, Button, message } from 'antd';
 import queryString from 'query-string';
 
-import removeEmptyObjectKeys from 'helpers/utils/removeEmptyObjectKeys';
+import removeEmptyStringObjectKeys from 'helpers/utils/removeEmptyStringObjectKeys';
+
 import { getUserGroups } from 'modules/authentication';
 import { submitData, saveDraft } from 'modules/userrequest';
 import { requestUserrequestPage, updateState, getUserrequestsArrayFilteredByUser } from 'modules/userrequestList';
@@ -97,7 +98,7 @@ class UserrequestList extends React.Component {
     };
 
     const stringifyParams = queryString.stringify({
-      ...removeEmptyObjectKeys(mergedLocations),
+      ...removeEmptyStringObjectKeys(mergedLocations),
     });
 
     return history.push(`/manage-request/?${stringifyParams}`);
