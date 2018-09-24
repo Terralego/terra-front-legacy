@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
@@ -18,10 +19,19 @@ import withAuthentication from 'hoc/authentication';
 import NewUserrequestButton from 'components/Userrequest/NewUserrequestButton';
 import Pagination from 'components/Userrequest/Pagination';
 import Search from 'components/Userrequest/Search';
+import { hasGroup } from 'helpers/permissionsHelpers';
 
 import styles from './UserrequestList.module.scss';
 
 class UserrequestList extends React.Component {
+  static propTypes = {
+    renderHeader: PropTypes.func,
+  }
+
+  static defaultProps = {
+    renderHeader: ({ isUser, location: { search } }) => getColumns(isUser, search),
+  }
+
   state = {
     selectedRowKeys: [],
   };
@@ -150,7 +160,7 @@ class UserrequestList extends React.Component {
 
   render () {
     const { selectedRowKeys } = this.state;
-    const { isUser, columns, pagination, items } = this.props;
+    const { isUser, pagination, items, loading, renderHeader } = this.props;
 
     const rowSelection = {
       selectedRowKeys,
@@ -191,10 +201,10 @@ class UserrequestList extends React.Component {
         <Table
           rowKey="id"
           scroll={{ x: 800 }}
-          columns={columns}
+          columns={renderHeader(this.props)}
           dataSource={items}
           rowSelection={isUser ? rowSelection : null}
-          loading={this.props.loading}
+          loading={loading}
           onRow={record => (
             {
               onClick: () => {
@@ -215,7 +225,7 @@ const mapStateToProps = (state, ownProps) => ({
   draft: state.userrequest,
   items: getUserrequestsArrayFilteredByUser(state, ownProps.location.search),
   loading: isCurrentPageFetching(state.pagination.userrequestList, ownProps.location.search),
-  columns: getColumns(getUserGroups(state)),
+  isUser: hasGroup(getUserGroups(state), 'user'),
   pagination: getPaginationParams(state.pagination.userrequestList, ownProps.location.search),
 });
 
