@@ -157,7 +157,18 @@ export const getRoutedFeatures = (stateFeatures, featureId, routedFeatures) => {
  * @param {array} featuresId - array of feature ids to delete
  * @returns array of features
  */
-export const deleteFeatureWithRoute = (features, featuresId) => (features.filter(feature =>
-  featuresId.indexOf(feature.properties.id) === -1
-  && featuresId.indexOf(feature.properties.relatedFeatureId) === -1)
-);
+export const deleteFeatureWithRoute = (features, featuresId) => {
+  const featuresToDelete = [...featuresId, ...features.map(feature => {
+    const isLineString = feature.properties.name === 'LineString';
+    const isToDelete = featuresId.indexOf(feature.properties.relatedFeatureId) !== -1;
+
+    return (isLineString && isToDelete)
+      ? feature.properties.id
+      : undefined;
+  })];
+
+  return (features.filter(feature =>
+    featuresToDelete.indexOf(feature.properties.id) === -1
+    || featuresToDelete.indexOf(feature.properties.relatedFeatureId) === -1)
+  );
+};
