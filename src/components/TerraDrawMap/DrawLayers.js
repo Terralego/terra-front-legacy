@@ -21,42 +21,34 @@ export default ({ data, geojsonPaint, editable, filters }) => {
             layerOptions={{ filter: ['==', '$type', 'Point'] }}
           />
 
-          <GeoJSONLayer
-            data={data}
-            linePaint={geojsonPaint.linePaint}
-            layerOptions={{ filter: ['==', '$type', 'LineString'] }}
-          />
         </React.Fragment>
       }
 
       {/* Routing features */}
-      {editable &&
-        <GeoJSONLayer
-          data={data}
-          linePaint={geojsonPaint.routedLinePaint}
-          layerOptions={{
-            filter: [
-              'all',
-              ['==', '$type', 'LineString'],
-              ['==', 'routeInProgress', false],
-            ],
-          }}
-        />
-      }
-      {editable &&
-        <GeoJSONLayer
-          data={data}
-          linePaint={geojsonPaint.routedLinePaintForbidden}
-          layerOptions={{
-            filter: [
-              'all',
-              ['==', '$type', 'LineString'],
-              ['==', 'routeInProgress', false],
-              ['==', authorisations, 0], // Check if path is forbidden, Forbidden = 0.
-            ],
-          }}
-        />
-      }
+      <GeoJSONLayer
+        data={data}
+        linePaint={geojsonPaint.routedLinePaint}
+        layerOptions={{
+          filter: [
+            'all',
+            ['==', '$type', 'LineString'],
+            ['==', 'routeInProgress', false],
+          ],
+        }}
+      />
+
+      <GeoJSONLayer
+        data={data}
+        linePaint={geojsonPaint.routedLinePaintForbidden}
+        layerOptions={{
+          filter: [
+            'all',
+            ['==', '$type', 'LineString'],
+            ['==', 'routeInProgress', false],
+            ['==', authorisations, 0], // Check if path is forbidden, Forbidden = 0.
+          ],
+        }}
+      />
     </React.Fragment>
   );
 };
