@@ -147,7 +147,6 @@ describe('pagination SELECTORS', () => {
           params: {
             limit: 100,
             page: 1,
-            search: '',
             ordering: '-id',
           },
           count: 4,
@@ -169,7 +168,6 @@ describe('pagination SELECTORS', () => {
           params: {
             limit: 100,
             page: 1,
-            search: '',
             ordering: '-id',
           },
           count: 4,
@@ -196,7 +194,6 @@ describe('pagination SELECTORS', () => {
           params: {
             limit: 10,
             page: 1,
-            search: '',
             ordering: '-id',
           },
           count: 0,
@@ -209,7 +206,6 @@ describe('pagination SELECTORS', () => {
           params: {
             limit: 10,
             page: 3,
-            search: '',
             ordering: '-id',
           },
           count: 0,
@@ -309,9 +305,8 @@ describe('pagination ACTIONS', () => {
         type: PAGE_ABORT_REQUEST,
         endpoint: 'test',
         params: {
-          limit: 10,
-          page: 1,
-          search: '',
+          limit: '10',
+          page: '1',
           ordering: '-id',
         },
       }]);
@@ -367,7 +362,6 @@ describe('pagination REDUCERS', () => {
         params: {
           limit: 2,
           page: 1,
-          search: '',
         },
       });
       expect(testReducer).toEqual({
@@ -393,7 +387,6 @@ describe('pagination REDUCERS', () => {
         params: {
           limit: 2,
           page: 1,
-          search: '',
         },
       });
       expect(testReducer).toEqual({
@@ -422,7 +415,6 @@ describe('pagination REDUCERS', () => {
         params: {
           limit: 2,
           page: 1,
-          search: '',
         },
       });
 
@@ -455,7 +447,6 @@ describe('pagination REDUCERS', () => {
         params: {
           limit: 2,
           page: 2,
-          search: '',
         },
       };
       const testReducer = testPaginaton(state, action);

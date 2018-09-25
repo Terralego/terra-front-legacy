@@ -41,9 +41,9 @@ const getQueryFingerprint = ({ limit, page, search }) => {
 const getParams = search => {
   const params = queryString.parse(search);
   return {
-    limit: params.limit ? parseInt(params.limit, 10) : settings.PAGE_SIZE,
-    page: params.page ? parseInt(params.page, 10) : 1,
-    search: params.search || '',
+    ...params,
+    limit: params.limit || settings.PAGE_SIZE,
+    page: params.page || 1,
     ordering: params.ordering || '-id',
   };
 };
