@@ -190,7 +190,10 @@ TerraDrawMap.propTypes = {
     PropTypes.string,
     PropTypes.object,
   ]),
-  FiltersValue: PropTypes.objectOf(PropTypes.string),
+  FiltersValue: PropTypes.shape({
+    OFF_PATHS: PropTypes.string,
+    PATHS: PropTypes.string,
+  }),
   activityFilters: PropTypes.array,
   zoom: PropTypes.number,
   center: PropTypes.arrayOf(PropTypes.number),

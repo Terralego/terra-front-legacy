@@ -1,5 +1,6 @@
 import React from 'react';
 import { Source, Layer } from 'react-mapbox-gl';
+import { getIncidencePeriod } from 'helpers/mapFiltersHelpers';
 
 export default ({ sources }) =>
   sources.map(source => (
@@ -13,7 +14,8 @@ export default ({ sources }) =>
           sourceLayer={layer.sourceLayer}
           id={layer.id}
           paint={layer.paint}
-          filter={layer.filter}
+          // TODO: Replace Date.now by activityDate.
+          filter={['>=', getIncidencePeriod(Date.now()), 0]}
           layout={layer.layout}
         />
     ))}
