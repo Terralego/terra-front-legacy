@@ -108,6 +108,9 @@ class FormMap extends Component {
             onSelectionChange={this.onSelectionChange}
             osmSource="https://{a-c}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png"
             editable={editable}
+            mapDrawerProps={{
+              expandOnInit: editable,
+            }}
           />
         </Col>
         <Col span={24} lg={24}>

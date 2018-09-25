@@ -122,8 +122,8 @@ class TerraDrawMap extends Component {
       editable,
       features,
       filters,
+      mapDrawerProps,
     } = this.props;
-
     // Map component is created in constructor
     const { Map } = this;
 
@@ -174,6 +174,7 @@ class TerraDrawMap extends Component {
         </Map>
 
         <MapDrawer
+          {...mapDrawerProps}
           sources={sources}
           filters={filters}
           setLayerVisibility={this.setLayerVisibility}
@@ -213,6 +214,9 @@ TerraDrawMap.propTypes = {
   }),
   editable: PropTypes.bool,
   features: PropTypes.array,
+  mapDrawerProps: PropTypes.shape({
+    expandOnInit: PropTypes.bool,
+  }),
 };
 
 TerraDrawMap.defaultProps = {

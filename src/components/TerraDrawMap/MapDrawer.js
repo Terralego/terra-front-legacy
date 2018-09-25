@@ -7,7 +7,9 @@ import TerraDrawMapFilters from 'components/TerraDrawMap/TerraDrawMapFilters';
 
 class MapDrawer extends React.Component {
   state = {
-    expanded: true,
+    expanded: this.props.expandOnInit === undefined
+      ? true
+      : this.props.expandOnInit,
   };
 
   toggleDrawer = () =>
