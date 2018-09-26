@@ -2,15 +2,13 @@ import React from 'react';
 import { Alert, Icon } from 'antd';
 import { getFeatureType } from 'helpers/mapHelpers';
 
-const getMessage = (i, type) => `${getFeatureType(type)} ${i}`;
-
 const FeatureMessage = ({
   feature: { properties: { id }, geometry: { type } },
   i,
   ...props
 }) => (
   <Alert
-    message={getMessage(i, type)}
+    message={`${getFeatureType(type)} ${i}`}
     type="info"
     style={{ marginTop: 12 }}
     closeText={props.editable && <Icon type="delete" style={{ fontSize: 20 }} />}
