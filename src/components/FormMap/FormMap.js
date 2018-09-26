@@ -122,6 +122,7 @@ class FormMap extends Component {
               deleteFeatureById={this.deleteDrawData}
               editable={editable}
               withIncidence={withIncidence}
+              activityDates={this.props.activityDates}
             />
           </Card>
         </Col>

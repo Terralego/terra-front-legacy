@@ -20,11 +20,12 @@ export const getFeaturesWithIncidence = (response, features) => {
       return feature;
     }
     response.results.features.forEach(intersection => {
-      if (intersection.properties[0].GRIDCODE > incidence.GRIDCODE) {
+      // TODO: Get GRIDCODE lvl by dates.
+      if (intersection.properties.GRIDCODE3 > incidence.GRIDCODE) {
         incidence = {
-          GRIDCODE: intersection.properties[0].GRIDCODE,
-          date_from: intersection.properties[0].date_from,
-          date_to: intersection.properties[0].date_to,
+          GRIDCODE: intersection.properties.GRIDCODE1,
+          // date_from: intersection.properties[0].date_from,
+          // date_to: intersection.properties[0].date_to,
         };
       }
     });

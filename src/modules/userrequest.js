@@ -244,7 +244,7 @@ export const saveDraft = (data, form = 'userrequest') => (dispatch, getState) =>
  */
 export const getIntersections = (feature, eventDateStart, eventDateEnd) => ({
   [CALL_API]: {
-    endpoint: '/layer/reference/intersects/',
+    endpoint: '/layer/hors_chemins/intersects/',
     types: [INTERSECT_REQUEST, INTERSECT_SUCCESS, INTERSECT_FAILURE],
     config: {
       headers: defaultHeaders,
