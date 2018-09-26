@@ -17,7 +17,7 @@ import SubmitFailed from 'components/Form/SubmitFailed';
 
 import styles from './Form.module.scss';
 
-const isDraft = props => props.state === props.draftStatus;
+const isDraft = props => props.data && props.data.state === props.draftStatus;
 const isNew = (prevProps, props) => !prevProps.data && !props.data && props.id;
 const isExisting = (prevProps, props) => props.id && prevProps.data && props.data
   && prevProps.data.updated_at !== props.data.updated_at && prevProps.data.updated_at;
