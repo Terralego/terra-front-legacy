@@ -115,7 +115,11 @@ const userrequest = (state = initialState, action) => {
         ...state,
         geojson: {
           ...state.geojson,
-          features: getFeaturesWithIncidence(action.data, state.geojson.features),
+          features: getFeaturesWithIncidence(
+            action.data,
+            state.geojson.features,
+            state.properties.activities[0].eventDates,
+          ),
         },
       };
     case ROUTING_SUCCESS:

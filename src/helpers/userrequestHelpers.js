@@ -1,4 +1,5 @@
 import guid from 'helpers/guidHelpers';
+import getIncidencePeriods from 'helpers/incidencePeriodHelpers';
 
 /**
  * Creation of an initial gricode equal to zero, while mapping through the features
@@ -9,9 +10,14 @@ import guid from 'helpers/guidHelpers';
  * @param  {Array} features : the feature, we want obtain the gridcode
  * @return {Array} the feature with this incidence
  */
-export const getFeaturesWithIncidence = (response, features) => {
+export const getFeaturesWithIncidence = (response, features, eventDates) => {
   if (!response || !response.results || response.results.length < 1) {
     return features;
+  }
+
+  let incidencePeriods = 0;
+  if (eventDates.length) {
+    incidencePeriods = getIncidencePeriods(eventDates);
   }
 
   return features.map(feature => {
@@ -21,12 +27,15 @@ export const getFeaturesWithIncidence = (response, features) => {
     }
     response.results.features.forEach(intersection => {
       // TODO: Get GRIDCODE lvl by dates.
-      if (intersection.properties.GRIDCODE3 > incidence.GRIDCODE) {
-        incidence = {
-          GRIDCODE: intersection.properties.GRIDCODE1,
-          // date_from: intersection.properties[0].date_from,
-          // date_to: intersection.properties[0].date_to,
-        };
+      if (eventDates.length) {
+        incidence = Object.keys(incidencePeriods).reduce((acc, key) => {
+          if (intersection.properties[key] > incidence.GRIDCODE) {
+            return { ...acc, GRIDCODE: intersection.properties[key] };
+          }
+          return { ...acc };
+        }, incidence);
+      } else {
+        incidence = { GRIDCODE: 0 };
       }
     });
     return {
