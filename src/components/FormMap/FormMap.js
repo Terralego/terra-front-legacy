@@ -83,6 +83,7 @@ class FormMap extends Component {
       activityFilters,
       FiltersValue,
       activityDates,
+      mapProps,
     } = this.props;
     const activityFeatures = getActivityFeatures(features, activity.uid);
     const featureList = activityFeatures.filter(feature => !feature.properties.routeInProgress);
@@ -113,6 +114,7 @@ class FormMap extends Component {
             mapDrawerProps={{
               expandOnInit: editable,
             }}
+            mapProps={mapProps}
           />
         </Col>
         <Col span={24} lg={24}>
@@ -161,6 +163,7 @@ FormMap.propTypes = {
     }),
     geometry: PropTypes.object,
   })),
+  mapProps: PropTypes.object,
 };
 
 FormMap.defaultProps = {
@@ -172,6 +175,7 @@ FormMap.defaultProps = {
   },
   withIncidence: false,
   editable: false,
+  mapProps: {},
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(FormMap);
