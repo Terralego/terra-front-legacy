@@ -32,6 +32,7 @@ class HeaderForm extends React.Component {
       pushHistory();
     } else {
       Modal.confirm({
+        className: styles['flip-buttons'],
         title: t('Your form isn\'t saved yet. If you go back you will lost all data. Are you sure?'),
         okText: t('Yes'),
         okType: 'danger',
