@@ -98,6 +98,7 @@ class FormMap extends Component {
             activityFilters={activityFilters}
             maxZoom={21}
             zoom={13}
+            activityDates={this.props.activityDates}
             center={[2.62322, 48.40813]}
             maxBounds={[[2.2917527636, 48.1867854393], [3.1004132613, 48.6260818006]]}
             ref={el => {

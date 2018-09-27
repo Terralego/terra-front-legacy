@@ -122,6 +122,7 @@ class TerraDrawMap extends Component {
       editable,
       features,
       filters,
+      activityDates,
       mapDrawerProps,
     } = this.props;
     // Map component is created in constructor
@@ -148,7 +149,7 @@ class TerraDrawMap extends Component {
           {...this.customMapProps}
         >
 
-          <MapSources sources={sources} />
+          <MapSources sources={sources} activityDates={activityDates} />
 
           <DrawLayers
             editable={editable}
