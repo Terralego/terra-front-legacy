@@ -14,3 +14,15 @@
     display: none;
   }
 }
+
+.flip-buttons {
+  :global(.ant-confirm-btns) {
+    display: flex;
+    flex-direction: row-reverse;
+
+    button + button {
+      margin-left: 0;
+      margin-right: 8px;
+    }
+  }
+}
