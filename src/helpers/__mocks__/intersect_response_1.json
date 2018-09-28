@@ -16,10 +16,10 @@
         "type": "Feature",
         "properties": [
           {
-            "ID": 1034,
-            "GRIDCODE": 1,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "fid": 1255,
+            "GRIDCODE1": 0,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2
           }
         ],
         "geometry": {
@@ -586,14 +586,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 945,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 1,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_00945",
             "LLIB_VCI": "Route du Long Boyau",
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 228.297552,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 228.297552
           }
         ],
         "geometry": {
@@ -640,14 +640,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 5981,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 1,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 0,
+            "GRIDCODE3": 3,
             "IIDT_TRC": "FONT_05981",
             "LLIB_VCI": null,
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 260.022382,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 260.022382
           }
         ],
         "geometry": {

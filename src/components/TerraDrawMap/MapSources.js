@@ -1,8 +1,13 @@
 import React from 'react';
 import { Source, Layer } from 'react-mapbox-gl';
+import { drawStyles } from 'components/FormMap/FormMap.config';
+import { getIncidencePeriods } from 'helpers/incidencePeriodHelpers';
 
-export default ({ sources }) =>
-  sources.map(source => (
+export default ({ sources, activityDates = [] }) => {
+  const incidences = getIncidencePeriods(activityDates);
+  const getter = Object.keys(incidences).map(i => ['get', i]);
+
+  return sources.map(source => (
     <React.Fragment key={source.id}>
       <Source id={source.id} tileJsonSource={source.options} />
       {source.layers.map(layer => (
@@ -12,10 +17,26 @@ export default ({ sources }) =>
           sourceId={source.id}
           sourceLayer={layer.sourceLayer}
           id={layer.id}
-          paint={layer.paint}
-          filter={layer.filter}
+          paint={
+            layer.id === 'hors_chemins' && activityDates.length
+            ? {
+              'fill-opacity': 0.4,
+              'fill-color':
+                ['match',
+                  ['max', ...getter],
+                  0, drawStyles.green45,
+                  1, drawStyles.yellow45,
+                  2, drawStyles.darkYellow45,
+                  3, drawStyles.red45,
+                  4, drawStyles.darkRed45,
+                  'transparent',
+                ],
+              }
+            : layer.paint
+          }
           layout={layer.layout}
         />
-    ))}
+      ))}
     </React.Fragment>
   ));
+};

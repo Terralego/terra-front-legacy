@@ -115,7 +115,11 @@ const userrequest = (state = initialState, action) => {
         ...state,
         geojson: {
           ...state.geojson,
-          features: getFeaturesWithIncidence(action.data, state.geojson.features),
+          features: getFeaturesWithIncidence(
+            action.data,
+            state.geojson.features,
+            state.properties.activities[0].eventDates,
+          ),
         },
       };
     case ROUTING_SUCCESS:
@@ -244,7 +248,7 @@ export const saveDraft = (data, form = 'userrequest') => (dispatch, getState) =>
  */
 export const getIntersections = (feature, eventDateStart, eventDateEnd) => ({
   [CALL_API]: {
-    endpoint: '/layer/reference/intersects/',
+    endpoint: '/layer/hors_chemins/intersects/',
     types: [INTERSECT_REQUEST, INTERSECT_SUCCESS, INTERSECT_FAILURE],
     config: {
       headers: defaultHeaders,
