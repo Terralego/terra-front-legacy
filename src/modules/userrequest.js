@@ -195,9 +195,11 @@ export const openDraft = data => dispatch => {
  * resetForm restore form in its initial state with react-redux-form action
  * and clear userrequest data
  */
-export const resetForm = () => dispatch => {
-  dispatch(actions.setInitial('userrequest'));
-  return dispatch({ type: RESET_FORM });
+export const resetForm = ({ full } = {}) => dispatch => {
+  dispatch(actions.reset('userrequest'));
+  if (full) {
+    dispatch({ type: RESET_FORM });
+  }
 };
 
 /**

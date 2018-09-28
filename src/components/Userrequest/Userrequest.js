@@ -29,11 +29,14 @@ class Userrequest extends React.Component {
     if (data) {
       return this.props.openDraft(data);
     }
+
+    this.props.resetForm();
     return this.props.fetchUserrequest(id);
   }
 
   componentWillUnmount () {
-    this.props.resetForm();
+    const full = true;
+    this.props.resetForm({ full });
   }
 
   render () {
