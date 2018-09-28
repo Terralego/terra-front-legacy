@@ -27,6 +27,8 @@ const reviewers = [
   },
 ];
 
+const incidence = { GRIDCODE: 0 };
+
 describe('getReviewersByUuid', () => {
   it('should return an object of reviewers', () => {
     expect(getReviewersByUuid(reviewers)).toEqual({
@@ -69,11 +71,7 @@ describe('getFeaturesWithIncidence', () => {
       {
         type: 'Feature',
         id: 'a',
-        properties: {
-          incidence: { GRIDCODE: 1,
-            date_from: '04-01',
-            date_to: '07-31' },
-        },
+        properties: { incidence },
       },
       {
         type: 'Feature',
@@ -103,11 +101,7 @@ describe('getFeaturesWithIncidence', () => {
       {
         type: 'Feature',
         id: 'b',
-        properties: {
-          incidence: { GRIDCODE: 3,
-            date_from: '04-01',
-            date_to: '07-31' },
-        },
+        properties: { incidence },
       },
       {
         type: 'Feature',
@@ -136,11 +130,7 @@ describe('getFeaturesWithIncidence', () => {
       {
         type: 'Feature',
         id: 'c',
-        properties: {
-          incidence: { GRIDCODE: 4,
-            date_from: '04-01',
-            date_to: '07-31' },
-        },
+        properties: { incidence },
       },
       {
         type: 'Feature',

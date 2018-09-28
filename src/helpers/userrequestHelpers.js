@@ -16,7 +16,7 @@ export const getFeaturesWithIncidence = (response, features, eventDates) => {
   }
 
   let incidencePeriods = 0;
-  if (eventDates.length) {
+  if (eventDates && eventDates.length) {
     incidencePeriods = getIncidencePeriods(eventDates);
   }
 
@@ -27,15 +27,13 @@ export const getFeaturesWithIncidence = (response, features, eventDates) => {
     }
     response.results.features.forEach(intersection => {
       // TODO: Get GRIDCODE lvl by dates.
-      if (eventDates.length) {
+      if (incidencePeriods) {
         incidence = Object.keys(incidencePeriods).reduce((acc, key) => {
           if (intersection.properties[key] > incidence.GRIDCODE) {
             return { ...acc, GRIDCODE: intersection.properties[key] };
           }
           return { ...acc };
         }, incidence);
-      } else {
-        incidence = { GRIDCODE: 0 };
       }
     });
     return {

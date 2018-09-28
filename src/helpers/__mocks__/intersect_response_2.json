@@ -26,14 +26,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 885,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 2,
+            "GRIDCODE1": 2,
+            "GRIDCODE2": 0,
+            "GRIDCODE3": 3,
             "IIDT_TRC": "FONT_00885",
             "LLIB_VCI": "Route de Beringhem",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 281.67089,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 281.67089
           }
         ],
         "geometry": {
@@ -64,14 +64,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 889,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 2,
+            "GRIDCODE1": 2,
+            "GRIDCODE2": 0,
+            "GRIDCODE3": 3,
             "IIDT_TRC": "FONT_00889",
             "LLIB_VCI": "Route de Beringhem",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 375.666474,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 375.666474
           }
         ],
         "geometry": {
@@ -106,14 +106,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 4983,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 2,
+            "GRIDCODE1": 2,
+            "GRIDCODE2": 0,
+            "GRIDCODE3": 3,
             "IIDT_TRC": "FONT_04983",
             "LLIB_VCI": "Route Lemonnier",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 267.517132,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 267.517132
           }
         ],
         "geometry": {
@@ -144,14 +144,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 4984,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 2,
+            "GRIDCODE1": 2,
+            "GRIDCODE2": 0,
+            "GRIDCODE3": 3,
             "IIDT_TRC": "FONT_04984",
             "LLIB_VCI": "Route de la Croix Saint-Jacques",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 334.344514,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 334.344514
           }
         ],
         "geometry": {
@@ -182,14 +182,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 4993,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 3,
+            "GRIDCODE1": 2,
+            "GRIDCODE2": 0,
+            "GRIDCODE3": 3,
             "IIDT_TRC": "FONT_04993",
             "LLIB_VCI": "Route d'Occident",
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 327.673261,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 327.673261
           }
         ],
         "geometry": {
@@ -220,14 +220,14 @@
             "CCOD_FRT": "HSFD",
             "CCOD_TRC": 2435,
             "DESSERTE": "Route",
-            "GRIDCODE": 0,
+            "GRIDCODE1": 2,
+            "GRIDCODE2": 0,
+            "GRIDCODE3": 3,
             "IIDT_TRC": "HSFD_02435",
             "LLIB_VCI": null,
             "CCOD_REVN": "RV",
             "LARGE_TRC": "> 4 m",
-            "Shape_Leng": 206.702474,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 206.702474
           }
         ],
         "geometry": {
@@ -258,14 +258,14 @@
             "CCOD_FRT": "HSFD",
             "CCOD_TRC": 2436,
             "DESSERTE": "Route",
-            "GRIDCODE": 0,
+            "GRIDCODE1": 2,
+            "GRIDCODE2": 0,
+            "GRIDCODE3": 3,
             "IIDT_TRC": "HSFD_02436",
             "LLIB_VCI": null,
             "CCOD_REVN": "RV",
             "LARGE_TRC": "> 4 m",
-            "Shape_Leng": 151.058028,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 151.058028
           }
         ],
         "geometry": {
@@ -291,9 +291,9 @@
         "properties": [
           {
             "ID": 1011,
-            "GRIDCODE": 0,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "GRIDCODE1": 2,
+            "GRIDCODE2": 0,
+            "GRIDCODE3": 3
           }
         ],
         "geometry": {
@@ -329,9 +329,9 @@
         "properties": [
           {
             "ID": 1016,
-            "GRIDCODE": 1,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "GRIDCODE1": 2,
+            "GRIDCODE2": 0,
+            "GRIDCODE3": 3
           }
         ],
         "geometry": {
@@ -367,9 +367,9 @@
         "properties": [
           {
             "ID": 1034,
-            "GRIDCODE": 1,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "GRIDCODE1": 2,
+            "GRIDCODE2": 0,
+            "GRIDCODE3": 3
           }
         ],
         "geometry": {
@@ -927,9 +927,9 @@
         "properties": [
           {
             "ID": 1129,
-            "GRIDCODE": 3,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "GRIDCODE1": 2,
+            "GRIDCODE2": 0,
+            "GRIDCODE3": 3
           }
         ],
         "geometry": {

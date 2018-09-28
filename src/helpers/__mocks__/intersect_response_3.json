@@ -26,14 +26,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 396,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 3,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_00396",
             "LLIB_VCI": "Route Circulaire",
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 258.868194,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 258.868194
           }
         ],
         "geometry": {
@@ -68,14 +68,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 397,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 3,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_00397",
             "LLIB_VCI": "Route forestire de la Plaine de la Haute Borne",
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 417.87395,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 417.87395
           }
         ],
         "geometry": {
@@ -106,14 +106,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 416,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 2,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_00416",
             "LLIB_VCI": "Route forestire de la Plaine de la Haute Borne",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 456.4657,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 456.4657
           }
         ],
         "geometry": {
@@ -176,14 +176,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 417,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 2,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_00417",
             "LLIB_VCI": "Route de la Fontaine Sainte Marguerite",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 419.692778,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 419.692778
           }
         ],
         "geometry": {
@@ -230,14 +230,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 418,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 2,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_00418",
             "LLIB_VCI": "Route de la Fontaine Sainte Marguerite",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 376.825125,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 376.825125
           }
         ],
         "geometry": {
@@ -312,14 +312,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 419,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 2,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_00419",
             "LLIB_VCI": "Route de la Fontaine Sainte Marguerite",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 51.960757,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 51.960757
           }
         ],
         "geometry": {
@@ -350,14 +350,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 420,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 2,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_00420",
             "LLIB_VCI": "Route forestire de la Plaine de la Haute Borne",
             "CCOD_REVN": "RV",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 475.500287,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 475.500287
           }
         ],
         "geometry": {
@@ -448,14 +448,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 424,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 2,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_00424",
             "LLIB_VCI": "Route forestire de la Plaine de la Haute Borne",
             "CCOD_REVN": "RV",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 263.070971,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 263.070971
           }
         ],
         "geometry": {
@@ -534,14 +534,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 425,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 2,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_00425",
             "LLIB_VCI": "Route forestire de la Plaine de la Haute Borne",
             "CCOD_REVN": "RV",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 98.499849,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 98.499849
           }
         ],
         "geometry": {
@@ -588,14 +588,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 426,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 2,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_00426",
             "LLIB_VCI": "Route forestire de la Plaine de la Haute Borne",
             "CCOD_REVN": "RV",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 137.420608,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 137.420608
           }
         ],
         "geometry": {
@@ -666,14 +666,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 427,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 2,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_00427",
             "LLIB_VCI": "Route forestire de la Plaine de la Haute Borne",
             "CCOD_REVN": "RV",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 78.417933,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 78.417933
           }
         ],
         "geometry": {
@@ -724,14 +724,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 428,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 2,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_00428",
             "LLIB_VCI": "Route forestire de la Plaine de la Haute Borne",
             "CCOD_REVN": "RV",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 55.194628,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 55.194628
           }
         ],
         "geometry": {
@@ -770,14 +770,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 429,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 2,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_00429",
             "LLIB_VCI": "Route forestire de la Plaine de la Haute Borne",
             "CCOD_REVN": "RV",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 410.078907,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 410.078907
           }
         ],
         "geometry": {
@@ -872,14 +872,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 511,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 2,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_00511",
             "LLIB_VCI": "Route Descamps",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 599.384828,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 599.384828
           }
         ],
         "geometry": {
@@ -990,14 +990,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 512,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 2,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_00512",
             "LLIB_VCI": "Route Descamps",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 130.159103,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 130.159103
           }
         ],
         "geometry": {
@@ -1040,14 +1040,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 513,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 2,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_00513",
             "LLIB_VCI": "Route Circulaire",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 212.612571,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 212.612571
           }
         ],
         "geometry": {
@@ -1106,14 +1106,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 514,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 2,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_00514",
             "LLIB_VCI": "Route Descamps",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 454.348055,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 454.348055
           }
         ],
         "geometry": {
@@ -1184,14 +1184,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 517,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 0,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_00517",
             "LLIB_VCI": "Route Circulaire",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 277.710241,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 277.710241
           }
         ],
         "geometry": {
@@ -1226,14 +1226,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 518,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 0,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_00518",
             "LLIB_VCI": "Route Circulaire",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 20.170864,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 20.170864
           }
         ],
         "geometry": {
@@ -1264,14 +1264,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 519,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 0,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_00519",
             "LLIB_VCI": "Route Circulaire",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 127.271795,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 127.271795
           }
         ],
         "geometry": {
@@ -1314,14 +1314,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 520,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 2,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_00520",
             "LLIB_VCI": "Route Circulaire",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 170.622827,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 170.622827
           }
         ],
         "geometry": {
@@ -1356,14 +1356,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 521,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 2,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_00521",
             "LLIB_VCI": "Route forestire de la Plaine de la Haute Borne",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 583.523141,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 583.523141
           }
         ],
         "geometry": {
@@ -1458,14 +1458,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 522,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 2,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_00522",
             "LLIB_VCI": "Route Circulaire",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 457.030537,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 457.030537
           }
         ],
         "geometry": {
@@ -1540,14 +1540,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 523,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 2,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_00523",
             "LLIB_VCI": "Route du Gros Buisson",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 315.445579,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 315.445579
           }
         ],
         "geometry": {
@@ -1586,14 +1586,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 524,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 2,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_00524",
             "LLIB_VCI": "Route des Platires",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 312.839657,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 312.839657
           }
         ],
         "geometry": {
@@ -1628,14 +1628,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 525,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 0,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_00525",
             "LLIB_VCI": "Route du Gros Buisson",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 274.923896,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 274.923896
           }
         ],
         "geometry": {
@@ -1666,14 +1666,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 526,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 2,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_00526",
             "LLIB_VCI": "Route Circulaire",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 381.716866,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 381.716866
           }
         ],
         "geometry": {
@@ -1712,14 +1712,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 527,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 2,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_00527",
             "LLIB_VCI": "Route Circulaire",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 231.94629,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 231.94629
           }
         ],
         "geometry": {
@@ -1754,14 +1754,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 528,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 2,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_00528",
             "LLIB_VCI": "Route Circulaire",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 356.39904,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 356.39904
           }
         ],
         "geometry": {
@@ -1796,14 +1796,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 529,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 2,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_00529",
             "LLIB_VCI": "Route forestire de la Plaine de la Haute Borne",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 519.306619,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 519.306619
           }
         ],
         "geometry": {
@@ -1898,14 +1898,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 530,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 0,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_00530",
             "LLIB_VCI": "Route des Borlots",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 350.330325,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 350.330325
           }
         ],
         "geometry": {
@@ -1936,14 +1936,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 532,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 0,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_00532",
             "LLIB_VCI": "Route des Borlots",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 96.408594,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 96.408594
           }
         ],
         "geometry": {
@@ -1974,14 +1974,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 533,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 0,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_00533",
             "LLIB_VCI": "Route du Gros Buisson",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 335.031608,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 335.031608
           }
         ],
         "geometry": {
@@ -2012,14 +2012,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 534,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 0,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_00534",
             "LLIB_VCI": "Chemin d'Achre  Fontainebleau",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 280.808428,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 280.808428
           }
         ],
         "geometry": {
@@ -2050,14 +2050,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 535,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 2,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_00535",
             "LLIB_VCI": "Route du Gros Buisson",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 127.781318,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 127.781318
           }
         ],
         "geometry": {
@@ -2088,14 +2088,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 536,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 2,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_00536",
             "LLIB_VCI": "Route de la Gorge aux Archers",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 168.99903,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 168.99903
           }
         ],
         "geometry": {
@@ -2150,14 +2150,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 537,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 2,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_00537",
             "LLIB_VCI": "Route de la Gorge aux Archers",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 260.134509,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 260.134509
           }
         ],
         "geometry": {
@@ -2236,14 +2236,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 538,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 0,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_00538",
             "LLIB_VCI": "Route du Vacher",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 364.268391,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 364.268391
           }
         ],
         "geometry": {
@@ -2306,14 +2306,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 541,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 0,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_00541",
             "LLIB_VCI": "Route de la Gorge aux Archers",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 238.685175,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 238.685175
           }
         ],
         "geometry": {
@@ -2344,14 +2344,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 544,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 4,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_00544",
             "LLIB_VCI": "Route forestire de la Plaine de la Haute Borne",
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 438.509344,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 438.509344
           }
         ],
         "geometry": {
@@ -2406,14 +2406,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 545,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 2,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_00545",
             "LLIB_VCI": "Route forestire de la Plaine de la Haute Borne",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 624.812787,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 624.812787
           }
         ],
         "geometry": {
@@ -2452,14 +2452,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 546,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 2,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_00546",
             "LLIB_VCI": "Route Descamps",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 138.337503,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 138.337503
           }
         ],
         "geometry": {
@@ -2494,14 +2494,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 547,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 4,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_00547",
             "LLIB_VCI": "Route du Sapin Blanc\n\n",
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 300.036824,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 300.036824
           }
         ],
         "geometry": {
@@ -2552,14 +2552,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 548,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 4,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_00548",
             "LLIB_VCI": "Route de la Gorge aux Archers",
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 168.146506,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 168.146506
           }
         ],
         "geometry": {
@@ -2618,14 +2618,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 551,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 3,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_00551",
             "LLIB_VCI": "Route Descamps",
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 659.709311,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 659.709311
           }
         ],
         "geometry": {
@@ -2664,14 +2664,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 552,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 3,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_00552",
             "LLIB_VCI": "route du collet",
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 348.800283,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 348.800283
           }
         ],
         "geometry": {
@@ -2770,14 +2770,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 553,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 3,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_00553",
             "LLIB_VCI": "route du furet",
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 126.690151,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 126.690151
           }
         ],
         "geometry": {
@@ -2836,14 +2836,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 554,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 4,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_00554",
             "LLIB_VCI": "Route des Platires",
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 49.172701,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 49.172701
           }
         ],
         "geometry": {
@@ -2878,14 +2878,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 555,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 2,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_00555",
             "LLIB_VCI": "Route des Platires",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 174.807318,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 174.807318
           }
         ],
         "geometry": {
@@ -2916,14 +2916,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 556,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 3,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_00556",
             "LLIB_VCI": "route du panneau",
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 411.937815,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 411.937815
           }
         ],
         "geometry": {
@@ -3058,14 +3058,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 565,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 4,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_00565",
             "LLIB_VCI": "route de la hase",
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 237.854972,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 237.854972
           }
         ],
         "geometry": {
@@ -3132,14 +3132,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 566,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 4,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_00566",
             "LLIB_VCI": "Route des Platires",
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 370.424324,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 370.424324
           }
         ],
         "geometry": {
@@ -3230,14 +3230,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 567,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 4,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_00567",
             "LLIB_VCI": "NC",
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 117.724032,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 117.724032
           }
         ],
         "geometry": {
@@ -3268,14 +3268,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 568,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 4,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_00568",
             "LLIB_VCI": "Route des Platires",
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 325.997323,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 325.997323
           }
         ],
         "geometry": {
@@ -3334,14 +3334,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 733,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 0,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_00733",
             "LLIB_VCI": "Chemin d'Achre  Fontainebleau",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 124.020754,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 124.020754
           }
         ],
         "geometry": {
@@ -3372,14 +3372,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 734,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 0,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_00734",
             "LLIB_VCI": "Chemin d'Achre  Fontainebleau",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 478.628641,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 478.628641
           }
         ],
         "geometry": {
@@ -3410,14 +3410,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 2343,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 2,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_02343",
             "LLIB_VCI": "Chemin d'Arbonne  Achre",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 276.610722,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 276.610722
           }
         ],
         "geometry": {
@@ -3488,14 +3488,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 2344,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 2,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_02344",
             "LLIB_VCI": "Chemin d'Arbonne  Achre",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 148.208801,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 148.208801
           }
         ],
         "geometry": {
@@ -3550,14 +3550,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 2345,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 2,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_02345",
             "LLIB_VCI": "Chemin d'Arbonne  Achre",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 501.308439,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 501.308439
           }
         ],
         "geometry": {
@@ -3656,14 +3656,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 2350,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 2,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_02350",
             "LLIB_VCI": "Route des Platires",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 305.143751,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 305.143751
           }
         ],
         "geometry": {
@@ -3706,14 +3706,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 2351,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 4,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_02351",
             "LLIB_VCI": "Route des Platires",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 152.673867,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 152.673867
           }
         ],
         "geometry": {
@@ -3744,14 +3744,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 2352,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 4,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_02352",
             "LLIB_VCI": "Route des Platires",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 151.19924,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 151.19924
           }
         ],
         "geometry": {
@@ -3782,14 +3782,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 2353,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 4,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_02353",
             "LLIB_VCI": "Route des Platires",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 146.655883,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 146.655883
           }
         ],
         "geometry": {
@@ -3828,14 +3828,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 2354,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 4,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_02354",
             "LLIB_VCI": "Route des Platires",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 214.90394,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 214.90394
           }
         ],
         "geometry": {
@@ -3874,14 +3874,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 2355,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 4,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_02355",
             "LLIB_VCI": null,
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 46.35294,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 46.35294
           }
         ],
         "geometry": {
@@ -3912,14 +3912,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 2356,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 4,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_02356",
             "LLIB_VCI": "Route des Platires",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 377.852917,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 377.852917
           }
         ],
         "geometry": {
@@ -3994,14 +3994,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 2357,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 4,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_02357",
             "LLIB_VCI": "Route des Platires",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 136.110819,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 136.110819
           }
         ],
         "geometry": {
@@ -4048,14 +4048,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 2358,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 4,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_02358",
             "LLIB_VCI": "Route des Platires",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 156.588154,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 156.588154
           }
         ],
         "geometry": {
@@ -4086,14 +4086,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 2359,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 4,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_02359",
             "LLIB_VCI": "Route des Platires",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 169.224922,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 169.224922
           }
         ],
         "geometry": {
@@ -4128,14 +4128,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 2360,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 4,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_02360",
             "LLIB_VCI": "Route d'Achre  Arbonne",
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 370.557886,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 370.557886
           }
         ],
         "geometry": {
@@ -4178,14 +4178,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 2361,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 4,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_02361",
             "LLIB_VCI": "route du furet",
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 363.143018,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 363.143018
           }
         ],
         "geometry": {
@@ -4224,14 +4224,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 2362,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 4,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_02362",
             "LLIB_VCI": null,
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 160.849576,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 160.849576
           }
         ],
         "geometry": {
@@ -4266,14 +4266,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 2363,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 4,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_02363",
             "LLIB_VCI": "Route du Sapin Blanc\n\n",
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 96.965392,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 96.965392
           }
         ],
         "geometry": {
@@ -4316,14 +4316,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 2364,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 4,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_02364",
             "LLIB_VCI": "Route d'Achre  Arbonne",
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 325.257176,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 325.257176
           }
         ],
         "geometry": {
@@ -4358,14 +4358,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 2365,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 2,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_02365",
             "LLIB_VCI": "Route forestire de la Plaine de la Haute Borne",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 258.606657,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 258.606657
           }
         ],
         "geometry": {
@@ -4396,14 +4396,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 2366,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 2,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_02366",
             "LLIB_VCI": "Route Circulaire",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 364.271581,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 364.271581
           }
         ],
         "geometry": {
@@ -4442,14 +4442,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 2367,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 4,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_02367",
             "LLIB_VCI": "Route d'Achre  Arbonne",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 243.180499,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 243.180499
           }
         ],
         "geometry": {
@@ -4496,14 +4496,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 2368,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 4,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_02368",
             "LLIB_VCI": "Route des Platires",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 104.495368,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 104.495368
           }
         ],
         "geometry": {
@@ -4542,14 +4542,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 2369,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 4,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_02369",
             "LLIB_VCI": "Route d'Achre  Arbonne",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 146.008955,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 146.008955
           }
         ],
         "geometry": {
@@ -4580,14 +4580,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 2370,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 4,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_02370",
             "LLIB_VCI": "Route du Sapin Blanc\n\n",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 199.767083,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 199.767083
           }
         ],
         "geometry": {
@@ -4646,14 +4646,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 2371,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 4,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_02371",
             "LLIB_VCI": "Route des Platires",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 232.661234,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 232.661234
           }
         ],
         "geometry": {
@@ -4700,14 +4700,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 2372,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 4,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_02372",
             "LLIB_VCI": "Route forestire de la Plaine de la Haute Borne",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 580.894361,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 580.894361
           }
         ],
         "geometry": {
@@ -4806,14 +4806,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 2373,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 3,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_02373",
             "LLIB_VCI": "Route de la Fontaine Sainte Marguerite",
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 281.840157,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 281.840157
           }
         ],
         "geometry": {
@@ -4844,14 +4844,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 2374,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 4,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_02374",
             "LLIB_VCI": "NC",
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 523.111302,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 523.111302
           }
         ],
         "geometry": {
@@ -4906,14 +4906,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 2375,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 4,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_02375",
             "LLIB_VCI": "Route des Borlots",
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 355.820121,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 355.820121
           }
         ],
         "geometry": {
@@ -4960,14 +4960,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 2376,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 2,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_02376",
             "LLIB_VCI": "Route forestire de la Plaine de la Haute Borne",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 515.63042,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 515.63042
           }
         ],
         "geometry": {
@@ -5050,14 +5050,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 2377,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 2,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_02377",
             "LLIB_VCI": "Route Circulaire",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 24.460874,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 24.460874
           }
         ],
         "geometry": {
@@ -5096,14 +5096,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 2378,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 2,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_02378",
             "LLIB_VCI": "Route du Gros Buisson",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 460.045587,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 460.045587
           }
         ],
         "geometry": {
@@ -5226,14 +5226,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 2379,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 2,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_02379",
             "LLIB_VCI": "Route du Gros Buisson",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 71.069537,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 71.069537
           }
         ],
         "geometry": {
@@ -5272,14 +5272,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 2380,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 0,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_02380",
             "LLIB_VCI": "Chemin d'Achre  Fontainebleau",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 298.706041,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 298.706041
           }
         ],
         "geometry": {
@@ -5314,14 +5314,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 2381,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 0,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_02381",
             "LLIB_VCI": "Chemin d'Achre  Fontainebleau",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 464.3592,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 464.3592
           }
         ],
         "geometry": {
@@ -5352,14 +5352,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 2382,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 0,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_02382",
             "LLIB_VCI": "Route Circulaire",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 118.804347,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 118.804347
           }
         ],
         "geometry": {
@@ -5394,14 +5394,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 2383,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 0,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_02383",
             "LLIB_VCI": "Route Circulaire",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 280.430135,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 280.430135
           }
         ],
         "geometry": {
@@ -5432,14 +5432,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 2384,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 0,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_02384",
             "LLIB_VCI": "Chemin d'Achre  Fontainebleau",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 201.815553,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 201.815553
           }
         ],
         "geometry": {
@@ -5478,14 +5478,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 2386,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 0,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_02386",
             "LLIB_VCI": "Chemin d'Achre  Fontainebleau",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 201.79224,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 201.79224
           }
         ],
         "geometry": {
@@ -5516,14 +5516,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 2387,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 0,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_02387",
             "LLIB_VCI": "Route des Borlots",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 86.747894,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 86.747894
           }
         ],
         "geometry": {
@@ -5554,14 +5554,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 2388,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 0,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_02388",
             "LLIB_VCI": "Chemin d'Achre  Fontainebleau",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 70.921447,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 70.921447
           }
         ],
         "geometry": {
@@ -5592,14 +5592,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 2389,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 0,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_02389",
             "LLIB_VCI": "Chemin d'Achre  Fontainebleau",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 242.810055,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 242.810055
           }
         ],
         "geometry": {
@@ -5634,14 +5634,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 2390,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 0,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_02390",
             "LLIB_VCI": "Chemin d'Achre  Fontainebleau",
             "CCOD_REVN": "EM",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 347.780754,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 347.780754
           }
         ],
         "geometry": {
@@ -5676,14 +5676,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 2392,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 0,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_02392",
             "LLIB_VCI": "Route des Barnolets",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 230.06014,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 230.06014
           }
         ],
         "geometry": {
@@ -5714,14 +5714,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 2393,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 0,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_02393",
             "LLIB_VCI": "Chemin d'Achre  Fontainebleau",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 386.59057,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 386.59057
           }
         ],
         "geometry": {
@@ -5752,14 +5752,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 2398,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 0,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_02398",
             "LLIB_VCI": "Route du Vacher",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 547.154491,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 547.154491
           }
         ],
         "geometry": {
@@ -5790,14 +5790,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 2403,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 0,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_02403",
             "LLIB_VCI": "Route des Barnolets",
             "CCOD_REVN": "EM",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 528.527759,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 528.527759
           }
         ],
         "geometry": {
@@ -5840,14 +5840,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 2438,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 2,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_02438",
             "LLIB_VCI": "Route forestire de la Plaine de la Haute Borne",
             "CCOD_REVN": "RV",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 262.083752,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 262.083752
           }
         ],
         "geometry": {
@@ -5882,14 +5882,14 @@
             "CCOD_FRT": "HSFD",
             "CCOD_TRC": 6,
             "DESSERTE": "Route",
-            "GRIDCODE": 0,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "HSFD_00006",
             "LLIB_VCI": "Route d'Achre  Arbonne",
             "CCOD_REVN": "RV",
             "LARGE_TRC": "> 4 m",
-            "Shape_Leng": 176.120369,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 176.120369
           }
         ],
         "geometry": {
@@ -5920,14 +5920,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 2439,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 2,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_02439",
             "LLIB_VCI": "Route forestire de la Plaine de la Haute Borne",
             "CCOD_REVN": "RV",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 255.948675,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 255.948675
           }
         ],
         "geometry": {
@@ -5958,14 +5958,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 2440,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 2,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_02440",
             "LLIB_VCI": "Route forestire de la Plaine de la Haute Borne",
             "CCOD_REVN": "RV",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 671.633289,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 671.633289
           }
         ],
         "geometry": {
@@ -6000,14 +6000,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 4369,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 3,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_04369",
             "LLIB_VCI": null,
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 95.563002,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 95.563002
           }
         ],
         "geometry": {
@@ -6042,14 +6042,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 4372,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 3,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_04372",
             "LLIB_VCI": null,
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 227.012387,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 227.012387
           }
         ],
         "geometry": {
@@ -6088,14 +6088,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 4373,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 3,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_04373",
             "LLIB_VCI": "chemin d'arbonne  achres",
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 241.679614,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 241.679614
           }
         ],
         "geometry": {
@@ -6130,14 +6130,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 4378,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 3,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_04378",
             "LLIB_VCI": "Chemin d'Arbonne  Achre",
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 241.525037,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 241.525037
           }
         ],
         "geometry": {
@@ -6216,14 +6216,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 4379,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 3,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_04379",
             "LLIB_VCI": "Chemin d'Arbonne  Achre",
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 368.662365,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 368.662365
           }
         ],
         "geometry": {
@@ -6306,14 +6306,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 4380,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 3,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_04380",
             "LLIB_VCI": "Route Descamps",
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 216.539326,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 216.539326
           }
         ],
         "geometry": {
@@ -6344,14 +6344,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 4381,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 3,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_04381",
             "LLIB_VCI": "Route de la Fontaine Sainte Marguerite",
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 280.282862,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 280.282862
           }
         ],
         "geometry": {
@@ -6382,14 +6382,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 4382,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 3,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_04382",
             "LLIB_VCI": "Route Descamps",
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 110.931934,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 110.931934
           }
         ],
         "geometry": {
@@ -6428,14 +6428,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 4383,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 3,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_04383",
             "LLIB_VCI": "Route de la Gorge aux Archers",
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 134.437169,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 134.437169
           }
         ],
         "geometry": {
@@ -6478,14 +6478,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 4384,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 3,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_04384",
             "LLIB_VCI": "Route de la Fontaine Sainte Marguerite",
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 274.164375,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 274.164375
           }
         ],
         "geometry": {
@@ -6560,14 +6560,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 4385,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 3,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_04385",
             "LLIB_VCI": "route du collet",
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 149.788214,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 149.788214
           }
         ],
         "geometry": {
@@ -6618,14 +6618,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 4386,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 3,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_04386",
             "LLIB_VCI": "Route Descamps",
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 419.069423,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 419.069423
           }
         ],
         "geometry": {
@@ -6664,14 +6664,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 4387,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 3,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_04387",
             "LLIB_VCI": "Route de la Fontaine Sainte Marguerite",
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 72.982294,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 72.982294
           }
         ],
         "geometry": {
@@ -6702,14 +6702,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 4388,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 3,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_04388",
             "LLIB_VCI": "Route de la Fontaine Sainte Marguerite",
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 51.990131,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 51.990131
           }
         ],
         "geometry": {
@@ -6760,14 +6760,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 4390,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 3,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_04390",
             "LLIB_VCI": null,
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 287.991463,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 287.991463
           }
         ],
         "geometry": {
@@ -6806,14 +6806,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 4393,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 3,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_04393",
             "LLIB_VCI": "route du lapin",
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 263.142558,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 263.142558
           }
         ],
         "geometry": {
@@ -6888,14 +6888,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 4398,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 0,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_04398",
             "LLIB_VCI": "Route du Panneau",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 640.519754,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 640.519754
           }
         ],
         "geometry": {
@@ -6966,14 +6966,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 4399,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 0,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_04399",
             "LLIB_VCI": "Route d'Achre  Arbonne",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 296.42738,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 296.42738
           }
         ],
         "geometry": {
@@ -7032,14 +7032,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 4400,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 0,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_04400",
             "LLIB_VCI": "Secours RBI",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 487.39002,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 487.39002
           }
         ],
         "geometry": {
@@ -7102,14 +7102,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 4401,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 4,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_04401",
             "LLIB_VCI": "Route des Platires",
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 472.871172,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 472.871172
           }
         ],
         "geometry": {
@@ -7140,14 +7140,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 4402,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 4,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_04402",
             "LLIB_VCI": "Route des Platires",
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 346.238832,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 346.238832
           }
         ],
         "geometry": {
@@ -7258,14 +7258,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 4403,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 4,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_04403",
             "LLIB_VCI": "route de la bourse",
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 185.514111,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 185.514111
           }
         ],
         "geometry": {
@@ -7340,14 +7340,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 4404,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 0,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_04404",
             "LLIB_VCI": "Route des Borlots",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 518.404509,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 518.404509
           }
         ],
         "geometry": {
@@ -7378,14 +7378,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 4405,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 0,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_04405",
             "LLIB_VCI": "Route des Platires",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 322.586205,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 322.586205
           }
         ],
         "geometry": {
@@ -7416,14 +7416,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 4406,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 0,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_04406",
             "LLIB_VCI": "Route du Taureau",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 23.256315,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 23.256315
           }
         ],
         "geometry": {
@@ -7454,14 +7454,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 4408,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 1,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_04408",
             "LLIB_VCI": "Route des Barnolets",
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 349.516036,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 349.516036
           }
         ],
         "geometry": {
@@ -7520,14 +7520,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 4420,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 0,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_04420",
             "LLIB_VCI": "Route des Borlots",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 80.567141,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 80.567141
           }
         ],
         "geometry": {
@@ -7558,14 +7558,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 4421,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 0,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_04421",
             "LLIB_VCI": "Chemin d'Achre  Fontainebleau",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 568.392865,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 568.392865
           }
         ],
         "geometry": {
@@ -7596,14 +7596,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 4422,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 0,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_04422",
             "LLIB_VCI": "Route de la Gorge aux Archers",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 235.261996,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 235.261996
           }
         ],
         "geometry": {
@@ -7634,14 +7634,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 4423,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 2,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_04423",
             "LLIB_VCI": "Chemin d'Achre  Fontainebleau",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 321.894501,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 321.894501
           }
         ],
         "geometry": {
@@ -7672,14 +7672,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 4424,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 0,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_04424",
             "LLIB_VCI": "Chemin d'Achre  Fontainebleau",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 202.015452,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 202.015452
           }
         ],
         "geometry": {
@@ -7710,14 +7710,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 4425,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 0,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_04425",
             "LLIB_VCI": "Route Circulaire",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 258.801555,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 258.801555
           }
         ],
         "geometry": {
@@ -7772,14 +7772,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 4426,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 0,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_04426",
             "LLIB_VCI": "Route de la Gorge aux Archers",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 169.621286,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 169.621286
           }
         ],
         "geometry": {
@@ -7834,14 +7834,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 4427,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 0,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_04427",
             "LLIB_VCI": "Route Circulaire",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 339.295024,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 339.295024
           }
         ],
         "geometry": {
@@ -7872,14 +7872,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 4436,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 0,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_04436",
             "LLIB_VCI": "Chemin d'Achre  Fontainebleau",
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 127.671098,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 127.671098
           }
         ],
         "geometry": {
@@ -7934,14 +7934,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 4437,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 0,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_04437",
             "LLIB_VCI": "Route Circulaire",
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 286.276956,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 286.276956
           }
         ],
         "geometry": {
@@ -8004,14 +8004,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 4438,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 0,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_04438",
             "LLIB_VCI": "Route du Vacher",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 168.962185,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 168.962185
           }
         ],
         "geometry": {
@@ -8062,14 +8062,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 4439,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 0,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_04439",
             "LLIB_VCI": "Route du Vacher",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 550.856981,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 550.856981
           }
         ],
         "geometry": {
@@ -8192,14 +8192,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 4440,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 0,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_04440",
             "LLIB_VCI": "Route Circulaire",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 166.272909,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 166.272909
           }
         ],
         "geometry": {
@@ -8230,14 +8230,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 6397,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 4,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_06397",
             "LLIB_VCI": null,
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 94.650089,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 94.650089
           }
         ],
         "geometry": {
@@ -8288,14 +8288,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 6398,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 4,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_06398",
             "LLIB_VCI": "Route d'Achre  Arbonne",
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 277.927943,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 277.927943
           }
         ],
         "geometry": {
@@ -8378,14 +8378,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 6399,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 4,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_06399",
             "LLIB_VCI": "Route d'Achre  Arbonne",
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 72.532668,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 72.532668
           }
         ],
         "geometry": {
@@ -8432,14 +8432,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 6400,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 4,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_06400",
             "LLIB_VCI": "Route des Platires",
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 52.777659,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 52.777659
           }
         ],
         "geometry": {
@@ -8470,14 +8470,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 6401,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 4,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_06401",
             "LLIB_VCI": "NC",
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 203.282698,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 203.282698
           }
         ],
         "geometry": {
@@ -8560,14 +8560,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 6402,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 4,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_06402",
             "LLIB_VCI": "NC",
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 271.400113,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 271.400113
           }
         ],
         "geometry": {
@@ -8678,14 +8678,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 6403,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 4,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_06403",
             "LLIB_VCI": "Route des Platires",
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 589.05569,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 589.05569
           }
         ],
         "geometry": {
@@ -8824,14 +8824,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 6404,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 3,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_06404",
             "LLIB_VCI": "NC",
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 495.754007,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 495.754007
           }
         ],
         "geometry": {
@@ -8958,14 +8958,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 6405,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 3,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_06405",
             "LLIB_VCI": "Route forestire de la Plaine de la Haute Borne",
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 47.156935,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 47.156935
           }
         ],
         "geometry": {
@@ -9004,14 +9004,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 6600,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 2,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_06600",
             "LLIB_VCI": "Route Circulaire",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 414.501298,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 414.501298
           }
         ],
         "geometry": {
@@ -9042,14 +9042,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 6601,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 2,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_06601",
             "LLIB_VCI": "Route Circulaire",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 444.94321,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 444.94321
           }
         ],
         "geometry": {
@@ -9080,14 +9080,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 6607,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 4,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_06607",
             "LLIB_VCI": "Route des Borlots",
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 175.377853,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 175.377853
           }
         ],
         "geometry": {
@@ -9158,14 +9158,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 6608,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 3,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_06608",
             "LLIB_VCI": "Route du Gros Buisson",
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 70.520465,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 70.520465
           }
         ],
         "geometry": {
@@ -9216,14 +9216,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 6609,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 3,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_06609",
             "LLIB_VCI": "Route des Borlots",
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 105.703613,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 105.703613
           }
         ],
         "geometry": {
@@ -9270,14 +9270,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 6610,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 3,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_06610",
             "LLIB_VCI": "NC",
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 51.449722,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 51.449722
           }
         ],
         "geometry": {
@@ -9332,14 +9332,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 6636,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 3,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_06636",
             "LLIB_VCI": null,
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 108.84087,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 108.84087
           }
         ],
         "geometry": {
@@ -9382,14 +9382,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 6637,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 3,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_06637",
             "LLIB_VCI": "Route Descamps",
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 246.796582,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 246.796582
           }
         ],
         "geometry": {
@@ -9448,14 +9448,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 6638,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 3,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_06638",
             "LLIB_VCI": "Route forestire de la Plaine de la Haute Borne",
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 327.793649,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 327.793649
           }
         ],
         "geometry": {
@@ -9514,14 +9514,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 6639,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 4,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_06639",
             "LLIB_VCI": null,
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 265.046037,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 265.046037
           }
         ],
         "geometry": {
@@ -9572,14 +9572,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 6676,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 4,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_06676",
             "LLIB_VCI": "Route des Platires",
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 321.311979,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 321.311979
           }
         ],
         "geometry": {
@@ -9610,14 +9610,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 6677,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 4,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_06677",
             "LLIB_VCI": null,
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 219.006639,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 219.006639
           }
         ],
         "geometry": {
@@ -9648,14 +9648,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 7036,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 3,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_07036",
             "LLIB_VCI": "NC",
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 293.641163,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 293.641163
           }
         ],
         "geometry": {
@@ -9758,14 +9758,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 7039,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 3,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_07039",
             "LLIB_VCI": null,
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 152.129233,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 152.129233
           }
         ],
         "geometry": {
@@ -9840,14 +9840,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 7040,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 3,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_07040",
             "LLIB_VCI": "route du panneau",
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 1035.35843,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 1035.35843
           }
         ],
         "geometry": {
@@ -10134,14 +10134,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 7176,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 3,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_07176",
             "LLIB_VCI": "NC",
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 426.035535,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 426.035535
           }
         ],
         "geometry": {
@@ -10308,14 +10308,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 7430,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 3,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_07430",
             "LLIB_VCI": "NC",
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 62.458337,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 62.458337
           }
         ],
         "geometry": {
@@ -10346,14 +10346,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 7436,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 4,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_07436",
             "LLIB_VCI": "route de la gorge aux archers",
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 199.07659,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 199.07659
           }
         ],
         "geometry": {
@@ -10404,14 +10404,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 7437,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 4,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_07437",
             "LLIB_VCI": "route des platires",
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 358.145378,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 358.145378
           }
         ],
         "geometry": {
@@ -10486,14 +10486,14 @@
             "CCOD_FRT": "TPIG",
             "CCOD_TRC": 133,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 2,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "TPIG_00133",
             "LLIB_VCI": "Chemin de l'Auberge",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 585.000619,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 585.000619
           }
         ],
         "geometry": {
@@ -10580,14 +10580,14 @@
             "CCOD_FRT": "TPIG",
             "CCOD_TRC": 135,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 2,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "TPIG_00135",
             "LLIB_VCI": "Route Descamps",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 712.845717,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 712.845717
           }
         ],
         "geometry": {
@@ -10786,14 +10786,14 @@
             "CCOD_FRT": "TPIG",
             "CCOD_TRC": 339,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 2,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "TPIG_00339",
             "LLIB_VCI": "Chemin d'Arbonne  Achres",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 444.838176,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 444.838176
           }
         ],
         "geometry": {
@@ -10900,14 +10900,14 @@
             "CCOD_FRT": "TPIG",
             "CCOD_TRC": 340,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 2,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "TPIG_00340",
             "LLIB_VCI": "Chemin d'Arbonne  Achres",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 444.838176,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 444.838176
           }
         ],
         "geometry": {
@@ -11014,14 +11014,14 @@
             "CCOD_FRT": "TPIG",
             "CCOD_TRC": 341,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 2,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "TPIG_00341",
             "LLIB_VCI": "Chemin d'Arbonne  Achres",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 504.359408,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 504.359408
           }
         ],
         "geometry": {
@@ -11112,14 +11112,14 @@
             "CCOD_FRT": "TPIG",
             "CCOD_TRC": 342,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 2,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "TPIG_00342",
             "LLIB_VCI": "Chemin du Bois Rond",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 194.418104,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 194.418104
           }
         ],
         "geometry": {
@@ -11202,14 +11202,14 @@
             "CCOD_FRT": "TPIG",
             "CCOD_TRC": 432,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 2,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "TPIG_00432",
             "LLIB_VCI": "Chemin du Bois Rond",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 926.044755,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 926.044755
           }
         ],
         "geometry": {
@@ -11320,14 +11320,14 @@
             "CCOD_FRT": "TPIG",
             "CCOD_TRC": 433,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 2,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "TPIG_00433",
             "LLIB_VCI": "Chemin du Bois Rond",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 403.602819,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 403.602819
           }
         ],
         "geometry": {
@@ -11386,14 +11386,14 @@
             "CCOD_FRT": "TPIG",
             "CCOD_TRC": 434,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 2,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "TPIG_00434",
             "LLIB_VCI": "Chemin du Bois Rond",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 403.602819,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 403.602819
           }
         ],
         "geometry": {
@@ -11452,14 +11452,14 @@
             "CCOD_FRT": "TPIG",
             "CCOD_TRC": 510,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 2,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "TPIG_00510",
             "LLIB_VCI": "Route Descamps",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 116.42659,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 116.42659
           }
         ],
         "geometry": {
@@ -11502,14 +11502,14 @@
             "CCOD_FRT": "TPIG",
             "CCOD_TRC": 511,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 2,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "TPIG_00511",
             "LLIB_VCI": "Route Descamps",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 116.42659,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 116.42659
           }
         ],
         "geometry": {
@@ -11552,14 +11552,14 @@
             "CCOD_FRT": "TPIG",
             "CCOD_TRC": 512,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 2,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "TPIG_00512",
             "LLIB_VCI": "Route Descamps",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 134.658476,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 134.658476
           }
         ],
         "geometry": {
@@ -11618,14 +11618,14 @@
             "CCOD_FRT": "TPIG",
             "CCOD_TRC": 513,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 3,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "TPIG_00513",
             "LLIB_VCI": null,
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 69.897676,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 69.897676
           }
         ],
         "geometry": {
@@ -11660,14 +11660,14 @@
             "CCOD_FRT": "TPIG",
             "CCOD_TRC": 514,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 3,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "TPIG_00514",
             "LLIB_VCI": null,
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 290.233053,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 290.233053
           }
         ],
         "geometry": {
@@ -11718,14 +11718,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 7648,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 2,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_07648",
             "LLIB_VCI": null,
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 199.251756,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 199.251756
           }
         ],
         "geometry": {
@@ -11760,14 +11760,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 7649,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 2,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_07649",
             "LLIB_VCI": null,
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 134.461012,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 134.461012
           }
         ],
         "geometry": {
@@ -11798,14 +11798,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 7951,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 4,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_07951",
             "LLIB_VCI": "Route des Platires",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 26.621553,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 26.621553
           }
         ],
         "geometry": {
@@ -11840,14 +11840,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 7952,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 2,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_07952",
             "LLIB_VCI": "Route du Gros Buisson",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 251.276686,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 251.276686
           }
         ],
         "geometry": {
@@ -11890,14 +11890,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 7956,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 4,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_07956",
             "LLIB_VCI": "Route du Sapin Blanc\n\n",
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 100.145814,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 100.145814
           }
         ],
         "geometry": {
@@ -11932,14 +11932,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 7957,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 3,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_07957",
             "LLIB_VCI": "Route des Borlots",
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 45.930761,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 45.930761
           }
         ],
         "geometry": {
@@ -11986,14 +11986,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 7958,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 3,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_07958",
             "LLIB_VCI": "Route des Borlots",
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 133.726099,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 133.726099
           }
         ],
         "geometry": {
@@ -12056,14 +12056,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 7959,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 3,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_07959",
             "LLIB_VCI": "Route des Borlots",
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 41.085043,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 41.085043
           }
         ],
         "geometry": {
@@ -12102,14 +12102,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 7960,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 3,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_07960",
             "LLIB_VCI": "Route des Borlots",
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 28.498905,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 28.498905
           }
         ],
         "geometry": {
@@ -12144,14 +12144,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 7961,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 3,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_07961",
             "LLIB_VCI": null,
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 96.150144,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 96.150144
           }
         ],
         "geometry": {
@@ -12190,14 +12190,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 7962,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 3,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_07962",
             "LLIB_VCI": null,
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 120.805954,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 120.805954
           }
         ],
         "geometry": {
@@ -12240,14 +12240,14 @@
             "CCOD_FRT": "TPIG",
             "CCOD_TRC": 1116,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 3,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "TPIG_01116",
             "LLIB_VCI": null,
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 333.13291,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 333.13291
           }
         ],
         "geometry": {
@@ -12314,14 +12314,14 @@
             "CCOD_FRT": "TPIG",
             "CCOD_TRC": 1117,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 3,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "TPIG_01117",
             "LLIB_VCI": null,
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 144.539954,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 144.539954
           }
         ],
         "geometry": {
@@ -12368,14 +12368,14 @@
             "CCOD_FRT": "TPIG",
             "CCOD_TRC": 1119,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 3,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "TPIG_01119",
             "LLIB_VCI": null,
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 14.909272,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 14.909272
           }
         ],
         "geometry": {
@@ -12406,14 +12406,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 7975,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 3,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_07975",
             "LLIB_VCI": "NC",
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 76.169143,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 76.169143
           }
         ],
         "geometry": {
@@ -12468,14 +12468,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 7976,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 2,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_07976",
             "LLIB_VCI": "Chemin d'Arbonne  Achre",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 13.608163,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 13.608163
           }
         ],
         "geometry": {
@@ -12510,14 +12510,14 @@
             "CCOD_FRT": "TPIG",
             "CCOD_TRC": 1205,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 3,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "TPIG_01205",
             "LLIB_VCI": null,
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 123.3085,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 123.3085
           }
         ],
         "geometry": {
@@ -12548,14 +12548,14 @@
             "CCOD_FRT": "TPIG",
             "CCOD_TRC": 1206,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 3,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "TPIG_01206",
             "LLIB_VCI": null,
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 163.492426,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 163.492426
           }
         ],
         "geometry": {
@@ -12594,14 +12594,14 @@
             "CCOD_FRT": "TPIG",
             "CCOD_TRC": 1207,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 3,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "TPIG_01207",
             "LLIB_VCI": null,
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 188.59622,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 188.59622
           }
         ],
         "geometry": {
@@ -12660,14 +12660,14 @@
             "CCOD_FRT": "TPIG",
             "CCOD_TRC": 1208,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 3,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "TPIG_01208",
             "LLIB_VCI": null,
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 83.598036,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 83.598036
           }
         ],
         "geometry": {
@@ -12702,14 +12702,14 @@
             "CCOD_FRT": "TPIG",
             "CCOD_TRC": 1209,
             "DESSERTE": "Desserte",
-            "GRIDCODE": 2,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "TPIG_01209",
             "LLIB_VCI": "Chemin du Bois Rond",
             "CCOD_REVN": "TN",
             "LARGE_TRC": "> 3,5 m",
-            "Shape_Leng": 315.724602,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 315.724602
           }
         ],
         "geometry": {
@@ -12764,14 +12764,14 @@
             "CCOD_FRT": "TPIG",
             "CCOD_TRC": 1234,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 3,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "TPIG_01234",
             "LLIB_VCI": null,
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 1109.657487,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 1109.657487
           }
         ],
         "geometry": {
@@ -12906,14 +12906,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 8347,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 3,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_08347",
             "LLIB_VCI": null,
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 376.227129,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 376.227129
           }
         ],
         "geometry": {
@@ -12948,14 +12948,14 @@
             "CCOD_FRT": "HSFD",
             "CCOD_TRC": 2895,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 0,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "HSFD_02895",
             "LLIB_VCI": null,
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 763.189512,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 763.189512
           }
         ],
         "geometry": {
@@ -12998,14 +12998,14 @@
             "CCOD_FRT": "FONT",
             "CCOD_TRC": 8349,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 4,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "FONT_08349",
             "LLIB_VCI": null,
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 49.082062,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 49.082062
           }
         ],
         "geometry": {
@@ -13036,14 +13036,14 @@
             "CCOD_FRT": "HSFD",
             "CCOD_TRC": 2896,
             "DESSERTE": "Sentier",
-            "GRIDCODE": 0,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "HSFD_02896",
             "LLIB_VCI": null,
             "CCOD_REVN": "TN",
             "LARGE_TRC": null,
-            "Shape_Leng": 607.18335,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 607.18335
           }
         ],
         "geometry": {
@@ -13094,14 +13094,14 @@
             "CCOD_FRT": "HSFD",
             "CCOD_TRC": 2897,
             "DESSERTE": "Route",
-            "GRIDCODE": 0,
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2,
             "IIDT_TRC": "HSFD_02897",
             "LLIB_VCI": null,
             "CCOD_REVN": "RV",
             "LARGE_TRC": "> 4 m",
-            "Shape_Leng": 491.199819,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "Shape_Leng": 491.199819
           }
         ],
         "geometry": {
@@ -13135,9 +13135,9 @@
         "properties": [
           {
             "ID": 1473,
-            "GRIDCODE": 0,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2
           }
         ],
         "geometry": {
@@ -13209,9 +13209,9 @@
         "properties": [
           {
             "ID": 1542,
-            "GRIDCODE": 0,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2
           }
         ],
         "geometry": {
@@ -13247,9 +13247,9 @@
         "properties": [
           {
             "ID": 1544,
-            "GRIDCODE": 0,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2
           }
         ],
         "geometry": {
@@ -13321,9 +13321,9 @@
         "properties": [
           {
             "ID": 1548,
-            "GRIDCODE": 0,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2
           }
         ],
         "geometry": {
@@ -13359,9 +13359,9 @@
         "properties": [
           {
             "ID": 1553,
-            "GRIDCODE": 0,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2
           }
         ],
         "geometry": {
@@ -13409,9 +13409,9 @@
         "properties": [
           {
             "ID": 1554,
-            "GRIDCODE": 0,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2
           }
         ],
         "geometry": {
@@ -13447,9 +13447,9 @@
         "properties": [
           {
             "ID": 1556,
-            "GRIDCODE": 3,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2
           }
         ],
         "geometry": {
@@ -14261,9 +14261,9 @@
         "properties": [
           {
             "ID": 1557,
-            "GRIDCODE": 3,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2
           }
         ],
         "geometry": {
@@ -14303,9 +14303,9 @@
         "properties": [
           {
             "ID": 1558,
-            "GRIDCODE": 0,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2
           }
         ],
         "geometry": {
@@ -14341,9 +14341,9 @@
         "properties": [
           {
             "ID": 1572,
-            "GRIDCODE": 0,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2
           }
         ],
         "geometry": {
@@ -14407,9 +14407,9 @@
         "properties": [
           {
             "ID": 1587,
-            "GRIDCODE": 0,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2
           }
         ],
         "geometry": {
@@ -14505,9 +14505,9 @@
         "properties": [
           {
             "ID": 1600,
-            "GRIDCODE": 0,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2
           }
         ],
         "geometry": {
@@ -14543,9 +14543,9 @@
         "properties": [
           {
             "ID": 1601,
-            "GRIDCODE": 3,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2
           }
         ],
         "geometry": {
@@ -14605,9 +14605,9 @@
         "properties": [
           {
             "ID": 1604,
-            "GRIDCODE": 4,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2
           }
         ],
         "geometry": {
@@ -14891,9 +14891,9 @@
         "properties": [
           {
             "ID": 1608,
-            "GRIDCODE": 0,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2
           }
         ],
         "geometry": {
@@ -14929,9 +14929,9 @@
         "properties": [
           {
             "ID": 1609,
-            "GRIDCODE": 0,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2
           }
         ],
         "geometry": {
@@ -14975,9 +14975,9 @@
         "properties": [
           {
             "ID": 1613,
-            "GRIDCODE": 0,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2
           }
         ],
         "geometry": {
@@ -15013,9 +15013,9 @@
         "properties": [
           {
             "ID": 1615,
-            "GRIDCODE": 0,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2
           }
         ],
         "geometry": {
@@ -15051,9 +15051,9 @@
         "properties": [
           {
             "ID": 1616,
-            "GRIDCODE": 0,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2
           }
         ],
         "geometry": {
@@ -15089,9 +15089,9 @@
         "properties": [
           {
             "ID": 1619,
-            "GRIDCODE": 0,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2
           }
         ],
         "geometry": {
@@ -15151,9 +15151,9 @@
         "properties": [
           {
             "ID": 1620,
-            "GRIDCODE": 0,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2
           }
         ],
         "geometry": {
@@ -15225,9 +15225,9 @@
         "properties": [
           {
             "ID": 1626,
-            "GRIDCODE": 0,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2
           }
         ],
         "geometry": {
@@ -15263,9 +15263,9 @@
         "properties": [
           {
             "ID": 1636,
-            "GRIDCODE": 0,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2
           }
         ],
         "geometry": {
@@ -15317,9 +15317,9 @@
         "properties": [
           {
             "ID": 1642,
-            "GRIDCODE": 0,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2
           }
         ],
         "geometry": {
@@ -15363,9 +15363,9 @@
         "properties": [
           {
             "ID": 1650,
-            "GRIDCODE": 0,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2
           }
         ],
         "geometry": {
@@ -15417,9 +15417,9 @@
         "properties": [
           {
             "ID": 1660,
-            "GRIDCODE": 0,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2
           }
         ],
         "geometry": {
@@ -15459,9 +15459,9 @@
         "properties": [
           {
             "ID": 1998,
-            "GRIDCODE": 1,
-            "date_from": "04-01",
-            "date_to": "07-31"
+            "GRIDCODE1": 1,
+            "GRIDCODE2": 3,
+            "GRIDCODE3": 2
           }
         ],
         "geometry": {
