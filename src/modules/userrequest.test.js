@@ -4,9 +4,6 @@ import FetchMock from 'fetch-mock';
 import api from 'middlewares/api';
 import userrequest, {
   UPDATE_DATA_PROPERTIES,
-  SUBMIT_REQUEST,
-  SUBMIT_SUCCESS,
-  SUBMIT_FAILURE,
   submitData,
   updateFeatures,
   ADD_GEOJSON_FEATURE,
@@ -48,44 +45,31 @@ const data = {
 };
 
 describe('userrequest async action', () => {
-  it('should SUBMIT_REQUEST, then if success SUBMIT_SUCCESS', () => {
-    const store = mockStore(initialState);
+  it('should SUBMIT_REQUEST, then if success SUBMIT_SUCCESS', async () => {
+    const store = mockStore({ userrequest: initialState });
 
     FetchMock.post('*', data);
+    await submitData()(store.dispatch, store.getState);
+    const actions = store.getActions();
 
-    return store.dispatch(submitData(data))
-      .then(() => {
-        const actions = store.getActions();
-        expect(actions).toContainEqual({
-          type: SUBMIT_REQUEST,
-          endpoint: '/userrequest/',
-        });
-        expect(actions).toContainEqual({
-          type: SUBMIT_SUCCESS,
-          data,
-          endpoint: '/userrequest/',
-        });
-      });
+    expect(actions.length).toBe(4);
+    expect(actions[0]).toEqual({ type: 'rrf/setPending', model: 'userrequest', pending: true });
+    expect(actions[1]).toEqual({ type: 'userrequest/SUBMIT_REQUEST' });
+    expect(actions[2]).toEqual({ type: 'userrequest/SUBMIT_SUCCESS', data: initialState });
+    expect(actions[3]).toEqual({ type: 'rrf/setSubmitted', model: 'userrequest', submitted: true });
   });
 
-  it('should SUBMIT_REQUEST, then if failed SUBMIT_FAILURE', () => {
-    const store = mockStore(initialState);
+  it('should SUBMIT_REQUEST, then if failed SUBMIT_FAILURE', async () => {
+    const store = mockStore({ userrequest: initialState });
 
     FetchMock.post('*', 400, { overwriteRoutes: true });
 
-    return store.dispatch(submitData(data, null))
-      .then(() => {
-        const actions = store.getActions();
-        expect(actions).toEqual([
-          { type: SUBMIT_REQUEST, endpoint: '/userrequest/' },
-          {
-            type: SUBMIT_FAILURE,
-            error: {
-              message: 'Une erreur est survenue',
-            },
-          },
-        ]);
-      });
+    await submitData()(store.dispatch, store.getState);
+    const actions = store.getActions();
+    expect(actions.length).toBe(3);
+    expect(actions[0]).toEqual({ type: 'rrf/setPending', model: 'userrequest', pending: true });
+    expect(actions[1]).toEqual({ type: 'userrequest/SUBMIT_REQUEST' });
+    expect(actions[2]).toEqual({ type: 'userrequest/SUBMIT_FAILURE' });
   });
 });
 
