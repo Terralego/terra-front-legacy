@@ -35,8 +35,7 @@ class Userrequest extends React.Component {
   }
 
   componentWillUnmount () {
-    const full = true;
-    this.props.resetForm({ full });
+    this.props.resetForm({ full: true });
   }
 
   render () {

@@ -46,7 +46,6 @@ class HeaderForm extends React.Component {
 
   render () {
     const {
-      form,
       showSubmit,
       showDraft,
       match: { params: { id: pathId } },
@@ -75,7 +74,7 @@ class HeaderForm extends React.Component {
                   type="primary-dark"
                   htmlType="button"
                   onClick={e => this.saveDraft(e)}
-                  loading={isSaving}
+                  loading={isSaving === 'draft'}
                   icon="save"
                 >
                   {FormConfig.confirmation.draftButton}
@@ -87,7 +86,7 @@ class HeaderForm extends React.Component {
                   onClick={this.submitForm}
                   icon="arrow-right"
                   style={{ marginLeft: 12 }}
-                  loading={form.pending}
+                  loading={isSaving === true}
                 >
                   {FormConfig.confirmation.submitButton}
                 </Button>

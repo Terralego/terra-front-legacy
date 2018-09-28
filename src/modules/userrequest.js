@@ -1,7 +1,7 @@
 import { actions } from 'react-redux-form';
 
 import { CALL_API } from 'middlewares/api';
-import { defaultHeaders } from 'services/apiService';
+import apiService, { defaultHeaders } from 'services/apiService';
 import {
   getFeaturesWithIncidence,
   removeRouteInProgressDatas,
@@ -83,7 +83,7 @@ const userrequest = (state = initialState, action) => {
     case SAVE_DRAFT_REQUEST:
       return {
         ...state,
-        isSaving: true,
+        isSaving: 'draft',
       };
     case SAVE_DRAFT_SUCCESS:
       return {
@@ -103,10 +103,21 @@ const userrequest = (state = initialState, action) => {
         ...state,
         isSaving: false,
       };
+    case SUBMIT_REQUEST:
+      return {
+        ...state,
+        isSaving: true,
+      };
     case SUBMIT_SUCCESS:
       return {
         ...state,
         expiry: action.data.expiry,
+        isSaving: false,
+      };
+    case SUBMIT_FAILURE:
+      return {
+        ...state,
+        isSaving: false,
       };
     case RESET_FORM:
       return initialState;
@@ -206,41 +217,44 @@ export const resetForm = ({ full } = {}) => dispatch => {
  * Submit data object
  * @param  {object} data : data that will be send to the server
  */
-export const submitData = (data, form = 'userrequest') => ({
-  [CALL_API]: {
-    endpoint: `/userrequest/${data.id ? `${data.id}/` : ''}`,
-    types: [SUBMIT_REQUEST, SUBMIT_SUCCESS, SUBMIT_FAILURE],
-    config: {
+export const submitData = ({ draft } = {}) => async (dispatch, getState) => {
+  const data = getState().userrequest;
+  dispatch(actions.setPending('userrequest', true));
+
+  dispatch({ type: draft ? SAVE_DRAFT_REQUEST : SUBMIT_REQUEST });
+
+  const bodyData = draft
+    ? data
+    : removeRouteInProgressDatas(data);
+
+  try {
+    await apiService.request(`/userrequest/${data.id ? `${data.id}/` : ''}`, {
       headers: defaultHeaders,
       method: data.id ? 'PUT' : 'POST',
       body: JSON.stringify({
-        ...removeRouteInProgressDatas(data),
-        state: 200, // SUBMITTED
+        ...bodyData,
+        state: draft ? getState().appConfig.states.DRAFT : 200,
       }),
-    },
-    form,
-  },
-});
+    });
+    dispatch({ type: draft ? SAVE_DRAFT_SUCCESS : SUBMIT_SUCCESS, data });
+
+    if (!draft) {
+      dispatch(actions.setSubmitted('userrequest', true));
+    }
+  } catch (e) {
+    dispatch({ type: draft ? SAVE_DRAFT_FAILURE : SUBMIT_FAILURE });
+  }
+
+  if (draft) {
+    dispatch(actions.setPending('userrequest', false));
+  }
+};
 
 /**
  * userrequest action : save userrequest as draft
  * @param {string} data
  */
-export const saveDraft = (data, form = 'userrequest') => (dispatch, getState) => dispatch({
-  [CALL_API]: {
-    endpoint: `/userrequest/${data.id ? `${data.id}/` : ''}`,
-    types: [SAVE_DRAFT_REQUEST, SAVE_DRAFT_SUCCESS, SAVE_DRAFT_FAILURE],
-    config: {
-      headers: defaultHeaders,
-      method: data.id ? 'PUT' : 'POST',
-      body: JSON.stringify({
-        ...data,
-        state: getState().appConfig.states.DRAFT,
-      }),
-    },
-    form,
-  },
-});
+export const saveDraft = () => submitData({ draft: true });
 
 /**
  * Post feature object
