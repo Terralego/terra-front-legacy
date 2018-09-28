@@ -19,15 +19,17 @@ import styles from './Userrequest.module.scss';
 
 class Userrequest extends React.Component {
   componentDidMount () {
-    if (this.props.data) this.props.readUserrequest(this.props.data.id);
-    else this.props.readUserrequest(this.props.match.params.id);
+    const { data, match: { params: { id } } } = this.props;
+
+    // Set a "read" flag on userrequest
+    this.props.readUserrequest(id);
+
     this.props.resetPaginationCache('/userrequest/');
-    if (this.props.data && this.props.data.state === this.props.draftStatus) {
-      this.props.openDraft(this.props.data);
+
+    if (data) {
+      return this.props.openDraft(data);
     }
-    if (!this.props.data && !this.props.loading) {
-      this.props.fetchUserrequest(this.props.match.params.id);
-    }
+    return this.props.fetchUserrequest(id);
   }
 
   componentWillUnmount () {
