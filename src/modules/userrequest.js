@@ -178,7 +178,7 @@ export const deleteFeaturesById = featuresId => ({
  * openDraft set already loaded userrequest in userrequest form
  */
 export const openDraft = data => dispatch => {
-  dispatch(actions.setInitial('userrequest'));
+  dispatch(actions.reset('userrequest'));
   return dispatch({
     type: DETAIL_SUCCESS,
     data,
