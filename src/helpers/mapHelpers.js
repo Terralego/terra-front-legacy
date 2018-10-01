@@ -132,3 +132,31 @@ export const getDataWithFeatureId = data => {
     },
   };
 };
+
+/**
+ * @param {MapboxGL.Popup} popup
+ */
+export const showTooltipOverFeature = popup => (map, event) => {
+  if (!popup) {
+    return false;
+  }
+
+  const hoveredFeatures = map.queryRenderedFeatures(event.point);
+  if (!hoveredFeatures.length) {
+    return popup.remove();
+  }
+
+  const topMostFeature = hoveredFeatures[0];
+  const toolTip = topMostFeature.properties.tooltip;
+  if (!toolTip) {
+    return popup.remove();
+  }
+
+  const mapCanvasElement = map.getCanvas();
+  mapCanvasElement.style.cursor = toolTip ? 'pointer' : '';
+
+  return popup
+    .setLngLat(event.lngLat)
+    .setHTML(toolTip)
+    .addTo(map);
+};
