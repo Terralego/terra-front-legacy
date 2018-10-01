@@ -154,7 +154,6 @@ class TerraDrawMap extends Component {
           <MapSources sources={sources} activityDates={activityDates} />
 
           <DrawLayers
-            editable={editable}
             data={{ type: 'FeatureCollection', features }}
             geojsonPaint={geojsonPaint}
             filters={activityFilters}
