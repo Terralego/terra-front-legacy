@@ -47,7 +47,7 @@ class FormApp extends React.Component {
   }
 
   componentWillUnmount () {
-    this.props.resetForm();
+    this.props.resetForm({ full: true });
   }
 
   getFormErrors () {
