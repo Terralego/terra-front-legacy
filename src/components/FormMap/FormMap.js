@@ -118,6 +118,7 @@ class FormMap extends Component {
         <Col span={24} lg={24}>
           <Card title={mapTitleLegend.title}>
             <FeaturesList
+              activityDates={activityDates}
               filters={activityFilters}
               features={featureList}
               selectedFeaturesId={this.state.selectedFeaturesId}

@@ -17,6 +17,7 @@ export default ({ sources, activityDates = [] }) => {
           sourceId={source.id}
           sourceLayer={layer.sourceLayer}
           id={layer.id}
+          filter={layer.filter}
           paint={
             layer.id === 'hors_chemins' && activityDates.length
             ? {
