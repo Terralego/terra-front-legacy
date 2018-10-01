@@ -72,3 +72,16 @@ export const getIncidencePeriods = (activityDates = [{ dates: [] }]) =>
     .reduce(mergeArrayOfPeriods, {});
 
 export default getIncidencePeriods;
+
+export function hasInvalidIncidence (features, eventDates) {
+  const gridcodes = Object.keys(getIncidencePeriods(eventDates));
+
+  return features.reduce((incidence, feature) => {
+    const { properties } = feature;
+    const { incidence: { GRIDCODE: gridcode = 0 } = {} } = properties;
+    const incidenceInTime = gridcodes.reduce((total, period) =>
+      Math.max(total, +(feature.properties[period] || 0)), 0);
+
+    return Math.max(incidence, gridcode, incidenceInTime);
+  }, 0) === 4;
+}

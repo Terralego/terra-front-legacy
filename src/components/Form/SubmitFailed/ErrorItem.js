@@ -2,28 +2,30 @@ import React from 'react';
 
 import SmoothLink from 'components/SmoothLink';
 
-function getError (label) {
-  switch (label) {
+function getError (error) {
+  switch (error) {
     case 'userrequest.properties.activities':
-      return 'Description de l\'activité';
+      return { label: 'Description de l\'activité', target: error };
     case 'userrequest.properties.title':
-      return 'Titre de la déclaration';
+      return { label: 'Titre de la déclaration', target: error };
     case 'userrequest.properties.description':
-      return 'Description de la déclaration';
+      return { label: 'Description de la déclaration', target: error };
+    case 'userrequest.properties.features':
+      return { label: 'Tracé de l\'activité', target: 'userrequest.properties.activities' };
     default:
-      return null;
+      return {};
   }
 }
 
 export const ErrorItem = ({ error }) => {
-  const label = getError(error);
+  const { label, target } = getError(error);
 
   if (!label) return null;
 
   return (
     <li>
       <SmoothLink
-        target={error}
+        target={target}
         margin={50}
       >
         {label}

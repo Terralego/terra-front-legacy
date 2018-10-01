@@ -9,6 +9,7 @@ import moment from 'moment';
 import { fetchUserrequest } from 'modules/userrequestList';
 import { resetForm } from 'modules/userrequest';
 import { updateConfigValue } from 'modules/appConfig';
+import { hasInvalidIncidence } from 'helpers/incidencePeriodHelpers';
 
 import HeaderForm from 'components/Form/HeaderForm';
 import FormConfig from 'components/Form/Form.config';
@@ -52,7 +53,6 @@ class FormApp extends React.Component {
 
   getFormErrors () {
     const { form: { properties } } = this.props;
-
     return Array.from(Object.values(properties))
       .map(property => {
         const form = property.$form || property;
@@ -63,12 +63,28 @@ class FormApp extends React.Component {
       .filter(a => a);
   }
 
+  validateFeatures () {
+    const { features, activities } = this.props;
+    const eventDates = Array.from(activities)
+      .reduce((dates, activity) => dates.concat(activity.eventDates), []);
+
+    if (!eventDates.length) {
+      return false;
+    }
+
+    return !hasInvalidIncidence(features, eventDates);
+  }
+
   previewForm = () => {
     this.props.updateConfigValue('formMode', 'preview');
   }
 
   editForm = () => {
     this.props.updateConfigValue('formMode', 'edit');
+  }
+
+  validators = {
+    'properties.features': () => this.validateFeatures(),
   }
 
   render () {
@@ -92,6 +108,7 @@ class FormApp extends React.Component {
           <ReduxForm
             model={track('userrequest')}
             onSubmit={this.previewForm}
+            validators={this.validators}
           >
             {FormConfig.steps.map(step => (
               <Card title={step.title} key={step.title} style={{ marginTop: 16 }}>
@@ -119,6 +136,8 @@ const mapStateToProps = state => ({
   mode: state.appConfig.formMode,
   form: state.forms.userrequest,
   draftStatus: state.appConfig.states.DRAFT,
+  features: state.userrequest.geojson.features,
+  activities: state.userrequest.properties.activities,
 });
 
 const mapDispatchToProps = dispatch =>
