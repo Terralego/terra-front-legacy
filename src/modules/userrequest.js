@@ -259,10 +259,8 @@ export const saveDraft = () => submitData({ draft: true });
 /**
  * Post feature object
  * @param  {object} feature : feature sent to the server
- * @param  {date} eventDateStart : Event start date
- * @param  {date} eventDateEnd : Event end date
  */
-export const getIntersections = (feature, eventDateStart, eventDateEnd) => ({
+export const getIntersections = feature => ({
   [CALL_API]: {
     endpoint: '/layer/hors_chemins/intersects/',
     types: [INTERSECT_REQUEST, INTERSECT_SUCCESS, INTERSECT_FAILURE],
@@ -271,8 +269,6 @@ export const getIntersections = (feature, eventDateStart, eventDateEnd) => ({
       method: 'POST',
       body: JSON.stringify({
         callbackid: feature.id,
-        from: eventDateStart,
-        to: eventDateEnd,
         geom: JSON.stringify(feature.geometry),
       }),
     },

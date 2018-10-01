@@ -11,7 +11,8 @@
     "is_internal": null,
     "error": null,
     "intersections": null,
-    "tempFeatures": []
+    "tempFeatures": [],
+    "userrequestDate": []
   },
   "SUBMIT_FAILURE": {
     "geojson": {
@@ -27,7 +28,8 @@
       "message": "error message"
     },
     "intersections": null,
-    "tempFeatures": []
+    "tempFeatures": [],
+    "userrequestDate": []
   },
   "GEOJSON_COMMENT_FEATURE_ADD": {
     "geojson": {
@@ -41,7 +43,8 @@
     "is_internal": null,
     "error": null,
     "intersections": null,
-    "tempFeatures": []
+    "tempFeatures": [],
+    "userrequestDate": []
   },
   "GEOJSON_COMMENT_FEATURE_REMOVE": {
     "geojson": {
@@ -55,7 +58,8 @@
     "is_internal": null,
     "error": null,
     "intersections": null,
-    "tempFeatures": []
+    "tempFeatures": [],
+    "userrequestDate": []
   },
   "removeFeaturesMultiple": {
     "state": {
@@ -75,7 +79,8 @@
       "is_internal": null,
       "error": null,
       "intersections": null,
-      "tempFeatures": []
+      "tempFeatures": [],
+      "userrequestDate": []
     },
     "result": {
       "geojson": {
@@ -93,7 +98,8 @@
       "is_internal": null,
       "error": null,
       "intersections": null,
-      "tempFeatures": []
+      "tempFeatures": [],
+      "userrequestDate": []
     }
   },
   "clearGeojson": {
@@ -114,7 +120,8 @@
       "is_internal": null,
       "error": null,
       "intersections": null,
-      "tempFeatures": []
+      "tempFeatures": [],
+      "userrequestDate": []
     },
     "result": {
       "geojson": {
@@ -128,7 +135,8 @@
       "is_internal": null,
       "error": null,
       "intersections": null,
-      "tempFeatures": []
+      "tempFeatures": [],
+      "userrequestDate": []
     }
   },
   "COMMENT_ATTACHMENT_ADD": {
@@ -143,7 +151,8 @@
     "is_internal": null,
     "error": null,
     "intersections": null,
-    "tempFeatures": []
+    "tempFeatures": [],
+    "userrequestDate": []
   },
   "attachmentRemove": {
     "state": {
@@ -158,7 +167,8 @@
       "is_internal": null,
       "error": null,
       "intersections": null,
-      "tempFeatures": []
+      "tempFeatures": [],
+      "userrequestDate": []
     },
     "result": {
       "geojson": {
@@ -172,7 +182,8 @@
       "is_internal": null,
       "error": null,
       "intersections": null,
-      "tempFeatures": []
+      "tempFeatures": [],
+      "userrequestDate": []
     }
   },
   "submitComment": {
