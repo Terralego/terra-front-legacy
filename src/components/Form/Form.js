@@ -9,7 +9,7 @@ import moment from 'moment';
 import { fetchUserrequest } from 'modules/userrequestList';
 import { resetForm } from 'modules/userrequest';
 import { updateConfigValue } from 'modules/appConfig';
-import { hasInvalidIncidence } from 'helpers/incidencePeriodHelpers';
+import validators from 'components/Form/validators';
 
 import HeaderForm from 'components/Form/HeaderForm';
 import FormConfig from 'components/Form/Form.config';
@@ -63,28 +63,12 @@ class FormApp extends React.Component {
       .filter(a => a);
   }
 
-  validateFeatures () {
-    const { features, activities } = this.props;
-    const eventDates = Array.from(activities)
-      .reduce((dates, activity) => dates.concat(activity.eventDates), []);
-
-    if (!eventDates.length) {
-      return false;
-    }
-
-    return !hasInvalidIncidence(features, eventDates);
-  }
-
   previewForm = () => {
     this.props.updateConfigValue('formMode', 'preview');
   }
 
   editForm = () => {
     this.props.updateConfigValue('formMode', 'edit');
-  }
-
-  validators = {
-    'properties.features': () => this.validateFeatures(),
   }
 
   render () {
@@ -108,7 +92,7 @@ class FormApp extends React.Component {
           <ReduxForm
             model={track('userrequest')}
             onSubmit={this.previewForm}
-            validators={this.validators}
+            validators={validators(this.props)}
           >
             {FormConfig.steps.map(step => (
               <Card title={step.title} key={step.title} style={{ marginTop: 16 }}>
