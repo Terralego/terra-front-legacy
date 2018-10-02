@@ -52,7 +52,7 @@ class TerraDrawMapFilters extends React.Component {
       >
         <span className={styles.filterLabel}>
           {icon && <img src={icon} alt={iconAlt} className={styles.filterIcon} />}
-          {legendStyle && <span style={legendStyle || {}} className={styles.filterStyle} />}
+          {<span style={legendStyle || {}} className={styles.filterStyle} />}
           {name}
         </span>
 
