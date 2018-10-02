@@ -57,7 +57,6 @@ class TerraDrawMapFilters extends React.Component {
         </span>
 
         <Switch
-          onChange={() => this.toggleFilter(id)}
           defaultChecked={this.isLayerVisible(id)}
           checked={this.isLayerVisible(id)}
           size="small"
