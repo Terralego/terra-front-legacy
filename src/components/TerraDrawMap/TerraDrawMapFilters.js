@@ -43,6 +43,7 @@ class TerraDrawMapFilters extends React.Component {
     return (
       source.showFilter && source.layers.map(layer => (
         <button
+          type="button"
           className={classnames({
             [styles.filterItem]: true,
             [styles['filterItem--visible']]: this.isLayerVisible(layer.id),
