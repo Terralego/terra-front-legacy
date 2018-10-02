@@ -1,10 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import classnames from 'classnames';
-import { Switch } from 'antd';
 
-import styles from 'components/TerraDrawMap/TerraDrawMapFilters.module.scss';
+import TerraDrawMapFilter from 'components/TerraDrawMap/TerraDrawMapFilter';
+
 import { updateConfigValue } from 'modules/appConfig';
 
 class TerraDrawMapFilters extends React.Component {
@@ -39,28 +38,19 @@ class TerraDrawMapFilters extends React.Component {
   }
 
   render () {
-    const { source } = this.props;
-    return source.showFilter && source.layers.map(({ id, icon, iconAlt, name, legendStyle }) => (
-      <button
-        type="button"
-        className={classnames({
-          [styles.filterItem]: true,
-          [styles['filterItem--visible']]: this.isLayerVisible(id),
-        })}
-        key={id}
-        onClick={() => this.toggleFilter(id)}
-      >
-        <span className={styles.filterLabel}>
-          {icon && <img src={icon} alt={iconAlt} className={styles.filterIcon} />}
-          {<span style={legendStyle || {}} className={styles.filterStyle} />}
-          {name}
-        </span>
+    const { source: { showFilter, layers } } = this.props;
 
-        <Switch
-          checked={this.isLayerVisible(id)}
-          size="small"
-        />
-      </button>
+    if (!showFilter) {
+      return null;
+    }
+
+    return layers.map(({ id, ...layerProps }) => (
+      <TerraDrawMapFilter
+        {...layerProps}
+        key={id}
+        checked={this.isLayerVisible(id)}
+        toggleFilter={() => this.toggleFilter(id)}
+      />
     ));
   }
 }
