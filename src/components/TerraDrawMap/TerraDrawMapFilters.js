@@ -47,7 +47,7 @@ class TerraDrawMapFilters extends React.Component {
           [styles.filterItem]: true,
           [styles['filterItem--visible']]: this.isLayerVisible(id),
         })}
-        key={`${id}_filter`}
+        key={id}
         onClick={() => this.toggleFilter(id)}
       >
         <span className={styles.filterLabel}>
