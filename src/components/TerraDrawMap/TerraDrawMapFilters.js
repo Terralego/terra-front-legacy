@@ -40,35 +40,30 @@ class TerraDrawMapFilters extends React.Component {
 
   render () {
     const { source } = this.props;
-    return (
-      source.showFilter && source.layers.map(layer => (
-        <button
-          type="button"
-          className={classnames({
-            [styles.filterItem]: true,
-            [styles['filterItem--visible']]: this.isLayerVisible(layer.id),
-          })}
-          key={`${layer.id}_filter`}
-          onClick={() => this.toggleFilter(layer.id)}
-        >
-          <span className={styles.filterLabel}>
-            {layer.icon &&
-            <img src={layer.icon} alt={layer.iconAlt} className={styles.filterIcon} />
-          }
-            {layer.legendStyle &&
-            <span style={layer.legendStyle || {}} className={styles.filterStyle} />
-          }
-            {layer.name}
-          </span>
-          <Switch
-            onChange={() => this.toggleFilter(layer.id)}
-            defaultChecked={this.isLayerVisible(layer.id)}
-            checked={this.isLayerVisible(layer.id)}
-            size="small"
-          />
-        </button>
-      ))
-    );
+    return source.showFilter && source.layers.map(({ id, icon, iconAlt, name, legendStyle }) => (
+      <button
+        type="button"
+        className={classnames({
+          [styles.filterItem]: true,
+          [styles['filterItem--visible']]: this.isLayerVisible(id),
+        })}
+        key={`${id}_filter`}
+        onClick={() => this.toggleFilter(id)}
+      >
+        <span className={styles.filterLabel}>
+          {icon && <img src={icon} alt={iconAlt} className={styles.filterIcon} />}
+          {legendStyle && <span style={legendStyle || {}} className={styles.filterStyle} />}
+          {name}
+        </span>
+
+        <Switch
+          onChange={() => this.toggleFilter(id)}
+          defaultChecked={this.isLayerVisible(id)}
+          checked={this.isLayerVisible(id)}
+          size="small"
+        />
+      </button>
+    ));
   }
 }
 
