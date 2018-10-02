@@ -26,7 +26,6 @@ export const getFeaturesWithIncidence = (response, features, eventDates) => {
       return feature;
     }
     response.results.features.forEach(intersection => {
-      // TODO: Get GRIDCODE lvl by dates.
       if (incidencePeriods) {
         incidence = Object.keys(incidencePeriods).reduce((acc, key) => {
           if (intersection.properties[key] > incidence.GRIDCODE) {

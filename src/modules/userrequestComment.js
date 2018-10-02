@@ -32,7 +32,7 @@ export const UPDATE_TEMP_FEATURES = 'userrequestComment/UPDATE_TEMP_FEATURES';
 export const DELETE_GEOJSON_TEMPFEATURES = 'userrequestComment/DELETE_GEOJSON_TEMPFEATURES';
 
 // Set the current activity date
-export const SET_USERREQUEST_DATE = 'SET_USERREQUEST_DATE';
+export const SET_USERREQUEST_ACTIVITIES = 'userrequestComment/SET_USERREQUEST_ACTIVITIES';
 
 export const initialState = {
   geojson: {
@@ -42,12 +42,13 @@ export const initialState = {
   attachment: null,
   properties: {
     comment: '',
+    selectedActivityUid: null,
   },
   is_internal: null,
   error: null,
   intersections: null,
   tempFeatures: [],
-  userrequestDate: [],
+  activities: [],
 };
 
 
@@ -93,17 +94,16 @@ const userrequestComment = (state = initialState, action) => {
         ...state,
         attachment: null,
       };
-    case INTERSECT_SUCCESS: {
+    case INTERSECT_SUCCESS:
       return {
         ...state,
         intersections: action.data,
         tempFeatures: getFeaturesWithIncidence(
           action.data,
           state.tempFeatures,
-          state.userrequestDate,
+          state.activities[state.properties.selectedActivityUid].eventDates,
         ),
       };
-    }
     case UPDATE_TEMP_FEATURES:
       return {
         ...state,
@@ -123,10 +123,10 @@ const userrequestComment = (state = initialState, action) => {
           action.data.geom.features,
         ),
       };
-    case SET_USERREQUEST_DATE:
+    case SET_USERREQUEST_ACTIVITIES:
       return {
         ...state,
-        userrequestDate: [...action.eventDates],
+        activities: [...action.activities],
       };
     default:
       return state;
@@ -235,9 +235,9 @@ export const addAttachment = attachment => ({
   attachment,
 });
 
-export const setDate = eventDates => ({
-  type: SET_USERREQUEST_DATE,
-  eventDates,
+export const setActivities = activities => ({
+  type: SET_USERREQUEST_ACTIVITIES,
+  activities,
 });
 
 /**
