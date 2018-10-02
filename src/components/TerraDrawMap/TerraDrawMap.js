@@ -124,6 +124,7 @@ class TerraDrawMap extends Component {
       filters,
       activityDates,
       mapDrawerProps,
+      mapProps,
     } = this.props;
     // Map component is created in constructor
     const { Map } = this;
@@ -137,6 +138,7 @@ class TerraDrawMap extends Component {
     return (
       <div className={styles.map}>
         <Map
+          {...mapProps}
           style={mapboxStyle}
           containerStyle={{ height: '100%', width: '100%' }}
           fitBoundsOptions={{ padding: 30, maxZoom: 14 }}
@@ -221,6 +223,7 @@ TerraDrawMap.propTypes = {
   mapDrawerProps: PropTypes.shape({
     expandOnInit: PropTypes.bool,
   }),
+  mapProps: PropTypes.object,
 };
 
 TerraDrawMap.defaultProps = {
@@ -241,6 +244,7 @@ TerraDrawMap.defaultProps = {
   },
   editable: true,
   features: [],
+  mapProps: {},
 };
 
 export default TerraDrawMap;
