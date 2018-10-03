@@ -94,6 +94,7 @@ class TerraDrawMap extends Component {
     this.map = map;
     this.map.addControl(new MapboxGL.FullscreenControl(), 'top-left');
     this.map.addControl(new MapboxGL.ScaleControl(), 'bottom-left');
+    this.map.dragRotate.disable();
   }
 
   deleteFeatureById (id) {
