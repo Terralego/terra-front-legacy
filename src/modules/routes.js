@@ -9,6 +9,7 @@ import CreateAccount from 'components/Account/CreateAccount';
 import Account from 'components/Account/Account';
 import Credit from 'components/Credit/Credit';
 import LegalNotice from 'components/LegalNotice/LegalNotice';
+import { REQUEST_CREATE } from 'helpers/permissionsHelpers';
 
 export const routes = [{
   path: '/',
@@ -56,6 +57,7 @@ export const routes = [{
   component: Form,
   icon: 'form',
   protected: true,
+  permissions: [REQUEST_CREATE],
   layout: {
     hideHeader: true,
     hideFooter: true,

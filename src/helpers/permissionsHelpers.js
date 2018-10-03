@@ -1,3 +1,15 @@
+export const REQUEST_CREATE = 'trrequests.can_create_requests';
+export const REQUEST_COMMENT = 'trrequests.can_comment_requests';
+export const REQUEST_READ_SELF = 'trrequests.can_read_self_requests';
+
+export const REQUEST_READ_COMMENT = 'trrequests.can_read_comment_requests';
+export const REQUEST_POST_INTERNAL_COMMENT = 'trrequests.can_internal_comment_requests';
+export const REQUEST_APPROVE = 'actions.can_approve_requests';
+
+export const REQUEST_CHANGE_STATE = 'trrequests.can_change_state_requests';
+export const REQUEST_POST_COMMENT = 'trrequests.can_comment_requests';
+export const REQUEST_READ_ALL = 'trrequests.can_read_all_requests';
+
 /**
  * hasPermissions returns true if all requested permissions are checked
  *

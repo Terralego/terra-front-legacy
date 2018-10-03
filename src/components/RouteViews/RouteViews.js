@@ -6,6 +6,7 @@ import routes from 'modules/routes';
 import Layout from 'components/Layout/Layout';
 import SubRoutes from './SubRoutes';
 import AuthRoute from './AuthRoute';
+import PermissionsRoute from './PermissionsRoute';
 
 const hasSubRoutes = route => route.routes && route.routes.length;
 
@@ -21,11 +22,15 @@ export const RouteViews = ({ location }) => (
             {...route}
             location={location}
           >
-            <Layout {...route.layout}>
-              {hasSubRoutes(route)
-                ? <SubRoutes {...props} {...route} />
-                : <route.component />}
-            </Layout>
+            <PermissionsRoute
+              permissions={route.permissions}
+            >
+              <Layout {...route.layout}>
+                {hasSubRoutes(route)
+                  ? <SubRoutes {...props} {...route} />
+                  : <route.component />}
+              </Layout>
+            </PermissionsRoute>
           </AuthRoute>
         )}
       />
