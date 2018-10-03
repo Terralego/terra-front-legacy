@@ -228,7 +228,7 @@ export const submitData = ({ draft } = {}) => async (dispatch, getState) => {
     : removeRouteInProgressDatas(data);
 
   try {
-    await apiService.request(`/userrequest/${data.id ? `${data.id}/` : ''}`, {
+    const { data: savedData } = await apiService.request(`/userrequest/${data.id ? `${data.id}/` : ''}`, {
       headers: defaultHeaders,
       method: data.id ? 'PUT' : 'POST',
       body: JSON.stringify({
@@ -236,7 +236,7 @@ export const submitData = ({ draft } = {}) => async (dispatch, getState) => {
         state: draft ? getState().appConfig.states.DRAFT : 200,
       }),
     });
-    dispatch({ type: draft ? SAVE_DRAFT_SUCCESS : SUBMIT_SUCCESS, data });
+    dispatch({ type: draft ? SAVE_DRAFT_SUCCESS : SUBMIT_SUCCESS, data: savedData });
 
     if (!draft) {
       dispatch(actions.setSubmitted('userrequest', true));

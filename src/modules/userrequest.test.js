@@ -55,7 +55,7 @@ describe('userrequest async action', () => {
     expect(actions.length).toBe(4);
     expect(actions[0]).toEqual({ type: 'rrf/setPending', model: 'userrequest', pending: true });
     expect(actions[1]).toEqual({ type: 'userrequest/SUBMIT_REQUEST' });
-    expect(actions[2]).toEqual({ type: 'userrequest/SUBMIT_SUCCESS', data: initialState });
+    expect(actions[2]).toEqual({ type: 'userrequest/SUBMIT_SUCCESS', data });
     expect(actions[3]).toEqual({ type: 'rrf/setSubmitted', model: 'userrequest', submitted: true });
   });
 
