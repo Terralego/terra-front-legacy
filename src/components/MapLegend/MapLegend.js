@@ -2,7 +2,7 @@ import React from 'react';
 
 import './MapLegend.scss';
 
-const MapLegend = ({ title, legend, style }) => (
+const MapLegend = ({ title, legend = [], style, Component = null }) => (
   <div className="legend" style={style}>
     <p className="legend__title">{title || 'Legend'}</p>
     <ul className="legend__list">
@@ -14,6 +14,7 @@ const MapLegend = ({ title, legend, style }) => (
         </li>
       ))}
     </ul>
+    {Component}
   </div>
 );
 
