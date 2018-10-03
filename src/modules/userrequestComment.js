@@ -34,6 +34,9 @@ export const DELETE_GEOJSON_TEMPFEATURES = 'userrequestComment/DELETE_GEOJSON_TE
 // Set the current activity date
 export const SET_USERREQUEST_ACTIVITIES = 'userrequestComment/SET_USERREQUEST_ACTIVITIES';
 
+// Set current modale activity Id
+export const SET_ACTIVITY_UID = 'SET_ACTIVITY_UID';
+
 export const initialState = {
   geojson: {
     type: 'FeatureCollection',
@@ -97,7 +100,6 @@ const userrequestComment = (state = initialState, action) => {
     case INTERSECT_SUCCESS:
       return {
         ...state,
-        intersections: action.data,
         tempFeatures: getFeaturesWithIncidence(
           action.data,
           state.tempFeatures,
@@ -127,6 +129,14 @@ const userrequestComment = (state = initialState, action) => {
       return {
         ...state,
         activities: [...action.activities],
+      };
+    case SET_ACTIVITY_UID:
+      return {
+        ...state,
+        properties: {
+          ...state.properties,
+          selectedActivityUid: action.activityUid,
+        },
       };
     default:
       return state;
@@ -238,6 +248,11 @@ export const addAttachment = attachment => ({
 export const setActivities = activities => ({
   type: SET_USERREQUEST_ACTIVITIES,
   activities,
+});
+
+export const setActivityUid = activityUid => ({
+  type: SET_ACTIVITY_UID,
+  activityUid,
 });
 
 /**

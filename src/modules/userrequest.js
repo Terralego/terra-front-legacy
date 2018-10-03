@@ -121,7 +121,10 @@ const userrequest = (state = initialState, action) => {
       };
     case RESET_FORM:
       return initialState;
-    case INTERSECT_SUCCESS:
+    case INTERSECT_SUCCESS: {
+      const currentFeature = state.geojson.features
+        .find(feature => feature.id === action.data.request.callbackid);
+
       return {
         ...state,
         geojson: {
@@ -129,10 +132,11 @@ const userrequest = (state = initialState, action) => {
           features: getFeaturesWithIncidence(
             action.data,
             state.geojson.features,
-            state.properties.activities[0].eventDates,
+            state.properties.activities[currentFeature.properties.activity].eventDates,
           ),
         },
       };
+    }
     case ROUTING_SUCCESS:
       return {
         ...state,

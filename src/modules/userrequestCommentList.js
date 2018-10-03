@@ -25,6 +25,7 @@ const getCommentAuthor = ({ email, properties: { firstname, lastname } }) => {
 
 const getCommentData = data => ({
   content: data.properties.comment,
+  selectedActivityUid: data.properties.selectedActivityUid,
   date: data.created_at,
   author: getCommentAuthor(data.owner),
   is_internal: data.is_internal,
