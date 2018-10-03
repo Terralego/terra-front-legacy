@@ -6,13 +6,14 @@
     },
     "attachment": null,
     "properties": {
-      "comment": ""
+      "comment": "",
+      "selectedActivityUid": null
     },
     "is_internal": null,
     "error": null,
     "intersections": null,
     "tempFeatures": [],
-    "userrequestDate": []
+    "activities": []
   },
   "SUBMIT_FAILURE": {
     "geojson": {
@@ -21,7 +22,8 @@
     },
     "attachment": null,
     "properties": {
-      "comment": ""
+      "comment": "",
+      "selectedActivityUid": null
     },
     "is_internal": null,
     "error": {
@@ -29,7 +31,7 @@
     },
     "intersections": null,
     "tempFeatures": [],
-    "userrequestDate": []
+    "activities": []
   },
   "GEOJSON_COMMENT_FEATURE_ADD": {
     "geojson": {
@@ -38,13 +40,13 @@
     },
     "attachment": null,
     "properties": {
-      "comment": ""
+      "comment": "",
+      "selectedActivityUid": null
     },
     "is_internal": null,
     "error": null,
     "intersections": null,
-    "tempFeatures": [],
-    "userrequestDate": []
+    "tempFeatures": []
   },
   "GEOJSON_COMMENT_FEATURE_REMOVE": {
     "geojson": {
@@ -53,13 +55,13 @@
     },
     "attachment": null,
     "properties": {
-      "comment": ""
+      "comment": "",
+      "selectedActivityUid": null
     },
     "is_internal": null,
     "error": null,
     "intersections": null,
-    "tempFeatures": [],
-    "userrequestDate": []
+    "tempFeatures": []
   },
   "removeFeaturesMultiple": {
     "state": {
@@ -74,13 +76,13 @@
       },
       "attachment": null,
       "properties": {
-        "comment": ""
+        "comment": "",
+        "selectedActivityUid": null
       },
       "is_internal": null,
       "error": null,
       "intersections": null,
-      "tempFeatures": [],
-      "userrequestDate": []
+      "tempFeatures": []
     },
     "result": {
       "geojson": {
@@ -93,13 +95,13 @@
       },
       "attachment": null,
       "properties": {
-        "comment": ""
+        "comment": "",
+        "selectedActivityUid": null
       },
       "is_internal": null,
       "error": null,
       "intersections": null,
-      "tempFeatures": [],
-      "userrequestDate": []
+      "tempFeatures": []
     }
   },
   "clearGeojson": {
@@ -115,13 +117,13 @@
       },
       "attachment": null,
       "properties": {
-        "comment": ""
+        "comment": "",
+        "selectedActivityUid": null
       },
       "is_internal": null,
       "error": null,
       "intersections": null,
-      "tempFeatures": [],
-      "userrequestDate": []
+      "tempFeatures": []
     },
     "result": {
       "geojson": {
@@ -130,13 +132,13 @@
       },
       "attachment": null,
       "properties": {
-        "comment": ""
+        "comment": "",
+        "selectedActivityUid": null
       },
       "is_internal": null,
       "error": null,
       "intersections": null,
-      "tempFeatures": [],
-      "userrequestDate": []
+      "tempFeatures": []
     }
   },
   "COMMENT_ATTACHMENT_ADD": {
@@ -146,13 +148,14 @@
     },
     "attachment": "a",
     "properties": {
-      "comment": ""
+      "comment": "",
+      "selectedActivityUid": null
     },
     "is_internal": null,
     "error": null,
     "intersections": null,
     "tempFeatures": [],
-    "userrequestDate": []
+    "activities": []
   },
   "attachmentRemove": {
     "state": {
@@ -162,13 +165,13 @@
       },
       "attachment": "a",
       "properties": {
-        "comment": ""
+        "comment": "",
+        "selectedActivityUid": null
       },
       "is_internal": null,
       "error": null,
       "intersections": null,
-      "tempFeatures": [],
-      "userrequestDate": []
+      "tempFeatures": []
     },
     "result": {
       "geojson": {
@@ -177,13 +180,13 @@
       },
       "attachment": null,
       "properties": {
-        "comment": ""
+        "comment": "",
+        "selectedActivityUid": null
       },
       "is_internal": null,
       "error": null,
       "intersections": null,
-      "tempFeatures": [],
-      "userrequestDate": []
+      "tempFeatures": []
     }
   },
   "submitComment": {
