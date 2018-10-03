@@ -8,7 +8,7 @@ export default ({ data, geojsonPaint, filters }) => {
       <GeoJSONLayer
         data={data}
         fillPaint={geojsonPaint.fillPaint}
-        linePaint={geojsonPaint.linePaint}
+        linePaint={geojsonPaint.linePaintDashed}
         layerOptions={{ filter: ['==', '$type', 'Polygon'] }}
       />
 
