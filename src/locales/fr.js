@@ -42,7 +42,7 @@ const fr = {
     'Téléphone secondaire': 'Téléphone secondaire',
   },
   headerTranslations: {
-    'Your form isn\'t saved yet. If you go back you will lost all data. Are you sure?': 'Vous n\'avez pas enregistré votre formulaire comme brouillon. Si vous retournez en arrière, vous perdrez toutes les informations saisies. Etes-vous sûre de vouloir quitter ce formulaire sans sauvegarder ?',
+    'Your form isn\'t saved yet. If you go back you will lost all data. Are you sure?': 'Vous n\'avez pas enregistré votre formulaire comme brouillon. Si vous retournez en arrière, vous perdrez toutes les informations saisies. Etes-vous sûr(e) de vouloir quitter ce formulaire sans sauvegarder ?',
     Yes: 'Oui',
     No: 'Non',
   },
