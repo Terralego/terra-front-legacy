@@ -7,7 +7,7 @@
     "attachment": null,
     "properties": {
       "comment": "",
-      "selectedActivityUid": null
+      "selectedActivityUid": 0
     },
     "is_internal": null,
     "error": null,
@@ -23,7 +23,7 @@
     "attachment": null,
     "properties": {
       "comment": "",
-      "selectedActivityUid": null
+      "selectedActivityUid": 0
     },
     "is_internal": null,
     "error": {
@@ -41,7 +41,7 @@
     "attachment": null,
     "properties": {
       "comment": "",
-      "selectedActivityUid": null
+      "selectedActivityUid": 0
     },
     "is_internal": null,
     "error": null,
@@ -56,7 +56,7 @@
     "attachment": null,
     "properties": {
       "comment": "",
-      "selectedActivityUid": null
+      "selectedActivityUid": 0
     },
     "is_internal": null,
     "error": null,
@@ -77,7 +77,7 @@
       "attachment": null,
       "properties": {
         "comment": "",
-        "selectedActivityUid": null
+        "selectedActivityUid": 0
       },
       "is_internal": null,
       "error": null,
@@ -96,7 +96,7 @@
       "attachment": null,
       "properties": {
         "comment": "",
-        "selectedActivityUid": null
+        "selectedActivityUid": 0
       },
       "is_internal": null,
       "error": null,
@@ -118,7 +118,7 @@
       "attachment": null,
       "properties": {
         "comment": "",
-        "selectedActivityUid": null
+        "selectedActivityUid": 0
       },
       "is_internal": null,
       "error": null,
@@ -133,7 +133,7 @@
       "attachment": null,
       "properties": {
         "comment": "",
-        "selectedActivityUid": null
+        "selectedActivityUid": 0
       },
       "is_internal": null,
       "error": null,
@@ -149,7 +149,7 @@
     "attachment": "a",
     "properties": {
       "comment": "",
-      "selectedActivityUid": null
+      "selectedActivityUid": 0
     },
     "is_internal": null,
     "error": null,
@@ -166,7 +166,7 @@
       "attachment": "a",
       "properties": {
         "comment": "",
-        "selectedActivityUid": null
+        "selectedActivityUid": 0
       },
       "is_internal": null,
       "error": null,
@@ -181,7 +181,7 @@
       "attachment": null,
       "properties": {
         "comment": "",
-        "selectedActivityUid": null
+        "selectedActivityUid": 0
       },
       "is_internal": null,
       "error": null,
