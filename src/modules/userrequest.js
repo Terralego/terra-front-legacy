@@ -45,6 +45,9 @@ export const ROUTING_REQUEST = 'userrequest/ROUTING_REQUEST';
 export const ROUTING_SUCCESS = 'userrequest/ROUTING_SUCCESS';
 export const ROUTING_FAILURE = 'userrequest/ROUTING_FAILURE';
 
+// Set new datas to the initial userrequest
+export const CHANGE_USERREQUEST_DATA_MAP = 'CHANGE_USERREQUEST_DATA_MAP';
+
 /**
  * REDUCER
  * --------------------------------------------------------- *
@@ -147,6 +150,18 @@ const userrequest = (state = initialState, action) => {
             action.data.request.callbackid,
             action.data.geom.features,
           ),
+        },
+      };
+    case CHANGE_USERREQUEST_DATA_MAP:
+      return {
+        ...state,
+        geojson: {
+          ...state.geojson,
+          features: [
+            ...state.geojson.features.filter(feature =>
+              feature.properties.activity !== action.features[0].properties.activity),
+            ...action.features,
+          ],
         },
       };
     default:
@@ -259,6 +274,20 @@ export const submitData = ({ draft } = {}) => async (dispatch, getState) => {
  * @param {string} data
  */
 export const saveDraft = () => submitData({ draft: true });
+
+export const changeMapUserrequest = () => (dispatch, getState) => {
+  const { userrequestComment: { properties, geojson } } = getState();
+  const activityToChange = properties.selectedActivityUid;
+  const features = [
+    ...geojson.features.map(feature =>
+      ({ ...feature, properties: { ...feature.properties, activity: activityToChange } })),
+  ];
+
+  dispatch({
+    type: CHANGE_USERREQUEST_DATA_MAP,
+    features,
+  });
+};
 
 /**
  * Post feature object
