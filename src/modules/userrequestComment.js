@@ -22,12 +22,20 @@ export const INTERSECT_REQUEST = 'userrequestComment/INTERSECT_REQUEST';
 export const INTERSECT_SUCCESS = 'userrequestComment/INTERSECT_SUCCESS';
 export const INTERSECT_FAILURE = 'userrequestComment/INTERSECT_FAILURE';
 
+// Get LineString routing actions types
 export const ROUTING_REQUEST = 'userrequestComment/ROUTING_REQUEST';
 export const ROUTING_SUCCESS = 'userrequestComment/ROUTING_SUCCESS';
 export const ROUTING_FAILURE = 'userrequestComment/ROUTING_FAILURE';
 
+// Update or Delete geojson temp_features
 export const UPDATE_TEMP_FEATURES = 'userrequestComment/UPDATE_TEMP_FEATURES';
 export const DELETE_GEOJSON_TEMPFEATURES = 'userrequestComment/DELETE_GEOJSON_TEMPFEATURES';
+
+// Set the current activity date
+export const SET_USERREQUEST_ACTIVITIES = 'userrequestComment/SET_USERREQUEST_ACTIVITIES';
+
+// Set current modale activity Id
+export const SET_ACTIVITY_UID = 'SET_ACTIVITY_UID';
 
 export const initialState = {
   geojson: {
@@ -37,11 +45,13 @@ export const initialState = {
   attachment: null,
   properties: {
     comment: '',
+    selectedActivityUid: null,
   },
   is_internal: null,
   error: null,
   intersections: null,
   tempFeatures: [],
+  activities: [],
 };
 
 
@@ -87,17 +97,14 @@ const userrequestComment = (state = initialState, action) => {
         ...state,
         attachment: null,
       };
-    // case INTERSECT_REQUEST: {
-    //   return {
-    //     ...state,
-    //     intersections: null,
-    //   };
-    // }
     case INTERSECT_SUCCESS:
       return {
         ...state,
-        intersections: action.data,
-        tempFeatures: getFeaturesWithIncidence(action.data, state.tempFeatures),
+        tempFeatures: getFeaturesWithIncidence(
+          action.data,
+          state.tempFeatures,
+          state.activities[state.properties.selectedActivityUid].eventDates,
+        ),
       };
     case UPDATE_TEMP_FEATURES:
       return {
@@ -117,6 +124,19 @@ const userrequestComment = (state = initialState, action) => {
           action.data.request.callbackid,
           action.data.geom.features,
         ),
+      };
+    case SET_USERREQUEST_ACTIVITIES:
+      return {
+        ...state,
+        activities: [...action.activities],
+      };
+    case SET_ACTIVITY_UID:
+      return {
+        ...state,
+        properties: {
+          ...state.properties,
+          selectedActivityUid: action.activityUid,
+        },
       };
     default:
       return state;
@@ -225,6 +245,16 @@ export const addAttachment = attachment => ({
   attachment,
 });
 
+export const setActivities = activities => ({
+  type: SET_USERREQUEST_ACTIVITIES,
+  activities,
+});
+
+export const setActivityUid = activityUid => ({
+  type: SET_ACTIVITY_UID,
+  activityUid,
+});
+
 /**
  * userrequestComment action
  * remove attachment
@@ -248,10 +278,8 @@ export const updateTempFeatures = features => ({
 /**
  * Post feature object
  * @param  {object} feature : feature sent to the server
- * @param  {date} eventDateStart : Event start date
- * @param  {date} eventDateEnd : Event end date
  */
-export const getIntersections = (feature, eventDateStart, eventDateEnd) => ({
+export const getIntersections = feature => ({
   [CALL_API]: {
     endpoint: '/layer/hors_chemins/intersects/',
     types: [INTERSECT_REQUEST, INTERSECT_SUCCESS, INTERSECT_FAILURE],
@@ -260,8 +288,6 @@ export const getIntersections = (feature, eventDateStart, eventDateEnd) => ({
       method: 'POST',
       body: JSON.stringify({
         callbackid: feature.id,
-        from: eventDateStart,
-        to: eventDateEnd,
         geom: JSON.stringify(feature.geometry),
       }),
     },

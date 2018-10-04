@@ -6,12 +6,14 @@
     },
     "attachment": null,
     "properties": {
-      "comment": ""
+      "comment": "",
+      "selectedActivityUid": null
     },
     "is_internal": null,
     "error": null,
     "intersections": null,
-    "tempFeatures": []
+    "tempFeatures": [],
+    "activities": []
   },
   "SUBMIT_FAILURE": {
     "geojson": {
@@ -20,14 +22,16 @@
     },
     "attachment": null,
     "properties": {
-      "comment": ""
+      "comment": "",
+      "selectedActivityUid": null
     },
     "is_internal": null,
     "error": {
       "message": "error message"
     },
     "intersections": null,
-    "tempFeatures": []
+    "tempFeatures": [],
+    "activities": []
   },
   "GEOJSON_COMMENT_FEATURE_ADD": {
     "geojson": {
@@ -36,7 +40,8 @@
     },
     "attachment": null,
     "properties": {
-      "comment": ""
+      "comment": "",
+      "selectedActivityUid": null
     },
     "is_internal": null,
     "error": null,
@@ -50,7 +55,8 @@
     },
     "attachment": null,
     "properties": {
-      "comment": ""
+      "comment": "",
+      "selectedActivityUid": null
     },
     "is_internal": null,
     "error": null,
@@ -70,7 +76,8 @@
       },
       "attachment": null,
       "properties": {
-        "comment": ""
+        "comment": "",
+        "selectedActivityUid": null
       },
       "is_internal": null,
       "error": null,
@@ -88,7 +95,8 @@
       },
       "attachment": null,
       "properties": {
-        "comment": ""
+        "comment": "",
+        "selectedActivityUid": null
       },
       "is_internal": null,
       "error": null,
@@ -109,7 +117,8 @@
       },
       "attachment": null,
       "properties": {
-        "comment": ""
+        "comment": "",
+        "selectedActivityUid": null
       },
       "is_internal": null,
       "error": null,
@@ -123,7 +132,8 @@
       },
       "attachment": null,
       "properties": {
-        "comment": ""
+        "comment": "",
+        "selectedActivityUid": null
       },
       "is_internal": null,
       "error": null,
@@ -138,12 +148,14 @@
     },
     "attachment": "a",
     "properties": {
-      "comment": ""
+      "comment": "",
+      "selectedActivityUid": null
     },
     "is_internal": null,
     "error": null,
     "intersections": null,
-    "tempFeatures": []
+    "tempFeatures": [],
+    "activities": []
   },
   "attachmentRemove": {
     "state": {
@@ -153,7 +165,8 @@
       },
       "attachment": "a",
       "properties": {
-        "comment": ""
+        "comment": "",
+        "selectedActivityUid": null
       },
       "is_internal": null,
       "error": null,
@@ -167,7 +180,8 @@
       },
       "attachment": null,
       "properties": {
-        "comment": ""
+        "comment": "",
+        "selectedActivityUid": null
       },
       "is_internal": null,
       "error": null,
