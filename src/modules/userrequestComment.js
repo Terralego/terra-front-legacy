@@ -45,7 +45,7 @@ export const initialState = {
   attachment: null,
   properties: {
     comment: '',
-    selectedActivityUid: null,
+    selectedActivityUid: 0,
   },
   is_internal: null,
   error: null,

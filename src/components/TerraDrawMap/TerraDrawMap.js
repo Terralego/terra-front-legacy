@@ -105,7 +105,6 @@ class TerraDrawMap extends Component {
     if (this.drawControl) {
       const editableFeatures = this.props.features.filter(feature =>
         feature.geometry.type !== 'LineString' || feature.properties.routeInProgress);
-      // this.drawControl.draw.deleteAll();
       this.drawControl.draw.set({
         type: 'FeatureCollection',
         features: editableFeatures,
