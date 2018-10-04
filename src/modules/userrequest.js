@@ -9,7 +9,7 @@ import {
   deleteFeatureWithRoute,
 } from 'helpers/userrequestHelpers';
 import { getDataWithFeatureId } from 'helpers/mapHelpers';
-import { DETAIL_SUCCESS } from 'modules/userrequestList';
+import { insertUserrequest, DETAIL_SUCCESS } from 'modules/userrequestList';
 import initialState from 'modules/userrequest-initial';
 
 // Modify userrequest object action types
@@ -232,12 +232,20 @@ export const resetForm = ({ full } = {}) => dispatch => {
   }
 };
 
+function saveRequest (body) {
+  return apiService.request(`/userrequest/${body.id ? `${body.id}/` : ''}`, {
+    headers: defaultHeaders,
+    method: body.id ? 'PUT' : 'POST',
+    body: JSON.stringify(body),
+  });
+}
+
 /**
  * Submit data object
  * @param  {object} data : data that will be send to the server
  */
-export const submitData = ({ draft } = {}) => async (dispatch, getState) => {
-  const data = getState().userrequest;
+export const submitData = ({ draft, data: requestData } = {}) => async (dispatch, getState) => {
+  const data = requestData || getState().userrequest;
   dispatch(actions.setPending('userrequest', true));
 
   dispatch({ type: draft ? SAVE_DRAFT_REQUEST : SUBMIT_REQUEST });
@@ -247,13 +255,9 @@ export const submitData = ({ draft } = {}) => async (dispatch, getState) => {
     : removeRouteInProgressDatas(data);
 
   try {
-    const { data: savedData } = await apiService.request(`/userrequest/${data.id ? `${data.id}/` : ''}`, {
-      headers: defaultHeaders,
-      method: data.id ? 'PUT' : 'POST',
-      body: JSON.stringify({
-        ...bodyData,
-        state: draft ? getState().appConfig.states.DRAFT : 200,
-      }),
+    const { data: savedData } = await saveRequest({
+      ...bodyData,
+      state: draft ? getState().appConfig.states.DRAFT : 200,
     });
     dispatch({ type: draft ? SAVE_DRAFT_SUCCESS : SUBMIT_SUCCESS, data: savedData });
 
@@ -287,6 +291,23 @@ export const changeMapUserrequest = () => (dispatch, getState) => {
     type: CHANGE_USERREQUEST_DATA_MAP,
     features,
   });
+};
+
+export const duplicate = (data, title = '{{title}}') => async (dispatch, getState) => {
+  const copyData = { ...data };
+  delete copyData.id;
+  const copyTitle = title.replace('{{title}}', data.properties.title);
+  copyData.properties.title = copyTitle;
+
+  try {
+    const { data: savedData } = await saveRequest({
+      ...copyData,
+      state: getState().appConfig.states.DRAFT,
+    });
+    dispatch(insertUserrequest(savedData, 0));
+  } catch (e) {
+    //
+  }
 };
 
 /**

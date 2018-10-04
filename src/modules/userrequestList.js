@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 
 import { CALL_API } from 'middlewares/api';
-import { defaultHeaders } from 'services/apiService';
+import apiService, { defaultHeaders } from 'services/apiService';
 
 import { SUBMIT_SUCCESS, SAVE_DRAFT_SUCCESS, READ_SUCCESS } from 'modules/userrequest';
 import { getUserGroups } from 'modules/authentication';
@@ -24,6 +24,11 @@ export const APPROBATIONS_CHANGE_REQUEST = 'userrequestList/APPROBATIONS_CHANGE_
 export const APPROBATIONS_CHANGE_SUCCESS = 'userrequestList/APPROBATIONS_CHANGE_SUCCESS';
 export const APPROBATIONS_CHANGE_FAILURE = 'userrequestList/APPROBATIONS_CHANGE_FAILURE';
 
+export const ITEMS_FETCH_LOADING = 'userrequestList/ITEMS_FETCH_LOADING';
+export const ITEMS_FETCH_SUCCESS = 'userrequestList/ITEMS_FETCH_SUCCESS';
+export const ITEM_INSERT = 'userrequestList/ITEM_INSERT';
+export const ITEMS_RESET = 'userrequestList/ITEMS_RESET';
+
 export const userrequestPaginator = createPaginator('/userrequest/');
 
 /**
@@ -34,10 +39,14 @@ export const userrequestPaginator = createPaginator('/userrequest/');
  */
 const getItemIdFromUrl = (url = '') => url.split('/').reverse()[1];
 
+const initialState = {
+  items: [],
+};
+
 /**
  * userrequestList reducer
  */
-const userrequestList = (state = {}, action) => {
+const userrequestList = (state = initialState, action) => {
   switch (action.type) {
     case PAGE_SUCCESS:
       return {
@@ -84,6 +93,44 @@ const userrequestList = (state = {}, action) => {
         [getItemIdFromUrl(action.error.url)]: {
           error: action.error,
         },
+      };
+    case ITEMS_FETCH_LOADING:
+      return {
+        ...state,
+        loading: true,
+      };
+    case ITEMS_FETCH_SUCCESS: {
+      const { items: prevItems } = state;
+      const { page, count, items: newItems } = action;
+      const items = [...prevItems];
+      const startIndex = (page - 1) * 10;
+      items.length = count;
+      newItems.forEach((item, k) => {
+        items[k + startIndex] = item;
+      });
+
+      return {
+        ...state,
+        items,
+        count,
+        loading: false,
+      };
+    }
+    case ITEM_INSERT: {
+      const { items } = state;
+      const { item, index } = action;
+      items.splice(index, 1, item);
+      return {
+        ...state,
+        items: [...items],
+        count: items.length,
+      };
+    }
+    case ITEMS_RESET:
+      return {
+        ...state,
+        items: [],
+        count: 0,
       };
     default:
       return userrequestPaginator.itemsReducer(state, action);
@@ -153,7 +200,33 @@ export const getUserrequestsArrayFilteredByUser = createSelector(
  *
  * @param search {string} search query parameters
  */
-export const requestUserrequestPage = search => userrequestPaginator.requestPage('/userrequest/', search, 'userrequestList');
+export const requestUserrequestPage = (page, ordering = '-id') => async dispatch => {
+  dispatch({
+    type: ITEMS_FETCH_LOADING,
+  });
+
+  const { data: { count, results: items } } = await apiService.request(`/userrequest/?ordering=${ordering}&page=${page}&limit=10`, {
+    headers: defaultHeaders,
+    method: 'GET',
+  });
+
+  dispatch({
+    type: ITEMS_FETCH_SUCCESS,
+    page,
+    count,
+    items,
+  });
+};
+
+export const resetUserrequestsList = () => ({
+  type: ITEMS_RESET,
+});
+
+export const insertUserrequest = (item, index) => ({
+  type: ITEM_INSERT,
+  item,
+  index,
+});
 
 /**
  * userrequest action : fetch userrequest
