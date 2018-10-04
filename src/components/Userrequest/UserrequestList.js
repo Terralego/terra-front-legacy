@@ -20,7 +20,8 @@ import withAuthentication from 'hoc/authentication';
 import NewUserrequestButton from 'components/Userrequest/NewUserrequestButton';
 import Pagination from 'components/Userrequest/Pagination';
 import Search from 'components/Userrequest/Search';
-import { hasGroup } from 'helpers/permissionsHelpers';
+import { hasGroup, REQUEST_CREATE } from 'helpers/permissionsHelpers';
+import Permissions from 'components/Permissions';
 
 import styles from './UserrequestList.module.scss';
 
@@ -173,12 +174,18 @@ class UserrequestList extends React.Component {
       <div>
         <div className={styles.header}>
           <h1 className={styles.header__title}>Déclarations d&apos;activité(s)</h1>
-          <NewUserrequestButton className={styles.header__button} />
+          <Permissions
+            permissions={[REQUEST_CREATE]}
+          >
+            <NewUserrequestButton className={styles.header__button} />
+          </Permissions>
         </div>
         <div className={styles.header}>
           <Search handleQueryUpdate={this.handleQueryUpdate} />
         </div>
-        {isUser && (
+        <Permissions
+          permissions={[REQUEST_CREATE]}
+        >
           <div className={styles.actions}>
             <Button
               className={styles.actions__button}
@@ -198,7 +205,7 @@ class UserrequestList extends React.Component {
               Annuler {selectedRowKeys.length} {selectedRowKeys.length > 1 ? 'déclarations sélectionnées' : 'déclaration sélectionnée'}
             </Button>
           </div>
-        )}
+        </Permissions>
         <Table
           rowKey="id"
           scroll={{ x: 800 }}

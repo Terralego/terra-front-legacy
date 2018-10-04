@@ -1,6 +1,8 @@
 import React from 'react';
 import { withRouter, Route, Switch } from 'react-router-dom';
 
+import Permissions from 'components/Permissions';
+import Error401 from 'components/Error401';
 import Error404 from 'components/Error404/Error404';
 import routes from 'modules/routes';
 import Layout from 'components/Layout/Layout';
@@ -21,11 +23,16 @@ export const RouteViews = ({ location }) => (
             {...route}
             location={location}
           >
-            <Layout {...route.layout}>
-              {hasSubRoutes(route)
-                ? <SubRoutes {...props} {...route} />
-                : <route.component />}
-            </Layout>
+            <Permissions
+              permissions={route.permissions}
+              renderFail={Error401}
+            >
+              <Layout {...route.layout}>
+                {hasSubRoutes(route)
+                  ? <SubRoutes {...props} {...route} />
+                  : <route.component />}
+              </Layout>
+            </Permissions>
           </AuthRoute>
         )}
       />
