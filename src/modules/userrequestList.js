@@ -39,7 +39,7 @@ export const userrequestPaginator = createPaginator('/userrequest/');
  */
 const getItemIdFromUrl = (url = '') => url.split('/').reverse()[1];
 
-const initialState = {
+export const initialState = {
   items: [],
 };
 

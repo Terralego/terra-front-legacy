@@ -4,18 +4,18 @@ import reducer, * as userrequestList from './userrequestList';
 describe('userrequestList reducer', () => {
   it('should return the initial state', () => {
     const ACTION = {};
-    const result = {};
+    const { initialState } = userrequestList;
 
-    expect(reducer(undefined, ACTION)).toEqual(result);
+    expect(reducer(undefined, ACTION)).toEqual(initialState);
   });
 
   it('with DETAIL_REQUEST action', () => {
     const ACTION = {
       type: userrequestList.DETAIL_REQUEST,
     };
-    const result = {};
+    const { initialState } = userrequestList;
 
-    expect(reducer(undefined, ACTION)).toEqual(result);
+    expect(reducer(undefined, ACTION)).toEqual(initialState);
   });
 
   it('with DETAIL_SUCCESS action', () => {
@@ -23,7 +23,8 @@ describe('userrequestList reducer', () => {
       type: userrequestList.DETAIL_SUCCESS,
       data: { id: 12, content: 'content' },
     };
-    const result = { 12: { id: 12, content: 'content' } };
+    const { initialState } = userrequestList;
+    const result = { ...initialState, 12: { id: 12, content: 'content' } };
 
     expect(reducer(undefined, ACTION)).toEqual(result);
   });
@@ -33,7 +34,8 @@ describe('userrequestList reducer', () => {
       type: userrequest.SUBMIT_SUCCESS,
       data: { id: 12, content: 'content' },
     };
-    const result = { 12: { id: 12, content: 'content' } };
+    const { initialState } = userrequestList;
+    const result = { ...initialState, 12: { id: 12, content: 'content' } };
 
     expect(reducer(undefined, ACTION)).toEqual(result);
   });
@@ -43,7 +45,8 @@ describe('userrequestList reducer', () => {
       type: userrequest.SAVE_DRAFT_SUCCESS,
       data: { id: 12, content: 'content' },
     };
-    const result = { 12: { id: 12, content: 'content' } };
+    const { initialState } = userrequestList;
+    const result = { ...initialState, 12: { id: 12, content: 'content' } };
 
     expect(reducer(undefined, ACTION)).toEqual(result);
   });
@@ -53,7 +56,8 @@ describe('userrequestList reducer', () => {
       type: userrequestList.STATE_CHANGE_SUCCESS,
       data: { id: 12, content: 'content' },
     };
-    const result = { 12: { id: 12, content: 'content' } };
+    const { initialState } = userrequestList;
+    const result = { ...initialState, 12: { id: 12, content: 'content' } };
 
     expect(reducer(undefined, ACTION)).toEqual(result);
   });
@@ -63,7 +67,8 @@ describe('userrequestList reducer', () => {
       type: userrequestList.STATE_CHANGE_FAILURE,
       data: { id: 12, content: 'content' },
     };
-    const result = { 12: { id: 12, content: 'content' } };
+    const { initialState } = userrequestList;
+    const result = { ...initialState, 12: { id: 12, content: 'content' } };
 
     expect(reducer(undefined, ACTION)).toEqual(result);
   });
@@ -73,7 +78,8 @@ describe('userrequestList reducer', () => {
       type: userrequestList.APPROBATIONS_CHANGE_SUCCESS,
       data: { id: 12, content: 'content' },
     };
-    const result = { 12: { id: 12, content: 'content' } };
+    const { initialState } = userrequestList;
+    const result = { ...initialState, 12: { id: 12, content: 'content' } };
 
     expect(reducer(undefined, ACTION)).toEqual(result);
   });
@@ -83,7 +89,8 @@ describe('userrequestList reducer', () => {
       type: userrequestList.STATE_CHANGE_REQUEST,
       endpoint: '/userrequest/12/',
     };
-    const result = { 12: { isLoading: true } };
+    const { initialState } = userrequestList;
+    const result = { ...initialState, 12: { isLoading: true } };
 
     expect(reducer(undefined, ACTION)).toEqual(result);
   });
