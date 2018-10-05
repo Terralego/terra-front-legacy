@@ -11,18 +11,17 @@ export const Permissions = ({
   renderFail: Fail,
 }) => {
   const goPermissions = permissions.length
-    ? permissions.reduce((can, permission) =>
-      can || userPermissions.includes(permission), false)
+    ? permissions.some(permission => userPermissions.includes(permission))
     : null;
   const goGroups = groups.length
-    ? groups.reduce((can, group) =>
-      can || userGroups.includes(group), false)
+    ? groups.some(group => userGroups.includes(group))
     : null;
-  return (
-    (goPermissions === true || goGroups === true)
-    ||
-    (goPermissions === null && goGroups === null)
-  )
+  const go = !(goPermissions === false || goGroups === false);
+  if (typeof children === 'function') {
+    return children(go);
+  }
+
+  return go
     ? children
     : <Fail />;
 };
@@ -30,19 +29,23 @@ export const Permissions = ({
 Permissions.propTypes = {
   permissions: PropTypes.arrayOf(PropTypes.string),
   groups: PropTypes.arrayOf(PropTypes.string),
+  userPermissions: PropTypes.arrayOf(PropTypes.string),
+  userGroups: PropTypes.arrayOf(PropTypes.string),
   renderFail: PropTypes.func,
 };
 
 Permissions.defaultProps = {
   permissions: [],
   groups: [],
+  userPermissions: [],
+  userGroups: [],
   renderFail: () => null,
 };
 
 export default connect(state => {
   const { payload = {} } = state.authentication;
   const { user = {} } = payload;
-  const { permissions: userPermissions = [], groups: userGroups = [] } = user;
+  const { permissions: userPermissions, groups: userGroups } = user;
   return {
     userPermissions,
     userGroups,
