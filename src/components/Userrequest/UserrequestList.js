@@ -59,7 +59,7 @@ class UserrequestList extends React.Component {
 
   get currentOrdering () {
     const { location: { search = '' } } = this.props;
-    const [, ordering] = search.match(/ordering=([^&]+)/) || [undefined, undefined];
+    const [, ordering] = search.match(/ordering=([^&]+)/) || [undefined, '-id'];
     return ordering;
   }
 
@@ -106,6 +106,9 @@ class UserrequestList extends React.Component {
         this.setState({
           selectedRowKeys: [],
         });
+
+        const { location: { pathname }, history: { push } } = this.props;
+        push(pathname);
       },
     });
   }
@@ -222,7 +225,7 @@ class UserrequestList extends React.Component {
             page: this.currentPage,
             pageSize: 10,
           }}
-          count={items.length}
+          count={items ? items.length : 0}
         />
       </div>
     );
