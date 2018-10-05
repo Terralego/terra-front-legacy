@@ -1,31 +1,50 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import withAuthentication from 'hoc/authentication';
+import { connect } from 'react-redux';
 
 export const Permissions = ({
   children,
   permissions,
-  user: {
-    permissions: userPermissions,
-  } = {},
+  groups,
+  userGroups,
+  userPermissions,
   renderFail: Fail,
 }) => {
-  const go = !permissions.length || permissions.reduce((can, permission) =>
-    can || userPermissions.includes(permission), false);
-
-  return go
+  const goPermissions = permissions.length
+    ? permissions.reduce((can, permission) =>
+      can || userPermissions.includes(permission), false)
+    : null;
+  const goGroups = groups.length
+    ? groups.reduce((can, group) =>
+      can || userGroups.includes(group), false)
+    : null;
+  return (
+    (goPermissions === true || goGroups === true)
+    ||
+    (goPermissions === null && goGroups === null)
+  )
     ? children
     : <Fail />;
 };
 
 Permissions.propTypes = {
   permissions: PropTypes.arrayOf(PropTypes.string),
+  groups: PropTypes.arrayOf(PropTypes.string),
   renderFail: PropTypes.func,
 };
 
 Permissions.defaultProps = {
   permissions: [],
+  groups: [],
   renderFail: () => null,
 };
 
-export default withAuthentication(Permissions);
+export default connect(state => {
+  const { payload = {} } = state.authentication;
+  const { user = {} } = payload;
+  const { permissions: userPermissions = [], groups: userGroups = [] } = user;
+  return {
+    userPermissions,
+    userGroups,
+  };
+})(Permissions);
