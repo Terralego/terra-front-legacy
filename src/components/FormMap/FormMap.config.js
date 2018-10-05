@@ -9,6 +9,7 @@ export const mapLegend = [
   { color: '#4ac437', label: 'Ma première légende' },
   { color: '#c0d37b', label: 'Ma seconde légende' },
 ];
+export const LegendComponent = null;
 
 export const mapTitleLegend = {
   title: 'Carte',

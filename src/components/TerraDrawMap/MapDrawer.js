@@ -2,7 +2,7 @@ import React from 'react';
 
 import Drawer from 'components/Drawer/Drawer';
 import MapLegend from 'components/MapLegend/MapLegend';
-import { mapLegend, mapTitleLegend } from 'components/FormMap/FormMap.config';
+import { mapLegend, LegendComponent, mapTitleLegend } from 'components/FormMap/FormMap.config';
 import TerraDrawMapFilters from 'components/TerraDrawMap/TerraDrawMapFilters';
 
 class MapDrawer extends React.Component {
@@ -31,6 +31,7 @@ class MapDrawer extends React.Component {
         <MapLegend
           title={mapTitleLegend.titleLegend}
           legend={mapLegend}
+          Component={LegendComponent}
         />
         {sources.map(source => (
           <TerraDrawMapFilters
