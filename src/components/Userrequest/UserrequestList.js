@@ -103,8 +103,7 @@ class UserrequestList extends React.Component {
       content: selectedItems.length > 1 ? 'Les nouvelles déclarations prendront le statut "Brouillon".' : 'La nouvelle déclaration prendra le statut "Brouillon".',
       onOk: () => {
         message.loading('Duplication de la déclaration en cours...', 2.5);
-        const item = selectedItems[0];
-        this.props.duplicate(item, '{{title}} - copie', () => {
+        this.props.duplicate(selectedItems.map(item => ({ item, title: '{{title}} - copie' })), () => {
           const { location: { pathname }, history: { push } } = this.props;
           push(pathname);
         });
@@ -181,10 +180,13 @@ class UserrequestList extends React.Component {
             <Button
               className={styles.actions__button}
               onClick={this.handleCopy}
-              disabled={!hasSelected || selectedRowKeys.length > 1}
+              disabled={!hasSelected}
             >
               <Icon type="copy" />
-              Dupliquer la déclaration
+              {selectedRowKeys.length > 1
+                ? 'Dupliquer les déclarations'
+                : 'Dupliquer la déclaration'}
+
             </Button>
             <Button
               className={styles.actions__button}

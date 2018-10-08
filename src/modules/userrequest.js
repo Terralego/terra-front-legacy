@@ -293,18 +293,31 @@ export const changeMapUserrequest = () => (dispatch, getState) => {
   });
 };
 
-export const duplicate = (data, title = '{{title}}', afterInserted = () => null) => async (dispatch, getState) => {
-  const copyData = { ...data };
-  delete copyData.id;
-  const copyTitle = title.replace('{{title}}', data.properties.title);
-  copyData.properties.title = copyTitle;
-
+/**
+ * Duplicate one or many userrequest
+ * @param {mixed} items Object or array of objects containing:
+ * * item: {Object} userrequest resource
+ * * title: {String} New item title template. Can take a "{{title}}" placeholder
+ */
+export const duplicate = (items, afterInserted = () => null) => async (dispatch, getState) => {
+  const itemsList = Array.isArray(items) ? items : [items];
   try {
-    const { data: savedData } = await saveRequest({
-      ...copyData,
-      state: getState().appConfig.states.DRAFT,
-    });
-    dispatch(insertUserrequest(savedData, 0));
+    await Promise.all(itemsList.map(async ({ item, title }) => {
+      const copyData = { ...item };
+      delete copyData.id;
+      const copyTitle = title.replace('{{title}}', item.properties.title);
+      copyData.properties.title = copyTitle;
+
+      try {
+        const { data: savedData } = await saveRequest({
+          ...copyData,
+          state: getState().appConfig.states.DRAFT,
+        });
+        dispatch(insertUserrequest(savedData, 0));
+      } catch (e) {
+        //
+      }
+    }));
     afterInserted();
   } catch (e) {
     //
