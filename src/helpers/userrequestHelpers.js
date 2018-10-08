@@ -28,10 +28,10 @@ export const getFeaturesWithIncidence = (response, features, eventDates) => {
     response.results.features.forEach(intersection => {
       if (incidencePeriods) {
         incidence = Object.keys(incidencePeriods).reduce((acc, key) => {
-          if (intersection.properties[key] > incidence.GRIDCODE) {
+          if (intersection.properties[key] > acc.GRIDCODE) {
             return { ...acc, GRIDCODE: intersection.properties[key] };
           }
-          return { ...acc };
+          return acc;
         }, incidence);
       }
     });
