@@ -34,6 +34,9 @@ const getFeatureCollection = features => featureCollection(features.map(feature 
 const withoutRoutingResult = features => features.filter(feature =>
   feature.geometry.type !== 'LineString' || feature.properties.routeInProgress);
 
+const routingResultOnly = features => features.filter(feature =>
+  feature.geometry.type === 'LineString' && !feature.properties.routeInProgress);
+
 class TerraDrawMap extends Component {
   constructor (props) {
     super(props);
@@ -150,11 +153,28 @@ class TerraDrawMap extends Component {
 
           <MapSources sources={sources} activityDates={activityDates} />
 
-          <DrawLayers
-            data={{ type: 'FeatureCollection', features }}
-            geojsonPaint={geojsonPaint}
-            filters={activityFilters}
-          />
+          {!editable &&
+            <DrawLayers
+              data={{
+                type: 'FeatureCollection',
+                features,
+              }}
+              geojsonPaint={geojsonPaint}
+              filters={activityFilters}
+            />
+          }
+
+          {editable &&
+            <DrawLayers
+              data={{
+                type: 'FeatureCollection',
+                features: routingResultOnly(features),
+                // Other features will be drawn by <DrawControl />
+              }}
+              geojsonPaint={geojsonPaint}
+              filters={activityFilters}
+            />
+          }
 
           {editable &&
             <DrawControl
