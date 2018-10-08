@@ -101,12 +101,11 @@ class UserrequestList extends React.Component {
     Modal.confirm({
       title: selectedItems.length > 1 ? "Êtes-vous sûr de vouloir dupliquer ces déclarations d'activités ?" : "Êtes-vous sûr de vouloir dupliquer cette déclaration d'activité ?",
       content: selectedItems.length > 1 ? 'Les nouvelles déclarations prendront le statut "Brouillon".' : 'La nouvelle déclaration prendra le statut "Brouillon".',
-      onOk: () => {
+      onOk: async () => {
         message.loading('Duplication de la déclaration en cours...', 2.5);
-        this.props.duplicate(selectedItems.map(item => ({ item, title: '{{title}} - copie' })), () => {
-          const { location: { pathname }, history: { push } } = this.props;
-          push(pathname);
-        });
+        await this.props.duplicate(selectedItems.map(item => ({ item, title: '{{title}} - copie' })));
+        const { location: { pathname }, history: { push } } = this.props;
+        push(pathname);
         this.setState({
           selectedRowKeys: [],
         });
@@ -184,7 +183,7 @@ class UserrequestList extends React.Component {
             >
               <Icon type="copy" />
               {selectedRowKeys.length > 1
-                ? 'Dupliquer les déclarations'
+                ? `Dupliquer les ${selectedRowKeys.length} déclarations`
                 : 'Dupliquer la déclaration'}
 
             </Button>
@@ -242,15 +241,14 @@ const mapStateToProps = state => ({
   isUser: hasGroup(getUserGroups(state), 'user'),
 });
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators({
-    requestUserrequestPage,
-    resetUserrequestsList,
-    submitData,
-    saveDraft,
-    duplicate,
-    updateState,
-  }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({
+  requestUserrequestPage,
+  resetUserrequestsList,
+  submitData,
+  saveDraft,
+  updateState,
+  duplicate,
+}, dispatch);
 
 export default withRouter(withAuthentication(connect(
   mapStateToProps,

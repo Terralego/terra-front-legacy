@@ -299,7 +299,7 @@ export const changeMapUserrequest = () => (dispatch, getState) => {
  * * item: {Object} userrequest resource
  * * title: {String} New item title template. Can take a "{{title}}" placeholder
  */
-export const duplicate = (items, afterInserted = () => null) => async (dispatch, getState) => {
+export const duplicate = items => async (dispatch, getState) => {
   const itemsList = Array.isArray(items) ? items : [items];
   try {
     await Promise.all(itemsList.map(async ({ item, title }) => {
@@ -318,7 +318,6 @@ export const duplicate = (items, afterInserted = () => null) => async (dispatch,
         //
       }
     }));
-    afterInserted();
   } catch (e) {
     //
   }
