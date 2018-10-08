@@ -8,6 +8,7 @@ export const SubRoutes = ({ routes, ...props }) => (
     {routes.map(route => (
       <Permissions
         permissions={route.permissions}
+        groups={route.groups}
         renderFail={Error401}
       >
         <Route
