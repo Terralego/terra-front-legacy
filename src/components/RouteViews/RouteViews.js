@@ -3,7 +3,7 @@ import { withRouter, Route, Switch } from 'react-router-dom';
 
 import Permissions from 'components/Permissions';
 import Error401 from 'components/Error401';
-import Error404 from 'components/Error404/Error404';
+import Error404 from 'components/Error404';
 import routes from 'modules/routes';
 import Layout from 'components/Layout/Layout';
 import SubRoutes from './SubRoutes';
