@@ -5,7 +5,12 @@ import { Redirect, withRouter } from 'react-router-dom';
 import { Spin, Row, Col, Card } from 'antd';
 
 import { fetchUserrequest } from 'modules/userrequestList';
-import { openDraft, readUserrequest, resetForm } from 'modules/userrequest';
+import {
+  openDraft,
+  readUserrequest,
+  resetForm,
+  getUserrequestGeojsonConflicts,
+} from 'modules/userrequest';
 
 import withAuthentication from 'hoc/authentication';
 
@@ -22,6 +27,8 @@ class Userrequest extends React.Component {
 
     // Set a "read" flag on userrequest
     this.props.readUserrequest(id);
+
+    this.props.getUserrequestGeojsonConflicts(id);
 
     if (data) {
       return this.props.openDraft(data);
@@ -80,6 +87,7 @@ const mapStateToProps = (state, ownProps) => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators({
     fetchUserrequest,
+    getUserrequestGeojsonConflicts,
     openDraft,
     readUserrequest,
     resetForm,
