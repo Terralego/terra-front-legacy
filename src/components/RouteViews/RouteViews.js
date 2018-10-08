@@ -23,17 +23,17 @@ export const RouteViews = ({ location }) => (
             {...route}
             location={location}
           >
-            <Permissions
-              permissions={route.permissions}
-              groups={route.groups}
-              renderFail={Error401}
-            >
-              <Layout {...route.layout}>
+            <Layout {...route.layout}>
+              <Permissions
+                permissions={route.permissions}
+                groups={route.groups}
+                renderFail={Error401}
+              >
                 {hasSubRoutes(route)
                   ? <SubRoutes {...props} {...route} />
                   : <route.component />}
-              </Layout>
-            </Permissions>
+              </Permissions>
+            </Layout>
           </AuthRoute>
         )}
       />
