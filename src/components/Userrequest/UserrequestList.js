@@ -22,6 +22,8 @@ import Permissions from 'components/Permissions';
 
 import styles from './UserrequestList.module.scss';
 
+const DEFAULT_ORDERING = '-id';
+
 class UserrequestList extends React.Component {
   static propTypes = {
     renderHeader: PropTypes.func,
@@ -59,7 +61,7 @@ class UserrequestList extends React.Component {
 
   get currentOrdering () {
     const { location: { search = '' } } = this.props;
-    const [, ordering] = search.match(/ordering=([^&]+)/) || [undefined, '-id'];
+    const [, ordering] = search.match(/ordering=([^&]+)/) || [undefined, DEFAULT_ORDERING];
     return ordering;
   }
 
@@ -86,7 +88,7 @@ class UserrequestList extends React.Component {
    * to implement history change in actions / reducers
    * @param {object} query : couple(s) of key / value parameter(s)
    */
-  handleQueryUpdate = ({ page = this.currentPage, ordering }, reset) => {
+  handleQueryUpdate = ({ page = this.currentPage, ordering = this.currentOrdering }, reset) => {
     const { location: { pathname }, history: { push } } = this.props;
     if (reset) {
       this.props.resetUserrequestsList();
@@ -102,13 +104,13 @@ class UserrequestList extends React.Component {
       onOk: () => {
         message.loading('Duplication de la déclaration en cours...', 2.5);
         const item = selectedItems[0];
-        this.props.duplicate(item, '{{title}} - copie');
+        this.props.duplicate(item, '{{title}} - copie', () => {
+          const { location: { pathname }, history: { push } } = this.props;
+          push(pathname);
+        });
         this.setState({
           selectedRowKeys: [],
         });
-
-        const { location: { pathname }, history: { push } } = this.props;
-        push(pathname);
       },
     });
   }

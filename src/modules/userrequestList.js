@@ -114,6 +114,8 @@ const userrequestList = (state = initialState, action) => {
         items,
         count,
         loading: false,
+        // This is for retrocompatibility purpose
+        ...items.filter(i => i).reduce((all, item) => ({ ...all, [item.id]: item }), {}),
       };
     }
     case ITEM_INSERT: {

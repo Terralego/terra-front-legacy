@@ -293,7 +293,7 @@ export const changeMapUserrequest = () => (dispatch, getState) => {
   });
 };
 
-export const duplicate = (data, title = '{{title}}') => async (dispatch, getState) => {
+export const duplicate = (data, title = '{{title}}', afterInserted = () => null) => async (dispatch, getState) => {
   const copyData = { ...data };
   delete copyData.id;
   const copyTitle = title.replace('{{title}}', data.properties.title);
@@ -305,6 +305,7 @@ export const duplicate = (data, title = '{{title}}') => async (dispatch, getStat
       state: getState().appConfig.states.DRAFT,
     });
     dispatch(insertUserrequest(savedData, 0));
+    afterInserted();
   } catch (e) {
     //
   }
