@@ -136,7 +136,6 @@ class FormMap extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  drawMode: state.appConfig.drawMode,
   features: ownProps.features || state.userrequest.geojson.features,
 });
 
