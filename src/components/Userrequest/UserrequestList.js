@@ -236,7 +236,7 @@ class UserrequestList extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  items: state.userrequestList.items,
+  items: state.userrequestList.items.map(id => state.userrequestList[id]),
   loading: state.userrequestList.loading,
   isUser: hasGroup(getUserGroups(state), 'user'),
 });

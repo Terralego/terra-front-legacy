@@ -105,8 +105,8 @@ const userrequestList = (state = initialState, action) => {
       const items = [...prevItems];
       const startIndex = (page - 1) * 10;
       items.length = count;
-      newItems.forEach((item, k) => {
-        items[k + startIndex] = item;
+      newItems.forEach(({ id }, k) => {
+        items[k + startIndex] = id;
       });
 
       return {
@@ -114,8 +114,7 @@ const userrequestList = (state = initialState, action) => {
         items,
         count,
         loading: false,
-        // This is for retrocompatibility purpose
-        ...items.filter(i => i).reduce((all, item) => ({ ...all, [item.id]: item }), {}),
+        ...newItems.reduce((all, item) => ({ ...all, [item.id]: item }), {}),
       };
     }
     case ITEM_INSERT: {
