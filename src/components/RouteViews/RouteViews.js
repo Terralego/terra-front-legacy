@@ -25,6 +25,7 @@ export const RouteViews = ({ location }) => (
           >
             <Permissions
               permissions={route.permissions}
+              groups={route.groups}
               renderFail={Error401}
             >
               <Layout {...route.layout}>
