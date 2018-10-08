@@ -47,6 +47,11 @@ export const ROUTING_FAILURE = 'userrequest/ROUTING_FAILURE';
 // Set new datas to the initial userrequest
 export const CHANGE_USERREQUEST_DATA_MAP = 'CHANGE_USERREQUEST_DATA_MAP';
 
+// Get userrequest Geojson Conflicts
+export const GEOJSON_CONFLICTS_REQUEST = 'userrequest/GEOJSON_CONFLICTS_REQUEST';
+export const GEOJSON_CONFLICTS_SUCCESS = 'userrequest/GEOJSON_CONFLICTS_SUCCESS';
+export const GEOJSON_CONFLICTS_FAILURE = 'userrequest/GEOJSON_CONFLICTS_FAILURE';
+
 /**
  * REDUCER
  * --------------------------------------------------------- *
@@ -204,6 +209,20 @@ export const updateFeatures = feature => ({
 export const deleteFeaturesById = featuresId => ({
   type: DELETE_GEOJSON_FEATURES,
   featuresId,
+});
+
+/**
+ * Get geojson conflicts on userrequest
+ */
+export const getUserrequestGeojsonConflicts = id => ({
+  [CALL_API]: {
+    endpoint: `/userrequest/${id}/conflict/geojson/`,
+    types: [GEOJSON_CONFLICTS_REQUEST, GEOJSON_CONFLICTS_SUCCESS, GEOJSON_CONFLICTS_FAILURE],
+    config: {
+      headers: defaultHeaders,
+      method: 'GET',
+    },
+  },
 });
 
 /**
