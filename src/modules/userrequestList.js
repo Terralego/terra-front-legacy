@@ -1,12 +1,7 @@
-import { createSelector } from 'reselect';
-
 import { CALL_API } from 'middlewares/api';
 import apiService, { defaultHeaders } from 'services/apiService';
 
 import { SUBMIT_SUCCESS, SAVE_DRAFT_SUCCESS, READ_SUCCESS } from 'modules/userrequest';
-import { getUserGroups } from 'modules/authentication';
-import createPaginator, { getCurrentPageResults, PAGE_SUCCESS } from 'modules/pagination';
-import { hasGroup } from 'helpers/permissionsHelpers';
 import { getDataWithFeatureId } from 'helpers/mapHelpers';
 
 // Load userrequest detail
@@ -29,8 +24,6 @@ export const ITEMS_FETCH_SUCCESS = 'userrequestList/ITEMS_FETCH_SUCCESS';
 export const ITEM_INSERT = 'userrequestList/ITEM_INSERT';
 export const ITEMS_RESET = 'userrequestList/ITEMS_RESET';
 
-export const userrequestPaginator = createPaginator('/userrequest/');
-
 /**
  * Get the userrequest id
  *
@@ -48,10 +41,6 @@ export const initialState = {
  */
 const userrequestList = (state = initialState, action) => {
   switch (action.type) {
-    case PAGE_SUCCESS:
-      return {
-        ...userrequestPaginator.itemsReducer(state, action),
-      };
     case DETAIL_REQUEST:
       return {
         ...state,
@@ -134,62 +123,11 @@ const userrequestList = (state = initialState, action) => {
         count: 0,
       };
     default:
-      return userrequestPaginator.itemsReducer(state, action);
+      return state;
   }
 };
 
 export default userrequestList;
-
-/**
- * SELECTORS
- * --------------------------------------------------------- *
- */
-
-/**
- * getUserrequestsByUser selector
- * @param {object} items
- * @param {number} draftStatus
- * @param {array} groups
- * @returns {array} array of userrequest without draft if N1 or N2
- */
-const getUserrequestsByUser = (items, draftStatus, groups) => {
-  const userrequestArray = items.filter(item => !item.error);
-  if (hasGroup(groups, 'staff')) {
-    return userrequestArray.filter(userrequest => userrequest.state !== draftStatus);
-  }
-
-  return userrequestArray;
-};
-
-const getDraftStatus = createSelector(
-  state => state.appConfig.states.DRAFT,
-  draftStatus => draftStatus,
-);
-
-export const getUserrequestArray = createSelector(
-  state => state,
-  (_, query) => query,
-  (state, query) => getCurrentPageResults(
-    state.pagination.userrequestList,
-    query,
-    state.userrequestList,
-  ),
-);
-
-/**
- * getUserrequestsArray selector
- * @param {object} state
- * @returns {array} array of userrequest without erroneous items
- */
-export const getUserrequestsArrayFilteredByUser = createSelector(
-  [
-    getUserrequestArray,
-    getDraftStatus,
-    getUserGroups,
-  ],
-  (items, draftStatus, groups) => getUserrequestsByUser(items, draftStatus, groups),
-);
-
 
 /**
  * ACTIONS
