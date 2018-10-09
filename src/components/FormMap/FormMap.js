@@ -12,6 +12,17 @@ import FeaturesList from 'components/FormMap/FeatureList';
 import TerraDrawMap from 'components/TerraDrawMap/TerraDrawMap';
 import { terraDrawMapConfig, mapTitleLegend } from 'components/FormMap/FormMap.config';
 
+
+const terraDrawMapProps = {
+  center: [2.62322, 48.40813],
+  maxBounds: [[2.2917527636, 48.1867854393], [3.1004132613, 48.6260818006]],
+  minZoom: 8,
+  maxZoom: 21,
+  zoom: 13,
+  osmSource: 'https://{a-c}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png',
+};
+
+
 class FormMap extends Component {
   state = {
     selectedFeaturesId: [],
@@ -19,6 +30,11 @@ class FormMap extends Component {
 
   onSelectionChange = e => {
     this.setState({ selectedFeaturesId: e.features.map(feature => feature.id) });
+  }
+
+  setRef = el => {
+    this.mapContainer = el;
+    return this;
   }
 
   /**
@@ -78,15 +94,19 @@ class FormMap extends Component {
   render () {
     const {
       features,
-      editable, activity,
+      editable,
+      activity,
       withIncidence,
       activityFilters,
       FiltersValue,
       activityDates,
       mapProps,
     } = this.props;
+
     const activityFeatures = getActivityFeatures(features, activity.uid);
     const featureList = activityFeatures.filter(feature => !feature.properties.routeInProgress);
+
+    const mapDrawerProps = { expandOnInit: editable };
 
     return (
       <Row gutter={24} style={{ paddingBottom: 24 }}>
@@ -95,26 +115,17 @@ class FormMap extends Component {
             mapboxAccessToken={settings.MAPBOX_ACCESS_TOKEN}
             features={activityFeatures}
             config={terraDrawMapConfig}
-            minZoom={8}
             FiltersValue={FiltersValue}
             activityFilters={activityFilters}
-            maxZoom={21}
-            zoom={13}
             activityDates={activityDates}
-            center={[2.62322, 48.40813]}
-            maxBounds={[[2.2917527636, 48.1867854393], [3.1004132613, 48.6260818006]]}
-            ref={el => {
-              this.mapContainer = el;
-            }}
             onUpdateDataDraw={this.handleUpdateDataDraw}
             onDeleteDataDraw={this.handleDeleteDataDraw}
             onSelectionChange={this.onSelectionChange}
-            osmSource="https://{a-c}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png"
             editable={editable}
-            mapDrawerProps={{
-              expandOnInit: editable,
-            }}
+            mapDrawerProps={mapDrawerProps}
             mapProps={mapProps}
+            ref={this.setRef}
+            {...terraDrawMapProps}
           />
         </Col>
         <Col span={24} lg={24}>
