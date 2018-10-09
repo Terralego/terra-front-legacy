@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Table, Icon, Modal, Button, message } from 'antd';
+import queryString from 'query-string';
 
 import { getUserGroups } from 'modules/authentication';
 import { submitData, saveDraft, duplicate } from 'modules/userrequest';
@@ -49,20 +50,24 @@ class UserrequestList extends React.Component {
     }
   }
 
+  componentWillUnmount () {
+    this.isCanceled = true;
+  }
+
   onSelectChange = selectedRowKeys => {
     this.setState({ selectedRowKeys });
   }
 
   get currentPage () {
     const { location: { search = '' } } = this.props;
-    const [, page] = search.match(/page=([0-9]+)/) || [undefined, 1];
-    return +page;
+    const query = queryString.parse(search);
+    return +(query.page || 1);
   }
 
   get currentOrdering () {
     const { location: { search = '' } } = this.props;
-    const [, ordering] = search.match(/ordering=([^&]+)/) || [undefined, DEFAULT_ORDERING];
-    return ordering;
+    const query = queryString.parse(search);
+    return query.ordering || DEFAULT_ORDERING;
   }
 
   /**
@@ -88,12 +93,24 @@ class UserrequestList extends React.Component {
    * to implement history change in actions / reducers
    * @param {object} query : couple(s) of key / value parameter(s)
    */
-  handleQueryUpdate = ({ page = this.currentPage, ordering = this.currentOrdering }, reset) => {
-    const { location: { pathname }, history: { push } } = this.props;
+  handleQueryUpdate = ({
+    page = this.currentPage,
+    ordering = this.currentOrdering,
+    ...otherQueries
+  }, reset) => {
+    const { location: { pathname, search }, history: { push } } = this.props;
     if (reset) {
       this.props.resetUserrequestsList();
     }
-    return push(`${pathname}?page=${page}&ordering=${ordering}`);
+    const prevQuery = queryString.parse(search);
+    const query = queryString.stringify({
+      ...prevQuery,
+      ...otherQueries,
+      page: reset ? 1 : page,
+      ordering,
+    });
+
+    return push(`${pathname}${query ? `?${query}` : ''}`);
   }
 
   handleCopy = () => {
@@ -104,6 +121,7 @@ class UserrequestList extends React.Component {
       onOk: async () => {
         message.loading('Duplication de la déclaration en cours...', 2.5);
         await this.props.duplicate(selectedItems.map(item => ({ item, title: '{{title}} - copie' })));
+        if (this.isCanceled) return;
         const { location: { pathname }, history: { push } } = this.props;
         push(pathname);
         this.setState({
