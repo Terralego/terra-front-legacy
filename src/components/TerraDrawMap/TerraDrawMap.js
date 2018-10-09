@@ -31,6 +31,12 @@ const getFeatureCollection = features => featureCollection(features.map(feature 
   return polygon(feature.geometry.coordinates);
 }));
 
+const withoutRoutingResult = features => features.filter(feature =>
+  feature.geometry.type !== 'LineString' || feature.properties.routeInProgress);
+
+const routingResultOnly = features => features.filter(feature =>
+  feature.geometry.type === 'LineString' && !feature.properties.routeInProgress);
+
 class TerraDrawMap extends Component {
   constructor (props) {
     super(props);
@@ -51,8 +57,9 @@ class TerraDrawMap extends Component {
     };
   }
 
-  componentWillUnmount () {
-    this.resetDrawMap();
+  shouldComponentUpdate (nextProps) {
+    // TODO: Change this inefficient to an efficient one
+    return JSON.stringify(nextProps) !== JSON.stringify(this.props);
   }
 
   onDrawChange = e => {
@@ -101,13 +108,11 @@ class TerraDrawMap extends Component {
     this.drawControl.draw.delete([id]);
   }
 
-  resetDrawMap () {
-    if (this.drawControl) {
-      const editableFeatures = this.props.features.filter(feature =>
-        feature.geometry.type !== 'LineString' || feature.properties.routeInProgress);
+  initDrawLayer = () => {
+    if (this.drawControl && this.drawControl.draw && this.props.editable) {
       this.drawControl.draw.set({
         type: 'FeatureCollection',
-        features: editableFeatures,
+        features: withoutRoutingResult(this.props.features),
       });
     }
   }
@@ -153,11 +158,28 @@ class TerraDrawMap extends Component {
 
           <MapSources sources={sources} activityDates={activityDates} />
 
-          <DrawLayers
-            data={{ type: 'FeatureCollection', features }}
-            geojsonPaint={geojsonPaint}
-            filters={activityFilters}
-          />
+          {!editable &&
+            <DrawLayers
+              data={{
+                type: 'FeatureCollection',
+                features,
+              }}
+              geojsonPaint={geojsonPaint}
+              filters={activityFilters}
+            />
+          }
+
+          {editable &&
+            <DrawLayers
+              data={{
+                type: 'FeatureCollection',
+                features: routingResultOnly(features),
+                // Other features will be drawn by <DrawControl />
+              }}
+              geojsonPaint={geojsonPaint}
+              filters={activityFilters}
+            />
+          }
 
           {editable &&
             <DrawControl
@@ -169,7 +191,10 @@ class TerraDrawMap extends Component {
               onDrawSelectionChange={onSelectionChange}
               controls={{ polygon: true, line_string: true, point: true, trash: true }}
               ref={ref => {
-                this.drawControl = ref;
+                if (ref && ref.draw) {
+                  this.drawControl = ref;
+                  this.initDrawLayer();
+                }
               }}
             />
           }
