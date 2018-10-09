@@ -57,6 +57,11 @@ class TerraDrawMap extends Component {
     };
   }
 
+  shouldComponentUpdate (nextProps) {
+    // TODO: Change this inefficient to an efficient one
+    return JSON.stringify(nextProps) !== JSON.stringify(this.props);
+  }
+
   onDrawChange = e => {
     if (
       e.action === 'move' ||
