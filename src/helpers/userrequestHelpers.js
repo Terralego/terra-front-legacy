@@ -1,3 +1,5 @@
+import apiService, { defaultHeaders } from 'services/apiService';
+import settings from 'front-settings';
 import guid from 'helpers/guidHelpers';
 import getIncidencePeriods from 'helpers/incidencePeriodHelpers';
 
@@ -164,3 +166,17 @@ export const deleteFeatureWithRoute = (features, featuresId) => {
     || featuresToDelete.indexOf(feature.properties.relatedFeatureId) === -1)
   );
 };
+
+
+/**
+ * Return full url to download ShapeFile
+ * @param {number} id
+ * @returns {string} url
+ */
+export const getLayerUrl = async id => {
+  const { data: { shapefile_url: url } } = await apiService.request(`/layer/${id}/`, {
+    headers: defaultHeaders,
+  });
+  return `${settings.BASE_URL}${url}`;
+};
+
