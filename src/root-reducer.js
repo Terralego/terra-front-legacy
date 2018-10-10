@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import appConfig from 'modules/appConfig';
 import userrequest from 'modules/userrequest';
-import userrequestList, { userrequestPaginator } from 'modules/userrequestList';
+import userrequestList from 'modules/userrequestList';
 import userrequestComment from 'modules/userrequestComment';
 import userrequestCommentList from 'modules/userrequestCommentList';
 import authentication from 'modules/authentication';
@@ -28,9 +28,6 @@ export const reducers = {
   authentication,
   authenticationTimer,
   error,
-  pagination: combineReducers({
-    userrequestList: userrequestPaginator.reducer,
-  }),
 };
 
 export default combineReducers(reducers);

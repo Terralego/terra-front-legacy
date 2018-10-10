@@ -6,24 +6,24 @@ import { withRouter } from 'react-router-dom';
 import { Table, Icon, Modal, Button, message } from 'antd';
 import queryString from 'query-string';
 
-import removeEmptyStringObjectKeys from 'helpers/utils/removeEmptyStringObjectKeys';
-
 import { getUserGroups } from 'modules/authentication';
-import { submitData, saveDraft } from 'modules/userrequest';
-import { requestUserrequestPage, updateState, getUserrequestsArrayFilteredByUser } from 'modules/userrequestList';
-import { getPaginationParams, isCurrentPageFetching, resetPaginationCache } from 'modules/pagination';
+import { submitData, saveDraft, duplicate } from 'modules/userrequest';
+import { requestUserrequestPage, resetUserrequestsList, updateState } from 'modules/userrequestList';
 
 import getColumns from 'helpers/userrequestListColumns';
 
 import withAuthentication from 'hoc/authentication';
 
 import NewUserrequestButton from 'components/Userrequest/NewUserrequestButton';
+import Paginate from 'components/Paginate';
 import Pagination from 'components/Userrequest/Pagination';
 import Search from 'components/Userrequest/Search';
 import { hasGroup, REQUEST_CREATE } from 'helpers/permissionsHelpers';
 import Permissions from 'components/Permissions';
 
 import styles from './UserrequestList.module.scss';
+
+const DEFAULT_ORDERING = '-id';
 
 class UserrequestList extends React.Component {
   static propTypes = {
@@ -40,27 +40,34 @@ class UserrequestList extends React.Component {
 
   componentDidMount () {
     if (!this.props.loading) {
-      this.props.requestUserrequestPage(this.props.location.search);
+      this.props.requestUserrequestPage(this.currentPage, this.currentOrdering);
     }
   }
 
   componentDidUpdate (prevProps) {
     if (prevProps.location.search !== this.props.location.search && !this.props.loading) {
-      this.props.requestUserrequestPage(this.props.location.search);
+      this.props.requestUserrequestPage(this.currentPage, this.currentOrdering);
     }
+  }
 
-    if (typeof this.props.draft.id !== 'undefined' && prevProps.draft.id !== this.props.draft.id) {
-      this.props.history.replace({
-        pathname: `/manage-request/detail/${this.props.draft.id}`,
-        state: { from: '/manage-request' },
-      });
-      this.props.resetPaginationCache('/userrequest/');
-      message.destroy();
-    }
+  componentWillUnmount () {
+    this.isCanceled = true;
   }
 
   onSelectChange = selectedRowKeys => {
     this.setState({ selectedRowKeys });
+  }
+
+  get currentPage () {
+    const { location: { search = '' } } = this.props;
+    const query = queryString.parse(search);
+    return +(query.page || 1);
+  }
+
+  get currentOrdering () {
+    const { location: { search = '' } } = this.props;
+    const query = queryString.parse(search);
+    return query.ordering || DEFAULT_ORDERING;
   }
 
   /**
@@ -70,6 +77,7 @@ class UserrequestList extends React.Component {
    */
   getSelectedItems = () => (
     this.props.items
+      .filter(item => item)
       .filter(item => this.state.selectedRowKeys.includes(item.id))
       .map(item => ({
         ...item,
@@ -85,24 +93,24 @@ class UserrequestList extends React.Component {
    * to implement history change in actions / reducers
    * @param {object} query : couple(s) of key / value parameter(s)
    */
-  handleQueryUpdate = (query, reset) => {
-    const { history, location: { search } } = this.props;
-    const params = { ...query };
+  handleQueryUpdate = ({
+    page = this.currentPage,
+    ordering = this.currentOrdering,
+    ...otherQueries
+  }, reset) => {
+    const { location: { pathname, search }, history: { push } } = this.props;
     if (reset) {
-      this.props.resetPaginationCache('/userrequest/');
-      params.page = 1;
+      this.props.resetUserrequestsList();
     }
-
-    const mergedLocations = {
-      ...queryString.parse(search),
-      ...params,
-    };
-
-    const stringifyParams = queryString.stringify({
-      ...removeEmptyStringObjectKeys(mergedLocations),
+    const prevQuery = queryString.parse(search);
+    const query = queryString.stringify({
+      ...prevQuery,
+      ...otherQueries,
+      page: reset ? 1 : page,
+      ordering,
     });
 
-    return history.push(`/manage-request/?${stringifyParams}`);
+    return push(`${pathname}${query ? `?${query}` : ''}`);
   }
 
   handleCopy = () => {
@@ -110,12 +118,12 @@ class UserrequestList extends React.Component {
     Modal.confirm({
       title: selectedItems.length > 1 ? "Êtes-vous sûr de vouloir dupliquer ces déclarations d'activités ?" : "Êtes-vous sûr de vouloir dupliquer cette déclaration d'activité ?",
       content: selectedItems.length > 1 ? 'Les nouvelles déclarations prendront le statut "Brouillon".' : 'La nouvelle déclaration prendra le statut "Brouillon".',
-      onOk: () => {
+      onOk: async () => {
         message.loading('Duplication de la déclaration en cours...', 2.5);
-        const item = selectedItems[0];
-        delete item.id;
-        item.properties.title += ' - copie';
-        this.props.saveDraft(item);
+        await this.props.duplicate(selectedItems.map(item => ({ item, title: '{{title}} - copie' })));
+        if (this.isCanceled) return;
+        const { location: { pathname }, history: { push } } = this.props;
+        push(pathname);
         this.setState({
           selectedRowKeys: [],
         });
@@ -162,8 +170,7 @@ class UserrequestList extends React.Component {
 
   render () {
     const { selectedRowKeys } = this.state;
-    const { isUser, pagination, items, loading, renderHeader } = this.props;
-
+    const { isUser, items, loading, renderHeader } = this.props;
     const rowSelection = {
       selectedRowKeys,
       onChange: this.onSelectChange,
@@ -190,10 +197,13 @@ class UserrequestList extends React.Component {
             <Button
               className={styles.actions__button}
               onClick={this.handleCopy}
-              disabled={!hasSelected || selectedRowKeys.length > 1}
+              disabled={!hasSelected}
             >
               <Icon type="copy" />
-              Dupliquer la déclaration
+              {selectedRowKeys.length > 1
+                ? `Dupliquer les ${selectedRowKeys.length} déclarations`
+                : 'Dupliquer la déclaration'}
+
             </Button>
             <Button
               className={styles.actions__button}
@@ -206,45 +216,57 @@ class UserrequestList extends React.Component {
             </Button>
           </div>
         </Permissions>
-        <Table
-          rowKey="id"
-          scroll={{ x: 800 }}
-          columns={renderHeader(this.props)}
-          dataSource={items}
-          rowSelection={isUser ? rowSelection : null}
-          loading={loading}
-          onRow={record => (
-            {
-              onClick: () => {
-                this.handleClickOnRow(record.id);
-              },
-            }
+        <Paginate
+          items={items}
+          page={this.currentPage}
+        >
+          {pagedItems => (
+            <Table
+              rowKey="id"
+              scroll={{ x: 800 }}
+              columns={renderHeader(this.props)}
+              dataSource={pagedItems}
+              rowSelection={isUser ? rowSelection : null}
+              loading={!pagedItems.length && loading}
+              onRow={record => (
+                {
+                  onClick: () => {
+                    this.handleClickOnRow(record.id);
+                  },
+                }
+              )}
+              pagination={false}
+              onChange={this.handleTableChange}
+            />
           )}
-          pagination={false}
-          onChange={this.handleTableChange}
+        </Paginate>
+        <Pagination
+          handleQueryUpdate={this.handleQueryUpdate}
+          params={{
+            page: this.currentPage,
+            pageSize: 10,
+          }}
+          count={items ? items.length : 0}
         />
-        <Pagination {...pagination} handleQueryUpdate={this.handleQueryUpdate} />
       </div>
     );
   }
 }
 
-const mapStateToProps = (state, ownProps) => ({
-  draft: state.userrequest,
-  items: getUserrequestsArrayFilteredByUser(state, ownProps.location.search),
-  loading: isCurrentPageFetching(state.pagination.userrequestList, ownProps.location.search),
+const mapStateToProps = state => ({
+  items: state.userrequestList.items.map(id => state.userrequestList[id]),
+  loading: state.userrequestList.loading,
   isUser: hasGroup(getUserGroups(state), 'user'),
-  pagination: getPaginationParams(state.pagination.userrequestList, ownProps.location.search),
 });
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators({
-    requestUserrequestPage,
-    resetPaginationCache,
-    submitData,
-    saveDraft,
-    updateState,
-  }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({
+  requestUserrequestPage,
+  resetUserrequestsList,
+  submitData,
+  saveDraft,
+  updateState,
+  duplicate,
+}, dispatch);
 
 export default withRouter(withAuthentication(connect(
   mapStateToProps,

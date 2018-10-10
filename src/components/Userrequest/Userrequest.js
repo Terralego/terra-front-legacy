@@ -6,7 +6,6 @@ import { Spin, Row, Col, Card } from 'antd';
 
 import { fetchUserrequest } from 'modules/userrequestList';
 import { openDraft, readUserrequest, resetForm } from 'modules/userrequest';
-import { resetPaginationCache } from 'modules/pagination';
 
 import withAuthentication from 'hoc/authentication';
 
@@ -23,8 +22,6 @@ class Userrequest extends React.Component {
 
     // Set a "read" flag on userrequest
     this.props.readUserrequest(id);
-
-    this.props.resetPaginationCache('/userrequest/');
 
     if (data) {
       return this.props.openDraft(data);
@@ -85,7 +82,6 @@ const mapDispatchToProps = dispatch =>
     fetchUserrequest,
     openDraft,
     readUserrequest,
-    resetPaginationCache,
     resetForm,
   }, dispatch);
 
