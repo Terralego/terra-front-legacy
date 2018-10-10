@@ -314,7 +314,7 @@ export const getIntersections = feature => ({
  */
 export const getRouting = feature => ({
   [CALL_API]: {
-    endpoint: '/layer/1/route/',
+    endpoint: '/layer/chemins/route/',
     types: [ROUTING_REQUEST, ROUTING_SUCCESS, ROUTING_FAILURE],
     config: {
       headers: defaultHeaders,
