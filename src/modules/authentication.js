@@ -49,10 +49,7 @@ const authentication = (state = initialState, action) => {
         isFetching: true,
       };
     case REQUEST_LOG_OUT:
-      return {
-        ...state,
-        isAuthenticated: false,
-      };
+      return initialState;
     case RECEIVE_TOKEN:
       return {
         ...state,
