@@ -23,12 +23,14 @@ import styles from './Userrequest.module.scss';
 
 class Userrequest extends React.Component {
   componentDidMount () {
-    const { data, match: { params: { id } } } = this.props;
+    const { data, match: { params: { id } }, groups } = this.props;
 
     // Set a "read" flag on userrequest
     this.props.readUserrequest(id);
 
-    this.props.getUserrequestGeojsonConflicts(id);
+    if (groups.includes('staff')) {
+      this.props.getUserrequestGeojsonConflicts(id);
+    }
 
     if (data) {
       return this.props.openDraft(data);

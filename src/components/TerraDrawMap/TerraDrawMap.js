@@ -120,10 +120,12 @@ class TerraDrawMap extends Component {
   render () {
     const {
       mapboxStyle,
+      geojsonConflicts,
+      showGeojsonConflicts,
       maxBounds,
       onSelectionChange,
       activityFilters,
-      config: { drawStyles, sources, geojsonPaint },
+      config: { drawStyles, sources, geojsonPaint, geojsonConflictsPaint },
       editable,
       features,
       filters,
@@ -181,6 +183,14 @@ class TerraDrawMap extends Component {
             />
           }
 
+          {geojsonConflicts && showGeojsonConflicts &&
+            <DrawLayers
+              data={geojsonConflicts}
+              geojsonPaint={geojsonConflictsPaint}
+              filters={activityFilters}
+            />
+          }
+
           {editable &&
             <DrawControl
               displayControlsDefault={false}
@@ -222,6 +232,9 @@ TerraDrawMap.propTypes = {
     PATHS: PropTypes.string,
   }),
   activityFilters: PropTypes.array,
+  geojsonConflicts: PropTypes.shape({
+    features: PropTypes.arrayOf(PropTypes.object),
+  }),
   zoom: PropTypes.number,
   center: PropTypes.arrayOf(PropTypes.number),
   onUpdateDataDraw: PropTypes.func,
@@ -241,6 +254,7 @@ TerraDrawMap.propTypes = {
       })),
     })),
     geojsonPaint: PropTypes.object,
+    geojsonConflictsPaint: PropTypes.object,
   }),
   editable: PropTypes.bool,
   features: PropTypes.array,
@@ -257,6 +271,9 @@ TerraDrawMap.defaultProps = {
     PATHS: 'chemins',
   },
   activityFilters: [],
+  geojsonConflicts: {
+    features: [],
+  },
   zoom: 11,
   center: [2.62322, 48.40813],
   onUpdateDataDraw: e => e,
@@ -265,6 +282,7 @@ TerraDrawMap.defaultProps = {
     drawStyles: [],
     sources: [],
     geojsonPaint: {},
+    geojsonConflictsPaint: {},
   },
   editable: true,
   features: [],

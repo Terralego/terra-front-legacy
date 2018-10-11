@@ -168,6 +168,14 @@ const userrequest = (state = initialState, action) => {
           ],
         },
       };
+    case GEOJSON_CONFLICTS_SUCCESS:
+      return {
+        ...state,
+        geojsonConflicts: {
+          type: 'FeatureCollection',
+          features: action.data.features,
+        },
+      };
     default:
       return state;
   }
