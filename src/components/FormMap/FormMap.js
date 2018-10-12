@@ -19,7 +19,6 @@ const terraDrawMapProps = {
   minZoom: 8,
   maxZoom: 21,
   zoom: 13,
-  osmSource: 'https://{a-c}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png',
 };
 
 
