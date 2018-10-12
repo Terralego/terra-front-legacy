@@ -1,9 +1,8 @@
 import {
   initialState,
-  USERS_LOAD_REQUEST, USERS_LOAD_SUCCESS, USERS_LOAD_FAILURE,
-  USER_LOAD_REQUEST, USER_LOAD_SUCCESS, USER_LOAD_FAILURE,
+  USERS_LOAD_REQUEST, USERS_LOAD_SUCCESS, USERS_LOAD_FAILURE, USERS_REMOVE_ITEM,
+  USER_LOAD_SUCCESS,
   USER_EDIT_SUCCESS,
-  USER_DELETE_REQUEST,
 } from './constants';
 
 const usersReducer = (state = initialState, action) => {
@@ -61,7 +60,7 @@ const usersReducer = (state = initialState, action) => {
       };
     }
 
-    case USER_DELETE_REQUEST: {
+    case USERS_REMOVE_ITEM: {
       const { id } = action;
       const list = [...state.list];
       const prevIndex = list.findIndex(prevId => prevId === id);

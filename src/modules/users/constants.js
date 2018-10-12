@@ -1,6 +1,7 @@
 export const USERS_LOAD_REQUEST = 'users/USERS_LOAD_REQUEST';
 export const USERS_LOAD_SUCCESS = 'users/USERS_LOAD_SUCCESS';
 export const USERS_LOAD_FAILURE = 'users/USERS_LOAD_FAILURE';
+export const USERS_REMOVE_ITEM = 'users/USERS_REMOVE_ITEM';
 
 export const USER_LOAD_REQUEST = 'users/USER_LOAD_REQUEST';
 export const USER_LOAD_SUCCESS = 'users/USER_LOAD_SUCCESS';

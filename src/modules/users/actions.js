@@ -2,7 +2,7 @@ import { CALL_API } from 'middlewares/api';
 import apiService, { defaultHeaders } from 'services/apiService';
 
 import {
-  USERS_LOAD_REQUEST, USERS_LOAD_SUCCESS, USERS_LOAD_FAILURE,
+  USERS_LOAD_REQUEST, USERS_LOAD_SUCCESS, USERS_LOAD_FAILURE, USERS_REMOVE_ITEM,
   USER_LOAD_REQUEST, USER_LOAD_SUCCESS, USER_LOAD_FAILURE,
   USER_EDIT_REQUEST, USER_EDIT_SUCCESS, USER_EDIT_FAILURE,
   USER_DELETE_REQUEST, USER_DELETE_SUCCESS, USER_DELETE_FAILURE,
@@ -58,6 +58,11 @@ export const editUser = user => async dispatch => {
   }
 };
 
+export const removeUserFromList = id => ({
+  type: USERS_REMOVE_ITEM,
+  id,
+});
+
 export const deleteUser = id => async dispatch => {
   dispatch({
     type: USER_DELETE_REQUEST,
@@ -70,6 +75,7 @@ export const deleteUser = id => async dispatch => {
       type: USER_DELETE_SUCCESS,
       id,
     });
+    dispatch(removeUserFromList(id));
   } catch (error) {
     dispatch({
       type: USER_DELETE_FAILURE,
