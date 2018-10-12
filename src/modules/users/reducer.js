@@ -46,17 +46,18 @@ const usersReducer = (state = initialState, action) => {
     }
 
     case USER_EDIT_SUCCESS: {
-      const { user, user: { id } } = action;
-      const list = [...state.list];
-      const prevIndex = list.findIndex(prevId => id === prevId);
-      if (prevIndex > -1) {
-        list.splice(prevIndex, 1, user);
-      } else {
-        list.splice(0, 0, user);
-      }
+      const { id, data, updatedData } = action;
+      const prevUser = state[id] || {};
+      const newUser = updatedData
+        ? ({
+          ...prevUser,
+          ...updatedData,
+        })
+        : (data || prevUser);
+
       return {
         ...state,
-        list,
+        [id]: newUser,
       };
     }
 

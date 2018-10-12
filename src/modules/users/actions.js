@@ -1,5 +1,5 @@
 import { CALL_API } from 'middlewares/api';
-import { defaultHeaders } from 'services/apiService';
+import apiService, { defaultHeaders } from 'services/apiService';
 
 import {
   USERS_LOAD_REQUEST, USERS_LOAD_SUCCESS, USERS_LOAD_FAILURE,
@@ -8,16 +8,24 @@ import {
   USER_DELETE_REQUEST, USER_DELETE_SUCCESS, USER_DELETE_FAILURE,
 } from './constants';
 
-export const loadUsers = () => ({
-  [CALL_API]: {
-    endpoint: '/user/',
-    types: [USERS_LOAD_REQUEST, USERS_LOAD_SUCCESS, USERS_LOAD_FAILURE],
-    config: {
-      headers: defaultHeaders,
-      method: 'GET',
+export const loadUsers = ({ groupsIn }) => {
+  const params = {};
+  if (groupsIn) {
+    params.groups_in = groupsIn;
+  }
+
+  return ({
+    [CALL_API]: {
+      endpoint: '/user/',
+      types: [USERS_LOAD_REQUEST, USERS_LOAD_SUCCESS, USERS_LOAD_FAILURE],
+      config: {
+        headers: defaultHeaders,
+        method: 'GET',
+        params,
+      },
     },
-  },
-});
+  });
+};
 
 export const loadUser = id => ({
   [CALL_API]: {
@@ -39,7 +47,8 @@ export const editUser = user => async dispatch => {
     };
     dispatch({
       type: USER_EDIT_SUCCESS,
-      user: updatedUser,
+      id: updatedUser.id,
+      data: updatedUser,
     });
   } catch (error) {
     dispatch({
@@ -67,6 +76,30 @@ export const deleteUser = id => async dispatch => {
       id,
       error,
     });
+  }
+};
+
+export const setUserGroups = (id, groups) => async dispatch => {
+  dispatch({ type: USER_EDIT_REQUEST, id });
+
+  try {
+    await apiService.request(`/user/${id}/groups/`, {
+      headers: defaultHeaders,
+      method: 'POST',
+      body: JSON.stringify({
+        groups,
+      }),
+    });
+
+    dispatch({
+      type: USER_EDIT_SUCCESS,
+      id,
+      updatedData: {
+        groups,
+      },
+    });
+  } catch (error) {
+    dispatch({ type: USER_EDIT_FAILURE, error });
   }
 };
 
