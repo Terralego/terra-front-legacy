@@ -175,7 +175,7 @@ export const deleteFeatureWithRoute = (features, featuresId) => {
  */
 export const getLayerUrl = async id => {
   try {
-    const { data: { shapefile_url: url } } = await apiService.request(`/layer/${id}/`, {
+    const { data: { shapefile_url: url } = {} } = await apiService.request(`/layer/${id}/`, {
       headers: defaultHeaders,
     });
     return `${settings.BASE_URL}${url}`;
