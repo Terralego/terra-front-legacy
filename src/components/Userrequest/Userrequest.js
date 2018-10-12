@@ -5,7 +5,12 @@ import { Redirect, withRouter } from 'react-router-dom';
 import { Spin, Row, Col, Card } from 'antd';
 
 import { fetchUserrequest } from 'modules/userrequestList';
-import { openDraft, readUserrequest, resetForm } from 'modules/userrequest';
+import {
+  openDraft,
+  readUserrequest,
+  resetForm,
+  getUserrequestGeojsonConflicts,
+} from 'modules/userrequest';
 
 import withAuthentication from 'hoc/authentication';
 
@@ -18,10 +23,14 @@ import styles from './Userrequest.module.scss';
 
 class Userrequest extends React.Component {
   componentDidMount () {
-    const { data, match: { params: { id } } } = this.props;
+    const { data, match: { params: { id } }, groups } = this.props;
 
     // Set a "read" flag on userrequest
     this.props.readUserrequest(id);
+
+    if (groups.includes('staff')) {
+      this.props.getUserrequestGeojsonConflicts(id);
+    }
 
     if (data) {
       return this.props.openDraft(data);
@@ -80,6 +89,7 @@ const mapStateToProps = (state, ownProps) => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators({
     fetchUserrequest,
+    getUserrequestGeojsonConflicts,
     openDraft,
     readUserrequest,
     resetForm,

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Row, Col, Card } from 'antd';
+import { Row, Col, Card, Button } from 'antd';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import settings from 'front-settings';
@@ -26,10 +26,15 @@ const terraDrawMapProps = {
 class FormMap extends Component {
   state = {
     selectedFeaturesId: [],
+    showGeojsonConflicts: false,
   };
 
   onSelectionChange = e => {
     this.setState({ selectedFeaturesId: e.features.map(feature => feature.id) });
+  }
+
+  onConflictsChange = () => {
+    this.setState({ showGeojsonConflicts: !this.state.showGeojsonConflicts });
   }
 
   setRef = el => {
@@ -99,6 +104,7 @@ class FormMap extends Component {
       withIncidence,
       activityFilters,
       FiltersValue,
+      geojsonConflicts,
       activityDates,
       mapProps,
     } = this.props;
@@ -107,11 +113,12 @@ class FormMap extends Component {
     const featureList = activityFeatures.filter(feature => !feature.properties.routeInProgress);
 
     const mapDrawerProps = { expandOnInit: editable };
-
     return (
       <Row gutter={24} style={{ paddingBottom: 24 }}>
         <Col span={24} lg={24} style={{ height: 450, overflow: 'hidden', position: 'relative' }}>
           <TerraDrawMap
+            geojsonConflicts={geojsonConflicts}
+            showGeojsonConflicts={this.state.showGeojsonConflicts}
             mapboxAccessToken={settings.MAPBOX_ACCESS_TOKEN}
             features={activityFeatures}
             config={terraDrawMapConfig}
@@ -129,7 +136,20 @@ class FormMap extends Component {
           />
         </Col>
         <Col span={24} lg={24}>
-          <Card title={mapTitleLegend.title}>
+          <Card
+            title={
+              <React.Fragment>
+                <p>{mapTitleLegend.title}</p>
+                {geojsonConflicts.features.length > 0 &&
+                  <Button
+                    onClick={this.onConflictsChange}
+                  >
+                    Afficher les conflits avec d'autres activités
+                  </Button>
+                }
+              </React.Fragment>
+            }
+          >
             <FeaturesList
               activityDates={activityDates}
               filters={activityFilters}
@@ -159,6 +179,7 @@ FormMap.propTypes = {
   updateFeatures: PropTypes.func,
   deleteFeaturesById: PropTypes.func,
   withIncidence: PropTypes.bool,
+  geojsonConflicts: PropTypes.object,
   editable: PropTypes.bool,
   activity: PropTypes.shape({
     type: PropTypes.string,
@@ -178,6 +199,9 @@ FormMap.propTypes = {
 };
 
 FormMap.defaultProps = {
+  geojsonConflicts: {
+    features: [],
+  },
   updateFeatures: () => {},
   deleteFeaturesById: () => {},
   features: [],
