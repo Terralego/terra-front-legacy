@@ -10,17 +10,7 @@ import { getFeatureWithProperties, getActivityFeatures } from 'helpers/mapHelper
 import { getFeatureById } from 'helpers/userrequestHelpers';
 import FeaturesList from 'components/FormMap/FeatureList';
 import TerraDrawMap from 'components/TerraDrawMap/TerraDrawMap';
-import { terraDrawMapConfig, mapTitleLegend } from 'components/FormMap/FormMap.config';
-
-
-const terraDrawMapProps = {
-  center: [2.62322, 48.40813],
-  maxBounds: [[2.2917527636, 48.1867854393], [3.1004132613, 48.6260818006]],
-  minZoom: 8,
-  maxZoom: 21,
-  zoom: 13,
-};
-
+import { terraDrawMapConfig, terraDrawMapProps, mapTitleLegend } from 'components/FormMap/FormMap.config';
 
 class FormMap extends Component {
   state = {
