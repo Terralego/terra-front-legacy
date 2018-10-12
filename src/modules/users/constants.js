@@ -2,6 +2,10 @@ export const USERS_LOAD_REQUEST = 'users/USERS_LOAD_REQUEST';
 export const USERS_LOAD_SUCCESS = 'users/USERS_LOAD_SUCCESS';
 export const USERS_LOAD_FAILURE = 'users/USERS_LOAD_FAILURE';
 
+export const USER_LOAD_REQUEST = 'users/USER_LOAD_REQUEST';
+export const USER_LOAD_SUCCESS = 'users/USER_LOAD_SUCCESS';
+export const USER_LOAD_FAILURE = 'users/USER_LOAD_FAILURE';
+
 export const USER_EDIT_REQUEST = 'users/USER_PUT_REQUEST';
 export const USER_EDIT_SUCCESS = 'users/USER_PUT_SUCCESS';
 export const USER_EDIT_FAILURE = 'users/USER_PUT_FAILURE';

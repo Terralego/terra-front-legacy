@@ -1,6 +1,7 @@
 import {
   initialState,
   USERS_LOAD_REQUEST, USERS_LOAD_SUCCESS, USERS_LOAD_FAILURE,
+  USER_LOAD_REQUEST, USER_LOAD_SUCCESS, USER_LOAD_FAILURE,
   USER_EDIT_SUCCESS,
   USER_DELETE_REQUEST,
 } from './constants';
@@ -35,6 +36,14 @@ const usersReducer = (state = initialState, action) => {
         loading: false,
         error: action.error,
       };
+
+    case USER_LOAD_SUCCESS: {
+      const { data: user } = action;
+      return {
+        ...state,
+        [user.id]: user,
+      };
+    }
 
     case USER_EDIT_SUCCESS: {
       const { user, user: { id } } = action;
