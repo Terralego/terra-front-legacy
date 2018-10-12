@@ -4,7 +4,6 @@ import { CALL_API } from 'middlewares/api';
 import apiService, { defaultHeaders } from 'services/apiService';
 import {
   getFeaturesWithIncidence,
-  removeRouteInProgressDatas,
   getRoutedFeatures,
   deleteFeatureWithRoute,
 } from 'helpers/userrequestHelpers';
@@ -250,13 +249,9 @@ export const submitData = ({ draft, data: requestData } = {}) => async (dispatch
 
   dispatch({ type: draft ? SAVE_DRAFT_REQUEST : SUBMIT_REQUEST });
 
-  const bodyData = draft
-    ? data
-    : removeRouteInProgressDatas(data);
-
   try {
     const { data: savedData } = await saveRequest({
-      ...bodyData,
+      ...data,
       state: draft ? getState().appConfig.states.DRAFT : 200,
     });
     dispatch({ type: draft ? SAVE_DRAFT_SUCCESS : SUBMIT_SUCCESS, data: savedData });

@@ -2,7 +2,6 @@ import { CALL_API } from 'middlewares/api';
 import { defaultHeaders } from 'services/apiService';
 import {
   getFeaturesWithIncidence,
-  removeRouteInProgressDatas,
   getRoutedFeatures,
   deleteFeatureWithRoute,
 } from 'helpers/userrequestHelpers';
@@ -162,17 +161,16 @@ export default userrequestComment;
  * @param {string} new comment text
  */
 export const submitComment = (userrequestId = 0, data = initialState, isInternal = false) => {
-  const sendData = removeRouteInProgressDatas(data);
   const body = new FormData();
-  body.append('properties', JSON.stringify(sendData.properties));
+  body.append('properties', JSON.stringify(data.properties));
   body.append('is_internal', isInternal);
 
-  if (sendData.geojson.features.length) {
-    body.append('geojson', JSON.stringify(sendData.geojson));
+  if (data.geojson.features.length) {
+    body.append('geojson', JSON.stringify(data.geojson));
   }
 
-  if (sendData.attachment) {
-    body.append('attachment', sendData.attachment);
+  if (data.attachment) {
+    body.append('attachment', data.attachment);
   }
 
   return ({
