@@ -38,6 +38,56 @@ export const loadUser = id => ({
   },
 });
 
+export const searchUser = ({ search, inGroups }) => async (dispatch, getState) => {
+  // TODO Make a query
+  const query = {
+    search,
+  };
+
+  if (inGroups) {
+    const groupsIn = inGroups.filter(group => group.match(/^[^!]/));
+    if (groupsIn.length) {
+      query.groups__in = groupsIn;
+    }
+    const groupsNotin = inGroups
+      .filter(group => group.match(/^!/))
+      .map(group => group.replace(/^!/, ''));
+    if (groupsNotin.length) {
+      query.groups__notin = groupsNotin;
+    }
+  }
+
+
+  // TMP read in state
+  const { users } = getState();
+  return Object.values(users)
+    .filter(({ email = '' }) => email.match(query.search))
+    .filter(({ groups = [] }) => {
+      if (query.groups__in) {
+        return query.groups__in.reduce((isIn, group) => isIn || groups.includes(group), false);
+      }
+      if (query.groups__notin) {
+        return !query.groups__notin.reduce((isIn, group) => isIn || groups.includes(group), false);
+      }
+      return true;
+    })
+    .splice(0, 10);
+
+  //return [];
+};
+
+export const searchUserInList = params => async dispatch => {
+  const users = await dispatch(searchUser(params));
+
+  dispatch({
+    type: USERS_LOAD_SUCCESS,
+    data: {
+      count: users.length,
+      results: users,
+    },
+  });
+};
+
 export const editUser = user => async dispatch => {
   dispatch({ type: USER_EDIT_REQUEST });
 
