@@ -5,6 +5,14 @@ export const terraDrawMapConfig = {
   vectorLayers: [],
 };
 
+export const terraDrawMapProps = {
+  center: [2.62322, 48.40813],
+  maxBounds: [[2.2917527636, 48.1867854393], [3.1004132613, 48.6260818006]],
+  minZoom: 8,
+  maxZoom: 21,
+  zoom: 13,
+};
+
 export const mapLegend = [
   { color: '#4ac437', label: 'Ma première légende' },
   { color: '#c0d37b', label: 'Ma seconde légende' },
