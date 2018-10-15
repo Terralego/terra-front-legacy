@@ -59,6 +59,7 @@ export const searchUser = ({ search, inGroups }) => async (dispatch, getState) =
 
 
   // TMP read in state
+  if (!query.search) return [];
   const { users } = getState();
   return Object.values(users)
     .filter(({ email = '' }) => email.match(query.search))
@@ -88,13 +89,17 @@ export const searchUserInList = params => async dispatch => {
   });
 };
 
-export const editUser = user => async dispatch => {
+export const saveUser = user => async dispatch => {
   dispatch({ type: USER_EDIT_REQUEST });
 
+  const { id = '' } = user;
+
   try {
-    const updatedUser = await { // Put a real request here
-      ...user,
-    };
+    const updatedUser = await apiService.request(`/user/${id}/`, {
+      headers: defaultHeaders,
+      method: id ? 'PUT' : 'POST',
+      body: JSON.stringify(user),
+    });
     dispatch({
       type: USER_EDIT_SUCCESS,
       id: updatedUser.id,
