@@ -6,7 +6,6 @@ import userrequestComment from 'modules/userrequestComment';
 import userrequestCommentList from 'modules/userrequestCommentList';
 import authentication from 'modules/authentication';
 import authenticationTimer from 'modules/authenticationTimer';
-import featureAuthorisations from 'modules/featureAuthorisations';
 import profile from 'modules/profile';
 import error from 'modules/error';
 import account from 'modules/account';
@@ -23,7 +22,6 @@ export const reducers = {
       password: '',
     },
   }),
-  featureAuthorisations,
   userrequestCommentList,
   appConfig,
   userrequestList,
