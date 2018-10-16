@@ -11,9 +11,14 @@ import AuthRoute from './AuthRoute';
 
 const hasSubRoutes = route => route.routes && route.routes.length;
 
-export const RouteViews = ({ location }) => (
-  <Switch>
-    {routes.map(route => (
+export class RouteViews extends React.PureComponent {
+  state = {
+    routeComponents: [],
+  };
+
+  componentDidMount () {
+    const { location, ...props } = this.props;
+    const routeComponents = routes.map(route => (
       <Route
         key={route.path}
         {...route}
@@ -37,12 +42,23 @@ export const RouteViews = ({ location }) => (
           </AuthRoute>
         )}
       />
-    ))}
+    ));
+    this.setState({ routeComponents });
+  }
 
-    <Layout>
-      <Error404 />
-    </Layout>
-  </Switch>
-);
+  render () {
+    const { routeComponents } = this.state;
+
+    return (
+      <Switch>
+        {routeComponents.map(Component => Component)}
+
+        <Layout>
+          <Error404 />
+        </Layout>
+      </Switch>
+    );
+  }
+}
 
 export default withRouter(RouteViews);
