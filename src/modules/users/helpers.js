@@ -1,11 +1,19 @@
 import apiService, { defaultHeaders } from 'services/apiService';
 import queryString from 'query-string';
 
-export const searchUsers = async ({ email, inGroups, properties }) => {
+/**
+ * Search users
+ * @params {String} search Query to search
+ * @params { String[] } inGroups List of groups in users should be. Group name wan take a "!" prefix to exclude
+ * @params { String } uuid search in uuid
+ * @exemple
+ * searchUsers({ email: 'a', inGroups: ['!a', 'b']})
+ */
+export const searchUsers = async ({ search, inGroups, uuid }) => {
   const query = {};
 
-  if (email) {
-    query.email = email;
+  if (search) {
+    query.search = search;
   }
 
   if (inGroups) {
@@ -21,10 +29,8 @@ export const searchUsers = async ({ email, inGroups, properties }) => {
     }
   }
 
-  if (properties) {
-    Array.from(Object.keys(properties)).forEach(k => {
-      query[`properties__${k}`] = properties[k];
-    });
+  if (uuid) {
+    query.uuid = uuid;
   }
 
   try {

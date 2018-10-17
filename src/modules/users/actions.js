@@ -10,6 +10,10 @@ import {
 
 import { searchUsers } from './helpers';
 
+/**
+ * Load a list of users and store it in `list`
+ * @params {String[]} groupsIn List of groups where user should be
+ */
 export const loadUsers = ({ groupsIn }) => {
   const params = {};
   if (groupsIn) {
@@ -29,6 +33,10 @@ export const loadUsers = ({ groupsIn }) => {
   });
 };
 
+/**
+ * Load a user and store it in state
+ * @params {String} id User id
+ */
 export const loadUser = id => ({
   [CALL_API]: {
     endpoint: `/user/${id}`,
@@ -40,6 +48,10 @@ export const loadUser = id => ({
   },
 });
 
+/**
+ * Search for users and store them in `list`
+ * @params {mixed} params (see ./helpers/searchUsers)
+ */
 export const searchUsersInList = params => async dispatch => {
   const users = await searchUsers(params);
 
@@ -52,6 +64,10 @@ export const searchUsersInList = params => async dispatch => {
   });
 };
 
+/**
+ * Save user
+ * @params {Object} user User to save
+ */
 export const saveUser = user => async dispatch => {
   dispatch({ type: USER_EDIT_REQUEST });
 
@@ -76,11 +92,20 @@ export const saveUser = user => async dispatch => {
   }
 };
 
+/**
+ * Remove a user from the `list`
+ * @params {String} id User ID to remove
+ */
 export const removeUserFromList = id => ({
   type: USERS_REMOVE_ITEM,
   id,
 });
 
+/**
+ * Delete a user from backend
+ * @params {String} User ID to delete
+ * @mocked
+ */
 export const deleteUser = id => async dispatch => {
   dispatch({
     type: USER_DELETE_REQUEST,
@@ -103,6 +128,11 @@ export const deleteUser = id => async dispatch => {
   }
 };
 
+/**
+ * Set user's groups
+ * @params {String} id User ID to modify
+ * @paramd {String[]} groups List of groups to set. Will replace existing groups.
+ */
 export const setUserGroups = (id, groups) => async dispatch => {
   dispatch({ type: USER_EDIT_REQUEST, id });
 
