@@ -1,5 +1,6 @@
 import { CALL_API } from 'middlewares/api';
 import apiService, { defaultHeaders } from 'services/apiService';
+import queryString from 'query-string';
 
 import {
   USERS_LOAD_REQUEST, USERS_LOAD_SUCCESS, USERS_LOAD_FAILURE, USERS_REMOVE_ITEM,
@@ -17,17 +18,19 @@ import { searchUsers } from './helpers';
 export const loadUsers = ({ groupsIn }) => {
   const params = {};
   if (groupsIn) {
-    params.groups_in = groupsIn;
+    params.groups__in = `[${Array.isArray(groupsIn)
+      ? groupsIn.join(',')
+      : groupsIn
+    }]`;
   }
 
   return ({
     [CALL_API]: {
-      endpoint: '/user/',
+      endpoint: `/user/?${queryString.stringify(params)}`,
       types: [USERS_LOAD_REQUEST, USERS_LOAD_SUCCESS, USERS_LOAD_FAILURE],
       config: {
         headers: defaultHeaders,
         method: 'GET',
-        params,
       },
     },
   });

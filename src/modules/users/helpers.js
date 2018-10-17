@@ -1,6 +1,9 @@
 import apiService, { defaultHeaders } from 'services/apiService';
 import queryString from 'query-string';
 
+const GROUPS_IN = 'groups__in';
+const GROUPS_NOT_IN = 'groups__notin';
+
 /**
  * Search users
  * @params {String} search Query to search
@@ -17,16 +20,23 @@ export const searchUsers = async ({ search, inGroups, uuid }) => {
   }
 
   if (inGroups) {
-    const groupsIn = inGroups.filter(group => group.match(/^[^!]/));
-    if (groupsIn.length) {
-      query.groups__in = groupsIn;
-    }
-    const groupsNotin = inGroups
-      .filter(group => group.match(/^!/))
-      .map(group => group.replace(/^!/, ''));
-    if (groupsNotin.length) {
-      query.groups__notin = groupsNotin;
-    }
+    const filtered = inGroups.reduce((list, group) => {
+      const target = group[0] === '!'
+        ? GROUPS_NOT_IN
+        : GROUPS_IN;
+
+      return {
+        ...list,
+        [target]: [...list[target], group.replace(/^!/, '')],
+      };
+    }, { [GROUPS_IN]: [], [GROUPS_NOT_IN]: [] });
+
+    Object.keys(filtered).forEach(key => {
+      const list = filtered[key];
+      if (list.length) {
+        query[key] = `[${list.join(',')}]`;
+      }
+    });
   }
 
   if (uuid) {
