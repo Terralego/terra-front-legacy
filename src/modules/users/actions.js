@@ -42,7 +42,7 @@ export const loadUsers = ({ groupsIn }) => {
  */
 export const loadUser = id => ({
   [CALL_API]: {
-    endpoint: `/user/${id}`,
+    endpoint: `/user/${id}/`,
     types: [USER_LOAD_REQUEST, USER_LOAD_SUCCESS, USER_LOAD_FAILURE],
     config: {
       headers: defaultHeaders,
