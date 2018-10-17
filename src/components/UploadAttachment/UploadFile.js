@@ -9,7 +9,9 @@ class UploadFile extends React.Component {
     uploading: false,
   }
 
-  componentWillUnmount () { this.isCancelled = true; }
+  componentWillUnmount () {
+    this.isCancelled = true;
+  }
 
   handleChange = ({ file }) => this.setState({ file });
 
@@ -39,7 +41,7 @@ class UploadFile extends React.Component {
     const { uploading } = this.state;
 
     return (
-      <React.Fragment>
+      <div>
         <Upload
           beforeUpload={uploadWillStart}
           onRemove={handleUploadRemoved}
@@ -47,7 +49,7 @@ class UploadFile extends React.Component {
           onChange={handleChange}
         >
           <Button>
-            <Icon type="upload" /> Ajouter un fichier
+            <Icon type="upload" /> Importer un fichier
           </Button>
         </Upload>
 
@@ -59,7 +61,7 @@ class UploadFile extends React.Component {
         >
           Envoyer
         </Button>
-      </React.Fragment>
+      </div>
     );
   }
 }

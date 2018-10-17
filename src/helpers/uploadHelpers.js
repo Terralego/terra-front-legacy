@@ -6,7 +6,7 @@ import apiService from 'services/apiService';
  * @param {File object} file
  * @param {string} fileType
  */
-export const upload = (endpoint, file, fileType) => {
+export const upload = (endpoint, file, fileType = 'shapefile') => {
   const body = new FormData();
   body.append(fileType, file);
   return apiService.request(endpoint, {
