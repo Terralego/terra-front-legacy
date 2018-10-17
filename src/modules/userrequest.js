@@ -52,6 +52,11 @@ export const GEOJSON_CONFLICTS_REQUEST = 'userrequest/GEOJSON_CONFLICTS_REQUEST'
 export const GEOJSON_CONFLICTS_SUCCESS = 'userrequest/GEOJSON_CONFLICTS_SUCCESS';
 export const GEOJSON_CONFLICTS_FAILURE = 'userrequest/GEOJSON_CONFLICTS_FAILURE';
 
+// Update features properties actions
+const UPDATE_FEATURES_REQUEST = 'feature_authorisations/UPDATE_FEATURES_REQUEST';
+const UPDATE_FEATURES_SUCCESS = 'feature_authorisations/UPDATE_FEATURES_SUCCESS';
+const UPDATE_FEATURES_FAILURE = 'feature_authorisations/UPDATE_FEATURES_FAILURE';
+
 /**
  * REDUCER
  * --------------------------------------------------------- *
@@ -393,3 +398,39 @@ export const readUserrequest = id => ({
     },
   },
 });
+
+/**
+ * Send feature with properties updated
+ * @param {object} featureId // relative feature id to change properties
+ * @param {object} authorisations // array of authorisations to update featureId
+ */
+export const updateRoutingProperties = (featureId, authorisation, filters) =>
+  (dispatch, getState) => {
+    const { geojson } = getState().userrequest;
+
+    const routedFeatures = geojson.features.filter(feat =>
+      feat.properties.relatedFeatureId === featureId || feat.id === featureId);
+
+    const updateFeaturesProperties = routedFeatures.map(feature =>
+      (feature.properties.routeInProgress ? feature :
+        ({
+          ...feature,
+          properties: {
+            ...feature.properties,
+            [filters[0].replace('chemins_', '')]: authorisation,
+          },
+        })
+      ));
+
+    dispatch({
+      [CALL_API]: {
+        endpoint: '/layer/chemins/',
+        types: [UPDATE_FEATURES_REQUEST, UPDATE_FEATURES_SUCCESS, UPDATE_FEATURES_FAILURE],
+        config: {
+          headers: defaultHeaders,
+          method: 'PATCH',
+          body: JSON.stringify({ features: updateFeaturesProperties }),
+        },
+      },
+    });
+  };

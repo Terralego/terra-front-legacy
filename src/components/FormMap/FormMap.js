@@ -142,6 +142,7 @@ class FormMap extends Component {
             <FeaturesList
               activityDates={activityDates}
               filters={activityFilters}
+              activity={activity}
               features={featureList}
               selectedFeaturesId={this.state.selectedFeaturesId}
               deleteFeatureById={this.deleteDrawData}
