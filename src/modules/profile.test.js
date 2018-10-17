@@ -2,10 +2,12 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import api from 'middlewares/api';
 import FetchMock from 'fetch-mock';
+import settings from 'front-settings';
 
 import profile, {
   UPDATE_PROPERTIES,
   PROFILE_REQUEST,
+  PROFILE_FAILURE,
   PROFILE_SUCCESS,
   submitProfile,
 } from 'modules/profile';
@@ -58,22 +60,24 @@ describe('profile async action', () => {
       });
   });
 
-  // it('should PROFILE_REQUEST, then if failed PROFILE_FAILED', () => {
-  //   const store = mockStore(initialState);
+  it('should PROFILE_REQUEST, then if failed PROFILE_FAILED', () => {
+    const store = mockStore(initialState);
 
-  //   FetchMock.put('*', 400, { overwriteRoutes: true });
+    FetchMock.put('*', 400, { overwriteRoutes: true });
 
-  //   return store.dispatch(submitProfile('Bonjour', null))
-  //     .then(() => {
-  //       const actions = store.getActions();
-  //       expect(actions).toContainEqual({ type: PROFILE_REQUEST, endpoint: '/accounts/user/' });
+    return store.dispatch(submitProfile('Bonjour', null))
+      .then(() => {
+        const actions = store.getActions();
+        expect(actions).toContainEqual({ type: PROFILE_REQUEST, endpoint: '/accounts/user/' });
 
-  //       expect(actions).toContainEqual({
-  //         error: {
-  //           message: 'Une erreur est survenue',
-  //         },
-  //         type: PROFILE_FAILURE,
-  //       });
-  //     });
-  // });
+        expect(actions).toContainEqual({
+          error: {
+            message: undefined,
+            status: 400,
+            url: `${settings.API_URL}/accounts/user/`,
+          },
+          type: PROFILE_FAILURE,
+        });
+      });
+  });
 });
