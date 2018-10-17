@@ -17,7 +17,11 @@ export class RouteViews extends React.PureComponent {
   };
 
   componentDidMount () {
-    const { location, ...props } = this.props;
+    this.buildRouteComponents();
+  }
+
+  buildRouteComponents () {
+    const { location } = this.props;
     const routeComponents = routes.map(route => (
       <Route
         key={route.path}

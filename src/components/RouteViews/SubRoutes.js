@@ -9,6 +9,10 @@ export class SubRoutes extends React.Component {
   };
 
   componentDidMount () {
+    this.buildRouteComponents();
+  }
+
+  buildRouteComponents () {
     const { routes, path, ...props } = this.props;
 
     const subComponents = routes.map(({ component: Component, permissions, groups, ...route }) => (
