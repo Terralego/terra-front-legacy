@@ -7,7 +7,8 @@ const GROUPS_NOT_IN = 'groups__notin';
 /**
  * Search users
  * @params {String} search Query to search
- * @params { String[] } inGroups List of groups in users should be. Group name wan take a "!" prefix to exclude
+ * @params { String[] } inGroups List of groups in users should be.
+ * Group name wan take a "!" prefix to exclude
  * @params { String } uuid search in uuid
  * @exemple
  * searchUsers({ email: 'a', inGroups: ['!a', 'b']})
