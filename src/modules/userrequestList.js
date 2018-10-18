@@ -1,5 +1,6 @@
 import { CALL_API } from 'middlewares/api';
 import apiService, { defaultHeaders } from 'services/apiService';
+import settings from 'front-settings';
 
 import { SUBMIT_SUCCESS, SAVE_DRAFT_SUCCESS, READ_SUCCESS } from 'modules/userrequest';
 import { getDataWithFeatureId } from 'helpers/mapHelpers';
@@ -92,7 +93,7 @@ const userrequestList = (state = initialState, action) => {
       const { items: prevItems } = state;
       const { page, count, items: newItems } = action;
       const items = [...prevItems];
-      const startIndex = (page - 1) * 10;
+      const startIndex = (page - 1) * settings.PAGE_SIZE;
       items.length = count;
       newItems.forEach(({ id }, k) => {
         items[k + startIndex] = id;
@@ -144,7 +145,7 @@ export const requestUserrequestPage = (page, ordering = '-id') => async dispatch
     type: ITEMS_FETCH_LOADING,
   });
 
-  const { data: { count, results: items } } = await apiService.request(`/userrequest/?ordering=${ordering}&page=${page}&limit=10`, {
+  const { data: { count, results: items } } = await apiService.request(`/userrequest/?ordering=${ordering}&page=${page}&limit=${settings.PAGE_SIZE}`, {
     headers: defaultHeaders,
     method: 'GET',
   });
