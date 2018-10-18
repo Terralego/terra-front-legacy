@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import settings from 'front-settings';
 
 export class Paginate extends React.Component {
   static propTypes = {
@@ -11,7 +12,7 @@ export class Paginate extends React.Component {
   static defaultProps = {
     items: [],
     page: 1,
-    perPage: 10,
+    perPage: settings.PAGE_SIZE || 50,
   };
 
   render () {
