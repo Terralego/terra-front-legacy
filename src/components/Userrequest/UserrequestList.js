@@ -139,7 +139,7 @@ class UserrequestList extends React.Component {
       onOk: () => {
         selectedItems
           .forEach(item => {
-            this.props.updateState(item.id, -2);
+            this.props.updateState(item.id, -100);
           });
         this.setState({
           selectedRowKeys: [],
