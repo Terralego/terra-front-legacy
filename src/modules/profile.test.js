@@ -2,12 +2,13 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import api from 'middlewares/api';
 import FetchMock from 'fetch-mock';
+import settings from 'front-settings';
 
 import profile, {
   UPDATE_PROPERTIES,
   PROFILE_REQUEST,
-  PROFILE_SUCCESS,
   PROFILE_FAILURE,
+  PROFILE_SUCCESS,
   submitProfile,
 } from 'modules/profile';
 
@@ -71,7 +72,9 @@ describe('profile async action', () => {
 
         expect(actions).toContainEqual({
           error: {
-            message: 'Une erreur est survenue',
+            message: undefined,
+            status: 400,
+            url: `${settings.API_URL}/accounts/user/`,
           },
           type: PROFILE_FAILURE,
         });

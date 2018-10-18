@@ -4,7 +4,12 @@ import tokenService from 'services/tokenService';
 import i18next from 'i18next';
 
 async function handleErrors (response) {
-  const data = await response.json();
+  let data;
+  try {
+    data = await response.json();
+  } catch (e) {
+    data = {};
+  }
 
   if (response.status >= 200 && response.status < 300) {
     return data;
