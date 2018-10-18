@@ -40,13 +40,13 @@ class UserrequestList extends React.Component {
 
   componentDidMount () {
     if (!this.props.loading) {
-      this.props.requestUserrequestPage(this.currentPage, this.currentOrdering);
+      this.props.requestUserrequestPage(this.currentQueries);
     }
   }
 
   componentDidUpdate (prevProps) {
     if (prevProps.location.search !== this.props.location.search && !this.props.loading) {
-      this.props.requestUserrequestPage(this.currentPage, this.currentOrdering);
+      this.props.requestUserrequestPage(this.currentQueries);
     }
   }
 
@@ -58,16 +58,14 @@ class UserrequestList extends React.Component {
     this.setState({ selectedRowKeys });
   }
 
-  get currentPage () {
+  get currentQueries () {
     const { location: { search = '' } } = this.props;
     const query = queryString.parse(search);
-    return +(query.page || 1);
-  }
-
-  get currentOrdering () {
-    const { location: { search = '' } } = this.props;
-    const query = queryString.parse(search);
-    return query.ordering || DEFAULT_ORDERING;
+    return {
+      ...query,
+      ordering: query.ordering || DEFAULT_ORDERING,
+      page: +(query.page || 1),
+    };
   }
 
   /**
@@ -94,8 +92,8 @@ class UserrequestList extends React.Component {
    * @param {object} query : couple(s) of key / value parameter(s)
    */
   handleQueryUpdate = ({
-    page = this.currentPage,
-    ordering = this.currentOrdering,
+    ordering = this.currentQueries.ordering,
+    page = this.currentQueries.page,
     ...otherQueries
   }, reset) => {
     const { location: { pathname, search }, history: { push } } = this.props;
@@ -218,7 +216,7 @@ class UserrequestList extends React.Component {
         </Permissions>
         <Paginate
           items={items}
-          page={this.currentPage}
+          page={this.currentQueries.page}
         >
           {pagedItems => (
             <Table
@@ -243,7 +241,7 @@ class UserrequestList extends React.Component {
         <Pagination
           handleQueryUpdate={this.handleQueryUpdate}
           params={{
-            page: this.currentPage,
+            page: this.currentQueries.page,
             pageSize: 10,
           }}
           count={items ? items.length : 0}

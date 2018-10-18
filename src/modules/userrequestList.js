@@ -1,6 +1,7 @@
 import { CALL_API } from 'middlewares/api';
 import apiService, { defaultHeaders } from 'services/apiService';
 import settings from 'front-settings';
+import queryString from 'query-string';
 
 import { SUBMIT_SUCCESS, SAVE_DRAFT_SUCCESS, READ_SUCCESS } from 'modules/userrequest';
 import { getDataWithFeatureId } from 'helpers/mapHelpers';
@@ -140,19 +141,19 @@ export default userrequestList;
  *
  * @param search {string} search query parameters
  */
-export const requestUserrequestPage = (page, ordering = '-id') => async dispatch => {
+export const requestUserrequestPage = props => async dispatch => {
   dispatch({
     type: ITEMS_FETCH_LOADING,
   });
 
-  const { data: { count, results: items } } = await apiService.request(`/userrequest/?ordering=${ordering}&page=${page}&limit=${settings.PAGE_SIZE}`, {
+  const { data: { count, results: items } } = await apiService.request(`/userrequest/?${queryString.stringify(props)}&limit=${settings.PAGE_SIZE}`, {
     headers: defaultHeaders,
     method: 'GET',
   });
 
   dispatch({
     type: ITEMS_FETCH_SUCCESS,
-    page,
+    page: props.page,
     count,
     items,
   });
