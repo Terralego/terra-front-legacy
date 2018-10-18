@@ -102,6 +102,7 @@ class HeaderForm extends React.Component {
               {FormConfig.confirmation.printButton}
             </Button>
           )}
+          {this.props.children}
         </Row>
       </header>
     );
