@@ -20,6 +20,7 @@ import Pagination from 'components/Userrequest/Pagination';
 import Search from 'components/Userrequest/Search';
 import { hasGroup, REQUEST_CREATE } from 'helpers/permissionsHelpers';
 import Permissions from 'components/Permissions';
+import removeEmptyStringObjectKeys from 'helpers/utils/removeEmptyStringObjectKeys';
 
 import styles from './UserrequestList.module.scss';
 
@@ -101,13 +102,12 @@ class UserrequestList extends React.Component {
       this.props.resetUserrequestsList();
     }
     const prevQuery = queryString.parse(search);
-    const query = queryString.stringify({
+    const query = queryString.stringify(removeEmptyStringObjectKeys({
       ...prevQuery,
       ...otherQueries,
       page: reset ? 1 : page,
       ordering,
-    });
-
+    }));
     return push(`${pathname}${query ? `?${query}` : ''}`);
   }
 
