@@ -151,10 +151,10 @@ class TerraDrawMap extends Component {
       config: { drawStyles, sources, geojsonPaint, geojsonConflictsPaint },
       editable,
       features,
-      filters,
       activityDates,
       mapDrawerProps,
       mapProps,
+      filters,
       onlyMap,
     } = this.props;
     // Map component is created in constructor
@@ -257,10 +257,6 @@ TerraDrawMap.propTypes = {
     PropTypes.string,
     PropTypes.object,
   ]),
-  FiltersValue: PropTypes.shape({
-    OFF_PATHS: PropTypes.string,
-    PATHS: PropTypes.string,
-  }),
   activityFilters: PropTypes.array,
   geojsonConflicts: PropTypes.shape({
     features: PropTypes.arrayOf(PropTypes.object),
@@ -297,11 +293,6 @@ TerraDrawMap.propTypes = {
 
 TerraDrawMap.defaultProps = {
   mapboxStyle: 'mapbox://styles/mapbox/streets-v9',
-  FiltersValue: {
-    OFF_PATHS: 'hors_chemins',
-    PATHS: 'chemins',
-  },
-  activityFilters: [],
   geojsonConflicts: {
     features: [],
   },

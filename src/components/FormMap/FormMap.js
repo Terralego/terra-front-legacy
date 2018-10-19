@@ -92,7 +92,6 @@ class FormMap extends Component {
       activity,
       withIncidence,
       activityFilters,
-      FiltersValue,
       geojsonConflicts,
       activityDates,
       onlyMap,
@@ -112,7 +111,6 @@ class FormMap extends Component {
             mapboxAccessToken={settings.MAPBOX_ACCESS_TOKEN}
             features={activityFeatures}
             config={terraDrawMapConfig}
-            FiltersValue={FiltersValue}
             activityFilters={activityFilters}
             activityDates={activityDates}
             onUpdateDataDraw={this.handleUpdateDataDraw}
