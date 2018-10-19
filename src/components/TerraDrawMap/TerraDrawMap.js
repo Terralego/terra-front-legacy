@@ -154,7 +154,6 @@ class TerraDrawMap extends Component {
       activityDates,
       mapDrawerProps,
       mapProps,
-      filters,
       onlyMap,
     } = this.props;
     // Map component is created in constructor
@@ -166,6 +165,7 @@ class TerraDrawMap extends Component {
       onDrawChange,
       initDrawLayer,
       setLayerVisibility,
+      getLayoutProperty,
     } = this;
 
     const { zoom, center, isMapboxReady } = this.state;
@@ -242,8 +242,8 @@ class TerraDrawMap extends Component {
         {isMapboxReady && !onlyMap && <MapDrawer
           {...mapDrawerProps}
           sources={sources}
-          filters={filters}
-          getLayoutProperty={this.getLayoutProperty}
+          filters={activityFilters}
+          getLayoutProperty={getLayoutProperty}
           setLayerVisibility={setLayerVisibility}
         />}
       </div>
