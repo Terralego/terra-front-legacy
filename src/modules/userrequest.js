@@ -244,6 +244,18 @@ export const updateDocuments = documents => ({
 });
 
 /**
+ * uploadDocuments to api
+ * @param {string} userrequestId ID of the related user request
+ * @param {object} documents Documents to upload
+ */
+export const uploadDocuments = async (userrequestId, documents) =>
+  apiService.request(`/userrequest/${userrequestId}/`, {
+    headers: defaultHeaders,
+    method: 'PATCH',
+    body: JSON.stringify({ documents }),
+  });
+
+/**
  * Get geojson conflicts on userrequest
  */
 export const getUserrequestGeojsonConflicts = id => ({
