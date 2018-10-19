@@ -15,6 +15,7 @@ import initialState from 'modules/userrequest-initial';
 export const UPDATE_DATA_PROPERTIES = 'userrequest/UPDATE_DATA_PROPERTIES';
 export const ADD_GEOJSON_FEATURE = 'userrequest/ADD_GEOJSON_FEATURE';
 export const DELETE_GEOJSON_FEATURES = 'userrequest/DELETE_GEOJSON_FEATURES';
+export const DOCUMENTS_UPDATE = 'userrequest/DOCUMENTS_UPDATE';
 
 // Save draft userrequest actions types
 export const SAVE_DRAFT_REQUEST = 'userrequest/SAVE_DRAFT_REQUEST';
@@ -90,6 +91,14 @@ const userrequest = (state = initialState, action) => {
         geojson: {
           ...state.geojson,
           features: deleteFeatureWithRoute(state.geojson.features, action.featuresId),
+        },
+      };
+    case DOCUMENTS_UPDATE:
+      return {
+        ...state,
+        documents: {
+          ...state.documents,
+          ...action.documents,
         },
       };
     case SAVE_DRAFT_REQUEST:
@@ -222,6 +231,16 @@ export const updateFeatures = feature => ({
 export const deleteFeaturesById = featuresId => ({
   type: DELETE_GEOJSON_FEATURES,
   featuresId,
+});
+
+/**
+ * userrequest action
+ * updateDocuments update given documents
+ * @param  {object} documents : object of documents to update
+ */
+export const updateDocuments = documents => ({
+  type: DOCUMENTS_UPDATE,
+  documents,
 });
 
 /**
