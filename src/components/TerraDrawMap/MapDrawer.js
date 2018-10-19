@@ -20,6 +20,7 @@ class MapDrawer extends React.Component {
       sources,
       filters,
       setLayerVisibility,
+      getLayoutProperty,
     } = this.props;
 
     return (
@@ -37,6 +38,7 @@ class MapDrawer extends React.Component {
           <TerraDrawMapFilters
             key={source.id}
             source={source}
+            getLayoutProperty={getLayoutProperty}
             setLayerVisibility={setLayerVisibility}
             filters={filters}
           />

@@ -1,67 +1,65 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import PropTypes from 'prop-types';
 
 import TerraDrawMapFilter from 'components/TerraDrawMap/TerraDrawMapFilter';
 
-import { updateConfigValue } from 'modules/appConfig';
 
 class TerraDrawMapFilters extends React.Component {
-  componentDidMount () {
-    // TODO: need to fix re-rendering of route to avoid multiple calls
-    this.syncFiltersWithSource();
-  }
+  state = {
+    ...this.props.source.layers.reduce((acc, curr) =>
+      ({ ...acc, [curr.id]: curr.layout.visibility === 'visible' }), {}),
+  };
 
-  syncFiltersWithSource () {
-    this.props.source.layers.forEach(layer => {
-      if (layer.layout.visibility === 'visible') {
-        this.toggleFilter(layer.id);
-      }
+  componentDidMount () {
+    const { filters } = this.props;
+    filters.forEach(filter => {
+      this.toggleFilter(filter)();
     });
   }
 
-  isLayerVisible (layerId) {
-    return this.props.filters.indexOf(layerId) !== -1;
+  shouldComponentUpdate (nextProps) {
+    const { setLayerVisibility, filters } = this.props;
+    if (nextProps.filters !== filters) {
+      nextProps.filters.forEach(filter => {
+        setLayerVisibility(filter, 'visible');
+        this.setState({ [filter]: true });
+      });
+    }
+
+    return true;
   }
 
-  toggleFilter (layerId) {
-    const visibility = this.isLayerVisible(layerId);
-    let mapFilters = [
-      ...this.props.filters,
-      layerId,
-    ];
-    if (visibility) {
-      mapFilters = mapFilters.filter(filter => filter !== layerId);
-    }
-    this.props.setLayerVisibility(layerId, visibility ? 'none' : 'visible');
-    this.props.updateConfigValue('mapFilters', mapFilters);
+  toggleFilter = layerId => () => {
+    const { setLayerVisibility, getLayoutProperty } = this.props;
+    const isVisible = getLayoutProperty(layerId, 'visibility') === 'visible';
+    this.setState({ [layerId]: !this.state[layerId] });
+    return setLayerVisibility(layerId, (isVisible ? 'none' : 'visible'));
+  }
+
+  isVisible = layerId => {
+    const { getLayoutProperty } = this.props;
+    return getLayoutProperty(layerId, 'visibility') === 'visible';
   }
 
   render () {
-    const { source: { showFilter, layers } } = this.props;
-
-    if (!showFilter) {
-      return null;
-    }
-
-    return layers.map(({ id, ...layerProps }) => (
+    const { source: { layers } } = this.props;
+    return layers.map(({ id, layout, ...layerProps }) => (
       <TerraDrawMapFilter
         {...layerProps}
         key={id}
-        checked={this.isLayerVisible(id)}
-        toggleFilter={() => this.toggleFilter(id)}
+        toggleFilter={this.toggleFilter(id)}
+        checked={this.state[id]}
       />
     ));
   }
 }
 
-const mapStateToProps = state => ({
-  filters: state.appConfig.mapFilters,
-});
+TerraDrawMapFilters.propTypes = {
+  filters: PropTypes.arrayOf(PropTypes.string),
+};
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators({
-    updateConfigValue,
-  }, dispatch);
+TerraDrawMapFilters.defaultProps = {
+  filters: [],
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(TerraDrawMapFilters);
+export default TerraDrawMapFilters;
