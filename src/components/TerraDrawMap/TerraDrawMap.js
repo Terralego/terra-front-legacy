@@ -165,7 +165,6 @@ class TerraDrawMap extends Component {
       customMapProps,
       onDrawChange,
       initDrawLayer,
-      getLayoutProperty,
       setLayerVisibility,
     } = this;
 
@@ -244,7 +243,7 @@ class TerraDrawMap extends Component {
           {...mapDrawerProps}
           sources={sources}
           filters={filters}
-          getLayoutProperty={getLayoutProperty}
+          getLayoutProperty={this.getLayoutProperty}
           setLayerVisibility={setLayerVisibility}
         />}
       </div>
