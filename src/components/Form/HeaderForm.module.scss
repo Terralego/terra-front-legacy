@@ -7,6 +7,17 @@
   background: #00a655;
   padding: 1em 1.5em;
   box-shadow: 0 3px 18px 0 rgba(0,0,0,0.08);
+
+  display: flex;
+  justify-content: flex-end;
+
+  button + button {
+    margin-right: 1em;
+  }
+}
+
+.back {
+  margin-right: auto;
 }
 
 @media print {
