@@ -3,13 +3,17 @@ import { Source, Layer } from 'react-mapbox-gl';
 import { drawStyles } from 'components/FormMap/FormMap.config';
 import { getIncidencePeriods } from 'helpers/incidencePeriodHelpers';
 
-export default ({ sources, activityDates = [] }) => {
+export default ({ sources, activityDates = [], onSourceLoaded }) => {
   const incidences = getIncidencePeriods(activityDates);
   const getter = Object.keys(incidences).map(i => ['get', i]);
 
   return sources.map(source => (
     <React.Fragment key={source.id}>
-      <Source id={source.id} tileJsonSource={source.options} />
+      <Source
+        id={source.id}
+        tileJsonSource={source.options}
+        onSourceLoaded={src => onSourceLoaded(src.map)}
+      />
       {source.layers.map(layer => (
         <Layer
           key={layer.id}
