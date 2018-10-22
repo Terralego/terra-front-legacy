@@ -80,7 +80,7 @@ class TerraDrawMap extends Component {
     }
   }
 
-  onMapRender = map => {
+  onSourceLoaded = map => {
     if (!this.map || !this.map.length) {
       this.map = map;
     }
@@ -100,7 +100,7 @@ class TerraDrawMap extends Component {
   }
 
   getLayoutProperty = (layerId, layout) => {
-    if (this.state.isMapboxReady && this.map && this.map.length) {
+    if (this.state.isMapboxReady) {
       return this.map.getLayoutProperty(layerId, layout);
     }
     return false;
@@ -159,7 +159,7 @@ class TerraDrawMap extends Component {
     // Map component is created in constructor
     const {
       Map,
-      onMapRender,
+      onSourceLoaded,
       mapDidLoad,
       customMapProps,
       onDrawChange,
@@ -178,7 +178,6 @@ class TerraDrawMap extends Component {
           containerStyle={{ height: '100%', width: '100%' }}
           fitBoundsOptions={{ padding: 30, maxZoom: 14 }}
           onStyleLoad={mapDidLoad}
-          onRender={onMapRender}
           // Center prop need a fixed ref to disable it's render.
           center={center}
           maxBounds={maxBounds}
@@ -187,7 +186,11 @@ class TerraDrawMap extends Component {
           {...customMapProps}
         >
 
-          <MapSources sources={sources} activityDates={activityDates} />
+          <MapSources
+            sources={sources}
+            activityDates={activityDates}
+            onSourceLoaded={onSourceLoaded}
+          />
 
           {!editable &&
             <DrawLayers
