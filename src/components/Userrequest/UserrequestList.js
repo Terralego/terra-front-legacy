@@ -51,7 +51,7 @@ class UserrequestList extends React.Component {
   }
 
   componentWillUnmount () {
-    this.isCanceled = true;
+    this.isCancelled = true;
   }
 
   onSelectChange = selectedRowKeys => {
@@ -121,7 +121,7 @@ class UserrequestList extends React.Component {
       onOk: async () => {
         message.loading('Duplication de la déclaration en cours...', 2.5);
         await this.props.duplicate(selectedItems.map(item => ({ item, title: '{{title}} - copie' })));
-        if (this.isCanceled) return;
+        if (this.isCancelled) return;
         const { location: { pathname }, history: { push } } = this.props;
         push(pathname);
         this.setState({
@@ -139,7 +139,7 @@ class UserrequestList extends React.Component {
       onOk: () => {
         selectedItems
           .forEach(item => {
-            this.props.updateState(item.id, -2);
+            this.props.updateState(item.id, -100);
           });
         this.setState({
           selectedRowKeys: [],

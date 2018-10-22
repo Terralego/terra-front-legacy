@@ -15,7 +15,7 @@ const initialState = {
     SUBMITTED: 200,
     ACCEPTED: 300,
     REFUSED: -1,
-    CANCELED: -2,
+    CANCELLED: -100,
   },
 
   approbation_statuses: {

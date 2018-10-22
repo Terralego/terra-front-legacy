@@ -3,7 +3,7 @@ import store from 'store';
 const statusLabels = {
   DRAFT: { text: 'Brouillon', type: 'info' },
   REFUSED: { text: 'Déclaration refusée', type: 'error' },
-  CANCELED: { text: 'Déclaration annulée ', type: 'error' },
+  CANCELLED: { text: 'Déclaration annulée ', type: 'error' },
   ACCEPTED: { text: 'Déclaration acceptée', type: 'success' },
   NO_STATUS: { text: 'Pas de statut connu', type: 'warning' },
 };
@@ -29,8 +29,8 @@ const getUserrequestStatus = userrequest => {
     return statusLabels.ACCEPTED;
   }
 
-  if (userrequest.state === states.CANCELED) {
-    return statusLabels.CANCELED;
+  if (userrequest.state === states.CANCELLED) {
+    return statusLabels.CANCELLED;
   }
 
   return statusLabels.NO_STATUS;
