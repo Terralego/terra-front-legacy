@@ -95,6 +95,7 @@ class FormMap extends Component {
       FiltersValue,
       geojsonConflicts,
       activityDates,
+      onlyMap,
       mapProps,
     } = this.props;
 
@@ -122,35 +123,38 @@ class FormMap extends Component {
             mapProps={mapProps}
             ref={this.setRef}
             {...terraDrawMapProps}
+            onlyMap={onlyMap}
           />
         </Col>
-        <Col span={24} lg={24}>
-          <Card
-            title={
-              <React.Fragment>
-                <p>{mapTitleLegend.title}</p>
-                {geojsonConflicts.features.length > 0 &&
-                  <Button
-                    onClick={this.onConflictsChange}
-                  >
-                    Afficher les conflits avec d'autres activités
-                  </Button>
-                }
-              </React.Fragment>
-            }
-          >
-            <FeaturesList
-              activityDates={activityDates}
-              filters={activityFilters}
-              activity={activity}
-              features={featureList}
-              selectedFeaturesId={this.state.selectedFeaturesId}
-              deleteFeatureById={this.deleteDrawData}
-              editable={editable}
-              withIncidence={withIncidence}
-            />
-          </Card>
-        </Col>
+        {!onlyMap &&
+          <Col span={24} lg={24}>
+            <Card
+              title={
+                <React.Fragment>
+                  <p>{mapTitleLegend.title}</p>
+                  {geojsonConflicts.features.length > 0 &&
+                    <Button
+                      onClick={this.onConflictsChange}
+                    >
+                      Afficher les conflits avec d'autres activités
+                    </Button>
+                  }
+                </React.Fragment>
+              }
+            >
+              <FeaturesList
+                activityDates={activityDates}
+                filters={activityFilters}
+                activity={activity}
+                features={featureList}
+                selectedFeaturesId={this.state.selectedFeaturesId}
+                deleteFeatureById={this.deleteDrawData}
+                editable={editable}
+                withIncidence={withIncidence}
+              />
+            </Card>
+          </Col>
+        }
       </Row>
     );
   }
@@ -186,6 +190,7 @@ FormMap.propTypes = {
     geometry: PropTypes.object,
   })),
   mapProps: PropTypes.object,
+  onlyMap: PropTypes.bool,
 };
 
 FormMap.defaultProps = {
@@ -201,6 +206,7 @@ FormMap.defaultProps = {
   withIncidence: false,
   editable: false,
   mapProps: {},
+  onlyMap: false,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(FormMap);

@@ -2,7 +2,7 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Button, Icon, Col, Row, Modal } from 'antd';
+import { Button, Icon, Modal } from 'antd';
 import { withRouter, Redirect } from 'react-router-dom';
 import { translate } from 'react-i18next';
 
@@ -60,49 +60,49 @@ class HeaderForm extends React.Component {
 
     return (
       <header className={styles.header}>
-        <Row gutter={16} type="flex" justify="space-between">
-          <Col span={12}>
-            <Button onClick={this.showConfirmationReturn} type="primary">
-              <Icon type="left" />
-              {FormConfig.confirmation.backButton}
-            </Button>
-          </Col>
-          { (showDraft || showSubmit) ? (
-            <Col>
-              {showDraft &&
-                <Button
-                  type="primary-dark"
-                  htmlType="button"
-                  onClick={e => this.saveDraft(e)}
-                  loading={isSaving === 'draft'}
-                  icon="save"
-                >
-                  {FormConfig.confirmation.draftButton}
-                </Button>
-              }
-              {showSubmit &&
-                <Button
-                  type="primary-dark"
-                  onClick={this.submitForm}
-                  icon="arrow-right"
-                  style={{ marginLeft: 12 }}
-                  loading={isSaving === true}
-                >
-                  {FormConfig.confirmation.submitButton}
-                </Button>
-              }
-            </Col>
-          ) : (
-            <Button
-              type="primary-dark"
-              onClick={this.print}
-              icon="printer"
-              style={{ marginLeft: 12 }}
-            >
-              {FormConfig.confirmation.printButton}
-            </Button>
-          )}
-        </Row>
+        <Button
+          className={styles.back}
+          onClick={this.showConfirmationReturn}
+          type="primary"
+        >
+          <Icon type="left" />
+          {FormConfig.confirmation.backButton}
+        </Button>
+        { (showDraft || showSubmit) ? (
+          <React.Fragment>
+            {showDraft &&
+              <Button
+                type="primary-dark"
+                htmlType="button"
+                onClick={e => this.saveDraft(e)}
+                loading={isSaving === 'draft'}
+                icon="save"
+              >
+                {FormConfig.confirmation.draftButton}
+              </Button>
+            }
+            {showSubmit &&
+              <Button
+                type="primary-dark"
+                onClick={this.submitForm}
+                icon="arrow-right"
+                loading={isSaving === true}
+              >
+                {FormConfig.confirmation.submitButton}
+              </Button>
+            }
+          </React.Fragment>
+        ) : (
+          <Button
+            type="primary-dark"
+            onClick={this.print}
+            icon="printer"
+            style={{ marginLeft: 12 }}
+          >
+            {FormConfig.confirmation.printButton}
+          </Button>
+        )}
+        {this.props.children}
       </header>
     );
   }

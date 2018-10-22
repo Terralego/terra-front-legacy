@@ -43,7 +43,7 @@ class TerraDrawMap extends Component {
 
     const { mapboxAccessToken: accessToken, maxZoom, minZoom } = props;
 
-    this.Map = ReactMapboxGl({ accessToken, maxZoom, minZoom });
+    this.Map = ReactMapboxGl({ accessToken, maxZoom, minZoom, preserveDrawingBuffer: true });
 
     // if there's already features, fit bounds of these
     this.customMapProps = {};
@@ -98,9 +98,23 @@ class TerraDrawMap extends Component {
   }
 
   mapDidLoad = map => {
+    const interactions = [
+      'scrollZoom',
+      'boxZoom',
+      'dragRotate',
+      'dragPan',
+      'keyboard',
+      'doubleClickZoom',
+      'touchZoomRotate',
+    ];
+
     this.map = map;
-    this.map.addControl(new MapboxGL.FullscreenControl(), 'top-left');
-    this.map.addControl(new MapboxGL.ScaleControl(), 'bottom-left');
+    if (!this.props.onlyMap) {
+      this.map.addControl(new MapboxGL.FullscreenControl(), 'top-left');
+      this.map.addControl(new MapboxGL.ScaleControl(), 'bottom-left');
+    } else {
+      interactions.forEach(interaction => this.map[interaction].disable());
+    }
     this.map.dragRotate.disable();
   }
 
@@ -132,6 +146,7 @@ class TerraDrawMap extends Component {
       activityDates,
       mapDrawerProps,
       mapProps,
+      onlyMap,
     } = this.props;
     // Map component is created in constructor
     const { Map } = this;
@@ -210,12 +225,12 @@ class TerraDrawMap extends Component {
           }
         </Map>
 
-        <MapDrawer
+        {!onlyMap && <MapDrawer
           {...mapDrawerProps}
           sources={sources}
           filters={filters}
           setLayerVisibility={this.setLayerVisibility}
-        />
+        />}
       </div>
     );
   }
@@ -262,6 +277,7 @@ TerraDrawMap.propTypes = {
     expandOnInit: PropTypes.bool,
   }),
   mapProps: PropTypes.object,
+  onlyMap: PropTypes.bool,
 };
 
 TerraDrawMap.defaultProps = {
@@ -287,6 +303,7 @@ TerraDrawMap.defaultProps = {
   editable: true,
   features: [],
   mapProps: {},
+  onlyMap: false,
 };
 
 export default TerraDrawMap;
