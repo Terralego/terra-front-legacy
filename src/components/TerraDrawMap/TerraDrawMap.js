@@ -100,7 +100,7 @@ class TerraDrawMap extends Component {
   }
 
   getLayoutProperty = (layerId, layout) => {
-    if (this.state.isMapboxReady) {
+    if (this.state.isMapboxReady && this.map && this.map.length) {
       return this.map.getLayoutProperty(layerId, layout);
     }
     return false;
