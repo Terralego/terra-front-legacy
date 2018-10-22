@@ -6,6 +6,8 @@ import ReactMapboxGl from 'react-mapbox-gl';
 import DrawControl from 'react-mapbox-gl-draw';
 import MapboxGL from 'mapbox-gl';
 
+import debounce from 'lodash.debounce';
+
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 
@@ -54,12 +56,14 @@ class TerraDrawMap extends Component {
       // https://github.com/alex3165/react-mapbox-gl#why-are-zoom-bearing-and-pitch-arrays-
       zoom: [props.zoom],
       center: props.center,
+      isMapboxReady: false,
     };
   }
 
-  shouldComponentUpdate (nextProps) {
+  shouldComponentUpdate (nextProps, nextState) {
     // TODO: Change this inefficient to an efficient one
-    return JSON.stringify(nextProps) !== JSON.stringify(this.props);
+    return JSON.stringify(nextProps) !== JSON.stringify(this.props)
+      || JSON.stringify(nextState) !== JSON.stringify(this.state);
   }
 
   onDrawChange = e => {
@@ -76,25 +80,30 @@ class TerraDrawMap extends Component {
     }
   }
 
+  onMapRender = map => {
+    if (!this.map || !this.map.length) {
+      this.map = map;
+    }
+    this.setMapRendered();
+  }
+
+  /**
+   * Debounce method: know exactly when map has rendered every features needed
+   * at init all map render has to be done to get all map methods and more.
+  */
+  setMapRendered = debounce(() => this.setState({ isMapboxReady: true }), 500);
+
   setLayerVisibility = (layerId, value) => {
     if (this.map) {
       this.map.setLayoutProperty(layerId, 'visibility', value);
     }
   }
 
-  setDefaultFilters (filters = []) {
-    const { config: { sources }, FiltersValue } = this.props;
-
-    sources.forEach(source => {
-      source.layers.forEach(layer => {
-        if (!Object.values(FiltersValue).includes(layer.id)) {
-          this.setLayerVisibility(layer.id, 'none');
-        }
-      });
-    });
-    filters.forEach(filter => {
-      this.setLayerVisibility(filter, 'visible');
-    });
+  getLayoutProperty = (layerId, layout) => {
+    if (this.state.isMapboxReady) {
+      return this.map.getLayoutProperty(layerId, layout);
+    }
+    return false;
   }
 
   mapDidLoad = map => {
@@ -142,20 +151,24 @@ class TerraDrawMap extends Component {
       config: { drawStyles, sources, geojsonPaint, geojsonConflictsPaint },
       editable,
       features,
-      filters,
       activityDates,
       mapDrawerProps,
       mapProps,
       onlyMap,
     } = this.props;
     // Map component is created in constructor
-    const { Map } = this;
+    const {
+      Map,
+      onMapRender,
+      mapDidLoad,
+      customMapProps,
+      onDrawChange,
+      initDrawLayer,
+      setLayerVisibility,
+      getLayoutProperty,
+    } = this;
 
-    const { zoom, center } = this.state;
-
-    if (editable) {
-      this.setDefaultFilters(activityFilters);
-    }
+    const { zoom, center, isMapboxReady } = this.state;
 
     return (
       <div className={styles.map}>
@@ -164,13 +177,14 @@ class TerraDrawMap extends Component {
           style={mapboxStyle}
           containerStyle={{ height: '100%', width: '100%' }}
           fitBoundsOptions={{ padding: 30, maxZoom: 14 }}
-          onStyleLoad={this.mapDidLoad}
+          onStyleLoad={mapDidLoad}
+          onRender={onMapRender}
           // Center prop need a fixed ref to disable it's render.
           center={center}
           maxBounds={maxBounds}
           // Zoom prop need a fixed ref to disable it's render.
           zoom={zoom}
-          {...this.customMapProps}
+          {...customMapProps}
         >
 
           <MapSources sources={sources} activityDates={activityDates} />
@@ -210,26 +224,27 @@ class TerraDrawMap extends Component {
             <DrawControl
               displayControlsDefault={false}
               styles={drawStyles}
-              onDrawUpdate={this.onDrawChange}
-              onDrawCreate={this.onDrawChange}
-              onDrawDelete={this.onDrawChange}
+              onDrawUpdate={onDrawChange}
+              onDrawCreate={onDrawChange}
+              onDrawDelete={onDrawChange}
               onDrawSelectionChange={onSelectionChange}
               controls={{ polygon: true, line_string: true, point: true, trash: true }}
               ref={ref => {
                 if (ref && ref.draw) {
                   this.drawControl = ref;
-                  this.initDrawLayer();
+                  initDrawLayer();
                 }
               }}
             />
           }
         </Map>
 
-        {!onlyMap && <MapDrawer
+        {isMapboxReady && !onlyMap && <MapDrawer
           {...mapDrawerProps}
           sources={sources}
-          filters={filters}
-          setLayerVisibility={this.setLayerVisibility}
+          filters={activityFilters}
+          getLayoutProperty={getLayoutProperty}
+          setLayerVisibility={setLayerVisibility}
         />}
       </div>
     );
@@ -242,10 +257,6 @@ TerraDrawMap.propTypes = {
     PropTypes.string,
     PropTypes.object,
   ]),
-  FiltersValue: PropTypes.shape({
-    OFF_PATHS: PropTypes.string,
-    PATHS: PropTypes.string,
-  }),
   activityFilters: PropTypes.array,
   geojsonConflicts: PropTypes.shape({
     features: PropTypes.arrayOf(PropTypes.object),
@@ -282,11 +293,6 @@ TerraDrawMap.propTypes = {
 
 TerraDrawMap.defaultProps = {
   mapboxStyle: 'mapbox://styles/mapbox/streets-v9',
-  FiltersValue: {
-    OFF_PATHS: 'hors_chemins',
-    PATHS: 'chemins',
-  },
-  activityFilters: [],
   geojsonConflicts: {
     features: [],
   },
