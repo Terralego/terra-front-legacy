@@ -3,9 +3,19 @@ import { Switch, Route } from 'react-router-dom';
 import Permissions from 'components/Permissions';
 import Error401 from 'components/Error401';
 
-export const SubRoutes = ({ routes, path, ...props }) => (
-  <Switch>
-    {routes.map(({ component: Component, permissions, groups, ...route }) => (
+export class SubRoutes extends React.Component {
+  state = {
+    subComponents: [],
+  };
+
+  componentDidMount () {
+    this.buildRouteComponents();
+  }
+
+  buildRouteComponents () {
+    const { routes, path, ...props } = this.props;
+
+    const subComponents = routes.map(({ component: Component, permissions, groups, ...route }) => (
       <Route
         {...route}
         key={route.path}
@@ -20,12 +30,25 @@ export const SubRoutes = ({ routes, path, ...props }) => (
           </Permissions>
         )}
       />
-    ))}
-    <Route
+    ));
+    subComponents.push(<Route
+      key={path}
       path={path}
       {...props}
-    />
-  </Switch>
-);
+    />);
+
+    this.setState({ subComponents });
+  }
+
+  render () {
+    const { subComponents } = this.state;
+
+    return (
+      <Switch>
+        {subComponents.map(Component => Component)}
+      </Switch>
+    );
+  }
+}
 
 export default SubRoutes;

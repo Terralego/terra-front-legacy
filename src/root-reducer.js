@@ -9,6 +9,7 @@ import authenticationTimer from 'modules/authenticationTimer';
 import profile from 'modules/profile';
 import error from 'modules/error';
 import account from 'modules/account';
+import users from 'modules/users';
 import { createForms } from 'react-redux-form';
 
 export const reducers = {
@@ -28,6 +29,7 @@ export const reducers = {
   authentication,
   authenticationTimer,
   error,
+  users,
 };
 
 export default combineReducers(reducers);
