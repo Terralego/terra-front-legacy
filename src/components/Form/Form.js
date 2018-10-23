@@ -99,7 +99,7 @@ class FormApp extends React.Component {
                 <step.component />
               </Card>
             ))}
-            {submitFailed &&
+            {submitFailed && !!errors.length &&
             <SubmitFailed
               errors={errors}
             />}
