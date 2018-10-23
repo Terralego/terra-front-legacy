@@ -1,7 +1,6 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 import { Button, Icon, Modal } from 'antd';
 import { withRouter, Redirect } from 'react-router-dom';
 import { translate } from 'react-i18next';
@@ -46,7 +45,6 @@ class HeaderForm extends React.Component {
 
   render () {
     const {
-      showSubmit,
       showDraft,
       match: { params: { id: pathId } },
       userrequest: { isSaving, id, redirection },
@@ -68,31 +66,18 @@ class HeaderForm extends React.Component {
           <Icon type="left" />
           {FormConfig.confirmation.backButton}
         </Button>
-        { (showDraft || showSubmit) ? (
-          <React.Fragment>
-            {showDraft &&
-              <Button
-                type="primary-dark"
-                htmlType="button"
-                onClick={e => this.saveDraft(e)}
-                loading={isSaving === 'draft'}
-                icon="save"
-              >
-                {FormConfig.confirmation.draftButton}
-              </Button>
-            }
-            {showSubmit &&
-              <Button
-                type="primary-dark"
-                onClick={this.submitForm}
-                icon="arrow-right"
-                loading={isSaving === true}
-              >
-                {FormConfig.confirmation.submitButton}
-              </Button>
-            }
-          </React.Fragment>
-        ) : (
+        {showDraft
+        ?
+          <Button
+            type="primary-dark"
+            htmlType="button"
+            onClick={e => this.saveDraft(e)}
+            loading={isSaving === 'draft'}
+            icon="save"
+          >
+            {FormConfig.confirmation.draftButton}
+          </Button>
+         :
           <Button
             type="primary-dark"
             onClick={this.print}
@@ -101,20 +86,12 @@ class HeaderForm extends React.Component {
           >
             {FormConfig.confirmation.printButton}
           </Button>
-        )}
+        }
         {this.props.children}
       </header>
     );
   }
 }
-
-HeaderForm.propTypes = {
-  showSubmit: PropTypes.bool,
-};
-
-HeaderForm.defaultProps = {
-  showSubmit: false,
-};
 
 const mapStateToProps = state => ({
   userrequest: state.userrequest,
