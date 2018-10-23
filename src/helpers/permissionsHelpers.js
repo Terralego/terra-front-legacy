@@ -10,6 +10,8 @@ export const REQUEST_CHANGE_STATE = 'trrequests.can_change_state_requests';
 export const REQUEST_POST_COMMENT = 'trrequests.can_comment_requests';
 export const REQUEST_READ_ALL = 'trrequests.can_read_all_requests';
 
+export const ACCOUNTS_CAN_MANAGE_USER = 'accounts.can_manage_users';
+
 /**
  * hasPermissions returns true if all requested permissions are checked
  *
