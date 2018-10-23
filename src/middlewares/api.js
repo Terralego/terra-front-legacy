@@ -1,3 +1,5 @@
+import Symbol from 'es6-symbol/polyfill';
+
 import apiService from 'services/apiService';
 import { actions } from 'react-redux-form';
 import queryString from 'query-string';
