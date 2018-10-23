@@ -20,7 +20,7 @@ export const AUTHENTICATION_FAILURE = 'authentication/AUTHENTICATION_FAILURE';
  * @param {string} token
  */
 export function parseJwt (token) {
-  const [header, payload, signature] = token.split('.'); // eslint-disable-line no-unused-vars
+  const [header, payload = '', signature] = token.split('.'); // eslint-disable-line no-unused-vars
   const base64 = payload.replace('-', '+').replace('_', '/');
   try {
     return JSON.parse(atob(base64));
