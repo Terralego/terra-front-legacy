@@ -16,6 +16,8 @@ import FormConfig from 'components/Form/Form.config';
 import FormSummary from 'components/Form/FormSummary';
 import SubmitFailed from 'components/Form/SubmitFailed';
 
+import { getFormErrors } from 'helpers/formHelpers';
+
 import styles from './Form.module.scss';
 
 const isDraft = props => props.data && props.data.state === props.draftStatus;
@@ -51,18 +53,6 @@ class FormApp extends React.Component {
     this.props.resetForm({ full: true });
   }
 
-  getFormErrors () {
-    const { form: { properties } } = this.props;
-    return Array.from(Object.values(properties))
-      .map(property => {
-        const form = property.$form || property;
-        const { model, valid } = form;
-
-        return (!model || valid) ? null : model;
-      })
-      .filter(a => a);
-  }
-
   previewForm = () => {
     this.props.updateConfigValue('formMode', 'preview');
   }
@@ -82,7 +72,7 @@ class FormApp extends React.Component {
     }
 
     const { form: { $form: { submitFailed } } } = this.props;
-    const errors = this.getFormErrors();
+    const errors = getFormErrors(this.props.form.properties);
 
     return (
       <div>
@@ -99,7 +89,7 @@ class FormApp extends React.Component {
                 <step.component />
               </Card>
             ))}
-            {submitFailed &&
+            {submitFailed && !!errors.length &&
             <SubmitFailed
               errors={errors}
             />}
