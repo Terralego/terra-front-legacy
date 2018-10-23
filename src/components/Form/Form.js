@@ -65,6 +65,7 @@ class FormApp extends React.Component {
 
   previewForm = () => {
     this.props.updateConfigValue('formMode', 'preview');
+    setTimeout(() => global.scroll({ top: 0, behavior: 'smooth' }), 10);
   }
 
   editForm = () => {
