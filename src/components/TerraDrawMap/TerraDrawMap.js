@@ -39,6 +39,16 @@ const withoutRoutingResult = features => features.filter(feature =>
 const routingResultOnly = features => features.filter(feature =>
   feature.geometry.type === 'LineString' && !feature.properties.routeInProgress);
 
+
+/**
+ * Get array of features and filter invalid linestrings
+ * to get only valid LineStrings or other features.
+ * @param {array} features
+ */
+const filterValidLineStringCoordinates = features =>
+  features.filter(feat =>
+    feat.geometry.type !== 'LineString' || feat.geometry.coordinates.length > 1);
+
 class TerraDrawMap extends Component {
   constructor (props) {
     super(props);
@@ -132,10 +142,20 @@ class TerraDrawMap extends Component {
   }
 
   initDrawLayer = () => {
-    if (this.drawControl && this.drawControl.draw && this.props.editable) {
-      this.drawControl.draw.set({
+    const { editable, features } = this.props;
+    const { drawControl } = this;
+
+
+    if (drawControl && drawControl.draw && editable) {
+      features.forEach(({ geometry, properties, id }) =>
+        (geometry.type === 'LineString' && geometry.coordinates.length < 2
+          ? this.props.deleteFeaturesById([id, properties.relatedFeatureId])
+          : false
+        ));
+
+      drawControl.draw.set({
         type: 'FeatureCollection',
-        features: withoutRoutingResult(this.props.features),
+        features: filterValidLineStringCoordinates(withoutRoutingResult(features)),
       });
     }
   }
