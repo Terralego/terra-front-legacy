@@ -161,7 +161,7 @@ class UserrequestList extends React.Component {
     }
     if (Object.keys(sorter).length) {
       const order = sorter.order === 'descend' ? '-' : '';
-      query.ordering = `${order}${sorter.field.replace('.', '__')}`;
+      query.ordering = `${order}${sorter.columnKey.replace('.', '__')}`;
     }
     this.handleQueryUpdate(query, true);
   }

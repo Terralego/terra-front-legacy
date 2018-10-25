@@ -1,7 +1,7 @@
 const getColumns = () => [{
   title: 'Nom',
   dataIndex: 'properties.title',
-  key: 'name',
+  key: 'properties.title',
   width: 250,
   render: title => title,
   sorter: (a, b) =>
