@@ -7,7 +7,7 @@ import { Table, Icon, Modal, Button, message } from 'antd';
 import queryString from 'query-string';
 
 import { getUserGroups } from 'modules/authentication';
-import { submitData, saveDraft, duplicate } from 'modules/userrequest';
+import { saveDraft, duplicate } from 'modules/userrequest';
 import { requestUserrequestPage, resetUserrequestsList, updateState } from 'modules/userrequestList';
 
 import getColumns from 'helpers/userrequestListColumns';
@@ -260,7 +260,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => bindActionCreators({
   requestUserrequestPage,
   resetUserrequestsList,
-  submitData,
   saveDraft,
   updateState,
   duplicate,
