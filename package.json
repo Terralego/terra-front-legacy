@@ -18,6 +18,7 @@
     "@turf/helpers": "~6.1.4",
     "antd": "~3.9.1",
     "axios-mock-adapter": "~1.15.0",
+    "blueimp-canvas-to-blob": "~3.14.0",
     "classnames": "~2.2.6",
     "create-hash": "~1.2.0",
     "es6-symbol": "~3.1.1",
