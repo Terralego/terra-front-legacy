@@ -96,10 +96,10 @@ const userrequest = (state = initialState, action) => {
     case DOCUMENTS_UPDATE:
       return {
         ...state,
-        documents: {
+        documents: [
           ...state.documents,
           ...action.documents,
-        },
+        ],
       };
     case SAVE_DRAFT_REQUEST:
       return {
