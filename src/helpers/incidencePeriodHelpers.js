@@ -2,7 +2,77 @@ import moment from 'moment';
 
 export const april = 4;
 export const august = 8;
+export const september = 9;
 export const october = 10;
+
+export const NIGHT_START = 22;
+export const NIGHT_START_WINTER = 19;
+export const NIGHT_END = 5;
+export const NIGHT_END_WINTER = 7;
+
+
+const getActivityStartDate = activity =>
+  activity.eventDates.reduce(
+    (acc, eventDate) =>
+      (moment(eventDate.dates[0].startDate).valueOf() < acc
+        ? moment(eventDate.dates[0].startDate).valueOf()
+        : acc
+      )
+    , +Infinity,
+  );
+
+export const getFirstDateFromActivities = activities =>
+  moment(activities.reduce((acc, activity) => {
+    const activityStartDate = getActivityStartDate(activity);
+    if (activityStartDate < acc) return activityStartDate;
+    return acc;
+  }, +Infinity)).format();
+
+const hasNightDate = date => {
+  const month = moment(date).month() + 1;
+  const day = moment(date).date();
+  const isWinter =
+    month < april
+    || (month === april && day < 21)
+    || month > september
+    || (month === september && day > 21);
+
+  const morningLimit = isWinter ? NIGHT_END_WINTER : NIGHT_END;
+  const nightLimit = isWinter ? NIGHT_START_WINTER : NIGHT_START;
+  return moment(date).hour() <= morningLimit || moment(date).hour() >= nightLimit;
+};
+
+const isSameDay = (firstDate, secondDate) =>
+  moment(firstDate).dayOfYear() === moment(secondDate).dayOfYear();
+
+const hasNightDates = dates =>
+  dates.reduce((accum, { startDate, endDate }) => {
+    const isNightDate = hasNightDate(startDate) || hasNightDate(endDate);
+    const areSameDays = isSameDay(startDate, endDate);
+    if (accum || isNightDate || !areSameDays) return true;
+    return false;
+  }, false);
+
+const activityHasNightEvent = eventDates =>
+  eventDates.reduce(
+    (acc, eventDate) =>
+      (!acc
+        ? hasNightDates(eventDate.dates)
+        : acc
+      )
+    , false,
+  );
+
+export const activitiesHasNightEvent = activities =>
+  activities.reduce(
+    (acc, { eventDates }) =>
+      (!acc
+        ? activityHasNightEvent(eventDates)
+        : acc
+      )
+    , false,
+  );
+
 
 /**
  * Get all dates between start and end date
