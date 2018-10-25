@@ -147,6 +147,15 @@ export const showTooltipOverFeature = popup => (map, event) => {
   }
 
   const topMostFeature = hoveredFeatures[0];
+
+  const { userrequest: userrequestId } = topMostFeature.properties;
+  if (userrequestId) {
+    return popup
+      .setLngLat(event.lngLat)
+      .setHTML(`Demande n°${userrequestId}`)
+      .addTo(map);
+  }
+
   const toolTip = topMostFeature.properties.tooltip;
   if (!toolTip) {
     return popup.remove();
