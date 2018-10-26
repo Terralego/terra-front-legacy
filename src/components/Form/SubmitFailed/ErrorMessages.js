@@ -40,7 +40,7 @@ const ErrorMessages = ({ errors }) => {
     'userrequest.properties.description',
   ];
 
-  const activityErrors = errors.filter(error => error.split('.')[2] === 'activities' && error.split('.')[4]);
+  const activityErrors = errors.filter(error => error.split('.')[2] === 'activities' && error.split('.')[3]);
 
   const activityIndexes = Object.keys(activityErrors.reduce((acc, error) =>
     ({ ...acc, [error.split('.')[3]]: true }), {}));

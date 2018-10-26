@@ -5,11 +5,11 @@ export const getFormErrors = formData =>
   Object.keys(formData).reduce((acc, fieldName) => {
     const fieldData = formData[fieldName];
 
-    if (!fieldData.model) {
+    if (fieldData.$form) {
       return [...acc, ...getFormErrors(fieldData)];
     }
 
-    if (!fieldData.valid) {
+    if (!fieldData.valid && fieldData.model) {
       return [...acc, fieldData.model];
     }
 
