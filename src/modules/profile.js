@@ -21,6 +21,7 @@ const profile = (state = initialState, action) => {
       return {
         ...state,
         properties: {
+          ...initialState.properties,
           ...state.properties,
           ...action.properties,
         },
@@ -34,11 +35,15 @@ const profile = (state = initialState, action) => {
       return {
         ...state,
       };
-    case FILL_PROFILE_FROM_USER:
+    case FILL_PROFILE_FROM_USER: {
       return {
         ...state,
-        properties: action.properties,
+        properties: {
+          ...state.properties,
+          ...action.properties,
+        },
       };
+    }
     default:
       return state;
   }
@@ -57,20 +62,11 @@ export default profile;
  * updateProfileProperties add or update an object of properties
  * @param  {object} properties : object of properties to add / update in profile object
  */
-export const updateProfileProperties = properties => ({
-  type: UPDATE_PROPERTIES,
-  properties,
-});
-
-/**
- * profile action
- * get profile properties
- */
-export const fillProfileFromUser = () => (dispatch, getState) => {
+export const updateProfileProperties = properties => (dispatch, getState) => {
   dispatch(actions.reset('profile'));
   dispatch({
-    type: FILL_PROFILE_FROM_USER,
-    properties: getState().authentication.payload.user.properties,
+    type: UPDATE_PROPERTIES,
+    properties: { ...getState().authentication.payload.user.properties, properties },
   });
 };
 

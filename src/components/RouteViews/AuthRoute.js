@@ -9,6 +9,7 @@ export const AuthRoute = ({
   user = {},
   protected: isProtected,
   isAuthenticated,
+  path,
   location: { pathname },
 }) => {
   const shouldRedirectToLogin = isProtected && !isAuthenticated;
@@ -27,7 +28,7 @@ export const AuthRoute = ({
     && isAuthenticated
     && typeof user.properties === 'object'
     && !Object.keys(user.properties).length
-    && pathname !== '/create-profile';
+    && path !== '/create-profile';
 
   if (shouldRedirectToProfile) {
     return (
