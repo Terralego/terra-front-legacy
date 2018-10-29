@@ -71,18 +71,6 @@ export const updateProfileProperties = properties => (dispatch, getState) => {
 };
 
 /**
- * profile action
- * get profile properties
- */
-export const fillProfileFromUser = () => (dispatch, getState) => {
-  dispatch(actions.reset('profile'));
-  dispatch({
-    type: FILL_PROFILE_FROM_USER,
-    properties: getState().authentication.payload.user.properties,
-  });
-};
-
-/**
  * profile async action : post profile informations
  * @param {number}
  * @param {string}
