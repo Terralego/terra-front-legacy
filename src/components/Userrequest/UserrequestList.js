@@ -159,9 +159,13 @@ class UserrequestList extends React.Component {
         [`${current}__in`]: filters[current].join(','),
       }), {});
     }
+
     if (Object.keys(sorter).length) {
       const order = sorter.order === 'descend' ? '-' : '';
       query.ordering = `${order}${sorter.columnKey.replace('.', '__')}`;
+      if (Object.values(query).includes('200') && sorter.columnKey === 'state') {
+        query.ordering = [query.ordering, `${order}expiry`];
+      }
     }
     this.handleQueryUpdate(query, true);
   }
