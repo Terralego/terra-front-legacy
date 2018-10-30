@@ -21,8 +21,6 @@ const profile = (state = initialState, action) => {
       return {
         ...state,
         properties: {
-          ...initialState.properties,
-          ...state.properties,
           ...action.properties,
         },
       };
@@ -66,7 +64,7 @@ export const updateProfileProperties = properties => (dispatch, getState) => {
   dispatch(actions.reset('profile'));
   dispatch({
     type: UPDATE_PROPERTIES,
-    properties: { ...getState().authentication.payload.user.properties, properties },
+    properties: { ...getState().authentication.payload.user.properties, ...properties },
   });
 };
 
