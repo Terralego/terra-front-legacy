@@ -1,5 +1,4 @@
 import apiService, { defaultHeaders } from 'services/apiService';
-import queryString from 'query-string';
 
 const GROUPS_IN = 'groups__in';
 const GROUPS_NOT_IN = 'groups__notin';
@@ -14,10 +13,10 @@ const GROUPS_NOT_IN = 'groups__notin';
  * searchUsers({ email: 'a', inGroups: ['!a', 'b']})
  */
 export const searchUsers = async ({ search, inGroups, uuid }) => {
-  const query = {};
+  const query = [];
 
   if (search) {
-    query.search = search;
+    query.push(`search=${encodeURIComponent(search)}`);
   }
 
   if (inGroups) {
@@ -35,17 +34,17 @@ export const searchUsers = async ({ search, inGroups, uuid }) => {
     Object.keys(filtered).forEach(key => {
       const list = filtered[key];
       if (list.length) {
-        query[key] = `[${list.join(',')}]`;
+        query.push(`groups__name${key === GROUPS_NOT_IN ? '!' : ''}=${list.join(',')}`);
       }
     });
   }
 
   if (uuid) {
-    query.uuid = uuid;
+    query.push(`uuid=${uuid}`);
   }
 
   try {
-    const endpoint = `/user/?${queryString.stringify(query)}`;
+    const endpoint = `/user/?${query.join('&')}`;
     const { data: { results } } = await apiService.request(endpoint, {
       headers: defaultHeaders,
     });
