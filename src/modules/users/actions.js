@@ -18,7 +18,7 @@ import { searchUsers } from './helpers';
 export const loadUsers = ({ groupsIn }) => {
   const params = {};
   if (groupsIn) {
-    params.groups__in = `[${Array.isArray(groupsIn)
+    params.groups__name = `[${Array.isArray(groupsIn)
       ? groupsIn.join(',')
       : groupsIn
     }]`;
