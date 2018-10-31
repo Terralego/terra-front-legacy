@@ -26,6 +26,7 @@ class FormLogin extends Component {
       <ReduxForm model="login" onSubmit={this.handleSubmit}>
         <h2>Se connecter</h2>
         <Input
+          autoFocus
           model=".email"
           label="Email"
           errorMessages={{ required: { message: 'Please provide an email' } }}
