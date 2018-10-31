@@ -1,8 +1,11 @@
 import Cookies from 'js-cookie';
+import settings from 'front-settings';
 
-const cookieOptions = {
-  // domain: '.makina-corpus.net',
-};
+const cookieOptions = {};
+
+if (settings.COOKIE_HOST) {
+  cookieOptions.domain = settings.COOKIE_HOST;
+}
 
 class TokenService {
   constructor () {
