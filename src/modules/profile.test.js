@@ -11,6 +11,7 @@ import profile, {
   PROFILE_SUCCESS,
   submitProfile,
 } from 'modules/profile';
+import initialProfileState from 'modules/profile-initial';
 
 const middlewares = [thunk, api];
 const mockStore = configureMockStore(middlewares);
@@ -18,7 +19,7 @@ const initialState = 'modules/profile-initial';
 
 describe('profile reducer', () => {
   it('should have initial value equal to {}', () => {
-    expect(profile({}, {})).toEqual({});
+    expect(profile(undefined, {})).toEqual(initialProfileState);
   });
 
   describe('UPDATE_PROPERTIES', () => {
