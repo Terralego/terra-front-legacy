@@ -1,36 +1,22 @@
-import React from 'react';
-import Enzyme, { shallow } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
 import NewUserrequestButton from 'components/Userrequest/NewUserrequestButton';
+import enzymeSetup from './EnzymeSetup';
 
-Enzyme.configure({ adapter: new Adapter() });
+const props = {
+  type: 'primary',
+  className: '',
+  style: {},
+};
 
-function setup () {
-  const props = {
-    type: 'primary',
-    className: '',
-    style: {},
-  };
-
-  const enzymeWrapper = shallow(<NewUserrequestButton {...props} />);
-
-  return {
-    props,
-    enzymeWrapper,
-  };
-}
-
+const { enzymeWrapper } = enzymeSetup(props, NewUserrequestButton);
 
 describe('components', () => {
   describe('UserrequestButton', () => {
     it('should link to new-request', () => {
-      const { enzymeWrapper } = setup();
       const linkProps = enzymeWrapper.find('Link').props();
       expect(linkProps.to).toBe('/new-request');
     });
 
     it('should had content', () => {
-      const { enzymeWrapper } = setup();
       const Button = enzymeWrapper.find('Button');
       const buttonProps = Button.props();
 

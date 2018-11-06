@@ -1,24 +1,14 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import Enzyme, { shallow } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
 import { Search } from 'components/Userrequest/Search';
+import enzymeSetup from './EnzymeSetup';
 
-Enzyme.configure({ adapter: new Adapter() });
+const props = {
+  handleQueryUpdate: jest.fn(),
+  location: { search: 'Hadooooken' },
+};
 
-function setup () {
-  const props = {
-    handleQueryUpdate: jest.fn(),
-    location: { search: 'Hadooooken' },
-  };
-
-  const enzymeWrapper = shallow(<Search {...props} />);
-
-  return {
-    props,
-    enzymeWrapper,
-  };
-}
+const { enzymeWrapper } = enzymeSetup(props, Search);
 
 describe('components', () => {
   describe('Search', () => {
@@ -29,18 +19,22 @@ describe('components', () => {
     });
 
     it('should have default values', () => {
-      const { enzymeWrapper, props } = setup();
       const searchProps = enzymeWrapper.find('Search').props();
       const {
         addonBefore,
         placeholder,
         enterButton,
-        onSearch,
       } = searchProps;
 
       expect(addonBefore).toEqual('');
       expect(placeholder).toEqual("Numéro de déclaration, titre de l'événement…");
       expect(enterButton).toBe(true);
+    });
+
+    it('should search wording', () => {
+      const searchProps = enzymeWrapper.find('Search').props();
+      const { onSearch } = searchProps;
+
       onSearch('Hadoken');
       expect(props.handleQueryUpdate.mock.calls).toEqual([[{ search: 'Hadoken' }, true]]);
     });
