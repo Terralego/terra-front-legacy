@@ -1,6 +1,5 @@
 import { CALL_API } from 'middlewares/api';
 import apiService, { defaultHeaders } from 'services/apiService';
-import queryString from 'query-string';
 
 import {
   USERS_LOAD_REQUEST, USERS_LOAD_SUCCESS, USERS_LOAD_FAILURE, USERS_REMOVE_ITEM,
@@ -16,17 +15,17 @@ import { searchUsers } from './helpers';
  * @params {String[]} groupsIn List of groups where user should be
  */
 export const loadUsers = ({ groupsIn }) => {
-  const params = {};
+  const params = [];
   if (groupsIn) {
-    params.groups__name = `[${Array.isArray(groupsIn)
+    params.push(`[${Array.isArray(groupsIn)
       ? groupsIn.join(',')
       : groupsIn
-    }]`;
+    }]`);
   }
 
   return ({
     [CALL_API]: {
-      endpoint: `/user/?${queryString.stringify(params)}`,
+      endpoint: `/user/?${params.join(',')}`,
       types: [USERS_LOAD_REQUEST, USERS_LOAD_SUCCESS, USERS_LOAD_FAILURE],
       config: {
         headers: defaultHeaders,
