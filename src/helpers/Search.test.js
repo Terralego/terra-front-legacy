@@ -1,7 +1,7 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 import { Search } from 'components/Userrequest/Search';
-import enzymeSetup from './EnzymeSetup';
+import enzymeSetup from 'setupTests';
 
 const props = {
   handleQueryUpdate: jest.fn(),

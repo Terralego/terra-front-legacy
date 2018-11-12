@@ -1,5 +1,5 @@
 import NewUserrequestButton from 'components/Userrequest/NewUserrequestButton';
-import enzymeSetup from './EnzymeSetup';
+import enzymeSetup from 'setupTests';
 
 const props = {
   type: 'primary',
