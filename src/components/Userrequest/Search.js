@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { Input } from 'antd';
 import queryString from 'query-string';
 
-class Search extends React.Component {
+export class Search extends React.Component {
   getDefaultValue = () => queryString.parse(this.props.location.search).search;
 
   handleSearchChange = search => {
