@@ -214,6 +214,18 @@ export const updateRequestProperties = properties => ({
 });
 
 /**
+ * Remove parking in parkings
+ * @param {number} index : position in the parking properties
+ */
+export const removeParking = index => actions.remove('userrequest.properties.parkings', index);
+
+/**
+ * Add parking in parkings
+ * @param {number} parking : parking to add in parkings properties
+ */
+export const addParking = parking => actions.push('userrequest.properties.parkings', parking);
+
+/**
  * userrequest action
  * updateFeatures add or update an object of properties
  * @param  {object} properties : object of properties to add / update in userrequest object
