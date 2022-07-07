@@ -37,7 +37,7 @@
     "lodash.debounce": "~4.0.8",
     "lodash.pick": "~4.4.0",
     "mapbox-gl": "~0.47.0",
-    "moment": "~2.22.2",
+    "moment": "~2.29.4",
     "node-sass": "~4.9.3",
     "prop-types": "~15.6.2",
     "query-string": "~5.1.1",
